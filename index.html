@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title data-localize="TITLE_NAME"></title>
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
+<link rel="icon" sizes="any" mask href="/favicon.ico"/>
+<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="fonts/opensans/fonts.css">
+<link rel="stylesheet" type="text/css" media="screen" href="css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="css/font-jj.css">
+<link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-production.min.css">
+<!--link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-skins.min.css"-->
+<link rel="stylesheet" id="vdi_skins_url" type="text/css" media="screen">
+<link rel="stylesheet" type="text/css" media="screen" href="css/demo.min.css">
+<link rel="stylesheet" type="text/css" id="vdi_style" media="screen" href="css/vdi.css">
+<link rel="stylesheet" type="text/css" href="css/tree-control.css">
+<link rel="stylesheet" type="text/css" href="css/tree-control-attribute.css">
+<link rel="stylesheet" href="css/your_style.css">
+<!-- <link rel="stylesheet" type="text/css" href="css/uploadify.css"> -->
+<!--<script src="js/libs/jquery-2.1.1.js"></script>-->
+<!--<script src="js/libs/jquery-ui-1.10.3.min.js"></script>-->
+<!--<script src="js/libs/base64.min.js"></script>-->
+<!--<script src="js/libs/charts/highcharts.src.js"></script>-->
+<!--<script src="js/libs/charts/highcharts-3d.src.js"></script>-->
+<!-- JS TOUCH : include this plugin for mobile drag / drop touch events-->
+<!--<script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>-->
+<!-- BOOTSTRAP JS -->
+<!--<script src="js/bootstrap/bootstrap.min.js"></script>-->
+<!-- CUSTOM NOTIFICATION -->
+<!--<script src="js/notification/SmartNotification.min.js"></script>-->
+<!-- JARVIS WIDGETS -->
+<!--script src="js/smartwidgets/jarvis.widget.min.js"></script-->
+<!-- EASY PIE CHARTS -->
+<!--<script src="js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>-->
+<!-- SPARKLINES -->
+<!--<script src="js/plugin/sparkline/jquery.sparkline.min.js"></script>-->
+<!-- JQUERY VALIDATE -->
+<!--<script src="js/plugin/jquery-validate/jquery.validate.min.js"></script>-->
+<!-- JQUERY MASKED INPUT -->
+<!--<script src="js/plugin/masked-input/jquery.maskedinput.min.js"></script>-->
+<!-- JQUERY SELECT2 INPUT -->
+<!--<script src="js/plugin/select2/select2.min.js"></script>-->
+<!-- JQUERY UI + Bootstrap Slider -->
+<!--<script src="js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>-->
+<!-- browser msie issue fix -->
+<!--<script src="js/plugin/msie-fix/jquery.mb.browser.min.js"></script>-->
+<!-- FastClick: For mobile devices: you can disable this in app.js -->
+<!--<script src="js/plugin/fastclick/fastclick.min.js"></script>-->
+<!--<script src="js/plugin/uploadify/jquery.uploadify.min.js"></script>-->
+<!--<script src="js/libs/angular/angular.js"></script>-->
+<!--<script src="js/libs/angular/angular-resource.js"></script>-->
+<!--<script src="js/libs/angular/angular-route.js"></script>-->
+<!--<script src="js/libs/angular/angular-animate.js"></script>-->
+<!--<script src="js/vdi/local.js"></script>-->
+<!--<script src="js/libs/angular/ui-bootstrap-custom-tpls-0.11.0.js"></script>-->
+
+</head>
+
+<body class="fixed-page-footer" style="display:none">
+<!-- POSSIBLE CLASSES: minified, fixed-ribbon, fixed-header, fixed-width, top-menu
+	fixed-navigation fixed-header fixed-ribbon 
+	 You can also add different skin classes such as "smart-skin-0", "smart-skin-1" etc...-->
+<header id="header" data-ng-include="'includes/header.html'"></header>
+
+<!-- Left panel : Navigation area -->
+<!-- Note: This width of the aside area can be adjusted through LESS variables -->
+<aside id="left-panel" data-ng-include="'includes/left-panel.html'"></aside>
+
+<!-- MAIN PANEL -->
+<div id="main" role="main">
+	<div id="ribbon" data-ng-include="'includes/ribbon.html'" data-ribbon=""></div>
+	<div id="content" data-ng-view="" class="view-animate"></div>
+</div>
+
+<div data-ng-include="'includes/tasklist.html'"></div>
+
+<div id="shortcut"><span data-ng-include="'includes/shortcut.html'"></span></div>
+
+<!-- <div id="login_masker"
+	data-ng-show="showLoginScreen"
+	data-ng-controller="loginController"
+	data-ng-include="'includes/login.html'"></div> -->
+
+<div data-ng-show="showLoginScreen" data-ng-controller="loginController">
+	<div class="login_bg"></div>
+	<div id="login_masker" data-ng-include="'includes/login.html'"></div>	
+</div>
+
+
+
+
+<!-- <script src="js/plugin/easyui/jquery.easyui.min.js"></script> -->
+
+<!--[if IE 8]>
+	<h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
+<![endif]-->
+
+<!-- AngularJS -->
+
+<!-- ANGULAR: Handled via "ribbon" directive
+<script src="js/demo.js"></script>-->
+<!-- MAIN APP JS FILE -->
+<!-- MAIN APP JS FILE -->
+<!--<script src="js/app.config.js"></script>-->
+<!--<script src="js/app.js"></script>-->
+<!--<script src="js/env.js"></script>-->
+<!--<script>$BootScript("index")</script>-->
+<script src="js/all.bundle.js?d=1520939522873"></script>
+<script>
+var $$$MAIN_MODULE = "smartApp";
+</script>
+</body>
+</html>

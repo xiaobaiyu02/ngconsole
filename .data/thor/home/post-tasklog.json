@@ -1,0 +1,9 @@
+{
+    "code": 0,
+    "results": {
+        "alarms": [],
+        "notifies": [],
+        "tasks": [],
+		"images": [{"id": 18, "status": "alive"}]
+    }
+}

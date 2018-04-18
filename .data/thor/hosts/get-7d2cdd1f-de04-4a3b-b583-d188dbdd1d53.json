@@ -1,0 +1,34 @@
+{
+    "code": 0,
+    "host_cnt_error": 0,
+    "host_cnt_running": 1,
+    "hosts_list": [
+        {
+            "cpu_used": 36,
+            "disk_used": 136.24,
+            "external_ip": null,
+            "h_cpu": 24,
+            "h_disk": 299.85,
+            "h_mem": "62",
+            "host": "vdi188",
+            "id": "abf1887a-eef8-42aa-9a02-0057d8768435",
+            "image_storage_capacity": "e68d3c73-36b4-4746-9452-7fe74cabe2f8",
+            "image_storage_performance": "8cd4b7b9-cfcb-4038-805a-ab39cf96e3c3",
+            "inst_run": 18,
+            "inst_total": 158,
+            "ip": "172.16.201.188",
+            "is_console": true,
+            "max_instance": 90,
+            "mem_used": "46",
+            "root_password": "oseasy",
+            "status": "active",
+            "storage_capacity": "e68d3c73-36b4-4746-9452-7fe74cabe2f8",
+            "storage_performance": "8cd4b7b9-cfcb-4038-805a-ab39cf96e3c3",
+            "storage_uuid": "046d0087-3307-412e-9dfa-2abda66b48dc",
+            "virtual_type": "kvm"
+        }
+    ],
+    "resource_pool": "7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+    "server_count": 1,
+    "virtual_type": "kvm"
+}

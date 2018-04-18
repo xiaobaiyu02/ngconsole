@@ -1,0 +1,382 @@
+<section id="widget-grid">
+	<div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="mySmallModalLabel" data-localize="设置运行参数"></h4>
+        </div>
+		<div class="modal-body">
+			<form class="form-horizontal ng-pristine ng-valid" name="configureparameter" novalidate>
+				<div class="jarviswidget specialHeight">
+					<header>
+						<ul class="nav nav-tabs pull-left in" style="width: 110%">
+							<li class="active">
+								<a data-toggle="tab" href="#hr1" data-localize="模式" localize-title="模式"></a>
+							</li>
+							<li>
+								<a data-toggle="tab" href="#hr2" data-localize="权限" localize-title="权限"></a>
+							</li>
+							<li>
+								<a data-toggle="tab" href="#hr3" data-localize="快捷键" localize-title="快捷键"></a>
+							</li>
+							<li>
+								<a data-toggle="tab" href="#hr4" data-localize="个性化" localize-title="个性化"></a>
+							</li>
+							<li data-ng-if="has_windows">
+								<a data-toggle="tab" href="#hr5" data-localize="Windows客户端1" localize-title="Windows客户端1"></a>
+							</li>
+							<li data-ng-if="has_linux">
+								<a ng-class="{'has_linux': !isSingle && isLangEn}" data-toggle="tab" href="#hr6" data-localize="Linux客户端" localize-title="Linux客户端"></a>
+							</li>
+						</ul>
+					</header>
+					<div style="min-height: 200px">
+						<div class="widget-body">
+							<div class="tab-content">
+									<div class="tab-pane active" id="hr1">
+										<div class="form-group">
+											<label class="col-xs-4 control-label" data-localize="默认模式选择"></label>
+											<div class="col-xs-8">
+												<div class="radio">
+													<label>
+														<input type="radio" data-ng-model="config.desktop_mode" value="0" class="radiobox style-0" name="style-0" data-ng-click="checkMode(0)">
+														<span data-localize="混合模式"></span>
+													</label>
+												</div>
+												<div class="checkbox input-group terminal_configure">
+													<label>
+														<input type="checkbox" class="in_hybird" data-ng-checked="in_hybird" data-ng-click="inHybird()" data-ng-disabled="config.desktop_mode!='0'">
+														<span data-localize="倒数"></span>
+														<input type="number" class="mode_time" name="mode_countdown" data-ng-disabled="!in_hybird" data-ng-required="in_hybird" 
+																data-ng-model="config.mode_countdown"
+																input-number
+																ng-pattern='/^([3-9]|[1-9][0-9]|[1-5][0-9][0-9]|600)$/'
+																min='3'
+																max='600'
+																> S&nbsp;&nbsp;&nbsp;&nbsp;
+														<span data-localize="自动进入"></span>
+														<select class="desktop_mode" data-ng-model="config.final_mode" data-ng-disabled="!in_hybird" data-ng-required="in_hybird">
+															<option value="" data-localize="--请选择--"></option>
+															<option value="1" data-localize="教学桌面"></option>
+															<option value="2" data-localize="个人桌面"></option>
+														</select>
+														<div class="dataTables_info" data-localize="hybirdTip"></div>
+													</label>
+												</div>
+												<div class="radio">
+													<label>
+														<input type="radio" data-ng-model="config.desktop_mode" value="1" class="radiobox style-0" name="style-0" data-ng-click="checkMode(1)">
+														<span data-localize="教学模式"></span> 
+													</label>
+												</div>
+												<div class="radio">
+													<label>
+														<input type="radio" data-ng-model="config.desktop_mode" value="2" class="radiobox style-0" name="style-0" data-ng-click="checkMode(2)">
+														<span data-localize="个人模式"></span>
+													</label>
+												</div>
+												<div class="checkbox input-group terminal_configure">
+													<label>
+														<input type="checkbox" ng-disabled="config.desktop_mode!=='2'" data-ng-model="config.enabled_multiple" data-ng-true-value="1" data-ng-false-value="0">
+														<span data-localize="多桌面模式"></span>
+													</label>
+													<label>
+													    <a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='multiDesktopModeTips' data-placement="right" data-html="true" data-content="" data-original-title="" title=""><i class="fa fa-question-circle"></i></a>
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-xs-4" data-localize="是否自动进入桌面"></label>
+											<div class="col-xs-8" style="padding-top: 7px;">
+												<label>
+													<input type="checkbox" class="checkbox"  data-ng-model="config.autologin" data-ng-change='setWaitTime(config.autologin)'>
+													<span data-localize="设置自动进入桌面"></span>
+												</label>
+												<div class="form-inline" data-ng-if="config.autologin">
+														<span data-localize="倒计时"></span>
+														<input type="number" class="form-control" data-ng-required='config.autologin' name="wait_time" style="width: 70px;"
+															data-ng-model="config.wait_time"
+															input-number
+															ng-pattern='/^([3-9]|[1-9][0-9]|[1-5][0-9][0-9]|600)$/'
+															min='3'
+															max='600'
+															> 
+														<label> S</label>
+														<div class="dataTables_info" data-localize="hybirdTip"></div>
+												</div>												
+											</div>
+
+										</div>
+									</div>
+									<div class="tab-pane" id="hr2">
+										<div class="form-group">
+											<label class="control-label col-xs-4" data-localize="虚拟机自助"></label>
+											<div class="col-xs-8">
+												<div class="inline-group">
+													<label>
+														<input type="checkbox" class="checkbox"  data-ng-model="config.self_service_teach" data-ng-true-value="1" data-ng-false-value="0">
+														<span data-localize="教学桌面启用"></span>
+													</label>
+													<label>
+														<input type="checkbox" class="checkbox" data-ng-model="config.self_service_personal" data-ng-true-value="1" data-ng-false-value="0">
+														<span data-localize="个人桌面启用"></span>
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-xs-4" data-localize="教学桌面关机"></label>
+											<div class="col-xs-8">
+												<div class="inline-group">
+													<label>
+														<input type="checkbox" class="checkbox"  data-ng-model="config.mode1_shutdown_with_client" data-ng-true-value="1" data-ng-false-value="0">
+														<span data-localize="关闭桌面同时关闭终端"></span>
+													</label>
+													<label>
+														<input type="checkbox" class="checkbox" data-ng-model="config.mode1_shutdown_with_pc" data-ng-true-value="1" data-ng-false-value="0" checked disabled>
+														<span data-localize="关闭终端同时关闭桌面"></span>
+													</label>
+													
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-xs-4" data-localize="个人桌面关机"></label>
+											<div class="col-xs-8">
+												<div class="inline-group">
+													<label>
+														<input type="checkbox" class="checkbox" data-ng-model="config.mode2_shutdown_with_client" data-ng-true-value="1" data-ng-false-value="0" >
+														<span data-localize="关闭桌面同时关闭终端"></span>
+													</label>
+													<label>
+														<input type="checkbox" class="checkbox" data-ng-model="config.mode2_shutdown_with_pc" data-ng-true-value="1" data-ng-false-value="0" >
+														<span data-localize="关闭终端同时关闭桌面"></span>
+													</label>
+													<div class="dataTables_info" data-localize="MODE_TIP"></div>
+												</div>
+											</div>
+										</div>
+
+									</div>
+									<div class="tab-pane" id="hr3">
+										<div class="tab-pane fade active in" id="s1">
+											<ul class="nav nav-tabs">
+												<li class="active">
+													<a href="#iss1" data-toggle="tab">Windows</a>
+												</li>
+												<li>
+													<a href="#iss2" data-toggle="tab">Linux</a>
+												</li>
+											</ul>
+											<div class="tab-content padding-10">
+												<div class="tab-pane active" id="iss1">
+													<div class="table-responsive">
+														<table class="table table-hover table-bordered table-vertical-center">
+															<thead>
+																<tr>
+																	<th data-localize="快捷键"></th>
+																	<th data-localize="描述"></th>
+																	<th data-localize="启用"></th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>Shift+F12</td>
+																	<td data-localize="WINDOWS_SHOUCUTS_DESCRIBE"></td>
+																	<td>
+																		<div class="checkbox">
+																			<label class="mylla">
+																			  <input type="checkbox" class="checkbox style-0" data-ng-model="config.windows_shortcut_key"  data-ng-true-value="1" data-ng-false-value="0">
+																			  <span></span>
+																			</label>
+																		</div>
+																	</td>
+																</tr>
+
+															</tbody>
+														</table>
+													</div>
+												</div>
+												<div class="tab-pane fade" id="iss2">
+													<div class="table-responsive">
+														<table class="table table-hover table-bordered table-vertical-center">
+															<thead>
+																<tr>
+																	<th data-localize="快捷键"></th>
+																	<th data-localize="描述"></th>
+																	<th data-localize="启用"></th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>Shift+F12</td>
+																	<td data-localize="LINUX_SHOUCUTS_DESCRIBE"></td>
+																	<td>
+																		<div class="checkbox">
+																			<label class="mylla">
+																			  <input type="checkbox" class="checkbox style-0" data-ng-model="config.linux_shortcut_key"  data-ng-true-value="1" data-ng-false-value="0">
+																			  <span></span>
+																			</label>
+																		</div>
+																	</td>
+																</tr>
+																
+															</tbody>
+														</table>
+													</div>
+												</div>
+												
+											</div>
+
+										</div>
+									</div>
+									<div class="tab-pane" id="hr4">
+										<div class="form-group">
+											<label for="" class="col-xs-3 control-label" data-localize="分辨率"></label>
+											<div class="col-xs-9">
+												<select class="form-control" data-ng-model="config.current_resolution" data-ng-options="item.value for item in config.support_resolution"></select>
+											</div>
+										</div>
+										
+										<p data-localize="BEST_TIP"></p>
+										<div class="form-group">
+											<label for="console_ip" class="col-xs-3 control-label" data-localize="服务器IP"></label>
+											<div class="col-xs-9"><input type="text" name="console_ip" class="form-control" ng-pattern="/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/" data-ng-model="config.console_ip" required></div>
+										</div>
+										<div class="form-group">
+											<label for="init_pwd" class="col-xs-3 control-label" data-localize="超级密码"></label>
+											<div class="col-xs-9"><input type="text" name="init_pwd" class="form-control" disabled  data-ng-model="config.init_pwd"></div>
+										</div>
+									</div>
+									<div class="tab-pane" id="hr5" data-ng-if="has_windows">
+										<div class="form-group">
+											<label class="control-label col-xs-4" data-localize="Windows客户端" style="padding-top: 0;"></label>
+											<div class="col-xs-8">
+												<div class="inline-group">
+													<label>
+														<input type="radio" data-ng-model="config.fullscreen" data-ng-click="fullscreen(0)" value="0" class="radiobox" name="fullscreen">
+														<span data-localize="窗口模式"></span> 
+													</label>
+
+													<label>
+														<input type="radio" data-ng-model="config.fullscreen" data-ng-click="fullscreen(1)" value="1" class="radiobox" name="fullscreen">
+														<span data-localize="全屏可退出"></span> 
+													</label>
+
+													<label>
+														<input type="radio" data-ng-model="config.fullscreen" data-ng-click="fullscreen(2)" value="2" class="radiobox" name="fullscreen">
+														<span data-localize="全屏不可退出"></span> 
+													</label>
+												</div>
+												<div class="checkbox">
+													<label>
+													  <input type="checkbox" class="checkbox" data-ng-disabled="config.fullscreen=='2'" data-ng-model="config.auto_start"  data-ng-true-value="1" data-ng-false-value="0">
+													  <span data-localize="开机自启"></span>
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-xs-4" data-localize="Hyper-V桌面连接方式" style="padding-top: 0;"></label>
+											<div class="col-xs-8">
+												<div class="inline-group">
+													<label>
+														<input type="radio" data-ng-model="config.connect_type" value="rdp" class="radiobox" name="connect_type">
+														<span>RDP</span> 
+													</label>
+													<label>
+														<input type="radio" data-ng-model="config.connect_type" value="vm" class="radiobox" name="connect_type">
+														<span>VMConnect</span> 
+													</label>
+													<label>
+														<a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='terminalTips' data-placement="right" data-html="true" data-content="" data-original-title="" title=""><i class="fa fa-question-circle"></i></a>
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="control-label col-xs-4"></label>
+											<div class="col-xs-8" style="padding-top: 7px;">
+												<label>
+													<input type="checkbox" class="checkbox"  data-ng-model="config.auto_exit" data-ng-change='dialogSet("win_wait_time", config.win_wait_time || 2)'  data-ng-true-value="1" data-ng-false-value="0">
+													<span data-localize="与服务器连接断开后自动退出"></span>
+												</label>
+												<div class="form-inline">
+													<span data-localize="等待时间"></span>
+													<input type="number" class="form-control" name="win_wait_time" style="width: 70px;"
+														data-ng-disabled="config.auto_exit == '0'"
+														data-ng-required="config.auto_exit == '1'"
+														data-ng-model="config.win_wait_time"
+														input-number
+														ng-pattern='/^([1-9]|[1-2][0-9]|30)$/'
+														ng-style="{color: config.auto_exit === '1' ? '#555' : '#eee'}"
+														min='1'
+														max='30'
+														placeholder="1-30" 
+														> 
+													<label data-localize="分钟"> </label>
+												</div>												
+											</div>
+
+										</div>
+										<div class="form-group">
+											<label class="control-label col-xs-4" data-localize="磁盘共享到桌面" style="padding-top: 0;"></label>
+											<div class="col-xs-8">
+												<div class="inline-group">
+													<label>
+														<input type="radio" data-ng-model="config.disk_share_to_desktop" ng-value="0" class="radiobox" name="share_to_desktop">
+														<span data-localize="关闭1"></span>
+													</label>
+													<label>
+														<input type="radio" data-ng-model="config.disk_share_to_desktop" ng-value="1" class="radiobox" name="share_to_desktop">
+														<span data-localize="开启"></span>
+													</label>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="hr6" data-ng-if="has_linux">
+										<div class="form-group">
+											<label class="control-label col-xs-4" data-localize="虚实双系统断网切换"></label>
+											<div class="col-xs-8" style="padding-top: 7px;">
+												<label>
+													<input type="checkbox" class="checkbox"  data-ng-model="config.auto_switch" data-ng-true-value="1" data-ng-false-value="0" data-ng-change='dialogSet("auto_switch_seconds", config.auto_switch_seconds || 10)'>
+													<span data-localize="自动切换"></span>
+												</label>
+												<div class="form-inline">
+														<span data-localize="虚系统中断时，倒数"></span>
+														<input type="number" class="form-control" data-ng-disabled="config.auto_switch === '0'" data-ng-required='config.auto_switch == "1"' name="auto_switch_seconds" style="width: 70px;" data-ng-model="config.auto_switch_seconds"
+															input-number
+															ng-pattern='/^([3-9]|[1-9][0-9]|[1-5][0-9][0-9]|600)$/'
+                                                            ng-style="{color: config.auto_switch === '1' ? '#555' : '#eee'}"
+															min='3'
+															max='600'
+															> 
+														<label> S</label>
+														<span data-localize="自动进入实系统"></span>
+														<div class="dataTables_info" data-localize="hybirdTip"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+							</div>
+						</div>
+								
+					</div>
+				</div>
+				<div><span style="float: left;" data-localize='说明'></span><span  style="float: left;">:</span><span style="float: left;margin-left: 4px;" data-localize="terminalSetTips"></span></div>
+				<div class="row text-right">
+					<div class="col-md-12">
+						<img data-ng-if="sending || loading" src="./img/building.gif" width="24px">
+						<span class="failTip" data-ng-if="failTip" data-localize="TERMINAL_FAIL_TIP"></span>
+						<button type='submit' class="btn btn-primary myfooterbtn" data-ng-click="ok()" data-ng-disabled="configureparameter.$invalid || sending || loading || getError" data-localize="确定"></button>
+						<button type='button' class="btn btn-default myfooterbtn" data-ng-click="close()" data-localize="取消"></button>
+					</div>
+				</div>
+
+			</form>
+		</div>
+	</div>
+</section>
+<script>setTimeout(function(){ pageSetUp(); })</script>
+

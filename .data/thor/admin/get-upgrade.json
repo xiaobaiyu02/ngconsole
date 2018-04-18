@@ -1,0 +1,71 @@
+{
+    "code": 0,
+    "versions": [
+        {
+            "client_count": 1,
+            "md5": "4.4.1-234-gffbb888",
+            "need_update": false,
+            "new_client_count": 1,
+            "newer_version": null,
+            "owner": "console",
+            "type": "\u7ba1\u7406\u53f0",
+            "updatable": true,
+            "version": "4.4.1-234-gffbb888"
+        },
+        {
+            "client_count": 1,
+            "md5": "4.4.1-137-g4fbf36a",
+            "need_update": false,
+            "new_client_count": 1,
+            "newer_version": null,
+            "owner": "agent",
+            "type": "\u8ba1\u7b97\u8282\u70b9 vdi188",
+            "updatable": true,
+            "version": "4.4.1-137-g4fbf36a"
+        },
+        {
+            "client_count": 6,
+            "md5": "4.4.1-149-0636789",
+            "need_update": false,
+            "new_client_count": 6,
+            "newer_version": null,
+            "owner": "android_client",
+            "type": "Android \u5ba2\u6237\u7aef",
+            "updatable": true,
+            "version": "4.4.1-149-0636789"
+        },
+        {
+            "client_count": 11,
+            "md5": "74d46a3ad29901a0e2881c11bf0c91e4",
+            "need_update": true,
+            "new_client_count": 8,
+            "newer_version": "4.4.1-67-g39c88cc",
+            "owner": "lin_client",
+            "type": "Linux \u5ba2\u6237\u7aef",
+            "updatable": false,
+            "version": "4.4.1-67-g39c88cc"
+        },
+        {
+            "client_count": 6,
+            "md5": "cb496ab1d709e46ea989b11adb3dd17f",
+            "need_update": true,
+            "new_client_count": 2,
+            "newer_version": "4.4.1-30-g2d96417",
+            "owner": "win_client",
+            "type": "Windows \u5ba2\u6237\u7aef",
+            "updatable": false,
+            "version": "4.4.1-30-g2d96417"
+        },
+        {
+            "client_count": 1,
+            "md5": null,
+            "need_update": false,
+            "new_client_count": 1,
+            "newer_version": null,
+            "owner": "win_guesttool",
+            "type": "Guesttool\uff08Windows\uff09",
+            "updatable": true,
+            "version": "0.0.0-0-g0000000"
+        }
+    ]
+}

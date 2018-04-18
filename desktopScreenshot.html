@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<!-- <script src="js/vdi/config.js"></script> -->
+<!-- <script src="js/vdi/dev_config.js"></script> -->
+<!-- <script src="js/vdi/oem.js"></script> -->
+<script src="js/libs/jquery-2.1.1.js"></script>
+<style>
+html,body{margin:0;padding:0;}
+body{background-color:deepskyblue;}
+</style>
+</head>
+<body>
+<img id="shot" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIW2NkAAIAAAoAAggA9GkAAAAASUVORK5CYII=">
+<script type="text/javascript">
+    window.$$$storage = {
+        getSessionStorage: function(key){
+            return sessionStorage.getItem('vdi_'+ key);
+        },
+        setSessionStorage: function(key, value){
+            sessionStorage.setItem('vdi_'+ key, value);
+        },
+        clearSessionStorage: function(){
+            sessionStorage.clear()
+        }
+    }
+</script>
+<script>
+var host = location.hostname;
+if(host.toLowerCase() === "localhost" || host === "127.0.0.1"){
+	host = $$$storage.getSessionStorage('dev_host') || host;
+}
+var domain = location.protocol + "//" + host + ":8081";
+
+var shot = document.getElementById("shot");
+shot.onload = function(){
+	window.resizeTo(
+		Math.max(600 + this.width),
+		Math.max(300 + this.height) + 25
+	);
+};
+var id = location.hash.substr(1);
+function getShot(){
+	// document.title = $$$I18N.get("查看桌面");
+	$.ajax(domain + "/thor/instance/screenshot", {
+		method: "POST",
+		data: JSON.stringify({
+			instance_id: id
+		}),
+		xhrFields: {
+			withCredentials: true
+		},
+		crossDomain: true
+	}).promise().then(
+		function(res){
+			if(res.code === 0 && res.screen_data){
+				shot.src = "data:image/jpg;base64," + res.screen_data;
+			}
+			else{
+				// console.log(res.message);
+			}
+			setTimeout(getShot, 2000);
+		},
+		function(err){}
+	);
+}
+getShot();
+</script>
+</body>
+</html>

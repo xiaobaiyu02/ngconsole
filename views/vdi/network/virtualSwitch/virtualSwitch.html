@@ -1,0 +1,60 @@
+<section>
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div data-widget-grid class="jarviswidget">
+				<!-- widget div-->
+				<div class="noborder">
+					<!-- widget edit box -->
+					<div class="jarviswidget-editbox">
+						<!-- This area used as dropdown edit box -->
+					</div>
+					<!-- end widget edit box -->
+
+					<!-- widget content -->
+					<div class="widget-body no-padding">
+						<div class="form-inline no-footer">
+							<div class="dt-toolbar">
+								<div class="col-xs-6 col-sm-6">
+									<button class="btn btn-primary btn-xs isBatch" ng-disabled="hasHA_loading" data-ng-click="add()"><i class="fa icon-jj-addddd"></i> <span data-localize="新增"></span></button>
+								</div>
+								<div class="right_side col-xs-6 col-sm-6">
+									<div class="pull-right filter"> <span localize="显示"></span> <select ng-change="pageSizeChange()" data-ng-model="pagesize"data-ng-options="pagesize for pagesize in pagesizes"></select> <span localize="项结果"></span> </div>
+								</div> 
+							</div>
+						</div>
+						<div class="table-responsive switch-tabel">
+							<table data-vdi-grid
+								class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox table-vertical-center switch-tabel-first">
+								<thead class="vdi_header">
+									<tr>
+										<!-- <th><label class="checkbox"><input type="checkbox" data-ng-model="checkedAll" data-ng-change="selectAllChange(checkedAll)" data-ng-checked="checkAll(all)" name="checkbox-inline"><i></i></label></th> -->
+                                        <th localize="名称"></th>
+                                        <th localize="描述"></th>
+                                        <th localize="网络类型"></th>
+                                        <th localize="操作"></th>
+									</tr>
+								</thead>
+								<tbody class="vdi_body">
+									<tr data-ng-repeat="item in rows | paging:currentPage:pagesize:rows">
+										<!-- <td><label class="checkbox"><input data-ng-model="item._selected" data-ng-checked="item._selected" type="checkbox" data-ng-value="item.id" name="checkbox-inline"><i></i></label></td> -->
+										<td width="20%"><a href="#/network/virtualSwitch/{{item.uuid}}#{{ item.decodeName }}&{{ item.type }}">{{ item.name }}</a></td>
+										<td>{{ item.description }}</td>
+										<td>{{ item.type }}</td>
+										<td>
+											<button ng-disabled="hasHA_loading" localize-title='编辑' class="btn btn-xs btn-default" ng-click="edit(item)"><i class="fa icon-jj-Write"></i></button>
+											<button ng-disabled="hasHA_loading" localize-title='删除' class="btn btn-xs btn-default" ng-click="delete(item)"><i class="fa icon-jj-delete"></i></button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="tips" data-ng-if="loading" data-localize="LOADING_TEXT"></div>
+						<div class="tips" data-ng-if="!loading && rows.length == 0" data-localize="NO_MATCHING_DATA"></div>
+						<div data-ng-include="'includes/pagination.html'"></div>
+					</div>
+				</div>
+			</div>
+		</article>
+	</div>
+</section>
+<script>pageSetUp();</script>

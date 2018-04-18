@@ -1,0 +1,365 @@
+<section id="widget-grid">
+    <div class="row">
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div data-widget-grid class="jarviswidget">
+                <!-- widget div-->
+                <div class="noborder sysSet">
+                    <div class="widget-body no-padding">
+                        <div ng-controller="vdiSystemRecycleController as RecycleCtrl">
+                            <h4 localize='资源回收'></h4>
+                            <span class="desk-border">&nbsp;</span>
+                            <div class="form-group">
+                                <div class="col-xs-6" style="padding-left: 25px;">
+                                    <label class="col-xs-12 control-label" for="time" style="font-weight: 700" localize="教学桌面"></label>
+                                    <div class="col-xs-12">
+                                        <div class="teach-desk">
+                                            <label class="checkbox-inline checkbox-align week-label">
+                                                <input 
+                                                    class="checkbox" 
+                                                    type="checkbox" 
+                                                    name="start" 
+                                                    ng-model="RecycleCtrl.data.tecOpen" 
+                                                    ng-change='RecycleCtrl.setTechDefault(RecycleCtrl.data.tecOpen)'
+                                                    >
+                                                <span localize="启用"></span>
+                                            </label>
+                                            <img src="img/loadingtext.gif" data-ng-if="RecycleCtrl.techenabling" height="24" width="24" alt=""><br/>
+                                            <div class="offline-connect">
+                                                <span localize="断开连接"></span>&nbsp;
+                                                <input class="form-control inline" input-number
+                                                    type="text" 
+                                                    name="hours" 
+                                                    style="width:70px;padding-left: 5px;"
+                                                    data-ng-pattern="/^(00[5-9]|0[5-9]|[5-9]|0[1-9][0-9]|[1-9][0-9]|[1-6][0-9][0-9]|7[0-1][0-9]|720)$/"
+                                                    placeholder="5-720" 
+                                                    maxlength="3"
+                                                    min="5"  
+                                                    max="720" 
+                                                    ng-model="RecycleCtrl.data.tecDesk" 
+                                                    ng-disabled="!RecycleCtrl.techEdit || RecycleCtrl.techSave"
+                                                    >
+                                                <span localize="after-minutes"></span>
+                                                <select class="form-control inline"
+                                                    style="width: 100px" 
+                                                    ng-model="RecycleCtrl.data.tecStatus" 
+                                                    ng-disabled="!RecycleCtrl.techEdit || RecycleCtrl.techSave">
+                                                    <option value="shutdown" localize="自然关机"></option>
+                                                    <option value="suspend" localize="挂起"></option>
+                                                </select><br/>
+                                            </div>
+                                            <img class='recycleLoading' src="img/loadingtext.gif" data-ng-if="RecycleCtrl.techSave" height="24" width="24" alt="">
+                                            <div class="btn btn-primary btn-update" ng-disabled="!RecycleCtrl.data.tecOpen" ng-click="RecycleCtrl.techEdit = true" ng-if="!RecycleCtrl.techEdit && !RecycleCtrl.techSave" localize="更改"></div>
+                                            <div class="btn btn-primary btn-save" ng-disabled='RecycleCtrl.data.tecOpen && !RecycleCtrl.data.tecDesk' ng-click="RecycleCtrl.tecSave()" ng-if="RecycleCtrl.techEdit && !RecycleCtrl.techSave" localize="保存"></div>
+                                            <div class="btn btn-primary btn-cencel" ng-click="RecycleCtrl.techEdit = false;RecycleCtrl.getTech()" ng-if="RecycleCtrl.techEdit && !RecycleCtrl.techSave" localize="取消"></div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label class="col-xs-12 control-label" for="time" style="font-weight: 700" localize="个人桌面"></label>
+                                    <div class="col-xs-12">
+                                        <div class="teach-desk">
+                                            <label class="checkbox-inline checkbox-align week-label">
+                                                <input
+                                                    class="checkbox"
+                                                    type="checkbox"
+                                                    name="start"
+                                                    ng-model="RecycleCtrl.submit.perOpen"
+                                                    ng-change='RecycleCtrl.setPerDefault(RecycleCtrl.submit.perOpen)'
+                                                >
+                                                <span localize="启用"></span>
+                                            </label>
+                                            <img src="img/loadingtext.gif" data-ng-if="RecycleCtrl.perenabling" height="24" width="24" alt=""><br/>
+                                            <div class="offline-connect">
+                                                <span localize="断开连接"></span>&nbsp;
+                                                <input type="text" class="form-control inline" input-number
+                                                    name="hours" 
+                                                    style="width:70px;padding-left: 5px;" 
+                                                    data-ng-pattern="/^(0[1-9]|[1-9]|[1-3][0-9]|4[0-8])$/" 
+                                                    maxlength="2"
+                                                    min="1"  
+                                                    max="48" 
+                                                    placeholder="1-48"
+                                                    ng-model="RecycleCtrl.submit.perDesk"
+                                                    ng-disabled="!RecycleCtrl.personEdit || RecycleCtrl.personSave"
+                                                    >
+                                                <span localize="after-hours"></span>
+                                                <select class="form-control inline" style="width: 100px" 
+                                                        ng-model="RecycleCtrl.submit.perStatus"
+                                                        ng-disabled="!RecycleCtrl.personEdit || RecycleCtrl.personSave">
+                                                    <option value="shutdown" localize="自然关机"></option>
+                                                    <option value="suspend" localize="挂起"></option>
+                                                </select><br/>
+                                            </div>
+                                            <img class='recycleLoading' src="img/loadingtext.gif" data-ng-if="RecycleCtrl.personSave" height="24" width="24" alt="">
+                                            <div class="btn btn-primary btn-update" ng-disabled="!RecycleCtrl.submit.perOpen" ng-if="!RecycleCtrl.personEdit && !RecycleCtrl.personSave" ng-click="RecycleCtrl.personEdit = true" localize="更改"></div>
+                                            <div class="btn btn-primary btn-save" ng-disabled='RecycleCtrl.submit.perOpen && !RecycleCtrl.submit.perDesk' ng-if="RecycleCtrl.personEdit && !RecycleCtrl.personSave" ng-click="RecycleCtrl.perSave()" localize="保存"></div>
+                                            <div class="btn btn-primary btn-cencel" ng-if="RecycleCtrl.personEdit && !RecycleCtrl.personSave" ng-click="RecycleCtrl.personEdit = false;RecycleCtrl.getPerson()" localize="取消"></div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-controller="vdiSystemOutsideController" style="clear: both;">
+                            <h4 localize='外网访问'></h4>
+                            <span class="desk-border">&nbsp;</span>
+                            <div class="form-group">
+                                <section class='outside'>
+                                    <form class="form-horizontal" name="outsideFrom" method="post" ng-submit="outsideFrom.$valid"  novalidate>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-1"></label>
+                                            <label class="control-label">
+                                                <input type="checkbox" data-ng-disabled="save_loading" class="checkbox" data-ng-change="start()" data-ng-model="enable">
+                                                <span data-localize="启用"></span>
+                                                <img ng-show="enable_loading" ng-src="img/loadingtext.gif" width="16px" height="16px"/>
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-1" data-localize="外网IP"></label>
+                                            <div class="col-xs-2" style="padding-left: 0" data-ng-class="{'state-success':outsideFrom.IP.$valid && outsideFrom.IP.$dirty,'state-error':outsideFrom.IP.$invalid && outsideFrom.IP.$dirty, 'state-disabled': !enable}">
+                                                <input class="form-control" type="text" name="IP" format-ip ng-model="IP">
+                                            </div>
+                                            <div>
+                                                <button type="submit" name="button" disabled="disabled" class="btn btn-primary"
+                                                        data-ng-disabled="outsideFrom.$invalid || !IP || !enable || enable_loading || save_loading || ips_loading"
+                                                        data-ng-click="save()" data-localize="保存"></button>
+                                                <img ng-show="save_loading" ng-src="img/loadingtext.gif" width="16px" height="16px"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-1"></label>
+                                            <button class="btn btn-primary"
+                                                    data-ng-disabled="outsideFrom.$invalid || !IP  || !enable || enable_loading || save_loading"
+                                                    data-dialog="outsideAdvancedDialog"
+                                                    data-dialog-size="sm"
+                                                    data-dialog-url="system/outside_advanced.html"
+                                                    data-localize="高级"></button>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-1" ></label>
+                                            <div class="col-xs-9" style="padding-left: 0">
+                                                <div class="tip" data-localize='OUTER_IP_NOTE'></div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </section>
+                            </div>
+                        </div>
+                        <div ng-controller="spiceConnectController as spiceCtrl" style="clear: both;">
+                            <h4 localize='连接模式'></h4>
+                            <span class="desk-border">&nbsp;</span>
+                            <form class="form-horizontal" name="spiceFrom" method="post" ng-submit="spiceFrom.$valid"  novalidate>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-1" data-localize="连接模式"></label>
+                                    <div class="col-xs-2" style="white-space: nowrap;">
+                                        <select class="form-control inline"
+                                            ng-model="spiceCtrl.mode" 
+                                            ng-disabled="!spiceCtrl.edit || spiceCtrl.save">
+                                            <option value="always" localize="高质量"></option>
+                                            <option value="auto_glz" localize="高流畅性"></option>
+                                        </select>
+                                        <label>
+                                            <a href="javascript:void(0);" style="margin-left: 10px" rel="popover-hover" data-ribbon-tips data-my-tips='spiceConnectTip' data-placement="right" data-html="true" data-content="" data-original-title="" title=""><i class="fa fa-question-circle"></i></a>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-1"></label>
+                                    <div class="col-xs-2 text-right">
+                                        <img class='recycleLoading' src="img/loadingtext.gif" data-ng-if="spiceCtrl.save" height="24" width="24" alt="">
+                                        <div class="btn btn-primary" ng-disabled="spiceCtrl.loading" ng-click="spiceCtrl.edit = true" ng-if="!spiceCtrl.edit && !spiceCtrl.save" localize="更改"></div>
+                                        <div class="btn btn-primary" ng-click="spiceCtrl.saveSpiceConnect()" ng-if="spiceCtrl.edit && !spiceCtrl.save" localize="保存"></div>
+                                        <div class="btn btn-primary" ng-click="spiceCtrl.edit = false;spiceCtrl.getSpiceConnect()" ng-if="spiceCtrl.edit && !spiceCtrl.save" localize="取消" style="margin-left: 10px;"></div> 
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div ng-controller="vdiSystemtimeSyncController as SyncCtrl">
+                            <h4 localize='时间同步'></h4>
+                            <span class="desk-border">&nbsp;</span>
+                            <div class="form-group">
+                                <section class='timeSync'>
+                                    <form class="form-horizontal" name="timeSyncFrom" style="float: left;" novalidate>
+                                        <div class='col-xs-5'>
+                                            <label class="control-label" for="time" localize="时区"></label>
+                                            <select style="margin: 10px 0;" class="form-control" ng-disabled='!SyncCtrl.modifyTime' ng-model="SyncCtrl.zone" data-ng-options="'('+zone.offset+') '+zone.value for zone in SyncCtrl.zones"></select>
+                                            <div  class='col-xs-12' style="padding: 0">
+                                                <div class="col-xs-6" style="padding-left: 0">
+                                                    <p class="input-group" style="margin: 0">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default" ng-disabled='!SyncCtrl.modifyTime' data-ng-click="SyncCtrl.openStartDate($event)" ><i class="glyphicon glyphicon-calendar" ></i></button>
+                                                        </span>
+                                                        <input type="text"
+                                                            scheduler-input
+                                                            placeholder="yyyy-mm-dd" 
+                                                            class="form-control"
+                                                            datepicker-popup="yyyy-MM-dd"
+                                                            data-ng-model="SyncCtrl.choose_time"
+                                                            is-open="SyncCtrl.startDateOpened"
+                                                            datepicker-options="SyncCtrl.startDateOptions"
+                                                            show-weeks="false"
+                                                            show-button-bar="false"
+                                                            required
+                                                            ng-disabled='!SyncCtrl.modifyTime'
+                                                        >
+                                                    </p>
+                                                </div>
+                                                <div class="col-xs-2 hour">
+                                                    <input input-number
+                                                        class="form-control" 
+                                                        type="text" 
+                                                        data-ng-pattern="/^(0[0-9]|[0-9]|1[0-9]|2[0-3])$/" 
+                                                        maxlength="2"
+                                                        min="0"
+                                                        max="23"
+                                                        required
+                                                        ng-model="SyncCtrl.hours"
+                                                        ng-disabled='!SyncCtrl.modifyTime'
+                                                        ng-change='SyncCtrl.loopTime=false'
+                                                        />
+                                                </div>
+                                                <div class="col-xs-2 minute">
+                                                    <input input-number
+                                                        class="form-control" 
+                                                        type="text"
+                                                        data-ng-pattern="/^(0[0-9]|[0-9]|[1-5][0-9])$/" 
+                                                        maxlength="2"
+                                                        min="0"
+                                                        max="59"
+                                                        required
+                                                        ng-model="SyncCtrl.minutes"
+                                                        ng-disabled='!SyncCtrl.modifyTime'
+                                                        ng-change='SyncCtrl.loopTime=false'
+                                                        />
+                                                </div>
+                                                <div class="col-xs-2 second">
+                                                    <input input-number
+                                                        class="form-control"
+                                                        data-ng-pattern="/^(0[0-9]|[0-9]|[1-5][0-9])$/"
+                                                        maxlength="2"
+                                                        min="0"
+                                                        max="59"
+                                                        required
+                                                        ng-model="SyncCtrl.seconds"
+                                                        ng-disabled='!SyncCtrl.modifyTime'
+                                                        type="text"
+                                                        ng-change='SyncCtrl.loopTime=false'
+                                                        />
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 text-right" style="padding: 0;margin: 15px 0 20px 0">
+                                                <img src="img/loadingtext.gif" data-ng-if="SyncCtrl.updating_zone" height="24" width="24" alt="">
+                                                <button class="btn btn-primary" data-ng-disabled='SyncCtrl.loading_zone || SyncCtrl.loading_internet || SyncCtrl.loading_updateServer' ng-if="!SyncCtrl.modifyTime" ng-click="SyncCtrl.modifyTime = true" localize="更改"></button>
+                                                <button class="btn btn-primary" data-ng-disabled='!SyncCtrl.hours || !SyncCtrl.minutes || !SyncCtrl.seconds || !matchInput' ng-if="SyncCtrl.modifyTime && !SyncCtrl.updating_zone" ng-click="SyncCtrl.updateZone()" localize="保存"></button>
+                                                <button class="btn btn-primary" ng-if="SyncCtrl.modifyTime && !SyncCtrl.updating_zone" ng-click="SyncCtrl.modifyTime = false;SyncCtrl.loadZone()" localize="取消" style="margin-left: 10px"></button>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6 col-xs-offset-1 server">
+                                            <div class="col-xs-12">
+                                                <label>
+                                                    <input 
+                                                        class="checkbox" 
+                                                        type="checkbox" 
+                                                        name="start"
+                                                        ng-model="SyncCtrl.internetSync" 
+                                                        ng-disabled="SyncCtrl.loading_internet || SyncCtrl.loading_updateServer"
+                                                        ng-change='SyncCtrl.setInternetSync(SyncCtrl.internetSync)'
+                                                        >
+                                                    <span localize="与Internet时间服务器同步(s)"></span>
+                                                </label>
+                                                <img ng-if="SyncCtrl.loading_internet" src="img/loadingtext.gif" height="12" width="12">
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <label class="col-xs-3 control-label" style="white-space: nowrap;" for="network" data-localize="服务器(E):"></label>
+                                                <div class="col-xs-6">
+                                                    <select class="form-control inline" 
+                                                            data-ng-options="server for server in SyncCtrl.servers"
+                                                            ng-model="SyncCtrl.server"
+                                                            ng-disabled='SyncCtrl.loading_updateServer'>
+                                                        <!-- <option value="" localize="请选择"></option> -->
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-3">
+                                                    <img ng-if='SyncCtrl.loading_updateServer' src="img/loadingtext.gif" height="24" width="24">
+                                                    <button ng-if='!SyncCtrl.loading_updateServer' class="btn btn-primary immediateSync" ng-click="SyncCtrl.updateSyncServer()" localize="立即同步"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </section>
+                            </div>
+                        </div>
+                        <div ng-controller='vdiSystemAutoclearController as clearCtrl'>
+                            <h4 localize='共享磁盘自动清理时间'></h4>
+                            <span class="desk-border">&nbsp;</span>
+                            <form class="form-horizontal" name="clearFrom" method="post" ng-submit="clearFrom.$valid" style="padding-left: 25px" novalidate>
+                                <div class="form-group col-xs-12" style="font-weight: 700" localize="教学桌面"></div>
+                                <div class="form-group col-xs-5 clearTime">
+                                    <label class="control-label col-xs-1" data-localize="每" style="padding-right: 0"></label>
+                                    <div class="col-xs-5">
+                                        <select class="form-control inline" ng-disabled='!clearCtrl.edit || clearCtrl.save' ng-model="clearCtrl.day">
+                                            <option value="Mon" data-localize="周一">周一</option>
+                                            <option value="Tue" data-localize="周二">周二</option>
+                                            <option value="Wed" data-localize="周三">周三</option>
+                                            <option value="Thu" data-localize="周四">周四</option>
+                                            <option value="Fri" data-localize="周五">周五</option>
+                                            <option value="Sat" data-localize="周六">周六</option>
+                                            <option value="Sun" data-localize="周日">周日</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-2 hour">
+                                        <input input-number
+                                            class="form-control" 
+                                            type="text" 
+                                            data-ng-pattern="/^(0[0-9]|[0-9]|1[0-9]|2[0-3])$/" 
+                                            maxlength="2"
+                                            min="0"
+                                            max="23"
+                                            required
+                                            ng-model="clearCtrl.hours"
+                                            ng-disabled='!clearCtrl.edit || clearCtrl.save'
+                                            />
+                                    </div>
+                                    <div class="col-xs-2 minute">
+                                        <input input-number
+                                            class="form-control" 
+                                            type="text"
+                                            data-ng-pattern="/^(0[0-9]|[0-9]|[1-5][0-9])$/" 
+                                            maxlength="2"
+                                            min="0"
+                                            max="59"
+                                            required
+                                            ng-model="clearCtrl.minutes"
+                                            ng-disabled='!clearCtrl.edit || clearCtrl.save'
+                                            />
+                                    </div>
+                                    <div class="col-xs-2 second">
+                                        <input input-number
+                                            class="form-control"
+                                            data-ng-pattern="/^(0[0-9]|[0-9]|[1-5][0-9])$/"
+                                            maxlength="2"
+                                            min="0"
+                                            max="59"
+                                            required
+                                            ng-model="clearCtrl.seconds"
+                                            ng-disabled='!clearCtrl.edit || clearCtrl.save'
+                                            type="text"
+                                            />
+                                    </div>
+                                    <div class="col-xs-12 text-right" style="padding-right: 0;margin-top: 15px;">
+                                        <img class='recycleLoading' src="img/loadingtext.gif" data-ng-if="clearCtrl.save" height="24" width="24" alt="">
+                                        <div class="btn btn-primary" ng-disabled="clearCtrl.loading" ng-click="clearCtrl.edit = true" ng-if="!clearCtrl.edit && !clearCtrl.save" localize="更改"></div>
+                                        <div class="btn btn-primary" ng-disabled="!clearCtrl.hours || !clearCtrl.minutes || !clearCtrl.seconds" ng-click="clearCtrl.saveClearTime()" ng-if="clearCtrl.edit && !clearCtrl.save" localize="保存"></div>
+                                        <div class="btn btn-primary" ng-click="clearCtrl.edit = false;clearCtrl.getClearTime()" ng-if="clearCtrl.edit && !clearCtrl.save" localize="取消" style="margin-left: 10px;"></div> 
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- widget div end -->
+            </div>
+        </article>
+    </div>
+</section>
+<script>pageSetUp();</script>

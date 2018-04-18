@@ -1,0 +1,65 @@
+{
+    "code": 0,
+    "linux_count": 0,
+    "linux_images": [],
+    "other_count": 0,
+    "other_images": [],
+    "win_count": 5,
+    "win_images": [
+        {
+            "data_alloc_disk": 0,
+            "data_alloc_disk_2": 0,
+            "id": 18,
+            "name": "win7_create",
+            "os_type": "Windows 7 HOMEBASIC",
+            "owner": 5,
+            "owner_desc": "xf",
+            "status": "alive",
+            "system_alloc_disk": 20
+        },
+        {
+            "data_alloc_disk": 0,
+            "data_alloc_disk_2": 0,
+            "id": 17,
+            "name": "win7_reg",
+            "os_type": "Windows7_64",
+            "owner": 5,
+            "owner_desc": "xf",
+            "status": "alive",
+            "system_alloc_disk": 10
+        },
+        {
+            "data_alloc_disk": 0,
+            "data_alloc_disk_2": 0,
+            "id": 12,
+            "name": "win7",
+            "os_type": "Windows 7 HOMEBASIC",
+            "owner": 4,
+            "owner_desc": "clf",
+            "status": "alive",
+            "system_alloc_disk": 20
+        },
+        {
+            "data_alloc_disk": 0,
+            "data_alloc_disk_2": 0,
+            "id": 8,
+            "name": "aaa",
+            "os_type": "Windows 7 ULTIMATE",
+            "owner": 35,
+            "owner_desc": "lyh",
+            "status": "alive",
+            "system_alloc_disk": 20
+        },
+        {
+            "data_alloc_disk": 0,
+            "data_alloc_disk_2": 0,
+            "id": 2,
+            "name": "test1",
+            "os_type": "Windows 7 HOMEBASIC",
+            "owner": 1,
+            "owner_desc": "admin",
+            "status": "alive",
+            "system_alloc_disk": 20
+        }
+    ]
+}

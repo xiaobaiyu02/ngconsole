@@ -1,0 +1,72 @@
+<section id ='widget-grid'>
+	<div class='modal-content'>
+		<div class='modal-header'>
+			<button type='button' class='close' data-ng-click='close()'>
+				<span aria-hidden='true'>×</span><span class='sr-only'>Close</span>
+			</button>
+			<h4 class='modal-title' id='mySmallModalLabel' localize='删除'></h4>
+		</div>
+		<div class='modal-body'>
+			<form class='form-horizontal'>
+				<div style="padding:0 50px">
+					<p style='margin-bottom:10px;' localize='确认删除该bond设备吗'></p>
+					<div style='margin-bottom:14px;'>
+						<label class='checkbox-inline'>
+							<input class='checkbox' ng-model='data.is_inherit' type='checkbox' ng-disabled="data._has_inherit_net"/>
+							<span  localize='继承IP'></span></label>
+					</div>
+					<div ng-show="data.is_inherit">
+						<table class="unbundle_netcard_table" cellspacing="0" cellpadding="0" border="0" role="grid">
+							<thead>
+								<tr>
+									<th localize="现有IP"></th>
+									<th localize="指派网卡"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in data.ips track by $index">
+									<td>
+										<p class="nomargin">
+											<span>{{item.ip}}</span>/
+											<span>{{item.netmask}}</span>
+											<span ng-show="item.ip_editable.is_management">(<i localize="管理网络"></i>)</span>
+											<span ng-show="item.ip_editable.is_image">(<i localize="镜像网络" ng-show="item.ip_editable.is_image"></i>)</span>
+										</p>
+									</td>
+									<td>
+										<select ng-options="value for value in data.member" class="netcard_select" ng-model="item._inherit_menber">
+											<option value="" localize="无" ng-if="!item.uneditable"></option>
+										</select>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="note">
+							<p localize="说明"></p>
+							<p localize="D_UNBUNDLE_NETCARD_EXPLAIN1"></p>
+							<p localize="D_UNBUNDLE_NETCARD_EXPLAIN2"></p>
+						</div>
+					</div>
+				</div>
+				<footer class='text-right'>
+					<img ng-show="submiting"  ng-src="img/loadingtext.gif" alt="" width="24px" height="24px">
+					<div ng-hide="submiting">
+						<button class='btn btn-primary' data-ng-click='ok()' localize='确定'></button>
+						<button class='btn btn-default' data-ng-click='close()' style='margin-left:5px;' localize='取消'></button>
+					</div>
+				</footer>
+			</form>
+		</div>
+	</div>
+</section>
+<style>
+	.unbundle_netcard_table{
+		width: 100%;
+	}
+	.unbundle_netcard_table td,.unbundle_netcard_table th{
+		line-height: 3;
+	}
+	.unbundle_netcard_table select.netcard_select{
+		width: 100px;
+	}
+</style>

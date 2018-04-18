@@ -1,0 +1,74 @@
+<div class="container-fluid">
+    <section class="loginWrap">
+        <!-- <div class="logoWrap"><img src="img/logo.png"></div> -->
+        <oem-image></oem-image>
+        <h3 class="topBar">
+          <div localize="个人桌面登录"></div>
+        </h3>
+        <div class="row formWrap">
+          <div class="loading" ng-if="webCtrl.loading"><span class="loadingImg"></span></div>
+          <form class="form-horizontal formLeft col-xs-9 col-sm-10 col-md-10 col-lg-10" role="form" name="webLoginForm" novalidate>
+            <div class="icon-person" style="margin-top: 13px;">
+              <span><i class="icon-arm-user2"></i></span>
+            </div>
+            <div class="form-group">
+              <label for="username" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label"></label>
+              <div class="input-group col-xs-7 col-sm-7">
+                <span class="input-group-addon" style="color:#7dc9e1"><i class="icon-arm-user"></i></span>
+                <input  type="text" 
+                      class="form-control username" 
+                      name="username"
+                      ng-trim="true"
+                      ng-focus="webCtrl.info = ''"
+                      minlength="2" 
+                      maxlength="32"
+                      localize="2~32位字符"
+                      required
+                      ng-minlength="2"
+                      ng-maxlength="32"
+                      data-ng-pattern="/^[^\u4e00-\u9fa5]{1,32}$/i"
+                      ng-model="webCtrl.userInfo.username"
+                      ng-class="{false:'myRight',true:'myWarning'}[!webLoginForm.username.$pristine && webLoginForm.username.$invalid]"
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label"></label>
+              <div class="input-group col-xs-7 col-sm-7" style="position: relative;">
+                  <span class="input-group-addon" style="color:#7dc9e1"><i class="icon-arm-password"></i></span>
+                  <input type="password"
+                        class="form-control password" 
+                        name="password" 
+                        localize="1~20位字符"
+                        minlength="1" 
+                        maxlength="20"
+                        required
+                        ng-trim="true"
+                        ng-focus="webCtrl.info = ''"
+                        ng-minlength="1"
+                        ng-maxlength="20"
+                        ng-pattern="/^[^\u4e00-\u9fa5]{1,20}$/i"
+                        ng-model="webCtrl.userInfo.password"
+                        ng-keydown="webCtrl.ctrlSend($event)"
+                        ng-class="{false:'myRight',true:'myWarning'}[!webLoginForm.password.$pristine && webLoginForm.password.$invalid]" 
+                    >
+                    <span class="changePsd"><a class="modifyPsd" ng-click="webCtrl.modifyPsd()" localize="修改密码"></a></span>
+              </div>
+            </div>
+            <div class="form-group" ng-if="webCtrl.switch" style="margin-bottom:0;text-align: center;">
+              <div class="col-sm-offset-2 col-xs-offset-2 col-sm-7 col-xs-7 col-md-7">
+                  <label class="info">{{webCtrl.info}}</label>
+              </div>
+            </div>
+          </form>
+          <div class="loginBtn formRight col-xs-3 col-sm-2 col-md-2 col-lg-2" style="padding-left: 0;">
+            <a class="btn btn-arrow-login"
+                ng-disabled="webLoginForm.$invalid"
+                ng-click="webCtrl.webLogin()"
+                >
+              <i class="icon icon-arm-rihgt"></i>
+            </a>
+          </div>
+        </div>
+    </section>
+</div>

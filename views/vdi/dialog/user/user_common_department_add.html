@@ -1,0 +1,45 @@
+<div class="modal-body no-padding">
+    <form action="" class="smart-form" name="addCommonDepart" ng-submit="addCommonDepart.$valid"  novalidate>
+        <header class="myheader">
+            <div><span data-localize="新增用户组"></span>
+                <button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            </div>
+        </header>
+        <fieldset>
+            <section>
+                <label class="label required" data-localize="组名"></label>
+                <label class="input" data-ng-class="{'state-success':addCommonDepart.name.$valid && addCommonDepart.name.$dirty,'state-error':addCommonDepart.name.$invalid && addCommonDepart.name.$dirty}" >
+                    <input 
+                    type="text"
+                    name="name"
+                    data-ng-minlength="{{min_namelength}}" data-ng-maxlength="{{max_namelength}}" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}"
+                    maxlength="20"
+                    minlength="2" 
+                    required
+                    data-ng-model="name"
+                    data-ng-trim="false">
+                </label>
+            </section>
+            <section>
+                <label class="label required" data-localize="所属组"></label>
+                <div class="panel-body switch_mode" style="padding: 10px 0;">
+                    <treecontrol
+                        class="tree-classic no-padding userCommon-tree"
+                        tree-model="treedata"
+                        options="opts"
+                        on-selection="showSelected(node, selected)"
+                        expanded-nodes="expandnodes"
+                        selected-node="selected"
+                    >
+                        <i id="departmentIcon"></i>{{ node.name }}&nbsp;({{ node.user_num }})
+                    </treecontrol>
+                </div>
+            </section>
+        
+        </fieldset>
+        <footer>
+            <button type="button" data-ng-click="close()" class="btn btn-default myfooterbtn" data-localize="取消"></button>
+            <button type="submit" name="submit" class="btn btn-primary myfooterbtn" data-ng-disabled="addCommonDepart.$invalid || !selected" data-ng-click="ok()" data-localize="确定"></button>
+        </footer>
+    </form>
+</div>

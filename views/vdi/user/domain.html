@@ -1,0 +1,105 @@
+<section id="widget-grid">
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div
+				class="jarviswidget"
+				data-widget-grid
+				data-widget-editbutton="true"
+				data-widget-colorbutton="true"
+				data-widget-togglebutton="true"
+				data-widget-deletebutton="false"
+				data-widget-fullscreenbutton="true"
+				data-widget-custombutton="true"
+				data-widget-collapsed="false"
+				data-widget-sortable="true">
+<!-- 				<header class="nobgheader">
+					<div class="col-sm-9">		
+						<span class="totalmess" 
+						localize="DOMAIN_TOTAL_MESS" 
+						param1="{{rows.length}}"
+						param2="{{(rows | filter:{'status':true}).length}}"
+						param3="{{(rows | filter:{'status':false}).length}}"></span>	
+					</div>
+					<div class="col-sm-3 text-right">
+			
+					</div>
+				</header> -->
+				<!-- widget div-->
+				<div class="noborder">
+					<div class="jarviswidget-editbox"></div>
+					<div class="widget-body no-padding">
+						<div class="form-inline no-footer clearfix">
+							<div class="dt-toolbar">
+								<div class="left_side col-xs-12 col-sm-12">
+									<a class="btn btn-xs btn-primary isBatch" href="javascript:" data-dialog="addUserDomainDialog" data-dialog-url="user/user_domain_add.html" data-dialog-size="md"><i class="fa icon-jj-addddd"></i>&nbsp;<span localize="新增域">新增域</span></a>
+									<a class="btn btn-xs btn-danger isBatch" data-ng-class="{disabled:!checkOne()}" href="javascript:" data-ng-click="delete()"><i class="fa icon-jj-delete"></i>&nbsp;<span localize="删除">删除</span></a>
+								</div>
+								<div class="right_side hidden-xs">
+									
+									<!--<a class="btn btn-xs btn-primary isBatch" href="javascript:" data-ng-class="{disabled:!checkOne()}" data-ng-click="restarVirtical">重启虚拟化服务</a>-->
+								</div>
+							</div>
+						</div>
+						<div class="padding-20">
+							<div class="row">
+								<div class="tips" data-ng-if="loading" localize="LOADING_TEXT">数据正在加载...</div>
+								<div class="tips" data-ng-if="!loading && rows.length == 0" localize="NO_MATCHING_DATA">没有匹配数据</div>
+						        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" data-ng-repeat="item in rows">
+
+						            <div class="panel pricing-big panel-primary">
+						            	<span class="ribbon" ng-if="item.is_console" data-ng-class="{'zh':currentLang.language === 'Chinese, Simplified','en':currentLang.language === 'English'}"></span>
+						            	<!-- <img src="img/ribbon.png" class="ribbon" ng-if="item.is_console"> -->
+						                <div class="panel-heading smart-form">
+						                	<div class="padding-left-15">
+												<label class="checkbox-inline">
+													<input type="checkbox" class="checkbox style-0" data-ng-model="item._selected" data-ng-checked="item._selected" data-ng-value="item.id" ><span></span>
+												</label>
+											</div>
+						                    <div class="panel-cont domain-mess">
+							                    <ul class="panel-mess">
+							                    	<li class="panel-item panel-title">
+						                    			<label><img  ng-show="item.submiting" ng-src="img/ajax-loader.gif" style="width:48px;height:48px;"></label>
+							                    		<h2 class="item-flex">
+							                    			<div class="host_title" title="{{item.name}}" style="text-transform: none;">{{item.name}}</div><span class="small" style="color:#fff;">{{item.host}}</span>
+							                    		</h2>
+							                    	</li>
+							                    	<li class="panel-item">
+							                    		<label data-localize="关联用户数" localize-title="关联用户数">关联用户数</label>
+							                    		<div>{{item.user_num}} </div>
+							                    	</li>
+							                    	<li class="panel-item">
+							                    		<label data-localize="域管理员" localize-title="域管理员">域管理员</label>
+							                    		<div>{{item.user}} </div>
+							                    	</li>
+													<li class="panel-item">
+							                    		<label data-localize="描述">描述</label>
+							                    		<div class="item-flex">{{item.desc}} </div>
+							                    	</li>
+							                  	</ul>
+						                  	</div>
+
+						                  	<div class="primary panel-footbar user-domain-panel">
+						                		<a data-id="{{ item.id }}" href="javascript:void(0)" data-dialog="editUserDomainDialog" data-dialog-url="user/user_domain_edit.html" data-dialog-size="md" class="icon" data-localize-title="编辑域控制器"><i class="fa icon-jj-edit"></i></a>
+						                		<!-- <span class="mylili"><a data-ng-click="update(item)" data-ng-if="item.status=='alive'" href="javascript:void(0)" class="icon" data-localize-title="更新域用户"><i class="fa icon-jj-update" data-ng-class="{disabled_ico:item.instance_count > 1? false:true}"></i></a><span class="parameterdisabled" data-ng-if="item.instance_count > 1? false:true" data-localize-title="该模版未关联任何场景"></span></span> -->
+						                		
+												<span class="mylili"><a href="javascript:void(0)" class="icon" data-localize-title="删除域控制器"  data-ng-click="delete(item)"><i class="fa fa-trash-o" data-ng-class="{disabled_ico:item.instance_count > 1? true:false}"></i></a><span class="parameterdisabled" data-ng-if="item.instance_count > 1? true:false" data-localize-title="TEMPLATE_DELETE_TIP"></span></span>
+												<a data-id="{{ item.id }}" href="#/user/domain/{{item.id}}" class="icon" data-localize-title="域用户"><i class="fa icon-jj-men"></i></a>
+												
+							                </div>
+						                </div>
+						            </div>
+						        </div>
+				    		</div>
+						</div>
+					</div>
+					<!-- end widget content -->
+				</div>
+				<!-- end widget div -->
+			</div>
+			<!-- end widget -->
+		</article>
+		<!-- WIDGET END -->
+	</div>
+	<!-- end row -->
+</section>
+<script>pageSetUp();</script>

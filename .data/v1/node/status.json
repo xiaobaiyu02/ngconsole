@@ -1,0 +1,1 @@
+{"status": "active", "is_network_node": false, "management_ip": "172.16.114.3", "is_storage_node": false, "virt_type": "kvm", "progress": false, "is_compute_node": false, "hostname": "3", "control_node_ip": "172.16.114.3", "is_control_node": true}

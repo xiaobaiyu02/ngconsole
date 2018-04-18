@@ -1,0 +1,197 @@
+<section>
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-sm-12">
+			<div data-widget-grid class="jarviswidget">
+				<header class="nobgheader">
+					<div class="col-xs-12" style="padding-left: 8px;">
+						<span class="totalmess"
+							data-localize="TEMPLATE_DESC"
+		                    data-localize-title="HELP"
+		                    param1="{{ (rows | filter:searchText).length }}"
+		                    param2="{{ (rows | filter:searchText | filter:{instance_status: 'running'}).length }}"
+		                    param3="{{ (rows | filter:searchText | filter:{instance_status: 'shutdown'}).length }}">
+						</span>
+					</div>
+				</header>
+				<!-- widget div-->
+				<div class="noborder">
+					<div class="jarviswidget-editbox"></div>
+					<div class="widget-body no-padding">
+						<section class="dt-toolbar">
+							<div class="left_side col-xs-6">
+								<a class="btn btn-xs btn-primary" data-dialog="addTeachTemplateDialog" data-dialog-size="md" data-dialog-url="template/template_teach_add.html"><i class="icon-jj-addddd fa"></i> <span data-localize="新增"></span></a>
+								<a class="btn btn-xs btn-danger isBatch" data-ng-class="{disabled:!checkOne()}" data-ng-click="delete()" href="javascript:"><i class="icon-jj-delete fa"></i> <span data-localize="删除"></span></a>
+								<a class="btn btn-xs btn-primary" data-dialog="registerTeachTemplateDialog" data-dialog-size="md" data-dialog-url="template/template_teach_register.html" href="javascript:"><i class="icon-jj-zhuche fa"></i> <span data-localize="注册"></span></a>
+								<a class="btn btn-xs btn-primary" data-ng-class="{disabled:!checkOne()}" data-ng-click="shutdown()" href="javascript:"><i class="icon-jj-shutdown fa"></i> <span data-localize="关机"></span></a>
+							</div>
+							<div class="right_side col-xs-6">
+								<div class="dataTables_filter search"><label><span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span> <input type="search" maxlength="20" class="form-control" ng-model="searchText" ng-change="updateData(searchText,select)"></label></div>
+								<select class="selectclassroomName filter" ng-model="order" data-ng-options="order.name for order in orders" data-ng-change="sortTem(order.val)"></select>
+								<select class="selectclassroomName filter" style="height: 22px;" ng-model="select">
+									<option value="all" data-localize="全部状态"></option>
+									<option value="kvm">kvm</option>
+									<option value="hyper-v">hyper-v</option>
+								</select>
+							</div>
+						</section>
+						<div class="table-responsive noborderbottom">
+							<div class="padding-20">
+								<div class="row">
+							        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" data-id="{{item.id}}" style="height: 289px;" data-ng-repeat="item in rows | filter:searchText">
+							            <div class="panel pricing-big relative" data-ng-class="{'panel-darken':item.status!='alive','panel-primary':item.status=='alive'}">
+							                <div class="panel-heading smart-form mypanelhead">
+							                	<div class="checkbox row">
+							                		<div class="col-md-1 col-sm-1 col-xs-1">
+							                			<label class="checkbox-inline">
+															<input data-ng-model="item._selected" data-ng-checked="item._selected" type="checkbox" data-ng-value="item.id" name="checkbox-inline" class="checkbox style-0"><span></span>
+														</label>
+								                		</div>
+													<h2 class="head-title col-md-11 col-sm-11 col-xs-11">
+														<span title="{{item.image_id}}">{{item.name}}</span>
+														<div title="{{ item.description }}" class="desc">{{ item.description }}</div>
+													</h2>
+												</div>
+							                    <div class="template panel-cont flex">
+							                    	<div class="panel-pic" style="position: relative;bottom: 10px;">
+							                    		<div class="mynote">
+							                    			<span data-ng-if="item.status=='update failed'" data-localize="TEMPLATE_UPDATE_FAILED"></span>
+							                    			<span data-ng-if="item.status=='updating'" data-localize="TEMPLATE_UPDATING"></span>
+							                    			<span data-ng-if="item.status=='cloning'" data-localize="TEMPLATE_CLONING"></span>
+							                    			<span data-ng-if="item.status=='sync failed'" data-localize="TEMPLATE_SYNC_FAILED"></span>
+							                    			<span data-ng-if="item.status=='uploading'" data-localize="UPLOADING"></span>
+							                    			<span data-ng-if="item.status=='register failed'" data-localize="REGISTER_FAILED"></span>
+							                    			<span data-ng-if="item.status=='cloning failed'" data-localize="CLONING_FAILED"></span>
+							                    			<span data-ng-if="item.status=='reset failed'" data-localize="RESET_FAILED"></span>
+							                    			<span data-ng-if="item.status=='error'" data-localize="CREATE_FAILED"></span>
+
+							                    			<span data-ng-if="item.status=='making'" data-localize="MAKING"></span>
+							                    			<span data-ng-if="item.status=='saving'" data-localize="SAVING"></span>
+							                    			<span data-ng-if="item.status=='saveAs'" data-localize="SAVING"></span>
+							                    			<span data-ng-if="item.status=='installed'" data-localize="INSTALLED"></span>
+							                    			<span data-ng-if="item.status=='syncing'" data-localize="SYNCING"></span>
+							                    			<span data-ng-if="item.status=='building'" data-localize="BUILDING"></span>
+							                    			<span data-ng-if="item.status=='making seed'" data-localize="MAKING_SEED"></span>
+							                    			<span data-ng-if="item.status=='registering'" data-localize="REGESTER"></span>
+							                    			<span data-ng-if="item.status=='rebuilding'" data-localize="REBUILDING"></span>
+							                    		</div>
+							                    		<div class="pic-wrap">
+							                    			<img ng-src="img/ajax-loader.gif" data-ng-if="item.status =='making' || item.status =='syncing' || item.status == 'making seed'">
+							                    			<img ng-src="img/{{ item.icon || 'win7.png' }}" data-ng-if="item.status !== 'making' && item.status !== 'syncing' && item.status != 'making seed'">
+							                    		</div>
+							                    		<div data-ng-if="item.status!='making' && item.status !='syncing' && item.status!='making seed'">
+							                    			<p class="pic-version">{{item.os_type}}</p>
+							                    			<p class="memsize">{{item.is_64==true? 64:32}}Bit</p>
+							                    		</div>
+							                    		<div class="panel-status" >
+								                    		<span ng-if="item.instance_status=='running'" localize-title="开机状态" class="status50" ng-class="item.instance_status"></span>
+								                    		<span ng-if="item.instance_status=='shutdown'" localize-title="关机状态" class="status50" ng-class="item.instance_status"></span>
+								                    		<span ng-if="item.instance_status=='paused'" localize-title="挂起状态" class="status50" ng-class="item.instance_status"></span>
+								                    		<span ng-if="item.instance_status=='migrating'" localize-title="迁移状态" class="status50" ng-class="item.instance_status"></span>
+								                    		<span ng-if="item.instance_status=='building'" class="status50" ng-class="item.instance_status"></span>
+								                    		<span ng-if="item.instance_status=='nostate'" localize-title="未知状态" class="status50" ng-class="item.instance_status"></span>
+								                    		<span ng-if="item.instance_status=='error' ||item.instance_status=='crashed'" localize-title="错误状态" class="status50" ng-class="item.instance_status"></span>
+								                    		<span ng-if="item.instance_status=='reboot'" localize-title="重启中状态" class="status50" ng-class="item.instance_status"></span>
+								                    		<span ng-if="item.instance_status=='updating'" localize-title="更新中状态" class="status50" ng-class="item.instance_status"></span>
+								                    	</div>
+							                    	</div>
+								                    <ul class="panel-mess">
+								                    	<li class="panel-item">
+								                    		<label data-localize="系统盘" data-localize-title="系统盘"></label>
+								                    		<div class="item-flex">{{item.updateSize?item.updateSize:item.system_size_desc}}G/{{item.system_size_total}}G <span class="template"></span></div>
+								                    	</li>
+								                    	<li class="panel-item">
+								                    		<label data-localize="数据盘" data-localize-title="数据盘"></label>
+								                    		<div class="item-flex">{{item.data_size_desc}}G/{{item.data_size_total}}G <span class="template"></span></div>
+								                    	</li>
+								                    	<li class="panel-item">
+								                    		<label data-localize="关联桌面数" data-localize-title="关联桌面数"></label>
+								                    		<div class="item-flex">{{item.instance_count}}</div>
+								                    	</li>
+								                    	<li class="panel-item">
+								                    		<label data-localize="创建者" data-localize-title="创建者"></label>
+								                    		<div class="item-flex">{{item.owner_desc}}</div>
+								                    	</li>
+								                    	<li class="panel-item">
+								                    		<label data-localize="创建时间" data-localize-title="创建时间"></label>
+							                    			<div class="item-flex">{{item.created_at | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+								                    	</li>
+								                  	</ul>
+							                  	</div>
+							                </div>
+							                <div class="panel-footbar" data-ng-class="{'darken':item.status!='alive','primary':item.status=='alive'}" data-ng-if="sync_mode == 'bt'">
+							                	<a data-id="{{ item.id }}" data-name="{{ item.name }}" data-os-type="{{ item.os_type }}" data-ng-if="item.virtual_type=='kvm' && (item.status=='alive' || item.status =='making' || item.status =='installed' || item.status =='update failed')" onclick="window.open('templateModifybt.html#' + this.getAttribute('data-id') + '&' + this.getAttribute('data-os-type') + '&' + this.getAttribute('data-name'));return false;" href="javascript:" class="icon" data-localize-title="编辑模板"><i class="fa icon-jj-edit"></i></a>
+												<!--html5 spice					                		<a data-id="{{ item.id }}" data-name="{{ item.name }}" data-os-type="{{ item.os_type }}" data-instance-id="{{ item.instance_id}}" data-ng-if="item.virtual_type=='kvm' && (item.status=='alive' || item.status =='making' || item.status =='installed' || item.status =='update failed')" onclick="window.open('js/vdi-spice/spiceModifybt.html#?id=' + this.getAttribute('data-id') + '&os_type=' + this.getAttribute('data-os-type') + '&name=' + this.getAttribute('data-name')+'&instance_id='+this.getAttribute('data-instance-id'));return false;" href="javascript:" class="icon" data-localize-title="编辑模板"><i class="fa icon-jj-edit"></i></a> -->
+						                		<a data-id="{{ item.id }}" data-name="{{ item.name }}" data-os-type="{{ item.os_type }}" data-ng-if="item.virtual_type=='hyper-v' && (item.status=='alive' || item.status =='making' || item.status =='installed' || item.status =='update failed')" onclick="window.open('templateModifybt_rdp.html#' + this.getAttribute('data-id') + '&' + this.getAttribute('data-os-type') + '&' + this.getAttribute('data-name'));return false;" href="javascript:" class="icon" data-localize-title="编辑模板"><i class="fa icon-jj-edit"></i></a>
+												<!--html5 spice				                		<a data-id="{{ item.id }}" data-name="{{ item.name }}" data-os-type="{{ item.os_type }}" data-instance-id="{{ item.instance_id}}" data-ng-if="item.virtual_type=='hyper-v' && (item.status=='alive' || item.status =='making' || item.status =='installed' || item.status =='update failed')" onclick="window.open('js/vdi-spice/spiceModifybt_rdp.html#?id=' + this.getAttribute('data-id') + '&os_type=' + this.getAttribute('data-os-type') + '&name=' + this.getAttribute('data-name')+'&instance_id='+this.getAttribute('data-instance-id'));return false;" href="javascript:" class="icon" data-localize-title="编辑模板"><i class="fa icon-jj-edit"></i></a> -->
+												<a href="javascript:" class="icon" data-ng-if="item.status=='alive' || item.status=='sync failed'" data-localize-title="SYNC_TEM" data-ng-click="sync(item)"><i class="fa icon-jj-send"></i></a>
+												<!-- <a data-ng-if="item.sync_status.length" href="javascript:"  class="icon" data-localize-title="模板分布" data-ng-click="syncTem(item)"><i data-ng-if="item.syncFaild" class="fa icon-jj-back"></i><i data-ng-if="!(item.syncFaild || item.syncing)" class="fa icon-jj-look"></i><i data-ng-if="item.syncing" class="fa icon-jj-more"></i></a> -->
+												<a data-ng-if="item.sync_status.length" href="javascript:"  class="icon" data-localize-title="模板分布" data-ng-click="syncTem(item)"><i data-ng-class="{'failed': item.sync_status.syncFaild, 'normal': !(item.sync_status.syncFaild || item.sync_status.syncing), 'syncing': item.sync_status.syncing}" class="fa icon-jj-look syncTemIco"></i></a>
+												<!-- <a data-ng-if="item.sync_status.length" href="javascript:"  class="icon" data-localize-title="模板分布" data-ng-click="syncTem(item)"><i class="fa icon-jj-look"></i></a> -->
+												<a href="javascript:void(0)" class="icon" data-ng-click="copy(item)" data-ng-if="item.status=='alive'"><i class="fa icon-jj-copy" data-localize-title="COPY_TEM"></i></a>
+												<div class="more_list_container" data-ng-if="item.status=='alive'">
+													<a href="javascript:" class="icon more_icon" data-localize-title="MORE"><i class="fa icon-jj-more"></i></a>
+													<div class="menu_wrapper my_menu_wrapper">
+														<div class="arraw"></div>
+														<ul class="menu_item_list">
+															<li class="menu_item" ><a class="menu_label" target="_blank" href="{{ domain }}/thor/image/download/{{ item.id }}"><span class="fa icon-jj-Download"></span> <span data-localize="下载模版"></span></a></li>
+															<li class="menu_item" ><a href="javascript:" class="menu_label" data-ng-if="item.status=='alive'" data-localize-title="UNDO_SYNC_TEM" data-ng-click="undoSync(item)"><span class="fa icon-jj-back"></span><span data-localize="UNDO_SYNC_TEM"></span></a></li>
+															<!-- <li class="menu_item"><a class="menu_label" data-ng-class="{graydisabled:item.instance_count > 1? false:true}" data-ng-click="update(item)" href="javascript:void(0)"><span class="fa icon-jj-update"></span> <span data-localize="更新桌面"></span></a><span class="parameterdisabled" data-ng-if="item.instance_count > 1? false:true" data-localize-title="该模版未关联任何场景"></span></li> -->
+															<!-- <li class="menu_item"><a class="menu_label" data-ng-class="{graydisabled:item.instance_count > 0? true:false}" data-ng-click="delete(item)" href="javascript:void(0)"><span class="fa fa-trash-o"></span> <span data-localize="删除模版"></span></a><span class="parameterdisabled" data-ng-if="item.instance_count > 0? true:false" data-localize-title="TEMPLATE_DELETE_TIP"></span></li> -->
+															<li class="menu_item"><a class="menu_label" data-ng-click="update(item)" href="javascript:void(0)"><span class="fa icon-jj-update"></span> <span data-localize="更新桌面"></span></a></li>
+															<li class="menu_item"><a class="menu_label" data-ng-click="delete(item)" href="javascript:void(0)"><span class="fa fa-trash-o"></span> <span data-localize="删除模版"></span></a></li>
+														</ul>
+													</div>
+												</div>
+												<!-- <a href="javascript:" class="icon" data-ng-show="item.status=='syncing' || item.status=='sync failed' || item.status=='making seed'" data-localize-title="查看同步信息" data-dialog="syncTemplateDialog" data-dialog-size="md" data-dialog-url="template/template_sync.html" data-ng-click="syncTem(item)"><i class="fa icon-jj-look"></i></a> -->
+												<!-- <span class="mylili" data-ng-if="item.status!=='alive'"><a href="javascript:void(0)" class="icon" data-localize-title="删除模版"  data-ng-click="delete(item)"><i class="fa fa-trash-o" data-ng-class="{disabled_ico:item.instance_count > 0? true:false}"></i></a><span class="parameterdisabled" data-ng-if="item.instance_count > 0? true:false" data-localize-title="TEMPLATE_DELETE_TIP"></span></span> -->
+												<a data-ng-if="item.status!=='alive'" href="javascript:void(0)" class="icon" data-localize-title="删除模版"  data-ng-click="delete(item)"><i class="fa fa-trash-o"></i></a>
+							                </div>
+		                	                <div class="panel-footbar" data-ng-class="{'darken':item.status!='alive','primary':item.status=='alive'}" data-ng-if="sync_mode == 'scp'">
+		                	                	<a data-id="{{ item.id }}" data-name="{{ item.name }}" data-os-type="{{ item.os_type }}" data-ng-if="item.virtual_type=='kvm' && (item.status=='alive' || item.status =='making' || item.status =='installed' || item.status =='update failed')" onclick="window.open('templateModify.html#' + this.getAttribute('data-id') + '&' + this.getAttribute('data-os-type') + '&' + this.getAttribute('data-name'));return false;" href="javascript:" class="icon" data-localize-title="编辑模板"><i class="fa icon-jj-edit"></i></a>
+		                                		<!-- html5-spice <a data-id="{{ item.id }}" data-name="{{ item.name }}" data-os-type="{{ item.os_type }}" data-instance-id="{{ item.instance_id}}" data-ng-if="item.virtual_type=='kvm' && (item.status=='alive' || item.status =='making' || item.status =='installed' || item.status =='update failed')" onclick="window.open('js/vdi-spice/spiceModify.html#?id=' + this.getAttribute('data-id') + '&os_type=' + this.getAttribute('data-os-type') + '&name=' + this.getAttribute('data-name')+'&instance_id='+this.getAttribute('data-instance-id'));return false;" href="javascript:" class="icon" data-localize-title="编辑模板"><i class="fa icon-jj-edit"></i></a> -->
+		                                		<a data-id="{{ item.id }}" data-name="{{ item.name }}" data-os-type="{{ item.os_type }}" data-ng-if="item.virtual_type=='hyper-v' && (item.status=='alive' || item.status =='making' || item.status =='installed' || item.status =='update failed')" onclick="window.open('templateModify_rdp.html#' + this.getAttribute('data-id') + '&' + this.getAttribute('data-os-type') + '&' + this.getAttribute('data-name'));return false;" href="javascript:" class="icon" data-localize-title="编辑模板"><i class="fa icon-jj-edit"></i></a>
+		                                		<!-- html5 spice <a data-id="{{ item.id }}" data-name="{{ item.name }}" data-os-type="{{ item.os_type }}" data-instance-id="{{ item.instance_id}}" data-ng-if="item.virtual_type=='hyper-v' && (item.status=='alive' || item.status =='making' || item.status =='installed' || item.status =='update failed')" onclick="window.open('js/vdi-spice/spiceModify_rdp.html#?id=' + this.getAttribute('data-id') + '&os_type=' + this.getAttribute('data-os-type') + '&name=' + this.getAttribute('data-name')+'&instance_id='+this.getAttribute('data-instance-id'));return false;" href="javascript:" class="icon" data-localize-title="编辑模板"><i class="fa icon-jj-edit"></i></a> -->
+		                                		<!-- <a href="javascript:" class="icon" data-localize-title="模板分布" data-ng-click="syncTem(item)"><i class="fa icon-jj-look"></i></a> -->
+		                                		<a href="javascript:void(0)" data-ng-if="item.status=='alive'" class="icon" data-localize-title="COPY_TEM" data-ng-click="copy(item)"><i class="fa icon-jj-copy"></i></a>
+		                	                	<a href="javascript:void(0)" data-ng-if="item.status=='alive'" class="icon" data-localize-title="下载模版" download-url urls="{{item.download_image_uuid}}"><i class="fa icon-jj-Download"></i></a>
+<!-- 		                	                	<div class="more_list_container" data-ng-if="item.status=='alive'">
+		                	                		<a href="javascript:" class="icon more_icon" data-localize-title="MORE"><i class="fa icon-jj-more"></i></a>
+		                	                		<div class="menu_wrapper my_menu_wrapper">
+		                	                			<div class="arraw"></div>
+		                	                			<ul class="menu_item_list">
+		                	                				<li class="menu_item" ><a class="menu_label" target="_blank" href="{{ domain }}/thor/image/download/{{ item.id }}"><span class="fa icon-jj-Download"></span> <span data-localize="下载模版"></span></a></li>
+		                	                				<li class="menu_item"><a class="menu_label" data-ng-class="{graydisabled:item.instance_count > 1? false:true}" data-ng-click="update(item)" href="javascript:void(0)"><span class="fa icon-jj-update"></span> <span data-localize="更新桌面"></span></a><span class="parameterdisabled" data-ng-if="item.instance_count > 1? false:true" data-localize-title="该模版未关联任何场景"></span></li>
+		                	                				<li class="menu_item"><a class="menu_label" data-ng-class="{graydisabled:item.instance_count > 0? true:false}" data-ng-click="delete(item)" href="javascript:void(0)"><span class="fa fa-trash-o"></span> <span data-localize="删除模版"></span></a><span class="parameterdisabled" data-ng-if="item.instance_count > 0? true:false" data-localize-title="TEMPLATE_DELETE_TIP"></span></li>
+		                	                			</ul>
+		                	                		</div>
+		                	                	</div> -->
+		                	                	<!-- <span class="mylili"><a href="javascript:void(0)" class="icon" data-localize-title="删除模版"  data-ng-click="delete(item)"><i class="fa fa-trash-o" data-ng-class="{disabled_ico:item.instance_count > 0? true:false}"></i></a><span class="parameterdisabled" data-ng-if="item.instance_count > 0? true:false" data-localize-title="TEMPLATE_DELETE_TIP"></span></span> -->
+		                	                	<!-- <a href="javascript:void(0)" class="icon" data-localize-title="删除模版"  data-ng-click="delete(item)"><i class="fa fa-trash-o"></i></a> -->
+		                	                	<div class="more_list_container">
+		                	                		<a href="javascript:" class="icon more_icon" data-localize-title="MORE"><i class="fa icon-jj-more"></i></a>
+		                	                		<div class="menu_wrapper my_menu_wrapper">
+		                	                			<div class="arraw"></div>
+		                	                			<ul class="menu_item_list">
+		                	                				<li class="menu_item" ng-class="{disabled:item.instance_status!=='shutdown'}" data-ng-if="item.status=='alive'"><a class="menu_label" ng-disabled="item.instance_status!=='shutdown'" data-ng-click="modify(item)" href="javascript:void(0)"><span class="fa icon-jj-009"></span> <span data-localize="配置属性"></span></a></li>
+		                	                				<li class="menu_item" data-ng-if="item.status=='alive' && !item.rbd_enabled"><a class="menu_label" data-ng-click="imgManage(item)" href="javascript:void(0)"><span class="fa icon-jj-Template"></span> <span data-localize="镜像管理"></span></a></li>
+		                	                				<li class="menu_item" data-ng-if="item.status=='alive'"><a class="menu_label" data-ng-click="resetTemp(item)" href="javascript:void(0)"><span class="fa icon-jj-Recovery"></span> <span data-localize="重置模板"></span></a></li>
+		                	                				<li class="menu_item" data-ng-if="item.status=='alive'"><a class="menu_label" data-ng-click="detail(item)" href="javascript:void(0)"><span class="fa icon-jj-013"></span> <span data-localize="模板详情"></span></a></li>
+		                	                				<li class="menu_item"><a class="menu_label" data-ng-click="delete(item)" href="javascript:void(0)"><span class="fa fa-trash-o"></span> <span data-localize="删除模版" style="padding-left: 3px"></span></a></li>
+		                	                			</ul>
+		                	                		</div>
+		                	                	</div>
+		                	                </div>
+							            </div>
+							        </div>
+					    		</div>
+					    		<div class="tips" data-ng-if="loading" data-localize="LOADING_TEXT"></div>
+								<div class="tips" data-ng-if="!loading && rows.length == 0" data-localize="NO_MATCHING_DATA"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+	</div>
+</section>
+<script>pageSetUp();</script>

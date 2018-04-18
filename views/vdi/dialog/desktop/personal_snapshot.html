@@ -1,0 +1,42 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span></button>
+	<h4 class="modal-title" localize="快照管理">快照管理</h4>
+</div>
+<div class="modal-body">
+	<form action="" class="form-horizontal table-form" name="snapShotForm" novalidate>
+		<div class="margin-bottom-10 clearfix">
+			<div class="col-xs-7 nopadding">
+				<img ng-if="loading" src="img/loadingtext.gif" width="24px" height="24px">
+			</div>
+			<div class="col-xs-5 text-right nopadding">
+				<a class="btn btn-primary btn-sm " ng-disabled="loading || hasSaveButton() || hasSubmit()" data-ng-click="addNew()" href="javascript:void(0);"><i class="fa  icon-jj-addddd"></i>&nbsp;<span localize="新增快照">新增快照</span></a>
+			</div>
+		</div>
+		<table cellspacing="0" cellpadding="0" border="0" role="grid"  class="ui-jqgrid-btable table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th localize="快照名">快照名</th>
+					<th localize="快照描述">快照描述</th>
+					<th localize="创建时间">创建时间</th>
+					<th localize="操作">操作</th>
+				</tr>
+			</thead>	
+			<tbody>
+				<tr data-ng-repeat="item in rows track by $index"  data-ng-class="{read_tr:!item.editable}">
+					<td class="host-ip"><input type="text" title="{{ item.snapshot_name }}" ng-model="item.snapshot_name" class="small" data-ng-readonly="!item.editable" maxlength="15" required></td>
+					<td class="host-ip"><input type="text" title="{{ item.display_description }}" ng-model="item.display_description" class="small" data-ng-readonly="!item.editable" maxlength="15"></td>
+					<td>{{item.create_at | date:"yyyy-MM-dd HH:mm:ss"}}</td>
+					<td class="nowrap">
+						<img ng-if="item._submitting" src="img/loadingtext.gif" width="24px" height="24px">
+						<div ng-if="!item._submitting">
+							<button class="btn btn-xs btn-default" ng-disabled="hasSubmit()" ng-if="!item.editable" ng-click="restore(item)" localize-title="恢复"><i class="fa icon-jj-Recovery"></i></button>
+							<button class="btn btn-xs btn-default" ng-disabled="auto_recovery || snapShotForm.$invalid" ng-click="save(item)" ng-if="item.editable" localize-title="保存"><i class="fa fa-save"></i></button>
+							<button class="btn btn-xs btn-default" ng-disabled="hasSubmit() || item.auto_recovery" ng-click="delete(item)"  localize-title="删除"><i class="fa fa-trash-o"></i></button>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="note"></p>
+	</form>
+</div>

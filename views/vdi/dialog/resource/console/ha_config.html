@@ -1,0 +1,153 @@
+<div class="modal-body padding-10">
+	<form class="form-horizontal" name="haConfigworkForm"  novalidate>
+		<legend>
+			<header>
+				<span localize="配置主控HA策略"></span>
+				<button type="button" class="close" ng-click="close()">
+					<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+				</button>
+			</header>
+		</legend>
+		<!-- 编辑模式 -->
+		<fieldset ng-if="!ha.ha_mode" >
+			<div class="form-group">
+				<label for="" class="control-label col-xs-4 required" localize="主控节点当前管理IP"></label>
+				<div class="col-xs-5">
+					<input type="text" format-ip name="c_management_ip" ng-model="ha.management_ip" class="form-control" required>
+				</div>
+				<div class="col-xs-5 col-xs-offset-4">
+					<p class="note" localize="HA_NOTE"><!-- 启用HA时，此IP会被设置为浮动IP --></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="control-label col-xs-4 required" localize="主控节点新管理IP"></label>
+				<div class="col-xs-5">
+					<input type="text" format-ip name="c_floating_ip" ng-model="ha.floating_ip" class="form-control" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="control-label col-xs-4 required" localize="备控节点管理IP"></label>
+				<div class="col-xs-5">
+					<input type="text" format-ip name="c_peer_management_ip" ng-model="ha.peer_management_ip" class="form-control" required>
+				</div>
+			</div>
+			<header class="ha-space-line" data-localize="备控节点管理账户"></header>
+			<div class="form-group">
+				<label for="" class="control-label col-xs-4 required" localize="用户名">用户名</label>
+				<div class="col-xs-5">
+					<input type="text" ng-model="ha.back_user" class="form-control" disabled required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="control-label col-xs-4 required" localize="密码"></label>
+				<div class="col-xs-5">
+					<input type="password" ng-model="ha.back_password" class="form-control" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="control-label col-xs-4 required" localize="数据同步网络"></label>
+				<div class="col-xs-5">
+					<select name="network" class="form-control" ng-model="ha.network_data" ng-options="val as key for (key,val) in networks" required></select>
+					<!-- <input type="text" format-ip ng-model="ha.network_data" class="form-control"> -->
+				</div>
+				<div class="col-xs-2 padding-top-5">
+					<button ng-show="!loading_net" class="btn btn-xs btn-primary" ng-click="get_network()" localize="获取"></button>
+					<img ng-show="loading_net" src="img/loadingtext.gif" alt="" width="24" height="24" ng-show="quorum.connecting">
+				</div>
+			</div>
+			<!-- <div class="form-group">
+				<label for="" class="control-label col-xs-4" localize="浮动IP">浮动IP</label>
+				<div class="col-xs-5">
+					<input type="text" format-ip ng-model="ha.floating_ip" class="form-control" required>
+				</div>
+			</div> -->
+			<div class="form-group" ng-repeat="quorum in quorums">
+				<label for="" class="control-label col-xs-4 required" localize="仲裁IP"></label>
+				<div class="col-xs-5">
+					<input type="text" name="c_quorum_ip" format-ip ng-model="quorum.ip" class="form-control" required>
+					<div ng-hide="quorum.connecting">
+						<div class="note txt-color-redjj" ng-show="quorum.status=='failed'"><i class="icon-jj-Warning icon txt-color-redjj"></i><span localize="网络不通" ></span></div>
+						<!-- <div class="note txt-color-yellowjj" ng-show="quorum.status=='busy'"><i class="icon icon-jj-Warning txt-color-yellowjj"></i><span localize="网络堵塞"></span></div> -->
+						<div class="note txt-color-greenjj" ng-show="quorum.status=='normal'"><i class="icon icon-jj-Complete txt-color-greenjj"></i><span localize="网络连通"></span></div>
+					</div>
+				</div>
+				<div class="col-xs-3 padding-top-5">
+					<button class="btn btn-xs btn-primary" ng-show="!quorum.connecting" 
+						ng-disabled="haConfigworkForm.c_quorum_ip.$invalid || haConfigworkForm.c_floating_ip.$invalid || haConfigworkForm.c_management_ip.$invalid || haConfigworkForm.c_peer_management_ip.$invalid" 
+						ng-click="test_connect(quorum)" 
+						localize="测试连接"></button>
+					<img src="img/loadingtext.gif" alt="" width="24" height="24" ng-show="quorum.connecting">
+					<a ng-hide="quorums.length>2" href="javascript:void(0);" class="btn btn-xs btn-default txt-color-blueLight" data-ng-click="addQuorumIp()"><i class="fa fa-plus fa-lg"></i></a>
+					<a ng-hide="$index===0" href="javascript:void(0);" class="btn btn-xs btn-default txt-color-blueLight" data-ng-click="minusQuorumIp(quorum)"><i class="fa fa-minus fa-lg"></i></a>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="control-label col-xs-4 required" localize="敏感度(秒)"></label>
+				<div class="col-xs-5">
+					<input type="number" min="30" input-number  ng-model="ha.sensitivity" class="form-control" ng-pattern="/^[1-9]?[0-9]*$/" required>
+				</div>
+			</div>
+			<div class="col-md-12 text-right padding-10">
+				<button class="btn btn-primary" ng-show="!ha.loadding" ng-disabled="haConfigworkForm.$invalid" type="button" ng-click="ok()" localize="确定"></button>
+				<button class="btn btn-default" ng-show="!ha.loadding" type="button" ng-click="$close()" localize="取消"></button>
+	            <img ng-show="ha.loadding" src="img/loadingtext.gif" width="24px" height="24px"/>
+			</div>
+		</fieldset>
+		<!-- 编辑模式 end-->
+		<!-- 查看模式 -->
+		<fieldset ng-if="ha.ha_mode" class="ha_readable">
+			<div class="form-group">
+				<label for="" class="control-label col-xs-4" localize="主控节点管理IP"></label>
+				<div class="col-xs-5">
+					{{ha.management_ip}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="control-label col-xs-4" localize="浮动IP"></label>
+				<div class="col-xs-5">
+					{{ha.floating_ip}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="control-label col-xs-4" localize="备控节点管理IP"></label>
+				<div class="col-xs-5">
+					{{ha.peer_management_ip}}
+				</div>
+			</div>
+			<header class="ha-space-line" data-localize="备控节点管理账户"></header>
+			<div class="form-group">
+				<label for="" class="control-label col-xs-4" localize="用户名"></label>
+				<div class="col-xs-5">******</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="control-label col-xs-4" localize="密码"></label>
+				<div class="col-xs-5">******</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="control-label col-xs-4" localize="数据同步网络"></label>
+				<div class="col-xs-5">
+					{{ha.data_sync_cidr}}
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="" class="control-label col-xs-4" localize="仲裁IP"></label>
+				<div class="col-xs-5">
+					{{ha.quorum_ip_addresses.join(',')}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="control-label col-xs-4" localize="敏感度(秒)"></label>
+				<div class="col-xs-5">
+					{{ha.sensitivity}}
+				</div>
+			</div>
+			<div class="col-md-12 text-right padding-10">
+				<button ng-show="!ha.loadding" ng-disabled="!currentItem._btn_status" class="btn btn-primary" type="button" ng-click="ok()" localize="禁用"></button>
+				<button ng-show="!ha.loadding" class="btn btn-default" type="button" ng-click="$close()" localize="取消"></button>
+	            <img ng-show="ha.loadding" src="img/loadingtext.gif" width="24px" height="24px"/>
+			</div>
+		</fieldset>
+		<!-- 查看模式 end-->
+	</form>
+</div>

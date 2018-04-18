@@ -1,0 +1,38 @@
+<div class="modal-body no-padding">
+	<form action="" id="terminal_schoolroom_edit" class="smart-form ng-pristine ng-valid" name="addClassroomFrom" ng-submit="addClassroomFrom.$valid"  novalidate>
+		<header class="myheader">
+			<div><span data-localize="高级"></span>	
+				<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+			</div>
+		</header>
+		<fieldset>
+			<section>
+				<label class="label" data-localize="外网访问范围"></label>
+				<ul class="border-wrap-ul" style="padding: 10px 0 0 30px;">
+					<img ng-show="ips_loading" style="padding-left: 85px;" src="img/loadingtext.gif" width="24px" height="24px"/>
+					<li ng-show="!ips_loading" class="border-wrap-li" ng-repeat="pool in pools">
+						<label class="checkbox-inline">
+							<input type="checkbox" ng-model="pool._selected" class="checkbox" ng-change="checkAll(pool)">
+							<span>{{pool.name}}</span>
+						</label>
+						<dl class="border-wrap-dl">
+							<dd class="border-wrap-dd" ng-repeat="host in pool.hosts">
+								<label class="checkbox-inline">
+									<input type="checkbox" ng-model="host._selected" ng-change="checkOne(pool)" class="checkbox">
+									<span>{{host.host_name}}</span>
+								</label>
+							</dd>
+						</dl>
+					</li>
+					<div style="padding-left: 60px;font-weight: bold;" data-ng-if="!ips_loading && !pools.length" data-localize="NO_MATCHING_DATA"></div>
+				</ul>
+			</section>
+		
+		</fieldset>
+		<footer class="text-right padding-10">
+			<button type="submit" data-ng-disabled="!checked()" name="submit" class="btn btn-primary myfooterbtn" data-ng-click="ok()" data-localize="确定" ng-show="!isSubmiting"></button>
+			<button type="button" data-ng-click="close()" class="btn btn-default myfooterbtn" data-localize="取消" ng-show="!isSubmiting"></button>
+            <img ng-show="isSubmiting" src="img/loadingtext.gif" width="32px" height="32px"/>
+		</footer>
+	</form>
+</div>

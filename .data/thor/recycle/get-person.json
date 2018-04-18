@@ -1,0 +1,9 @@
+{
+	"code": 0,
+	"name": "recycle_person",
+	"value": {
+		"active": false,
+		"broken_min": 720,
+		"run": "suspend"
+	}
+}

@@ -1,0 +1,164 @@
+<div class="modal-body padding-10">
+	<form class="form-horizontal" name="systemDesktopTemplateEditForm"  novalidate>
+		<legend>
+			<header>
+				<span localize="配置系统桌面"></span>
+				<button type="button" class="close" ng-click="close()">
+					<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+				</button>
+			</header>
+		</legend>
+		<fieldset>
+			<div class="form-group">
+				<label for="" class="control-label col-xs-2 required" localize="名称"></label>
+				<div class="col-xs-4">
+					<input class="form-control"
+						type="text"
+						name="display_name"
+						required
+						data-ng-model="data.display_name"
+						data-ng-minlength="{{ min_namelength }}"
+						data-ng-maxlength="{{ max_namelength }}"
+						data-ng-trim="false"
+						data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}"
+					>
+				</div>
+				<label class="col-xs-2 control-label required"  localize="系统桌面类型"></label>
+				<div class="col-xs-3">
+					<select class="form-control" name="type" ng-model="data.type" required>
+						<option value="5" data-localize="共享服务"></option>
+						<option value="4" data-localize="其他桌面"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-2 control-label required" localize="CPU"></label>
+				<div class="btn-group col-xs-9">
+			        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="1">1</label>
+			        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="2">2</label>
+			        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="3">3</label>
+			        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="4">4</label>
+			        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="8">8</label>
+			         <div class="input-group my_input_group">
+				      <div class="input-number-wraper-sm"><input ui-input-number step="1" max="32" min="1" ng-model="data.cpu_num" data-ng-trim="false" required></div>
+				      <span></span>
+				      <div class="input-group-addon input-group-addon-disk"><span localize='核'>核</span></div>
+				    </div>
+		    	</div>
+		    	<label class="col-xs-1 note hardwarenote">1-32<span localize='核'>核</span></label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-2 control-label required" localize="内存">内存</label>
+				<div class="btn-group col-xs-9">
+			        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="32">32GB</label>
+		    		<label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="40">40GB</label>
+			        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="48">48GB</label>
+			        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="64">64GB</label>
+			        <div class="input-group my_input_group">
+				      <div class="input-number-wraper-sm"><input ui-input-number step="0.5" max="64" min="1" ng-model="data.memory_mb" required></div>
+				      <span></span>
+				      <div class="input-group-addon input-group-addon-disk">GB</div>
+				    </div>
+		    	</div>
+		    	<label class="col-xs-1 note hardwarenote">1-64GB</label>
+		    </div>
+		    <div ng-repeat="net in nets">
+		    	<div class="form-group">
+		    		<label class="col-xs-2 control-label" for="network"><span data-localize="网络"></span><span>{{ $index+1 }}</span></label>
+		    		<div class="col-xs-3">
+		    			<select class="form-control" data-ng-options="network.name for network in net.networks track by network.id" ng-change="get_subnet(false, net.network, net.key)"
+		    				data-ng-model="net.network">
+		    			</select>
+		    		</div>
+		    		<div class="col-xs-2" style="white-space: nowrap;top: 5px">
+		    			<img src="img/loadingtext.gif" ng-if="network_loading" height="20" width="20" alt="">
+		    			<a data-ng-if="!network_loading" ng-hide="nets.length>2" href="javascript:void(0);" class="btn btn-xs btn-default txt-color-blueLight" data-ng-click="addNet()"><i class="fa fa-plus fa-lg"></i></a>
+		    			<a ng-hide="$index===0" href="javascript:void(0);" class="btn btn-xs btn-default txt-color-blueLight" data-ng-click="minusNet(net)"><i class="fa fa-minus fa-lg"></i></a>
+		    		</div>
+		    		<label for="" class="control-label col-xs-1" localize="子网" style="white-space: nowrap;">子网</label>
+		    		<div class="col-xs-3">
+		    			<select class="form-control" data-ng-model="net.subnetwork" ng-change="clearBindIp(false, net.key)" data-ng-options="subnetwork._desc for subnetwork in net.subnetworks track by subnetwork.id">
+		    				<option value="" data-localize="不分配"></option>
+		    			</select>
+					</div>
+					<div class="col-xs-1" style="margin-top: 5px;">
+						<a class="mypopover" htmlpopover='{{multifyNetsTips}}'><i class="fa fa-question-circle"></i></a>
+					</div>
+		    	</div>
+		    	<div class="form-group">
+		    		<label for="" class="control-label col-xs-2">IP</label>
+		    		<div class="col-xs-3">
+		    			<select class="form-control" ng-change="net.ip = null" data-ng-options='IPmode.name for IPmode in net.IPmodes track by IPmode.value'  data-ng-model="net.IPmode" ng-disabled='net.IPmode.value==0' required></select>
+		    		</div>
+		    		<div class="col-xs-1"></div>
+		    		<div ng-if="net.IPmode.value=='2'">
+		    			<label for="" class="control-label col-xs-2" localize="固定IP">固定IP</label>
+		    			<div class="col-xs-3">
+		    				<input type="text" format-ip start="net.subnetwork.start_ip" end="net.subnetwork.end_ip" class="form-control" ng-model="net.ip" required>
+		    			</div>
+		    		</div>
+		    	</div>
+		    </div>
+		    <div class="form-group">
+		    	<label class="col-xs-2 control-label"></label>
+		    	<div class="col-xs-3">
+		    		<label class="checkbox-inline checkbox-align">
+		    			<input type="checkbox" class="checkbox style-0" ng-model="data.start_on_host_boot" >
+		    			<span localize="随宿主机启动">随宿主机启动</span>
+		    		</label>
+		    	</div>
+		    </div>
+		    <div class="form-group">
+		    	<label class="control-label col-xs-2" localize="选择透传设备">选择透传设备</label>
+		    	<div class="col-xs-9">
+		    		<div class="tagarea" ng-class="{'border-red':!(devices|selectedFilter).length}">
+		    			<div class="tag-wrap">
+		    				<img src="img/loadingtext.gif" ng-if="host_loading" height="24" width="24" alt="">
+		    				<div ng-show="!host_loading">
+		    					<label class="tag" ng-class="{on:item._selected}" ng-repeat="item in devices" >
+		    						 <input type="checkbox" ng-model="item._selected" ng-change="selectOneHost()" ng-disabled="data.is_cancel">
+		    						 {{item.product_info}}&nbsp;({{item.address}})&nbsp;
+		    					</label>
+		    				</div>
+		    				<div ng-show="devices.length==0">
+		    					<span localize="无设备">无设备！</span>
+		    				</div>
+		    			</div>
+		    		</div>
+		    		<div class="tag-checkbox">
+		    			<label class="checkbox-inline checkbox-align">
+		    				<input type="checkbox" class="checkbox style-0" ng-model="data.is_all" ng-change="selectAllHost(data.is_all)" ng-disabled="devices.length==0 || data.is_cancel">
+		    				<span localize="全选">全选</span>
+		    			</label>
+		    			<label class="checkbox-inline checkbox-align">
+		    				<input type="checkbox" class="checkbox style-0" ng-model="data.is_cancel" ng-change="selectAllHost(0);selectOneHost()">
+		    				<span localize="取消PCI设备透传">取消PCI设备透传</span>
+		    			</label>
+		    			<!-- <label for="" class="note" localize="所选择的PCI-E设备将被透传给分布式文件系统桌面使用">E设备将被透传给分布式文件系统桌面使用</label> -->
+		    		</div>
+
+		    	</div>
+		    </div>
+		    <!-- <div class="form-group">
+				<label for="" class="control-label col-xs-3" localize="启动">启动</label>
+				<div class="col-xs-7">
+					<label class="checkbox-inline checkbox-align">
+						<input type="checkbox" class="checkbox style-0" ng-model="data.is_on">
+						<span localize="随宿主机服务器启动">随宿主机服务器启动</span>
+					</label>
+				</div>
+			</div> -->
+			<footer class="text-right padding-10">
+				<img src="img/loadingtext.gif" ng-if="loading" height="24" width="24" alt="">
+				<div ng-show="!loading">
+					<button type="button" class="btn btn-primary" ng-class="{disabled:systemDesktopTemplateEditForm.$invalid || loading}" ng-click="ok()" localize="确定">
+						确定
+					</button>
+					<button type="button" class="btn btn-default" ng-click="close()" localize="取消">
+						取消
+					</button>
+				</div>
+			</footer>
+		</fieldset>
+	</form>
+</div>

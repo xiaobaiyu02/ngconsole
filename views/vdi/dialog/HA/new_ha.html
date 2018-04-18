@@ -1,0 +1,169 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" localize="桌面HA">桌面HA</h4>
+</div>
+<div class="modal-body">
+	<fieldset ng-init="data.step=1">
+		<form class="form-horizontal" name="addStorageStep1Form" ng-show="data.step==1"  novalidate>
+				<div class="form-group">
+					<label class="col-xs-3 control-label required" localize="策略名称">策略名称</label>
+					<div class="col-xs-7">
+						<input type="text" class="form-control" ng-model="data.name" data-ng-minlength="{{min_namelength}}" data-ng-maxlength="{{max_namelength}}" maxlength="{{max_namelength}}" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 control-label" localize="策略描述">策略描述</label>
+					<div class="col-xs-7">
+						<textarea name="" id="" class="form-control" rows="4" ng-model="data.desc" data-ng-maxlength="30" maxlength="30" data-localize="不能超过30位字符"></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 control-label required" localize="资源池">资源池</label>
+					<div class="col-xs-7">
+						<select ng-change="updateHaList()" ng-disabled="!ready" ng-model="data.resource_pool_id" class="form-control" ng-options="resource.id as resource.name for resource in resources" required></select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 control-label required" localize="桌面类型">桌面类型</label>
+					<div class="col-xs-7">
+						<select ng-model="data.type_code" class="form-control">
+							<option value="1" localize="教学桌面"></option>
+							<option value="2" localize="个人桌面"></option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group" ng-show="!scenes.length && ready && data.type_code==1" style="margin-top: -15px;">
+					<label class="col-xs-3 control-label"></label>
+					<div class="col-xs-7">
+						<label localize="无可用教学桌面" class="control-label" style="color:#999;"></label>
+					</div>
+				</div>
+				<div class="form-group" ng-show="data.type_code==1">
+					<label class="col-xs-3 control-label required" localize="教学场景">教学场景</label>
+					<div class="col-xs-7">
+						<select ng-model="data.scene" class="form-control" ng-options="scene.mode_name for scene in scenes" ng-required="data.type_code==1"></select>
+					</div>
+					<div class="col-xs-2"><img ng-hide="ready" src="img/loadingtext.gif" width="32px" height="32px"/></div>
+				</div>
+				<div class="form-group" ng-show="data.type_code==2">
+					<label class="col-xs-3 control-label required" localize="个人桌面"></label>
+					<div class="col-xs-7">
+						<dl class="ha-new-wrap">
+							<dt ng-show="instances.length" class="col-xs-12"><label class="ha-wrap-left-width col-xs-6" localize="桌面"></label><label class="ha-wrap-label col-xs-6" localize="所在宿主机">所在宿主机</label></dt>
+							<dd ng-show="instances.length === 0">
+								<p localize="无可用个人桌面" style="color:#999;">无可用个人桌面</p>
+							</dd>
+							<dd ng-hide="ready" class="text-center"><img  src="img/loadingtext.gif" width="32px" height="32px"/></dd>
+							<dd ng-repeat="item in instances" class="col-xs-12">
+								<label class="checkbox-inline ha-wrap-left-width col-xs-6">
+									<input type="checkbox" class="checkbox" ng-model="item._used" ng-change="checked('selectAllIns',instances)">
+									<span title="{{item.vm_name}}">{{item.vm_name}}</span>
+								</label>
+								<label class="col-xs-6">{{item.vm_hostname}}</label>
+							</dd>
+						</dl>
+						<label class="checkbox-inline" ng-show="instances.length" ng-show="instances.length">
+							<input type="checkbox" class="checkbox" ng-model="data.selectAllIns" ng-change="checkedAll('selectAllIns',instances)">
+							<span localize="全选"></span>
+						</label>
+					</div>
+				</div>
+				<div class="col-md-12 text-right padding-10">
+					<button class="btn btn-primary" type="button" ng-disabled="addStorageStep1Form.$invalid  || (data.type_code == 2 && (instances | filter : {'_used':true}).length === 0)" type="button" ng-click="next()" localize="下一步"> 下一步</button>
+					<!-- <button class="btn btn-primary" type="button" ng-click="next()" localize="下一步"></button> -->
+				</div>
+		</form>
+		<form class="form-horizontal" name="addStorageStep2Form" ng-show="data.step==2"  novalidate>
+				<div class="form-group">
+					<label class="col-xs-3 control-label required" localize="宿主机分布">宿主机分布</label>
+					<div class="col-xs-7">
+						<dl class="ha-new-wrap">
+							<dt class="col-xs-12">
+								<label localize="主机" class="ha-wrap-left-width col-xs-6"></label>
+								<label localize="桌面数" class="col-xs-6"></label>
+							</dt>
+							<dd class="col-xs-12 text-center" ng-hide="host_ready"><img  src="img/loadingtext.gif" width="24px" height="24px"/></dd>
+							<dd class="col-xs-12" ng-repeat="(key,value) in hosts">
+								<label class="ha-wrap-left-width col-xs-6">{{key}}</label>
+								<label class="col-xs-6">{{value}}</label>
+							</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" localize="优先级"  class="col-xs-3 control-label required">优先级</label>
+					<div class="col-xs-2">
+						<select class="form-control" ng-model="data.priority" required>
+							<option value="1" localize="低">低</option>
+							<option value="2" localize="中">中</option>
+							<option value="3" localize="高">高</option>
+						</select>
+					</div>
+					<label for="" class="col-xs-3 control-label required"><span localize="响应时间"></span>(s)</label>
+					<div class="col-xs-2">
+						<select ng-model="data.ha_response_time" class="form-control" required>
+							<option value="60">60</option>
+							<option value="90">90</option>
+							<option value="120">120</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 control-label required" localize="HA宿主机范围">HA宿主机范围</label>
+					<div class="col-xs-7">
+						<dl class="ha-new-wrap">
+							<dt class="col-xs-12"><label localize="主机" class="ha-wrap-left-width col-xs-5"></label><label class="col-xs-7" localize="所有桌面数"></label></dt>
+							<dd ng-hide="host_ready" class="text-center col-xs-12"><img  src="img/loadingtext.gif" width="24px" height="24px"/></dd>
+							<dd class="col-xs-12" ng-repeat="host in ha_hosts">
+								<label class="checkbox-inline ha-wrap-left-width col-xs-5">
+									<input type="checkbox" class="checkbox" ng-model="host._used" ng-change="checked('selectAllHost',ha_hosts)">
+									<span>{{host.name}}</span>
+								</label>
+								<label class="col-xs-7">{{host.num}}</label>
+							</dd>
+						</dl>
+						<label class="checkbox-inline" ng-show="ha_hosts.length">
+							<input type="checkbox" class="checkbox" ng-model="data.selectAllHost"  ng-change="checkedAll('selectAllHost',ha_hosts)">
+							<span localize="全选"></span>
+						</label>
+						<p class="note" localize="MESS_NEW_HA">说明：此处筛选出有与原宿主机相同的网络、镜像和存储配置的HA宿主机</p>
+					</div>
+				</div>
+
+				<!-- <div class="form-group">
+					<label for="" localize="选择桌面"  class="col-xs-3 control-label required">选择桌面</label>
+					<div class="col-xs-7">
+						<tabset justified="true">
+							<tab>
+								<tab-heading localize="教学桌面"></tab-heading>
+								<ul class="ha-new-wrap">
+									<li ng-repeat="item in scenes">
+										<label class="checkbox-inline">
+											<input type="checkbox" class="checkbox" ng-model="item._used" ng-change="checked(item)">
+											<span>{{item.mode_name}}</span>
+										</label>
+									</li>
+								</ul>
+							</tab>
+							<tab>
+								<tab-heading localize="个人桌面"></tab-heading>
+								<ul class="ha-new-wrap">
+									<li ng-repeat="item in instances">
+										<label class="checkbox-inline">
+											<input type="checkbox" class="checkbox" ng-model="item._used" ng-change="checked(item)">
+											<span>{{item.vm_name}}</span>
+										</label>
+									</li>
+								</ul>
+							</tab>
+						</tabset>
+					</div>
+				</div> -->
+				<div class="col-md-12 text-right padding-10">
+					<button class="btn btn-default" ng-show="!submiting" type="button" ng-click="data.step=1" localize="上一步"></button>
+					<button class="btn btn-primary" ng-show="!submiting" ng-disabled="addStorageStep2Form.$invalid || (ha_hosts | filter : {'_used':true}).length === 0"" type="button" ng-click="ok()" localize="确定">确定</button>
+	                <img ng-show="submiting" src="img/loadingtext.gif" width="32px" height="32px"/>
+				</div>
+		</form>
+	</fieldset>
+</div>

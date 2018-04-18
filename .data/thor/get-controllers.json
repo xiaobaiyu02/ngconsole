@@ -1,0 +1,27 @@
+{
+    "code": 0,
+    "result": [
+        {
+            "cpu_idle": 53.8,
+            "created_at": null,
+            "description": null,
+            "disk_gb": 600,
+            "disk_gb_used": 282,
+            "hostname": "vdi188",
+            "id": null,
+            "ip": "172.16.201.188",
+            "memory_mb": 64388.0,
+            "memory_mb_used": 47372.0,
+            "name": null,
+            "resource_pool_uuid": null,
+            "role": "controller",
+            "service_id": 0,
+            "status": "active",
+            "tasklog_controller_id": "-1",
+            "updated_at": null,
+            "vcpus": 24,
+            "vcpus_used": 0,
+            "workload": 0
+        }
+    ]
+}

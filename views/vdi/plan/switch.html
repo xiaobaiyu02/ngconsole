@@ -1,0 +1,89 @@
+<section data-widget-grid="" id="teach-page">
+	<!-- row -->
+	<div class="row">
+
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div data-widget-grid class="jarviswidget">
+				<!-- widget div-->
+				<div  class="noborder">
+					<!-- widget edit box -->
+					<div class="jarviswidget-editbox">
+						<!-- This area used as dropdown edit box -->
+					</div>
+					<!-- end widget edit box -->
+
+					<!-- widget content -->
+					<div class="widget-body no-padding">
+						<section class="dt-toolbar">
+							<div class="left_side left-btn-group col-xs-6 uploadFile ">
+								<a class="btn btn-xs btn-primary" data-dialog="addSwitchDialog" data-dialog-size="md" data-dialog-url="plan/switch_add.html"><i class="icon-jj-addddd fa"></i> <span data-localize="新增"></span></a>
+								<a class="btn btn-xs btn-danger isBatch" data-ng-class="{disabled:!checkOne()}" data-ng-click="delete()" href="javascript:"><i class="icon-jj-delete fa"></i> <span data-localize="删除"></span></a>
+							</div>
+							<div class="right_side col-xs-6">
+								<div class="pull-right filter"> <span data-localize="显示"></span> <input min="1" max="500" placeholder="1-500" type="number" class="mysmallinput" input-number data-ng-model="pagesize" data-ng-change="pageSizeChange()"> <span data-localize="项结果"></span></div>
+								<div class="pull-right dataTables_filter search"><label><span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span> <input type="search" maxlength="20" class="form-control" ng-model="searchText"></label></div>
+							</div>
+						</section>
+						<div class="table-responsive">
+							<table data-vdi-grid
+								class="table table-striped table-condensed table-hover smart-form has-tickbox"
+								width="100%">
+									<thead class="vdi_header">
+										<tr>
+											<th>
+												<label class="checkbox">
+													<input type="checkbox" data-ng-model="checkedAll" data-ng-change="selectAllChange(checkedAll)" data-ng-checked="checkAll()" name="checkbox-inline">
+													<i></i>
+												</label>
+											</th>
+											<th ng-model="nameSort" ng-click="nameSort = !nameSort;sort('name', nameSort)" data-localize="任务名"></th>
+											<th data-localize="描述"></th>
+											<th data-localize="状态" ng-model="is_activeSort" ng-click="is_activeSort = !is_activeSort;sort('is_active', is_activeSort)"></th>
+											<th data-localize="操作"></th>
+										</tr>
+									</thead>
+									<tbody class="vdi_body">
+										<tr data-contextmenu data-ng-repeat="item in rows | filter:searchText | paging:currentPage:pagesize">
+											<td><label class="checkbox"><input data-ng-model="item._selected" data-ng-checked="item._selected" type="checkbox" data-ng-value="item.id" name="checkbox-inline"><i></i></label></td>
+											<td>{{ item.name }}</td>
+											<td>{{ item.desc }}</td>
+											<td>
+												<div>
+													<span class="switch" ng-if="!item.active_loadding">
+														<input type="checkbox" name="start_interval" class="switch-checkbox" id="start_interval{{$index}}" ng-model="item.is_active">
+														<label class="switch-label" data-swchon-text="ON" data-swchoff-text="OFF" ng-click="active(item)">
+														</label>
+													</span>
+													<img ng-src="img/loadingtext.gif" ng-if="item.active_loadding" height="24" width="24">
+												</div>
+											</td>
+											<td>
+												<!-- <a class="btn btn-xs btn-default" data-dialog="viewSwitchDialog" data-ng-model="currentItem" data-dialog-size="md" data-dialog-url="plan/switch_view.html" data-localize-title="查看详情"><i class="fa icon-jj-look"></i></a> -->
+												<a class="btn btn-xs btn-default" data-dialog="editSwitchDialog" data-ng-model="currentItem" data-dialog-size="md" data-dialog-url="plan/switch_edit.html" data-localize-title="编辑"><i class="fa icon-jj-Write"></i></a>
+												<!-- <a class="btn btn-xs btn-default" data-ng-if="!item.is_active" data-ng-click='delete(item)' data-localize-title="删除"><i class="fa icon-jj-delete"></i></a> -->
+											</td>
+										</tr>
+									</tbody>
+							</table>
+						</div>
+						<div class="tips" data-ng-if="loading" data-localize="LOADING_TEXT"></div>
+						<div class="tips" data-ng-if="!loading && rows.length == 0" data-localize="NO_MATCHING_DATA"></div>
+						<div data-ng-include="'includes/pagination.html'"></div>
+					</div>
+				</div>
+				<section class="context_wrapper">
+					<div data-ng-if="currentItem" class="menu_wrapper grid_context_menu">
+						<ul class="menu_item_list">
+							<!-- <li class="menu_item" ><a data-dialog="viewSwitchDialog" data-ng-model="currentItem" data-dialog-size="md" data-dialog-url="plan/switch_view.html" data-localize="查看详情"></a></li> -->
+							<!-- <li class="menu_split"></li> -->
+							<li class="menu_item" ><a data-dialog="editSwitchDialog" data-ng-model="currentItem" data-dialog-size="md" data-dialog-url="plan/switch_edit.html" data-localize="编辑"></a></li>
+							<li class="menu_split"></li>
+							<li class="menu_item"><a class="menu_label" href="javascript:" data-ng-click="delete(currentItem)" data-ng-class="{graydisabled:currentItem.active}" data-localize="删除"></a><span class="parameterdisabled" data-ng-if="currentItem.active"></span></li>
+						</ul>
+					</div>
+				</section>
+			</div>
+		</article>
+	</div>
+</section>
+<script>pageSetUp();</script>

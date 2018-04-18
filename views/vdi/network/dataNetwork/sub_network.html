@@ -1,0 +1,95 @@
+<section id="widget-grid">
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div data-widget-grid class="jarviswidget">
+				<!-- widget div-->
+				<div class="noborder">
+					<div class="jarviswidget-editbox"></div>
+					<div class="widget-body no-padding">
+						<div class="form-inline no-footer">
+							<div class="dt-toolbar">
+								<div class="col-xs-6 col-sm-6">
+                                    <a class="btn btn-xs btn-primary"  href="#/network/dataNetwork"><i class="fa  icon-jj-recovery"></i>&nbsp;<span localize="返回">返回</span></a>
+                                    <button ng-disabled="hasHA_loading" class="btn btn-primary btn-xs" ng-click="new_sub_network()"><i class="fa icon-jj-addddd"></i>&nbsp;<span localize="新增">新增</span></button>
+                                    <!-- <button class="btn btn-danger btn-xs" data-ng-class="{disabled:!checkOne()}" ng-click="delete()"><i class="fa icon-jj-delete"></i>&nbsp;<span localize="删除">删除</span></button> -->
+                                    <!-- <ul class="dropdown-menu">
+                                        <li><a class="isBatch text-center" href="javascript:" ng-click="open_storage_dialog('logic')" localize="普通网络"></a></li>
+                                        <li><a class="isBatch text-center" href="javascript:" ng-click="open_storage_dialog('vlan')">VLAN</a></li>
+                                    </ul> -->
+								</div>
+								<div class="right_side col-xs-6 col-sm-6">
+									<div class="pull-right filter"><span localize="显示"></span> <select ng-change="pageSizeChange()" data-ng-model="pagesize" ng-init="pagesize=10;pagesizes=[10,20,30]" data-ng-options="pagesize for pagesize in pagesizes"></select> <span localize="项结果"></span> </div>
+								</div> 
+							</div>
+						</div>
+						<div class="table-responsive">
+							<table data-vdi-grid
+								class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox table-vertical-center">
+								<thead class="vdi_header">
+									<tr>
+										<!-- <th><label class="checkbox"><input type="checkbox" data-ng-model="checkedAll" data-ng-change="selectAllChange(checkedAll)" data-ng-checked="checkAll(all)" name="checkbox-inline"><i></i></label></th> -->
+										
+                                        <th localize="子网名称">子网名称</th>
+                                        <th localize="IP范围">IP范围</th>
+
+                                        <!-- <th localize="已分配IP数">已分配IP数</th> -->
+                                        <th localize="子网掩码">子网掩码</th>
+
+                                        <th localize="网关">网关</th>
+                                        <th>DNS</th>
+										
+										<!-- <th localize="状态">状态</th> -->
+                                        <th localize="操作">操作</th>
+									</tr>
+								</thead>
+								<tbody class="vdi_body">
+									
+									<tr data-ng-repeat="item in rows | paging:currentPage:pagesize:rows">
+										<!-- <td><label class="checkbox"><input data-ng-model="item._selected" data-ng-checked="item._selected" type="checkbox" data-ng-value="item.id" name="checkbox-inline"><i></i></label></td> -->
+
+                                        <td><a href="#/network/dataNetwork/{{cur_network_id}}/subnet/{{item.id}}">{{item.name}}</a></td>
+                                        <td><span ng-show="item.start_ip">{{item.start_ip + "--" +item.end_ip}}</span></td>
+										
+										<!-- <td></td> -->
+										<td>{{item.netmask}}</td>
+
+										<td>{{item.gateway_ip}}</td>
+										<td>
+											<p>{{item.dns_nameservers[0]}}</p>
+											<p>{{item.dns_nameservers[1]}}</p>
+										</td>
+
+										<!-- <td>
+											<span class="switch">
+												<input type="checkbox" name="start_interval" class="switch-checkbox" id="start_interval{{$index}}" ng-model="item.enable_dhcp" ng-change="enableDHCP(item)">
+												<label for="start_interval{{$index}}" class="switch-label" data-swchon-text="ON" data-swchoff-text="OFF">
+												</label>
+											</span>
+										</td> -->
+                                        <td class="nowrap"> 
+                                        	<div ng-show="item.type!=='bridge'">
+                                        		<!-- <button localize-title='新增子网' class="btn btn-xs btn-default" data-dialog="newSubNetworkDialog" data-dialog-url="resource/network/new_sub_network.html"><i class="fa  icon-jj-addddd"></i></button> -->
+                                        		<abbr class="abbr-title" localize-title='不可编辑'><button class="btn btn-xs btn-default" ng-disabled="item.un_edit" ng-show="item.un_edit"><i class="fa icon-jj-Write"></i></button></abbr>
+                                        		<button ng-disabled="hasHA_loading" localize-title='编辑' class="btn btn-xs btn-default" ng-disabled="item.un_edit" ng-show="!item.un_edit" ng-click="alter_sub_network(item)"><i class="fa icon-jj-Write"></i></button>
+                                        		<button ng-disabled="hasHA_loading" localize-title='删除' class="btn btn-xs btn-default" ng-click="delete(item)"><i class="fa icon-jj-delete"></i></button>
+                                        	</div>
+                                        </td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="tips" data-ng-if="loading"  localize="LOADING_TEXT">数据正在加载...</div>
+						<div class="tips" data-ng-if="!loading && rows.length == 0"  localize="NO_MATCHING_DATA">没有匹配数据</div>
+						<div data-ng-include="'includes/pagination.html'"></div>
+					</div>
+					<!-- end widget content -->
+				</div>
+				<!-- end widget div -->
+			</div>
+			<!-- end widget -->
+		</article>
+		<!-- WIDGET END -->
+	</div>
+	<!-- end row -->
+</section>
+<script>pageSetUp();</script>

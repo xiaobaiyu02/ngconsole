@@ -1,0 +1,115 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" localize="查看告警策略">查看告警策略</h4>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal" id="addMonitorAlarmForm" name="viewMonitorAlarmForm" action="" novalidate>
+		<div class="form-group">
+			<label class="col-xs-2 text-right font-bold" localize="名称">名称</label>
+			<div class="col-xs-9">{{data.name}}</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-2 text-right font-bold" localize="描述">描述</label>
+			<div class="col-xs-9">{{data.desc}}</div>
+		</div>
+		<fieldset>
+				<div class="form-group">
+					<label class="col-xs-2 text-right font-bold" localize='告警项'>告警项</label>
+					<div class="col-xs-10">
+						<div class="form-group" ng-show="data.alarm_settings['node.cpu_util_rate'].enabled">
+							<div class="col-xs-3" localize="CPU利用率">
+								CPU利用率
+							</div>
+							<div class="col-xs-3">
+								<label>≥{{data.alarm_settings['node.cpu_util_rate'].cond_value}}</label>%
+							</div>
+							<div class="col-xs-4">
+								<label localize="持续">持续</label>{{data.alarm_settings['node.cpu_util_rate'].cond_duration}}<span localize="分钟">分钟</span>
+							</div>
+						</div>
+						<div class="form-group" ng-show="data.alarm_settings['node.mem_util_rate'].enabled">
+							<div class="col-xs-3" localize="内存利用率">
+								内存利用率
+							</div>
+							<div class="col-xs-3">
+								<label>≥{{data.alarm_settings['node.mem_util_rate'].cond_value}}</label>%
+							</div>
+							<div class="col-xs-4">
+								<label localize="持续">持续</label>{{data.alarm_settings['node.mem_util_rate'].cond_duration}}<span localize="分钟">分钟</span>
+							</div>
+						</div>
+						<div class="form-group" ng-show="data.alarm_settings['node.mount_point_util_rate'].enabled">
+							<div class="col-xs-3" localize="磁盘使用空间">
+								磁盘使用空间
+							</div>
+							<div class="col-xs-4">
+								<label>≥{{data.alarm_settings['node.mount_point_util_rate'].cond_value}}</label> %
+							</div>
+						</div>
+						<div class="form-group" ng-show="data.alarm_settings['node.disk_io'].enabled">
+							<div class="col-xs-3" localize="磁盘IO利用率">
+								磁盘IO利用率
+							</div>
+							<div class="col-xs-3">
+								<label>≥{{data.alarm_settings['node.disk_io'].cond_value}}</label> %
+							</div>
+							<div class="col-xs-4">
+								<label localize="持续">持续</label>{{data.alarm_settings['node.disk_io'].cond_duration}}<span localize="分钟">分钟</span>
+							</div>
+						</div>
+						<div class="form-group" ng-show="data.alarm_settings['node.network_util_rate'].enabled">
+							<div class="col-xs-3" localize="网络上下行速率">
+								网络上下行速率
+							</div>
+							<div class="col-xs-3">
+								<label>≥{{data.alarm_settings['node.network_util_rate'].cond_value}}</label> %
+							</div>
+							<div class="col-xs-4">
+								<label localize="持续">持续</label>{{data.alarm_settings['node.network_util_rate'].cond_duration}}<span localize="分钟">分钟</span>
+							</div>
+						</div>
+					</div>
+				</div>
+		</fieldset>
+		<div class="form-group">
+			<label class="col-xs-2 text-right font-bold" localize="主机">主机</label>
+			<div class="col-xs-9">
+				<ul class="border-wrap-ul">
+					<img ng-show="loading" src="img/loadingtext.gif" width="24px" height="24px"/>
+					<li class="border-wrap-li" ng-repeat="pool in pools">
+						<label>{{pool.name}}</label>
+						<dl class="border-wrap-dl">
+							<dd class="border-wrap-dd" ng-repeat="host in pool.hosts">
+								<label class="checkbox-inline">{{host.host_name}}</label>
+							</dd>
+						</dl>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-2 text-right font-bold" localize="告警邮件">告警邮件</label>
+			<div class="col-xs-9" localize="发送告警邮件" ng-show="data.email_enabled">
+				发送告警邮件
+			</div>
+			<div class="col-xs-9" localize="不发送告警邮件" ng-show="!data.email_enabled">
+				不发送告警邮件
+			</div>
+			<div class="col-xs-9" ng-show="data.email_enabled">
+				<ul class="border-wrap-ul">
+					<li class="border-wrap-li" ng-repeat="email in data.email_address">{{email}}</li>
+				</ul>
+			</div>
+		</div>
+		<div class="form-group" ng-show="data.is_email">
+			<div class="col-xs-9 col-xs-offset-2">
+				<textarea name="" id="" ng-model="data.emails" cols="30" rows="4" localize-placeholder="MONITOR_EMAILL_MESS" class="form-control"></textarea>
+			</div>
+		</div>
+		<footer class="text-right">
+			<button type="button" class="btn btn-default" ng-click="close()" localize="关闭">
+				关闭
+			</button>
+		</footer>
+	</form>
+</div>

@@ -1,0 +1,17 @@
+
+<!-- end user info -->
+
+<!-- NAVIGATION : This navigation is also responsive
+
+To make this navigation dynamic please make sure to link the node
+(the reference to the nav > ul) after page load. Or the navigation
+will not initialize.
+-->
+
+<navigation>
+	<!--nav:item ng-repeat="nav in navs" data-sublist="{{ nav.sublist }}" data-view="{{nav.url}}" data-icon="fa fa-lg fa-fw {{ nav.icon }}" nav-title="{{ nav.value }}" /-->
+	<nav:item ng-repeat="nav in navs" data-view="{{nav.url}}" data-icon="fa fa-lg fa-fw {{ nav.icon }}" nav-title="{{ nav.value }}">
+		<nav:item data-ng-repeat="subnav in nav.sublist" data-view="{{subnav.url}}" nav-title="{{ subnav.value }}" />
+	</nav:item>
+</navigation>
+<span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>

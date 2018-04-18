@@ -1,0 +1,16 @@
+{
+	"code": 0,
+	"data_sync_cidr": "188.188.0.0/16",
+	"data_sync_ip": "188.188.101.151",
+	"data_sync_mask": "255.255.0.0",
+	"floating_ip": "172.16.101.151",
+	"floating_mask": "255.255.0.0",
+	"ha_mode": "active_passive",
+	"management_ip": "172.16.101.150",
+	"peer_data_sync_ip": "188.188.101.152",
+	"peer_management_ip": "172.16.101.152",
+	"quorum_ip_addresses": [
+		"172.16.102.25"
+	],
+	"sensitivity": 30
+}

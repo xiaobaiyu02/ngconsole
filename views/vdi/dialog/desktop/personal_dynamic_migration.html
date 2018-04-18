@@ -1,0 +1,32 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" localize="动态迁移">动态迁移</h4>
+</div>
+<div class="modal-body">
+	<fieldset>
+		<div class="form-group" ng-if="loading">
+			<label class="col-sm-12 control-label"><img  ng-src="img/loadingtext.gif" alt="" width="24px" height="24px"></label>
+		</div>
+		<form ng-show="hosts.length" class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-3 control-label"  localize="选择迁移主机">选择迁移主机</label>
+				<div class="col-sm-7">
+					<select class="form-control col-sm-10" data-ng-model="host" data-ng-options="host.ip for host in hosts">
+					</select> 
+				</div>
+			</div>
+			<footer class="text-right">
+				<img ng-if="submiting" src="img/loadingtext.gif" width="24px" height="24px">
+				<div ng-show="!submiting">
+					<button type="button" class="btn btn-primary" ng-click="post()"  localize="确定">
+						确定
+					</button>
+					<button type="button" class="btn btn-default" ng-click="close()"  localize="取消">
+						取消
+					</button>
+				</div>
+			</footer>
+		</form>
+		<div ng-if="hosts.length===0"  class="padding10"  localize="MESS_DYNAMIC">不存在可迁移主机！</div>
+	</fieldset>
+</div>

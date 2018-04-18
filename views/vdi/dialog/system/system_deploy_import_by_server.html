@@ -1,0 +1,25 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="ctrl.close()" ng-show="!ctrl.is_importing"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" localize="button.import-by-server"></h4>
+</div>
+<div class="modal-body">
+	<p class="quick-deploy-helpmsg" localize="init.import-from-cloud"></p>
+	<ul class="diskimg-list">
+	    <li ng-repeat="img in ctrl.remote_imgs track by img.path">
+	        <label class="radio radio-inline">
+	            <input type="radio" class="radiobox" name="imgs" ng-model="ctrl.selected" ng-value="img" ng-disabled="img.imported || ctrl.isAjaxOn()"/>
+	            <span title="{{img.filename}}">{{img.filename|filename}}</span>
+	        </label>
+	    </li>
+	</ul>
+	<div class="quick-deploy-toolbar">
+		<span class="quick-deploy-remain-time" ng-if="ctrl.showRemain()" localize="upload.remain" param1="{{ctrl.remain.hour}}" param2="{{ctrl.remain.minute}}" param3="{{ctrl.remain.second}}"></span>
+		<button class="btn btn-success" localize="button.refresh" ng-disabled="ctrl.isAjaxOn()" ng-click="ctrl.refreshImgs()"></button>
+		<img src="img/loadingtext.gif" ng-if="ctrl.loading" class="loadingtext" style="width:24px;height:24px;">
+	</div>
+	<footer class="text-right">
+		<button ng-disabled="ctrl.isAjaxOn() || !ctrl.selected" class="btn btn-primary" ng-click="ctrl.importSelected()" localize="button.import"></button>
+		<img src="img/loadingtext.gif" ng-if="ctrl.is_importing" class="loadingtext" style="width:24px;height:24px;">
+		<button type="button" class="btn btn-default" ng-click="ctrl.close()" localize="取消" ng-disabled="ctrl.is_importing"></button>
+	</footer>
+</div>

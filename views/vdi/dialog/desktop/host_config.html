@@ -1,0 +1,76 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" localize="高级">高级</h4>
+</div>
+<div class="modal-body">
+		<form class="form-horizontal" name="configStorageForm" novalidation>
+			<div class="form-group">
+				<label class="col-xs-4 control-label" localize="主机"></label>
+				<div class="col-xs-6">
+					<select ng-model="host" class="form-control" ng-options="val as val.host for (sid , val) in datas" ng-change="change_host(this)"></select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4 control-label" localize="系统盘镜像存储设备">系统盘镜像存储设备</label>
+				<div class="col-xs-6">
+					<select class="form-control" data-ng-options="lun.name for lun in host.storages track by lun.uuid" ng-model="image_storage_performance" ng-change="filterStorage(image_storage_performance,1,this)" required></select>
+					<div class="control-bar clearfix" ng-show="image_storage_performance._total_size">
+						<div class="progress progress-xs control-bar-l">
+							<div class="progress-bar progress-bar-primary" ng-style="{width:image_storage_performance._used_size/image_storage_performance._total_size * 100 + '%'}" role="progressbar"></div>
+						</div>
+						<div class="control-bar-r">{{image_storage_performance._used_size}}/{{image_storage_performance._total_size}}GB</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4 control-label" localize="数据盘镜像存储设备">数据盘镜像存储设备</label>
+				<div class="col-xs-6">
+					<select class="form-control" data-ng-options="lun.name for lun in host.storages track by lun.uuid" ng-model="image_storage_capacity" ng-change="filterStorage(image_storage_capacity,2,this)" required></select>
+					<div class="control-bar clearfix" ng-show="image_storage_capacity._total_size">
+						<div class="progress progress-xs control-bar-l">
+							<div class="progress-bar progress-bar-primary" ng-style="{width:image_storage_capacity._used_size/image_storage_capacity._total_size * 100 + '%'}" role="progressbar"></div>
+						</div>
+						<div class="control-bar-r">{{image_storage_capacity._used_size}}/{{image_storage_capacity._total_size}}GB</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4 control-label" localize="系统盘存储设备">系统盘存储设备</label>
+				<div class="col-xs-6">
+					<select class="form-control" data-ng-options="lun.name for lun in sys_luns track by lun.uuid" ng-model="storage_performance" required></select>
+					<div class="control-bar clearfix" ng-show="storage_performance._total_size">
+						<div class="progress progress-xs control-bar-l">
+							<div class="progress-bar progress-bar-primary" ng-style="{width:storage_performance._used_size/storage_performance._total_size * 100 + '%'}" role="progressbar"></div>
+						</div>
+						<div class="control-bar-r">{{storage_performance._used_size}}/{{storage_performance._total_size}}GB</div>
+					</div>
+				</div>
+				<div class="col-xs-2"><img ng-show="loading_lun" src="img/loadingtext.gif" width="24px" height="24px"/></div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4 control-label" localize="数据盘存储设备">数据盘存储设备</label>
+				<div class="col-xs-6">
+					<select class="form-control"  data-ng-options="lun.name for lun in data_luns track by lun.uuid" ng-model="storage_capacity" required></select>
+					<div class="control-bar clearfix" ng-show="storage_capacity._total_size">
+						<div class="progress progress-xs control-bar-l">
+							<div class="progress-bar progress-bar-primary" ng-style="{width:storage_capacity._used_size/storage_capacity._total_size * 100 + '%'}" role="progressbar"></div>
+						</div>
+						<div class="control-bar-r">{{storage_capacity._used_size}}/{{storage_capacity._total_size}}GB</div>
+					</div>
+				</div>
+				<div class="col-xs-2"><img ng-show="loading_lun" src="img/loadingtext.gif" width="24px" height="24px"/></div>
+			</div>
+			<footer class="text-right">
+				<button type="button" ng-disabled="configStorageForm.$pristine" ng-show="!loading" class="btn btn-primary" ng-click="okAll()" localize="确定">
+					确定
+				</button>
+				<button type="button" ng-show="!loading" class="btn btn-default" ng-click="close()" localize="取消">
+					取消
+				</button>
+				<button type="button" ng-disabled="configStorageForm.$pristine" ng-show="!loading" class="btn btn-default" ng-click="ok(this)" localize="应用">
+					应用
+				</button>
+                <img ng-show="loading" src="img/loadingtext.gif" width="24px" height="24px"/>
+			</footer>
+		</form>
+</div>

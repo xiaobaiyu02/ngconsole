@@ -1,0 +1,15 @@
+{
+    "code": 0,
+    "result": [
+        {
+            "access_key": "Summary,Resource,Console,Pool,Storage,Network,ManageNetwork,VirtualSwitch,DataNetwork,Desktop,Teaching_desktop,Personal_desktop,Template,Teaching_template,Personal_template,Hardware_template,Terminal,Classroom,Terminal_Manage,User,Role_Manage,Administrator,Common_user,Domain_user,Monitor,Host_monitoring,Desktop_monitoring,Alarm_information,Alarm_policy,Timetable,Course_list,Plan,Timer_switch,HA,desktop_ha,System,System_desktop,System_backup,System_ISO,USB_redirection,System_outside,System_upgrade,Operation_log,About",
+            "created_at": null,
+            "desc": null,
+            "id": 1,
+            "name": "Administrator",
+            "redactor": null,
+            "updated_time": 1496632812729.35,
+            "user_num": 15
+        }
+    ]
+}

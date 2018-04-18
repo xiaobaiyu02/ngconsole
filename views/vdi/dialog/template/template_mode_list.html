@@ -1,0 +1,24 @@
+<section id='widget-grid'>
+	<div class='modal-content'>
+		<div class='modal-header'>
+			<button type='button' class='close' data-ng-click='close()'>
+				<span aria-hidden='true'>×</span><span class='sr-only'>Close</span>
+			</button>
+			<h4 class='modal-title' id='mySmallModalLabel' data-localize="更新桌面"></h4>
+		</div>
+		<div class='modal-body'>
+			<form class='form-horizontal'>
+				<p style='margin-bottom:20px;'>
+					<cite data-localize="UPDATE_DESKTOP_INFOR"></cite>
+					<div style="white-space:normal;">
+						<i data-ng-repeat="mode in modes" style="border:1px solid #999;border-radius:3px; margin:2px;display:inline-block;padding:2px 8px;">{{ mode.name }}</i>
+					</div>
+				</p>
+				<footer class='text-right'>
+					<button class='btn btn-primary' data-ng-click='ok()' data-ng-disabled="noScense" data-localize="确定"></button>
+					<button class='btn btn-default' data-ng-click='close()' style='margin-left:5px;' data-localize="取消"></button>
+				</footer>
+			</form>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,77 @@
+{
+    "code": 0,
+    "result": [
+        {
+            "created_at": "2017-05-19T08:13:17.000000",
+            "description": "default",
+            "hosts": [
+                {
+                    "created_at": "2017-05-19T08:14:09.000000",
+                    "description": null,
+                    "disk_gb": 299,
+                    "disk_gb_used": 3250,
+                    "hostname": "vdi188",
+                    "id": "abf1887a-eef8-42aa-9a02-0057d8768435",
+                    "ip": "172.16.201.188",
+                    "memory_mb": 64388,
+                    "memory_mb_used": 557568,
+                    "metadata": {
+                        "type": "libvirt"
+                    },
+                    "name": "vdi188",
+                    "resource_pool_uuid": "7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+                    "role": "compute",
+                    "service_id": 0,
+                    "status": "active",
+                    "type": "libvirt",
+                    "updated_at": "2017-06-05T03:16:21.000000",
+                    "vcpus": 24,
+                    "vcpus_used": 326,
+                    "workload": 0
+                }
+            ],
+            "id": "7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "name": "default",
+            "status": "normal",
+            "type": "kvm",
+            "updated_at": null,
+            "uuid": "7d2cdd1f-de04-4a3b-b583-d188dbdd1d53"
+        },
+        {
+            "created_at": "2017-05-22T02:08:35.000000",
+            "description": "",
+            "hosts": [
+                {
+                    "created_at": "2017-05-24T01:06:07.000000",
+                    "description": null,
+                    "disk_gb": 59,
+                    "disk_gb_used": 20,
+                    "hostname": "XBo-hyperv-01",
+                    "id": "24de45c8-c5c2-4418-9430-413e4355b28b",
+                    "ip": "172.16.201.205",
+                    "memory_mb": 8190,
+                    "memory_mb_used": 4608,
+                    "metadata": {
+                        "type": "hyper-v"
+                    },
+                    "name": "XBo-hyperv-01",
+                    "resource_pool_uuid": "d9e563c9-b038-477e-9b6e-b60b60d535f8",
+                    "role": "compute",
+                    "service_id": 0,
+                    "status": "active",
+                    "type": "hyper-v",
+                    "updated_at": "2017-06-05T03:16:21.000000",
+                    "vcpus": 4,
+                    "vcpus_used": 2,
+                    "workload": 0
+                }
+            ],
+            "id": "d9e563c9-b038-477e-9b6e-b60b60d535f8",
+            "name": "hyperv",
+            "status": "normal",
+            "type": "hyper-v",
+            "updated_at": null,
+            "uuid": "d9e563c9-b038-477e-9b6e-b60b60d535f8"
+        }
+    ]
+}

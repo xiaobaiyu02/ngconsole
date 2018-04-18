@@ -1,0 +1,39 @@
+{
+    "code": 0,
+    "enable_ha": false,
+    "result": [
+        {
+            "controller_and_compute": true,
+            "controller_ip": "172.16.201.188",
+            "host_id": null,
+            "host_name": "vdi188",
+            "host_type": "controller",
+            "hostname": "vdi188",
+            "id": null,
+            "image_dev": "eth0",
+            "image_ip": "172.16.201.188",
+            "image_netmask": "255.255.0.0",
+            "ip": "172.16.201.188",
+            "management_dev": "eth0",
+            "management_ip": "172.16.201.188",
+            "management_netmask": "255.255.0.0",
+            "status": "active"
+        },
+        {
+            "controller_ip": "172.16.201.188",
+            "host_id": "24de45c8-c5c2-4418-9430-413e4355b28b",
+            "host_name": "XBo-hyperv-01",
+            "host_type": "compute",
+            "hostname": "XBo-hyperv-01",
+            "id": "24de45c8-c5c2-4418-9430-413e4355b28b",
+            "image_dev": "Ethernet0",
+            "image_ip": "172.16.201.205",
+            "image_netmask": "255.255.0.0",
+            "ip": "172.16.201.205",
+            "management_dev": "Ethernet0",
+            "management_ip": "172.16.201.205",
+            "management_netmask": "255.255.0.0",
+            "status": "active"
+        }
+    ]
+}

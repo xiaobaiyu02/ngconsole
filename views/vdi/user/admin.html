@@ -1,0 +1,77 @@
+<section >
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div data-widget-grid class="jarviswidget">
+				<!-- widget div-->
+					<div class="noborder">
+					<!-- widget edit box -->
+						<div class="jarviswidget-editbox"></div>
+
+					<div class="widget-body no-padding">
+						<section class="dt-toolbar">
+							<div class="left_side col-xs-6 left-btn-group">
+								<div data-ng-show="owner">
+									<a class="btn btn-primary btn-xs" data-dialog="addUserAdminDialog" data-dialog-size="md" data-dialog-url="user/user_admin_add.html"><i class="icon-jj-addddd fa"></i> <span data-localize="新增"></span></a>
+									<a class="btn btn-danger btn-xs isBatch" data-ng-class="{disabled:!checkOne()}" data-ng-click="delete()" href="javascript:"><i class="icon-jj-delete fa"></i> <span data-localize="删除"></span></a>
+								</div>
+							</div>
+							<div class="right_side col-xs-6">
+								<div class="pull-right filter"> <span data-localize="显示"></span> <input min="1" max="500" placeholder="1-500" type="number" class="mysmallinput" input-number data-ng-model="pagesize" data-ng-change="pageSizeChange()"> <span data-localize="项结果"></span></div>
+								<div class="pull-right dataTables_filter search"><label><span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span> <input type="search" maxlength="20" class="form-control" ng-model="searchText" ></label></div>
+							</div>
+						</section>
+						<div class="table-responsive">
+							<table data-vdi-grid
+									class="table table-striped table-condensed table-hover smart-form has-tickbox"
+								width="100%">
+									<thead class="vdi_header">
+										<tr>
+	<th><label class="checkbox" data-ng-show="owner"><input type="checkbox" data-ng-model="checkedAll" data-ng-change="selectAllChange(checkedAll)" data-ng-checked="checkAll(all)" name="checkbox-inline"><i></i></label></th>
+											<th ng-model="nameSort" ng-click="nameSort = !nameSort;sort('name', nameSort)" data-localize="登录名"></th>
+											<th ng-model="real_nameSort" ng-click="real_nameSort = !real_nameSort;sort('real_name', real_nameSort)" data-localize="姓名"></th>
+											<th ng-model="permissionSort" ng-click="permissionSort = !permissionSort;sort('permission', permissionSort)" data-localize="角色"></th>
+											<th ng-model="instance_numSort" ng-click="instance_numSort = !instance_numSort;sort('instance_num', instance_numSort)" data-localize="关联桌面数"></th>
+											<th data-localize="电子邮箱"></th>
+											<th data-localize="联系电话" ng-model="contactSort" ng-click="contactSort = !contactSort;sort('contact', contactSort)"></th>
+											<th ng-model="createdDateSort" ng-click="createdDateSort = !createdDateSort;sort('createdDate', createdDateSort)" data-localize="创建时间"></th>
+											<th data-localize="上次登录IP" ng-model="IPSort" ng-click="IPSort = !IPSort;sortIP(IPSort)"></th>
+											<th data-localize="操作"></th>
+										</tr>
+									</thead>
+									<tbody class="vdi_body">
+										<tr data-contextmenu data-contextmenu-disabled="{{ (owner && item.name=='admin') || (!owner && loginName != item.name) }}" data-ng-repeat="item in rows | filter:searchText | paging:currentPage:pagesize">
+	<td data-ng-if="owner && item.name != 'admin' && item.name != loginName"><label class="checkbox"><input data-ng-model="item._selected" data-ng-checked="item._selected" type="checkbox" data-ng-value="item.id" name="checkbox-inline"><i></i></label></td>
+	<td data-ng-if="!(owner && item.name != 'admin' && item.name != loginName)" data-ng-init="item._ignore=true"><label style="display:none;" class="checkbox"><input data-ng-model="item._ignore" data-ng-checked="item._ignore" type="checkbox" data-ng-value="item.id" name="checkbox-inline"><i></i></label></td>
+											<td>{{ item.name }}</td>
+											<td>{{ item.real_name }}</td>
+											<td>{{ item.permission }}</td>
+											<td>{{ item.instance_num }}</td>
+											<td><p style="max-width: 200px;" class='text-overflow' title="{{ item.email }}">{{ item.email }}</p></td>
+											<td>{{ item.contact }}</td>
+											<td>{{ item.createdDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+											<td>{{ item.last_login }}</td>
+											<td><a data-ng-if="(owner && item.name!='admin') || (!ower && loginName == item.name)" class="btn btn-xs btn-default" data-dialog="editUserAdminDialog" data-ng-model="currentItem" data-dialog-size="md" data-dialog-url="user/user_admin_edit.html" data-localize-title="编辑"><i class="fa icon-jj-Write"></i></a></td>
+										</tr>
+									</tbody>
+							</table>
+						</div>
+						<div class="tips" data-ng-if="loading" data-localize="LOADING_TEXT"></div>
+						<div class="tips" data-ng-if="!loading && rows.length == 0" data-localize="NO_MATCHING_DATA"></div>
+						<div data-ng-include="'includes/pagination.html'"></div>
+					</div>
+				</div>
+				<section class="context_wrapper">
+					<div data-ng-if="currentItem" class="menu_wrapper grid_context_menu">
+						<ul class="menu_item_list">
+							<li class="menu_item" ><a data-dialog="editUserAdminDialog" data-ng-model="currentItem" data-dialog-size="md" data-dialog-url="user/user_admin_edit.html" data-localize="编辑"></a></li>
+							<li data-ng-if="currentItem.name != 'admin' && loginName != currentItem.name" class="menu_split"></li>
+							<li data-ng-if="currentItem.name != 'admin' && loginName != currentItem.name" class="menu_item"><a class="menu_label" href="javascript:" data-ng-click="delete(currentItem)" data-ng-class="{graydisabled:currentItem.instance_num != 0}" data-localize="删除"></a><span class="parameterdisabled" data-localize-title="ADMIN_TIP" data-ng-if="currentItem.instance_num != 0"></span></li>
+						</ul>
+					</div>
+				</section>
+			</div>
+		</article>
+	</div>
+</section>
+
+<script>pageSetUp();</script>

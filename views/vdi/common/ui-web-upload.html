@@ -1,0 +1,17 @@
+<form action="javascript:" enctype="multipart/form-data" method="POST">
+	<input name="iso" type="file" style="display:none">
+	<button type="button" ng-disabled="!disableTest || isUploading" class="btn btn-primary"><i class="icon icon-jj-Upload"></i> {{btnName}}</button>
+</form>
+<div class="upload-progress" ng-show="isUploading">
+	<!-- 百分比 -->
+	<span class="progress-percent">{{progressPercent}}</span>
+	<!-- 进度条 -->
+	<div class="progress progress-xs">
+		<div class="progress-bar bg-color-blue" role="progressbar" ng-style="{'width':progressPercent}"></div>
+	</div>
+	<div class="upload-mess">
+		<div class="progress-word">{{progressName}}{{progressSize}}</div>
+	</div>
+	<!-- 关闭按钮 -->
+	<span class="upload-cancel-icon icon  icon-jj-close-2" id="abortBtn"></span>
+</div>

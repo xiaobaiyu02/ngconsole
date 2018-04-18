@@ -1,0 +1,81 @@
+<section >
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div data-widget-grid class="jarviswidget">
+				<!-- widget div-->
+					<div class="noborder">
+					<!-- widget edit box -->
+						<div class="jarviswidget-editbox"></div>
+
+					<div class="widget-body no-padding">
+						<section class="dt-toolbar">
+							<div class="left_side col-xs-6 left-btn-group">
+								<div>
+									<a class="btn btn-primary btn-xs" data-dialog="addSystemUSBDialog" data-dialog-size="md" data-dialog-url="system/system_usb_add.html"><i class="icon-jj-addddd fa"></i> <span data-localize="新增"></span></a>
+									<a class="btn btn-danger btn-xs isBatch" data-ng-class="{disabled:!checkOne()}" data-ng-click="delete()" href="javascript:"><i class="icon-jj-delete fa"></i> <span data-localize="删除"></span></a>
+								</div>
+							</div>
+							<div class="right_side col-xs-6">
+								<div class="pull-right filter">
+									<span data-localize="显示"></span>
+									<select
+										data-ng-model="pagesize"
+										data-ng-change="pageSizeChange()"
+										data-ng-options="pagesize for pagesize in pagesizes"
+									></select>
+									<span data-localize="项结果"></span>
+								</div>
+								<div class="pull-right dataTables_filter search"><label><span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span> <input type="search" maxlength="20" class="form-control" ng-model="searchText" ></label></div>
+							</div>
+						</section>
+						<div class="table-responsive">
+							<table data-vdi-grid
+									class="table table-striped table-condensed table-hover smart-form has-tickbox" width="100%">
+									<thead class="vdi_header">
+										<tr>
+											<th><label class="checkbox"><input type="checkbox" data-ng-model="checkedAll" data-ng-change="selectAllChange(checkedAll)" data-ng-checked="checkAll(all)" name="checkbox-inline"><i></i></label></th>
+											<!-- <th ng-model="idSort" ng-click="idSort = !idSort;sort('id', idSort)" data-localize="id"></th> -->
+											<th ng-model="class_idSort" ng-click="class_idSort = !class_idSort;sortClass_id(class_idSort)" data-localize="USB_GROUP"></th>
+											<th ng-model="prioritySort" ng-click="prioritySort = !prioritySort;sort('priority', prioritySort)" data-localize="优先级"></th>
+											<th ng-model="rule_nameSort" ng-click="rule_nameSort = !rule_nameSort;sort('rule_name', rule_nameSort)" data-localize="RULE_NAME"></th>
+											<th ng-model="product_idSort" ng-click="product_idSort = !product_idSort;sort('product_id', product_idSort)" data-localize="PID"></th>
+											<th ng-model="vendor_idSort" ng-click="vendor_idSort = !vendor_idSort;sort('vendor_id', vendor_idSort)" data-localize="VID"></th>
+											<th ng-model="allowSort" ng-click="allowSort = !allowSort;sort('allow', allowSort)" data-localize="IS_REDIRECT"></th>
+											<th data-localize="操作"></th>
+										</tr>
+									</thead>
+									<tbody class="vdi_body">
+										<tr data-contextmenu data-ng-repeat="item in rows | filter:searchText | paging:currentPage:pagesize">
+											<td><label class="checkbox" ><input data-ng-model="item._selected" data-ng-checked="item._selected" type="checkbox" data-ng-value="item.id" name="checkbox-inline"><i></i></label></td>
+											<!-- <td>{{ item.id }}</td> -->
+											<td>{{ item.class_id.value }}</td>
+											<td>{{ item.priority }}</td>
+											<td>{{ item.rule_name }}</td>
+											<td>{{ item.product_id == -1? "-1": item.product_id.indexOf("0x")>-1 ? item.product_id.substring(2): item.product_id}}</td>
+											<td>{{ item.vendor_id == -1? "-1": item.vendor_id.indexOf("0x")>-1 ? item.vendor_id.substring(2): item.vendor_id }}</td>
+											<td data-localize="{{ item.allow == true ? '是':'否' }}"></td>
+											<td><a class="btn btn-xs btn-default" data-dialog="editSystemUSBDialog" data-ng-model="currentItem" data-dialog-size="md" data-dialog-url="system/system_usb_edit.html" data-localize-title="编辑"><i class="fa icon-jj-Write"></i></a></td>
+										</tr>
+									</tbody>
+							</table>
+						</div>
+						<div class="tips" data-ng-if="loading" data-localize="LOADING_TEXT"></div>
+						<div class="tips" data-ng-if="!loading && rows.length == 0" data-localize="NO_MATCHING_DATA"></div>
+						<div data-ng-include="'includes/pagination.html'"></div>
+					</div>
+				</div>
+				<section class="context_wrapper">
+					<div data-ng-if="currentItem" class="menu_wrapper grid_context_menu">
+						<ul class="menu_item_list">
+							<li class="menu_item" ><a data-dialog="editSystemUSBDialog" data-ng-model="currentItem" data-dialog-size="md" data-dialog-url="system/system_usb_edit.html" data-localize="编辑"></a></li>
+							<li class="menu_split"></li>
+							<li class="menu_item"><a class="menu_label" href="javascript:" data-ng-click="delete(currentItem)" data-localize="删除"></a></li>
+						</ul>
+					</div>
+				</section>
+			</div>
+		</article>
+	</div>
+</section>
+
+<script>pageSetUp();</script>

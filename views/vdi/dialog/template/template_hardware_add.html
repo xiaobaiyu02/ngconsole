@@ -1,0 +1,148 @@
+<section id="widget-grid">
+		<div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	          <h4 class="modal-title" id="mySmallModalLabel" data-localize="新增硬件模板"></h4>
+	        </div>
+	        <div class="modal-body">
+				<form class="form-horizontal" name="addhardwareForm" method="post" novalidate>
+					<div class="form-group">
+						<label class="col-xs-2 control-label required" for="hardwareName" data-localize="名称"></label>
+						<div class="col-xs-8">
+							<input class="form-control" id="hardwareName" type="text"
+								name="name"
+								required
+								data-ng-model="data.name"
+								data-ng-minlength="{{min_namelength}}" data-ng-maxlength="{{max_namelength}}" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}"
+								data-ng-trim="true"
+							>
+						</div>
+					</div>
+<!-- 					<div class="form-group">
+						<label class="col-xs-2 control-label required" for="hardwareName" data-localize="系统盘存储"></label>
+						<div class="col-xs-8">
+							<select class="form-control" data-ng-model="data.system_disk_type">
+								<option value="1">基础镜像存储设备</option>
+								<option value="2" data-localize="性能型存储设备"></option>
+								<option value="3" data-localize="容量型存储设备"></option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label required" for="hardwareName" data-localize="数据盘存储"></label>
+						<div class="col-xs-8">
+							<select class="form-control" data-ng-model="data.local_disk_type">
+								<option value="1">基础镜像存储设备</option>
+								<option value="2" data-localize="性能型存储设备"></option>
+								<option value="3" data-localize="容量型存储设备"></option>
+							</select>
+						</div>
+					</div> -->
+					<div class="form-group">
+						<label class="col-xs-2 control-label" data-localize="CPU"></label>
+						<div class="col-xs-8 btn-group">
+					        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="1">1</label>
+					        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="2">2</label>
+					        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="3">3</label>
+					        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="4">4</label>
+					        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="8">8</label>
+						    <div class="input-group my_input_group">
+						      <!-- <input class="form-control" type="number" name="cpu_num"
+									required
+									data-ng-model="data.cpu_num"
+									data-ng-pattern="/^\s*([1-8])\s*$/"
+									data-ng-trim="false"
+						      > -->
+						      <div class="input-number-wraper-sm"><input ui-input-number step="1" max="32" min="1" ng-model="data.cpu_num" data-ng-trim="false" required></div>
+						      <span></span>
+						      <div class="input-group-addon input-group-addon-disk" data-localize="核"></div>
+						    </div>
+						</div>
+						<label class="col-xs-2 note hardwarenote">1~32<span data-localize="核"></span></label>
+				    </div>
+
+					<div class="form-group">
+						<label class="col-xs-2 control-label" data-localize="内存"></label>
+						<div class="btn-group col-xs-8">
+					        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="1.5">1.5GB</label>
+					        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="2">2GB</label>
+					        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="2.5">2.5GB</label>
+				    		<label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="3">3GB</label>
+			    			<div class="input-group my_input_group">
+						     <!--  <input class="form-control" type="number" name="memory_mb"
+									required
+									data-ng-model="data.memory_mb"
+									data-ng-pattern="/^\s*([1-8]|1.5|2.5|3.5|4.5|5.5|6.5|7.5)\s*$/"
+									data-ng-trim="false"
+						      > -->
+						      	  <div class="input-number-wraper-sm"><input ui-input-number step="0.5" max="64" min="1" ng-model="data.memory_mb" ng-init="data.memory_mb = 3" data-ng-trim="false" required></div>
+							      <span></span>
+							      <div class="input-group-addon input-group-addon-disk">GB</div>
+						    </div>
+				    	</div>
+				    	<label class="col-xs-2 note hardwarenote">1-64GB</label>
+				    </div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label" data-localize="系统盘" style="white-space: nowrap;"></label>
+						<div class="col-xs-8">
+							<div class="btn-group" style="width:100%;">
+						        <label class="btn btn-default" data-ng-model="data.system_gb" btn-radio="10">10GB</label>
+						        <label class="btn btn-default" data-ng-model="data.system_gb" btn-radio="20">20GB</label>
+						        <label class="btn btn-default" data-ng-model="data.system_gb" btn-radio="30">30GB</label>
+						        <label class="btn btn-default" data-ng-model="data.system_gb" btn-radio="40">40GB</label>
+							    <div class="input-group my_input_group">
+							      <!-- <input class="form-control" type="number" name="system_gb"
+										required
+										data-ng-model="data.system_gb"
+										data-ng-pattern="/^\s*([1-9][0-9]|100)\s*$/"
+										data-ng-trim="false"
+							      > -->
+							      <div class="input-number-wraper-sm"><input ui-input-number step="1" max="500" min="10" ng-model="data.system_gb" data-ng-trim="false" required></div>
+							      <span></span>
+							      <div class="input-group-addon input-group-addon-disk">GB</div>
+							    </div><label class="col-xs-2 note hardwarenote myhardwarenote">10-500GB</label>
+							</div>
+							
+							<div class="btn-group datapan" style="width:100%; margin: 15px 0 0 0;" data-ng-repeat="btndisk in btndisks">
+								<span data-localize="数据盘" class="mydatapan"></span>
+						        <label class="btn btn-default" data-ng-model="btndisk.local_gb" btn-radio="5">5GB</label>
+						        <label class="btn btn-default" data-ng-model="btndisk.local_gb" btn-radio="10">10GB</label>
+						        <label class="btn btn-default" data-ng-model="btndisk.local_gb" btn-radio="15">15GB</label>
+						        <label class="btn btn-default" data-ng-model="btndisk.local_gb" btn-radio="20">20GB</label>
+							    <div class="input-group my_input_group">
+							      <!-- <input class="form-control" type="number" name="local_gb"
+							      		 required
+										 data-ng-model="btndisk.local_gb"
+										 data-ng-pattern="/^\s*([1-9]|[1-9][0-9]|[1-4][0-9]{2}|500)\s*$/"
+										 data-ng-trim="false"
+							      > -->
+							      <div class="input-number-wraper-sm"><input ui-input-number step="1" max="1024" min="5" ng-model="btndisk.local_gb" data-ng-trim="false" required></div>
+								<span></span>
+								<div class="input-group-addon input-group-addon-disk">GB</div>
+							    </div><label class="col-xs-2 note hardwarenote myhardwarenote">5-1024GB</label>
+							</div>
+ 							
+							<div style="margin-top: 15px;">
+								<a ng-hide="btndisks.length>1" href="javascript:void(0);" class="btn btn-default txt-color-blueLight" data-ng-click="addbtndisk()"><i class="fa fa-plus fa-lg"></i></a>
+								<a ng-hide="!btndisks.length" href="javascript:void(0);" class="btn btn-default txt-color-blueLight" data-ng-click="minusbtndisk()"><i class="fa fa-minus fa-lg"></i></a>
+								<span class="control-label">&nbsp;
+									<span data-localize="增加" data-ng-if="btndisks.length<2">增加</span><span data-ng-if="btndisks.length==1">/ </span><span data-localize="删除2" data-ng-if="btndisks.length">删除</span><span data-localize="数据盘"></span>&nbsp;&nbsp;
+								</span>
+							</div>
+						</div>
+				    </div>
+
+				    <footer class="text-right">
+				    	<button type="submit" name="button" disabled="disabled" class="btn btn-primary"
+								data-ng-disabled="addhardwareForm.$invalid"
+								data-ng-click="ok()" data-localize="提交"></button>
+						<button class="btn btn-default"
+								data-ng-click="close()"
+								data-localize="取消"></button>
+					</footer>
+				</form>
+	        </div>
+
+      </div>
+
+</section>

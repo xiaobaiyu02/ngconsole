@@ -1,0 +1,82 @@
+<section class="dir-user-menu">
+<!-- {{$scope.type}}
+<div>
+	<div class="col-xs-5 control-label text-center">
+		<label class="text-center" localize="从下表选择一个或多个用户">从下表选择一个或多个用户</label>
+		{{$scope.type}}
+	</div>
+	<div class="col-xs-2">&nbsp;</div>
+	<div class="col-xs-5 control-label text-center">
+		<label class="text-center" localize="已选择用户">已选择用户</label>
+	</div>
+</div> -->
+
+<div class="user-menus">
+	<div>
+		<label class="text-center" localize="从下表选择一个或多个用户">从下表选择一个或多个用户</label>
+		<div class="dataTables_filter search" style="float: right;"><label><span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span> <input type="search" maxlength="20" class="form-control" ng-model="searchText"></label></div>
+	</div>	
+	<div class="menus" style="width: 100%">
+		<ul class="menu menu-tree" data-ng-repeat="item in _users track by $index">
+			<div class="menu_header">
+				<span class="fa icon-jj"></span>
+				<span>{{item.typeName}}</span>
+				<span class="pull-right  fa icon-jj-add" data-ng-click="add_selected(item.userData);$event.stopPropagation()"></span>
+			</div>
+			<div class="menu_body">
+				<div>
+					<li class="menuitem" data-ng-repeat="_user in (item.userData) | filter:searchText" ng-click="add_select_rows($event,_user,item.userData)" ng-dblclick="add_selected(_user)">
+						<span class="text-overflow text-overflow-half">{{_user.name}}</span><span class="text-overflow text-overflow-half">{{_user.real_name}}</span>
+					</li>
+				</div>
+			</div>
+		</ul>
+		<ul class="menu menu-tree" data-ng-repeat="item in domain_users track by $index">
+			<div class="menu_header">
+				<span class="fa icon-jj"></span>
+				<span>{{item._name}}</span>
+			</div>
+			<div class="menu_body">
+				<ul class="menu menu-tree" data-ng-repeat="group in item.groups track by $index">
+					<div class="menu_header">
+						<span class="fa icon-jj"></span>
+						<span class="menu-name">{{group.name}}</span>
+						<span class="pull-right  fa icon-jj-add" data-ng-click="add_selected(group.users,$event)"></span>
+					</div>
+					<div class="menu_body">
+						<div>
+							<li class="menuitem" data-ng-repeat="user in group.users | filter:searchText" ng-click="add_select_rows($event,user,group.users)" ng-dblclick="add_selected(user)">
+								<span class="text-overflow text-overflow-half" title="{{user.name}}">{{user.name}}</span><span class="text-overflow text-overflow-half">{{user.real_name}}</span>
+							</li>
+						</div>
+					</div>
+				</ul>
+			</div>
+		</ul>
+		<ul class="menu menu-tree">
+			<div class="menu_header">
+				<span class="fa icon-jj"></span>
+				<span localize='普通用户'></span>
+				<!-- <span class="pull-right  fa icon-jj-add" data-ng-click="add_selected(item.userData);$event.stopPropagation()"></span> -->
+			</div>
+			<div class="menu_body">
+				<tree-node-parent data-users='common_users' data-filtertext='searchText'></tree-node-parent>
+			</div>
+		</ul>
+	</div>
+	<div class="text-center operators">
+		<button  ng-disabled="seRows.length===0" ng-click="ltor()" type="button" class="btn btn-default btn-xs"><i class="fa icon-jj-003"></i></button>
+		<button  ng-disabled="rmRows.length===0" ng-click="rtol()" type="button" class="btn btn-default btn-xs"><i class="fa icon-jj-002"></i></button>
+	</div>
+	<!-- <label class="text-center" localize="已选择用户">已选择用户</label> -->
+	<div class="menus" ng-class="{'menus-error': !selected.length}">
+		<ul class="menu menu-selected">
+			<div class="menu_body">
+				<li class="menuitem" data-ng-repeat="sitem in selected" ng-click="add_remove_rows($event,sitem)" ng-dblclick="remove_selected(sitem)">
+					<span class="text-overflow text-overflow-half">{{sitem.name}}</span><span class="text-overflow text-overflow-half">{{sitem.real_name}}</span>
+				</li>
+			</div>
+		</ul>
+	</div>
+</div>
+</section>

@@ -1,0 +1,83 @@
+<section id="widget-grid">
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div data-widget-grid class="jarviswidget">
+				<!-- widget div-->
+				<div class="noborder">
+					<div class="jarviswidget-editbox"></div>
+					<div class="widget-body no-padding">
+						<div class="form-inline no-footer">
+							<div class="dt-toolbar">
+								<div class="col-xs-6 col-sm-6">
+                                    <button class="btn btn-primary btn-xs" data-dialog="newPoolDialog" data-dialog-url="resource/pool/new_pool.html"><i class="fa icon-jj-addddd"></i>&nbsp;<span localize="新增资源池">新增资源池</span></button>
+                                    <!-- <button class="btn btn-danger btn-xs" data-ng-class="{disabled:!checkOne()}" ng-click="delete()"><i class="fa icon-jj-delete"></i>&nbsp;<span localize="删除">删除</span></button> -->
+                                    <!-- <ul class="dropdown-menu">
+                                        <li><a class="isBatch text-center" href="javascript:" ng-click="open_storage_dialog('logic')" localize="普通网络"></a></li>
+                                        <li><a class="isBatch text-center" href="javascript:" ng-click="open_storage_dialog('vlan')">VLAN</a></li>
+                                    </ul> -->
+								</div>
+								<div class="right_side col-xs-6 col-sm-6">
+									<div class="pull-right filter"> <span localize="显示"></span> <select ng-change="pageSizeChange()" data-ng-model="pagesize" data-ng-options="pagesize for pagesize in pagesizes"></select> <span localize="项结果"></span> </div>
+								</div> 
+							</div>
+						</div>
+						<div class="table-responsive">
+							<table data-vdi-grid
+								class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox table-vertical-center">
+								<thead class="vdi_header">
+									<tr>
+										<!-- <th><label class="checkbox"><input type="checkbox" data-ng-model="checkedAll" data-ng-change="selectAllChange(checkedAll)" data-ng-checked="checkAll()" name="checkbox-inline"><i></i></label></th> -->
+										
+                                        <th localize="资源池名称">资源池名称</th>
+                                        <th localize="类型">类型</th>
+                                        <th localize="主机数量">主机数量</th>
+
+                                        <th localize="状态">状态</th>
+                                        <th localize="描述">描述</th>
+								
+                                        <th localize="操作">操作</th>
+									</tr>
+								</thead>
+								<tbody class="vdi_body">
+									
+									<tr data-ng-repeat="item in rows | paging:currentPage:pagesize:rows">
+										<!-- <td><label class="checkbox"><input data-ng-model="item._selected" data-ng-checked="item._selected" type="checkbox" data-ng-value="item.id" name="checkbox-inline"><i></i></label></td> -->
+
+                                        <td><a href="#/resource/pool/{{item.uuid}}/{{item.type}}">{{item.name}}</a></td>
+                                        <td>{{item.type}}</td>
+                                        <td>{{item.hosts.length}}</td>
+										
+										<td>
+											<i class="icon icon-jj-yes txt-color-greenjj" ng-show="item.status=='normal'" localize-title="正常"></i>
+											<i class="icon icon-jj-Warning txt-color-redjj" ng-show="item.status!='normal'" localize-title="异常"></i>
+										</td>
+										<td style="width:50%;word-break: break-all">{{item.description}}</td>
+
+                                        <td class="nowrap"> 
+                                        	<div>
+                                        		<button localize-title='添加计算节点' ng-show="item.type=='kvm'" class="btn btn-xs btn-default" data-dialog="addHostDialog" data-dialog-url="resource/pool/new_host.html"><i class="fa icon-jj-add-1"></i></button>
+                                        		<button localize-title='添加计算节点' ng-show="item.type=='hyper-v'" class="btn btn-xs btn-default" data-dialog="addHostDialog" data-dialog-url="resource/pool/new_host_hyperv.html"><i class="fa icon-jj-add-1"></i></button>
+                                        		<!-- <abbr class="abbr-title" localize-title='不可编辑'><button class="btn btn-xs btn-default" ng-disabled="item.un_edit" ng-show="item.un_edit"><i class="fa icon-jj-Write"></i></button></abbr> -->
+                                        		<button localize-title='编辑' class="btn btn-xs btn-default" ng-click="edit(item)"><i class="fa icon-jj-Write"></i></button>
+                                        		<!-- <abbr ng-show="item.hosts.length>0&&item.name!=='default'" class="abbr-title" localize-title='不可删除'><button class="btn btn-xs btn-default" disabled><i class="fa icon-jj-delete"></i></button></abbr> -->
+                                        		<button localize-title='删除' class="btn btn-xs btn-default" ng-show="item.hosts.length==0&&item.name!=='default'" ng-click="delete(item)"><i class="fa icon-jj-delete"></i></button>
+                                        	</div>
+                                        </td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="tips" data-ng-if="loading"  localize="LOADING_TEXT">数据正在加载...</div>
+						<div class="tips" data-ng-if="!loading && rows.length == 0"  localize="NO_MATCHING_DATA">没有匹配数据</div>
+						<div data-ng-include="'includes/pagination.html'"></div>
+					</div>
+					<!-- end widget content -->
+				</div>
+				<!-- end widget div -->
+			</div>
+			<!-- end widget -->
+		</article>
+		<!-- WIDGET END -->
+	</div>
+	<!-- end row -->
+</section>

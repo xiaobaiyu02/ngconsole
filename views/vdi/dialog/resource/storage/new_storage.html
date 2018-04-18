@@ -1,0 +1,164 @@
+<div class="modal-body padding-10">
+	<form class="form-horizontal" name="addStorageForm"  novalidate>
+		<fieldset>
+			<legend><header><span localize="添加存储">添加存储</span><button type="button" class="close" ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button></header></legend>
+            <div class="form-group">
+				<label class="col-xs-3 control-label " localize="存储名">存储名</label>
+				<div class="col-xs-6">
+					<input class="form-control" localize="LENGTH_LIMIT" param1="2" param2="20" ng-maxlength="20" maxlength="20" minlength="2" ng-minlength="2" type="text" data-ng-model="storage.name" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label " localize="存储用途">存储用途</label>
+				<div class="col-xs-6">
+					<select class="form-control" ng-disabled="loading" data-ng-model="storage.storage_usability" required ng-change="get_nodes();clear_mess()">
+						<option value="instance" localize="桌面磁盘镜像存储">桌面磁盘镜像存储</option>
+						<option value="local" localize="本地文件共享存储">本地文件共享存储</option>
+					</select> 
+				</div>
+			</div>
+			<div class="form-group" ng-show="storage.storage_usability === 'instance'">
+				<label class="col-xs-3 control-label " localize="资源池">资源池</label>
+				<div class="col-xs-6">
+					<select class="form-control" ng-disabled="loading" data-ng-model="storage.resource_pool" ng-options="resource_pool.name for resource_pool in resource_pools" ng-change="get_nodes();clear_mess()">
+						<!-- <option value="" localize="--请选择--">请选择</option> -->
+					</select>
+				</div>
+			</div>
+			<div class="form-group" ng-show="storage.storage_usability === 'instance'">
+				<label class="col-xs-3 control-label " localize="存储管理节点">存储管理节点</label>
+				<div class="col-xs-6">
+					<select class="form-control" data-ng-model="storage.manage_node" ng-options="value as key for (key,value) in nodes" ng-change="clear_mess()"  ng-required="storage.storage_usability === 'instance'">
+						<!-- <option value="" localize="--请选择--">请选择</option> -->
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-xs-3 control-label " localize="存储类型">存储类型</label>
+				<div class="col-xs-6">
+					<select class="form-control" data-ng-model="storage.type" ng-disabled="loading" ng-change="switchType(storage.type)" required>
+						<option value="" localize="--请选择--">请选择</option>
+						<option value="fc">FC</option>
+						<option value="iscsi">ISCSI</option>
+						<!-- <option value="rbd" localize="分布式存储">分布式存储</option> -->
+					</select> 
+				</div>
+			</div>
+			<!-- ISCSI -->
+			<section ng-if="storage.type=='iscsi'">
+				<div class="form-group">
+					<label class="col-xs-3 control-label required" localize="所在服务器">所在服务器</label>
+					<div class="col-xs-6">
+						<input format-ip class="form-control"  maxlength="15" type="text" ng-model="storage.iscsi.host" name="server" required>
+					</div>
+					<!-- <label class="col-xs-4 note"  localize="MESS_NEWSTORAGE2">填写服务器IP,如 172.16.10.64 </label> -->
+				</div>
+				<div class="form-group">
+					<div class="col-xs-6 col-xs-offset-3">
+						<button ng-class="{disabled:addStorageForm.server.$invalid || loadding}" class="btn btn-primary" ng-click="searchISCSI()" localize="搜索">搜索</button>
+						<!-- <label><img ng-src="img/loadingtext.gif" width="24px" height="24px"/></label> -->
+					</div>
+				</div>
+				<div class="form-group" ng-show="iscsi_targets.length > 0">
+					<label class="col-xs-3 control-label ">ISCSI Target</label>
+					<div class="col-xs-6">
+						<select class="form-control" data-ng-options="iscsi_target for iscsi_target in iscsi_targets" ng-model="storage.iscsi.target" ng-change="searchISCSIlun()" required>
+							<option value="" localize="--请选择--">--请选择--</option>
+	                    </select>
+					</div>
+					<label class="col-xs-2 padding-top-5"><button ng-click="searchISCSI(1)" type="button" class="btn btn-primary btn-xs" localize="重新发现">重新发现</button></label>
+				</div>
+				<div class="form-group" ng-show="iscsi_luns" style="margin-bottom: 0;">
+					<label class="col-xs-3 control-label">ISCSI Lun</label>
+					<div class="col-xs-6">
+						<select class="form-control"  data-ng-options="formatLun(lun) for (idx,lun) in iscsi_luns" ng-model="storage.iscsi.lun" required>
+							<option value="" localize="--请选择--"> --请选择-- </option>
+						</select>
+						<label class="checkbox-inline checkbox-align">
+							<input type="checkbox" class="checkbox" ng-model="storage.iscsi.is_format">
+							<span localize="格式化">格式化</span>
+						</label>
+					</div>
+	                <!-- <label class="col-xs-1"><img ng-show="loadlun" ng-src="img/loadingtext.gif" width="24px" height="24px"/></label> -->
+				</div>
+				<div class="form-group" ng-show="storage.storage_usability === 'instance' && iscsi_targets.length > 0">
+					<label class="col-xs-3 control-label"></label>
+					<div class="col-xs-6">
+						<label class="checkbox-inline checkbox-align">
+							<input type="checkbox" class="checkbox" ng-model="storage.iscsi.dynamic_lv">
+							<span localize='启用精简配置'></span>
+						</label>
+						<label style="position: relative;top: 1px;">
+						    <a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='dynamic_lvTips' data-placement="right" data-html="true" data-content="" data-original-title="" title=""><i class="fa fa-question-circle"></i></a>
+						</label>
+					</div>
+				</div>
+			</section>
+			<!-- FC -->
+			<section ng-if="storage.type=='fc'">
+				<div class="form-group">
+					<label class="col-xs-3 control-label">FC Lun</label>
+					<div class="col-xs-6">
+						<!-- <ul class="tagarea">
+							<li ng-repeat="lun in fc_luns">
+								<label class="checkbox-inline checkbox-align">
+									<input type="checkbox" class="checkbox" ng-model="lun._checked" ng-change="checkOneFC()">
+									<span>{{lun.name}}</span>
+								</label>
+							</li>
+						</ul>
+						<label class="checkbox-inline checkbox-align">
+							<input type="checkbox" class="checkbox" ng-model="storage.is_all_fc" ng-change="checkAllFC(storage.is_all_fc)">
+							<span localize="全选">全选</span>
+						</label> -->
+						<select class="form-control" ng-model="storage.fc.lun" ng-options="formatLun(lun) for (key,lun) in fc_luns" required>
+							<option value="" localize="--请选择--"></option>
+						</select>
+						<label class="checkbox-inline checkbox-align">
+							<input type="checkbox" class="checkbox" ng-model="storage.fc.is_format">
+							<span localize="执行格式化">执行格式化</span>
+						</label><br>
+						<label class="checkbox-inline checkbox-align" ng-show="storage.storage_usability === 'instance'">
+							<input type="checkbox" class="checkbox" ng-model="storage.fc.dynamic_lv">
+							<span localize='启用精简配置'></span>
+						</label>
+						<label style="position: relative;top: 1px;" ng-show="storage.storage_usability === 'instance'">
+						    <a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='dynamic_lvTips' data-placement="right" data-html="true" data-content="" data-original-title="" title=""><i class="fa fa-question-circle"></i></a>
+						</label>
+					</div>
+	                <label class="col-xs-2 padding-top-5"><button ng-click="searchFClun(1)" type="button" class="btn btn-primary btn-xs" localize="重新发现">重新发现</button></label>
+				</div>
+			</section>
+			<!-- 分布式存储 -->
+			<section ng-if="storage.type=='rbd'">
+				<div class="form-group">
+					<label class="col-xs-3 control-label">选择存储池</label>
+					<div class="col-xs-6">
+						<!-- <ul class="tagarea">
+							<li ng-repeat="pool in storage_pools">
+								<label class="checkbox-inline checkbox-align">
+									<input type="checkbox" class="checkbox" ng-model="pool._checked" ng-change="checkOnePool()">
+									<span>{{pool.name}}</span>
+								</label>
+							</li>
+						</ul>
+						<label class="checkbox-inline checkbox-align">
+							<input type="checkbox" class="checkbox" ng-model="storage.is_all_pool" ng-change="checkAllPool(storage.is_all_pool)">
+							<span localize="全选">全选</span>
+						</label> -->
+						<select class="form-control" ng-model="storage.ceph.pool" ng-options="pool.name for pool in storage_pools">
+							<option value="" localize="请选择">请选择</option>
+						</select>
+					</div>
+	                <!-- <label class="col-xs-1"><img ng-show="loadFclun" ng-src="img/loadingtext.gif" width="24px" height="24px"/></label> -->
+				</div>
+			</section>
+			<div class="col-md-12 text-right padding-10">
+	                <img ng-show="loading" src="img/loadingtext.gif" width="32px" height="32px"/>
+					<button class="btn btn-primary" ng-class="{disabled:addStorageForm.$invalid}" type="button" ng-click="ok()" localize=" 确定"> 确定</button>
+					<button class="btn btn-default" ng-click="close()"  localize="取消" type="button"> 取消</button>
+				</div>
+		</fieldset>
+	</form>
+</div>

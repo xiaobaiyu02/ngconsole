@@ -1,0 +1,29 @@
+<div class="modal-body no-padding">
+    <form action="" class="smart-form ng-pristine ng-valid form-horizontal" name="addUseradminFrom" ng-submit="addUseradminFrom.$valid"  novalidate>
+        <header class="myheader"><span data-localize="修改组名"></span><button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button></header>
+        <fieldset>
+            <div class="row" style="margin:10px 0;">
+                <label class="label required col-xs-2 col-sm-2 " data-localize="组名" style="line-height: 30px;"></label>
+                <label class="input col-xs-9 col-sm-9" data-ng-class="{'state-success':addUseradminFrom.name.$valid && addUseradminFrom.name.$dirty,'state-error':addUseradminFrom.name.$invalid && addUseradminFrom.name.$dirty}">
+                    <input 
+                    type="text"
+                    name="name"
+                    data-ng-minlength="{{min_namelength}}" data-ng-maxlength="{{max_namelength}}" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}"
+                    maxlength="20"
+                    min="1" 
+                    required
+                    autocomplete="off" 
+                    data-ng-model="name"
+                    data-ng-trim="false">
+                </label>
+            </div>
+        </fieldset>
+        <footer class="text-right">
+            <button type="submit" name="submit" class="btn btn-primary myfooterbtn"
+                    data-ng-disabled="addUseradminFrom.name.$invalid" 
+                    data-ng-click="ok()" data-localize="提交"></button>
+            <button class="btn btn-default myfooterbtn"
+                    data-ng-click="close()" data-localize="取消"></button>    
+        </footer>
+    </form>
+</div>

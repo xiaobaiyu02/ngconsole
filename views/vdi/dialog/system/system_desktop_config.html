@@ -1,0 +1,98 @@
+<div class="modal-body padding-10">
+	<form class="form-horizontal" name="systemDesktopConfigForm"  novalidate>
+		<legend>
+			<header>
+				<span localize="配置">配置</span>
+				<button type="button" class="close" ng-click="close()">
+					<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+				</button>
+			</header>
+		</legend>
+		<fieldset>
+			<header class="ha-space-line" data-localize="系统桌面设置">系统桌面设置</header>
+			<div class="form-group">
+				<label class="control-label col-xs-3" localize="选择透传设备">选择透传设备</label>
+				<div class="col-xs-8">
+					<div class="tagarea" ng-class="{'border-red':!(devices|selectedFilter).length}">
+						<div class="tag-wrap">
+							<img src="img/loadingtext.gif" ng-if="host_loading" height="24" width="24" alt="">
+							<div ng-show="!host_loading">
+								<label class="tag" ng-class="{on:item._selected}" ng-repeat="item in devices" >
+									 <input type="checkbox" ng-model="item._selected" ng-change="selectOneHost()" ng-disabled="data.is_cancel">
+									 {{item.product_info}}&nbsp;({{item.address}})&nbsp;
+								</label>
+							</div>
+							<div ng-show="devices.length==0">
+								<span localize="无设备">无设备！</span>
+							</div>
+						</div>
+					</div>
+					<div class="tag-checkbox">
+						<label class="checkbox-inline checkbox-align">
+							<input type="checkbox" class="checkbox style-0" ng-model="data.is_all" ng-change="selectAllHost(data.is_all)" ng-disabled="devices.length==0 || data.is_cancel">
+							<span localize="全选">全选</span>
+						</label>
+						<label class="checkbox-inline checkbox-align">
+							<input type="checkbox" class="checkbox style-0" ng-model="data.is_cancel" ng-change="selectAllHost(0);selectOneHost()">
+							<span localize="取消PCI设备透传">取消PCI设备透传</span>
+						</label>
+						<!-- <label for="" class="note" localize="所选择的PCI-E设备将被透传给分布式文件系统桌面使用">E设备将被透传给分布式文件系统桌面使用</label> -->
+					</div>
+
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label required" localize="处理器">处理器</label>
+				<div class="btn-group col-xs-8">
+			        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="1">1</label>
+			        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="2">2</label>
+			        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="3">3</label>
+			        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="4">4</label>
+			        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="8">8</label>
+			         <div class="input-group my_input_group">
+				      <div class="input-number-wraper-sm"><input ui-input-number step="1" max="32" min="1" ng-model="data.cpu_num" data-ng-trim="false" required></div>
+				      <span></span>
+				      <div class="input-group-addon input-group-addon-disk"><span localize='核'>核</span></div>
+				    </div>
+		    	</div>
+		    	<label class="col-xs-1 note hardwarenote">1-32<span localize='核'>核</span></label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label required" localize="内存">内存</label>
+				<div class="btn-group col-xs-8">
+			        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="1.5">1.5GB</label>
+		    		<label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="2">2GB</label>
+			        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="2.5">2.5GB</label>
+			        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="3">3GB</label>
+			        <div class="input-group my_input_group">
+				      <div class="input-number-wraper-sm"><input ui-input-number step="0.5" max="64" min="1" ng-model="data.memory_mb" required></div>
+				      <span></span>
+				      <div class="input-group-addon input-group-addon-disk">GB</div>
+				    </div>
+		    	</div>
+		    	<label class="col-xs-1 note hardwarenote">1-64GB</label>
+		    </div>
+			<header class="ha-space-line" data-localize="运行配置">运行配置</header>
+			<div class="form-group">
+				<label for="" class="control-label col-xs-3" localize="启动">启动</label>
+				<div class="col-xs-7">
+					<label class="checkbox-inline checkbox-align">
+						<input type="checkbox" class="checkbox style-0" ng-model="data.is_on">
+						<span localize="随宿主机服务器启动">随宿主机服务器启动</span>
+					</label>
+				</div>
+			</div>
+			<footer class="text-right padding-10">
+				<img src="img/loadingtext.gif" ng-if="loading" height="24" width="24" alt="">
+				<div ng-show="!loading">
+					<button type="button" class="btn btn-primary" ng-class="{disabled:systemDesktopConfigForm.$invalid || loading}" ng-click="ok()" localize="确定">
+						确定
+					</button>
+					<button type="button" class="btn btn-default" ng-click="close()" localize="取消">
+						取消
+					</button>
+				</div>
+			</footer>
+		</fieldset>
+	</form>
+</div>

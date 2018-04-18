@@ -1,0 +1,147 @@
+<div class="modal-header">
+    <button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title"  localize="桌面池修改">桌面池修改</h4>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal padding-10" name="alterSenceForm" action="" novalidate> 
+        <div class="padding-10">
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label"  localize="系统盘还原">系统盘还原</label>
+                    <div class="col-xs-4">
+                        <select class="form-control" data-ng-model="rollback" data-ng-change="rollbackChange(rollback)">
+                            <option value="0"  localize="无还原设置">不还原</option>
+                            <option value="1"  localize="每次都还原">每次还原</option>
+                            <option value="2"  localize="按周还原">按周还原</option>
+                            <option value="3"  localize="按月还原">按月还原</option>
+                        </select> 
+                    </div>
+                    <div class="col-xs-4" ng-if="rollback == 2">
+                        <select class="form-control" ng-model="$parent.rollback_weekday">
+                            <option value="1"  localize="周一">周一</option>
+                            <option value="2"  localize="周二">周二</option>
+                            <option value="3"  localize="周三">周三</option>
+                            <option value="4"  localize="周四">周四</option>
+                            <option value="5"  localize="周五">周五</option>
+                            <option value="6"  localize="周六">周六</option>
+                            <option value="7"  localize="周日">周日</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-4" ng-if="rollback == 3">
+                        <select class="form-control" ng-model="$parent.rollback_monthday">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="data_rollback!==null">
+                    <label class="col-xs-3 control-label"  localize="数据盘还原">数据盘还原</label>
+                    <div class="col-xs-4">
+                        <select class="form-control" data-ng-model="data_rollback">
+                            <option value="0"  localize="无还原设置">不还原</option>
+                            <option value="1"  localize="每次还原">每次还原</option>
+                            <option value="2"  localize="按周还原">按周还原</option>
+                            <option value="3"  localize="按月还原">按月还原</option>
+                        </select> 
+                    </div>
+                    <div class="col-xs-4" ng-if="data_rollback == 2">
+                        <select class="form-control" ng-model="$parent.data_rollback_weekday">
+                            <option value="1"  localize="周一">周一</option>
+                            <option value="2"  localize="周二">周二</option>
+                            <option value="3"  localize="周三">周三</option>
+                            <option value="4"  localize="周四">周四</option>
+                            <option value="5"  localize="周五">周五</option>
+                            <option value="6"  localize="周六">周六</option>
+                            <option value="7"  localize="周日">周日</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-4" ng-if="data_rollback == 3">
+                        <select class="form-control" ng-model="$parent.data_rollback_monthday">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-3 col-xs-offset-3">
+                        <label class="checkbox-inline checkbox-align">
+                            <input type="checkbox" class="checkbox style-0" ng-model="usb_redir">
+                            <span><i class="font-normal" localize="启用USB"></i></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-4" ng-show="usb_redir && currentItem.virtual_type=='kvm'">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" class="radiobox style-0" value="2.0" ng-model="usb_version">
+                                <span>USB2.0</span> 
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" class="radiobox style-0" value="3.0" ng-model="usb_version">
+                                <span>USB3.0</span> 
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <footer class="text-right">
+                    <img src="img/loadingtext.gif" ng-if="loading" height="24" width="24" alt="">
+                    <button ng-hide="loading" type="button" class="btn btn-primary" ng-click="ok()" ng-class="{'disabled':alterSenceForm.$invalid}"  localize="确定"> 确定 </button>
+                    <button ng-hide="loading" type="button" class="btn btn-default" ng-click="close()"  localize="取消"> 取消 </button>
+                </footer>
+            </fieldset>
+        </div>
+    </form>
+</div>

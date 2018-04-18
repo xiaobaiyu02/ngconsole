@@ -1,0 +1,74 @@
+<div class="modal-body padding-10">
+	<form class="form-horizontal ng-pristine ng-valid" name="addVirtualSwitch"  novalidate>
+		<fieldset>
+			<legend>
+				<header>
+					<span localize="新增分布式虚拟交换机"></span>
+					<button type="button" class="close" ng-click="close()">
+						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+					</button>
+				</header>
+			</legend>
+            <div class="form-group">
+                <label class="col-xs-3 control-label required" localize="名称"></label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" data-ng-minlength="{{min_namelength}}" data-ng-maxlength="{{max_namelength}}" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}" maxlength="20" data-ng-model="name" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-3 control-label" for="description" data-localize="描述"></label>
+                <div class="col-xs-7">
+                    <textarea class="form-control"
+                        style="height: 80px;" 
+                        rows="4"
+                        name="description"
+                        data-localize="不能超过30位字符"
+                        maxlength="30"
+                        data-ng-maxlength="30"
+                        data-ng-model="description"
+                        data-ng-trim="false"
+                    >
+                    </textarea>
+                </div>
+            </div>
+            <div class="form-group">
+            	<label class="col-xs-3 control-label" localize="类型"></label>
+            	<div class="col-xs-7">
+            		<select ng-model='type' class="form-control" data-ng-change="querySwitchdevice(type)">
+            			<option value="flat">Flat</option>
+            			<option value="vlan">VLAN</option>
+            		</select>
+            	</div>
+            </div>
+            <div class="form-group" ng-show="loading_hosts">
+                <label class="col-xs-3 control-label"></label>
+                <div class="col-xs-7">
+                    <img  src="img/loadingtext.gif" width="24px" height="24px"/>
+                </div>
+            </div>
+            <div class="form-group" data-ng-show="!loading_hosts">
+            	<label class="col-xs-3 control-label"></label>
+            	<div class="col-xs-7" data-ng-show="hosts.length">
+            		<div data-localize="关联主机" class="form-group col-xs-6"></div><div data-localize="映射网络适配器" class="form-group col-xs-6"></div>
+            		<ul>
+            			<li data-ng-repeat="item in hosts">
+            				<div class="form-group col-xs-6" style="margin-top: 7px;">{{ item.hostname }}</div>
+            				<div class="form-group col-xs-6">
+								<select class="form-control col-xs-6" data-ng-model="item._dev" data-ng-options="dev for dev in item.devs">
+                                    <option value="" localize="无"></option>
+                                </select>
+            				</div>
+            			</li>
+            		</ul>
+            	</div>
+                <div class="col-xs-7" data-ng-show="!hosts.length" data-localize="无可用的关联主机网卡"></div>
+            </div>
+
+			<div class="col-md-12 text-right padding-10">
+				<button class="btn btn-primary" ng-show="!loading" ng-disabled="!addVirtualSwitch.$valid || loading_hosts || !hosts.length" type="button" ng-click="ok()" localize="确定"></button>
+				<button class="btn btn-default" ng-show="!loading" type="button" ng-click="$close()" localize="取消"> </button>
+                <img ng-show="loading" src="img/loadingtext.gif" width="24px" height="24px"/>
+			</div>
+		</fieldset>
+	</form>
+</div>

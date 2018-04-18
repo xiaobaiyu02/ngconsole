@@ -1,0 +1,115 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" localize="配置全局告警">配置全局告警</h4>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal" id="configMonitorAlarmForm" name="configMonitorAlarmForm" action="" novalidate>
+		<fieldset>
+			<div class="form-group">
+				<label class="control-label col-xs-3" localize="告警项">告警项</label>
+				<div class="col-xs-3">
+					<label class="checkbox-inline">
+						<input class="checkbox" type="checkbox" ng-model="data['node.service_exception'].enabled" disabled>
+						<span localize="核心服务异常">核心服务异常</span>
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-xs-3 col-xs-offset-3">
+					<label class="checkbox-inline">
+						<input class="checkbox" type="checkbox" ng-model="data['node.disconn'].enabled" disabled>
+						<span localize="计算节点离线">计算节点离线</span>
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-xs-3 col-xs-offset-3">
+					<label class="checkbox-inline">
+						<input class="checkbox" type="checkbox" ng-model="data['sys.ha'].enabled">
+						<span localize="主控高可用性">主控高可用性</span>
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-xs-4 col-xs-offset-3">
+					<label class="checkbox-inline">
+						<input class="checkbox" type="checkbox" ng-model="data['inst.ha'].enabled">
+						<span localize="桌面高可用性">桌面高可用性</span>
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-xs-4 col-xs-offset-3">
+					<label class="checkbox-inline">
+						<input class="checkbox" type="checkbox" ng-model="data['inst.teach_desktop_using_time'].enabled">
+						<span localize="教学桌面运行时间">教学桌面运行时间</span>
+					</label>
+				</div>
+				<div class="col-xs-4">
+					<label class="control-label">＞</label>
+					<input type="number" ng-pattern="/^\+?[1-9][0-9]*$/"
+						min="1"
+						ng-disabled="!data['inst.teach_desktop_using_time'].enabled" 
+						ng-model="data['inst.teach_desktop_using_time'].cond_value" 
+						class="form-control form-control-inline" 
+						ng-required="data['inst.teach_desktop_using_time'].enabled"><span localize="小时">小时</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-xs-4 col-xs-offset-3">
+					<label class="checkbox-inline">
+						<input class="checkbox" type="checkbox" ng-model="data['inst.personal_desktop_using_time'].enabled">
+						<span localize="个人桌面运行时间">个人桌面运行时间</span>
+					</label>
+				</div>
+				<div class="col-xs-4">
+					<label class="control-label">＞</label>
+					<input type="number" ng-pattern="/^\+?[1-9][0-9]*$/"
+						min="1"
+						ng-disabled="!data['inst.personal_desktop_using_time'].enabled" 
+						ng-model="data['inst.personal_desktop_using_time'].cond_value"
+						ng-required="data['inst.personal_desktop_using_time'].enabled"
+						class="form-control form-control-inline"><span localize="小时">小时</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-xs-4 col-xs-offset-3">
+					<label class="checkbox-inline">
+						<input class="checkbox" type="checkbox" ng-model="data['sys.authorization'].enabled">
+						<span localize="系统授权日期">系统授权日期</span>
+					</label>
+				</div>
+				<div class="col-xs-4">
+					<label class="control-label">＜</label>
+					<input type="number" ng-pattern="/^\+?[1-9][0-9]*$/"
+						min="1"
+						ng-disabled="!data['sys.authorization'].enabled" 
+						ng-model="data['sys.authorization'].cond_value"
+						ng-required="data['sys.authorization'].enabled"
+						class="form-control form-control-inline"><span localize="天">天</span>
+				</div>
+			</div>
+		</fieldset>
+		<div class="form-group">
+			<label class="col-xs-3 control-label" localize="告警邮件">告警邮件</label>
+			<div class="col-xs-8">
+				<label class="checkbox-inline">
+					<input type="checkbox" class="checkbox" ng-model="config.email_enabled">
+					<span localize="发送告警邮件">发送告警邮件</span>
+				</label>
+			</div>
+		</div>
+		<div class="form-group" ng-show="config.email_enabled">
+			<div class="col-xs-8 col-xs-offset-3">
+				<textarea ng-model="config.email_address" cols="30" rows="4" textarea-email localize-placeholder="MONITOR_EMAILL_MESS" class="form-control" ng-required="config.email_enabled"></textarea>
+			</div>
+		</div>
+		<footer class="text-right">
+			<img ng-show="submiting" src="img/loadingtext.gif" width="32px" height="32px"/>
+			<div ng-show="!submiting">
+				<button type="button" class="btn btn-primary" ng-disabled="configMonitorAlarmForm.$invalid" ng-click="ok()" localize="确定"></button>
+				<button type="button" class="btn btn-default" ng-click="close()" localize="取消"></button>
+			</div>
+		</footer>
+	</form>
+</div>

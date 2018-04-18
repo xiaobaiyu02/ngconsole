@@ -1,0 +1,115 @@
+{
+    "code": 0,
+    "data": [
+        {
+            "id": "24de45c8-c5c2-4418-9430-413e4355b28b",
+            "insts": [],
+            "ip": "172.16.201.205",
+            "name": "XBo-hyperv-01",
+            "status": "active",
+            "type": "server",
+            "virtual_type": "hyper-v"
+        },
+        {
+            "id": "abf1887a-eef8-42aa-9a02-0057d8768435",
+            "insts": [
+                {
+                    "id": "d8033a43-7cf8-4963-880b-42d5a18f4a0b",
+                    "name": "005",
+                    "status": "running",
+                    "type": "vm",
+                    "vm_type": 2
+                },
+                {
+                    "id": "93084667-cb48-4ce7-ba0f-becdea4ba752",
+                    "name": "zjctest-001",
+                    "status": "running",
+                    "type": "vm",
+                    "vm_type": 2
+                },
+                {
+                    "id": "16f56d77-8c1c-4881-95e1-b3b88cd0f750",
+                    "name": "yyh-test",
+                    "status": "running",
+                    "type": "vm",
+                    "vm_type": 2
+                },
+                {
+                    "id": "4a60799e-ad76-498b-99f3-399a1df3b422",
+                    "name": "ubuntu-16.10-gnome",
+                    "status": "running",
+                    "type": "vm",
+                    "vm_type": 2
+                },
+                {
+                    "id": "6caf84f5-60ae-43f1-bb1b-10c4b8fe2fc3",
+                    "name": "ezgo12A-i386-kde",
+                    "status": "running",
+                    "type": "vm",
+                    "vm_type": 2
+                },
+                {
+                    "id": "3d62cb2a-b12b-42ff-a072-07cd17297141",
+                    "name": "zwForAndroid",
+                    "status": "running",
+                    "type": "vm",
+                    "vm_type": 2
+                },
+                {
+                    "id": "6827f8c2-2fa1-4188-8543-13cc44f56475",
+                    "name": "wyq2",
+                    "status": "running",
+                    "type": "vm",
+                    "vm_type": 2
+                },
+                {
+                    "id": "558bc70b-abae-402f-92ff-7fb336aa9da2",
+                    "name": "wyq1",
+                    "status": "running",
+                    "type": "vm",
+                    "vm_type": 2
+                },
+                {
+                    "id": "b601227d-5681-4899-aae4-e3484b4d0265",
+                    "name": "USB-3.0",
+                    "status": "running",
+                    "type": "vm",
+                    "vm_type": 2
+                },
+                {
+                    "id": "2e75559f-df0b-4366-936f-e8760c1144e4",
+                    "name": "test-aa-hy-001",
+                    "status": "running",
+                    "type": "vm",
+                    "vm_type": 2
+                },
+                {
+                    "id": "067715ed-f1ce-4a72-b351-7e48305a7550",
+                    "name": "123-001",
+                    "status": "running",
+                    "type": "vm",
+                    "vm_type": 2
+                },
+                {
+                    "id": "4c45b81c-ecf8-4209-a8b4-45be400c4656",
+                    "name": "zjc win7-kvm-002",
+                    "status": "running",
+                    "type": "vm",
+                    "vm_type": 2
+                },
+                {
+                    "id": "64a6187b-fd71-4b78-8d67-f00e8856ed06",
+                    "name": "zjc win7-kvm-001",
+                    "status": "running",
+                    "type": "vm",
+                    "vm_type": 2
+                }
+            ],
+            "ip": "172.16.201.188",
+            "name": "vdi188",
+            "status": "active",
+            "type": "server",
+            "virtual_type": "kvm"
+        }
+    ]
+}

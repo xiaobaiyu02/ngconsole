@@ -1,0 +1,257 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" data-localize="高级"></h4>
+</div>
+<div class="modal-body">
+	<div role="content">
+		<div class="widget-body fuelux" style="position: relative; padding-bottom: 40px">
+			<form name="runtimeForm" class="form-vertical"  ng-class="{is_error:error}">
+				<header data-localize="运行配置" class="space-line" style="font-size: 15px;padding-bottom: 15px;margin: 0 0 10px 0;display: block;padding: 8px 0;border-bottom: 1px dashed rgba(0, 0, 0, .2); background: #FFF;font-weight: 300;color:#232323;">
+					
+				</header>
+				<div class="row">
+					<div class="form-group clearfix">
+						<label class="col-xs-2 control-label" data-localize="系统盘还原"></label>
+						<div class="col-xs-3">
+							<select class="form-control" data-ng-model="data.rollback" data-ng-change="rollbackChange(this)">
+								<option value="0" data-localize="无还原设置"></option>
+								<option value="1" data-localize="每次都还原"></option>
+								<option value="2" data-localize="按周还原"></option>
+								<option value="3" data-localize="按月还原"></option>
+							</select>
+						</div>
+						<div class="col-xs-3" ng-if="data.rollback === '2'">
+							<select class="form-control" ng-model="data.rollback_weekday" >
+								<option value="1" data-localize="周一"></option>
+								<option value="2" data-localize="周二"></option>
+								<option value="3" data-localize="周三"></option>
+								<option value="4" data-localize="周四"></option>
+								<option value="5" data-localize="周五"></option>
+								<option value="6" data-localize="周六"></option>
+								<option value="7" data-localize="周日"></option>
+							</select>
+						</div>
+						<div class="col-xs-3" ng-if="data.rollback === '3'">
+							<select class="form-control" ng-model="data.rollback_monthday" >
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+								<option value="16">16</option>
+								<option value="17">17</option>
+								<option value="18">18</option>
+								<option value="19">19</option>
+								<option value="20">20</option>
+								<option value="21">21</option>
+								<option value="22">22</option>
+								<option value="23">23</option>
+								<option value="24">24</option>
+								<option value="25">25</option>
+								<option value="26">26</option>
+								<option value="27">27</option>
+								<option value="28">28</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group clearfix">
+						<label class="col-xs-2 control-label" data-localize="数据盘还原"></label>
+						<div class="col-xs-3">
+							<select class="form-control" data-ng-model="data.data_rollback" >
+								<option value="0" data-localize="无还原设置"></option>
+								<option value="1" data-localize="每次还原"></option>
+								<option value="2" data-localize="按周还原"></option>
+								<option value="3" data-localize="按月还原"></option>
+							</select>
+						</div>
+						<div class="col-xs-3" ng-if="data.data_rollback === '2'">
+							<select class="form-control" ng-model="data.data_rollback_weekday" >
+								<option value="1" data-localize="周一"></option>
+								<option value="2" data-localize="周二"></option>
+								<option value="3" data-localize="周三"></option>
+								<option value="4" data-localize="周四">周四</option>
+								<option value="5" data-localize="周五">周五</option>
+								<option value="6" data-localize="周六">周六</option>
+								<option value="7" data-localize="周日">周日</option>
+							</select>
+						</div>
+						<div class="col-xs-3" ng-if="data.data_rollback === '3'">
+							<select class="form-control" ng-model="data.data_rollback_monthday" >
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+								<option value="16">16</option>
+								<option value="17">17</option>
+								<option value="18">18</option>
+								<option value="19">19</option>
+								<option value="20">20</option>
+								<option value="21">21</option>
+								<option value="22">22</option>
+								<option value="23">23</option>
+								<option value="24">24</option>
+								<option value="25">25</option>
+								<option value="26">26</option>
+								<option value="27">27</option>
+								<option value="28">28</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group clearfix">
+						<div class="col-xs-4 col-xs-offset-2">
+							<label class="checkbox-inline checkbox-align">
+								<input type="checkbox" class="checkbox style-0" ng-model="data.enable_share">
+								<span><i class="font-normal" localize="自动挂载共享磁盘"></i></span>
+							</label>
+							<label style="position: relative;top: 2px;">
+								<a class="mypopover" htmlpopover='{{auto_mountTeachTips}}'><i class="fa fa-question-circle"></i></a>
+							    <!-- <a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='auto_mountPersonalTips' data-placement="right" data-html="true" data-content="" data-original-title="" title=""><i class="fa fa-question-circle"></i></a> -->
+							</label>
+						</div>
+						<div class="col-xs-4" ng-if='data.enable_share'>
+							<select class="form-control" required data-ng-model="data.share_server" ng-options="share_server.net.ip_address for share_server in share_servers">
+								<option value="" localize="--请选择--"></option>
+							</select> 
+						</div>
+						<div class="col-xs-1" style="padding: 4px 0 0 0;" ng-if='data.enable_share && loading_server'><img src="img/HLloading.gif" alt="" width="20px" height="20px"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group clearfix">
+						<div class="col-xs-3 col-xs-offset-2">
+							<label class="checkbox-inline checkbox-align">
+								<input type="checkbox" class="checkbox style-0" ng-model="data.usb_redir">
+								<span><i class="font-normal" localize="启用USB"></i></span>
+							</label>
+						</div>
+						<div class="col-xs-7">
+							<div class="radio">
+								<label>
+									<input type="radio" class="radiobox style-0" value="2.0" ng-disabled="!data.usb_redir" ng-model="data.usb_version">
+									<span>USB2.0</span>
+								</label>
+								<label>
+									<a class="mypopover" htmlpopover='{{USBRedictTips}}'><i class="fa fa-question-circle"></i></a>
+								</label>
+							</div>
+							<div class="radio">
+								<label>
+									<input type="radio" class="radiobox style-0" ng-disabled="!data.usb_redir || data.isxp" value="3.0" ng-model="data.usb_version">
+									<span>USB3.0</span>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group clearfix" ng-show="data.usb_redir && data.isxp">
+					<div class="col-xs-9 col-xs-offset-2">
+						<p class="note" localize="USB_NOTE"><!-- 说明：当桌面操作系统为windows 7及其以上版本,才能启用USB3.0重定向--></p>
+					</div>
+				</div>
+			</form>
+
+
+			<div data-name="桌面属性">
+				<form class="smart-form form-vertical" name="nameForm">
+					<header class="space-line" data-localize="HSOT_NAME_CONFIG">
+						配置计算机名
+					</header>
+					<section>
+						<div class="row">
+							<div class="col col-4">
+								<label class="label" data-localize="FORMAT">格式</label>
+								<label class="select">
+									<select ng-model="data.hostname_type" required>
+										<option value="1" data-localize="PREFIX1">前缀1</option>
+										<option value="2" data-localize="PREFIX01">前缀01</option>
+										<option value="3" data-localize="PREFIX001">前缀001</option>
+									</select></label>
+							</div>
+							<div class="col col-4">
+								<label class="label required" data-localize="PREFIX">前缀</label>
+								<label class="input"><input ng-model="data.hostname_prefix" maxlength="12" data-localize="LENGTH_LIMIT" param1="2" param2="12" minlength="1" ng-minlength="1" ng-maxlength="12" class="form-control" type="text" ng-pattern="/^\s*[A-Za-z]+([A-Za-z0-9|-]+)\s*$/" required></label>
+							</div>
+							<div class="col col-4">
+								<label class="label required" data-localize="BEGIN_WITH"><!-- 起始数字 --></label>
+								<label class="input"><input input-number ng-model="data.hostname_beginwith" class="form-control" min="1" max="999" type="number"  ng-pattern="/^\s*(\d{1,})\s*$/" required></label>
+							</div>
+						</div>
+						<div class="row" ><div  class="note col col-sm-12" ng-show="data.hostname_prefix && data.hostname_beginwith" param1="{{addZero(data.hostname_type,data.hostname_prefix,data.hostname_beginwith)}}" data-localize="HOST_NAME_IS_"></div></div>
+						<div class="row" ><div  class="note col col-sm-12" ng-show="!(data.hostname_prefix && data.hostname_beginwith)" data-localize="HOST_NAME_IS_NOT"></div></div>
+					</section>
+					<div>
+						<div class="checkbox no-padding">
+							<label>
+								<input type="checkbox" class="checkbox style-0" ng-model="data.MORE" ng-change="clearRDP(this)">
+								<span data-localize="ADVANCED">高级选项</span>
+							</label>
+							<label ng-show="data.MORE">
+								<input type="checkbox" class="checkbox style-0" ng-model="data.RDP">
+								<span>RDP</span>
+							</label>
+						</div>
+						<div ng-show="data.MORE">
+							<header class="space-line" data-localize="CONFIGURE_USER_NAME">
+								配置用户名
+							</header>
+							<section>
+								<div class="row">
+									<div class="col col-4">
+										<label class="label" data-localize="FORMAT">格式</label>
+										<label class="select">
+											<select class="" ng-model="data.username_type" >
+												<option value="1" data-localize="PREFIX1">前缀 + 1位数字</option>
+												<option value="2" data-localize="PREFIX01">前缀 + 2位数字</option>
+												<option value="3" data-localize="PREFIX001">前缀 + 3位数字</option>
+											</select>
+										</label>
+									</div>
+									<div class="col col-4">
+										<label class="label required" data-localize="PREFIX">前缀</label>
+										<label class="input"><input ng-model="data.username_prefix" maxlength="12" minlength="1" ng-minlength="1" ng-maxlength="12" class="form-control" data-localize="LENGTH_LIMIT" param1="1" param2="12" type="text" ng-pattern="/^\s*[A-Za-z]+([A-Za-z0-9|-]*)\s*$/" required></label>
+									</div>
+									<div class="col col-4">
+										<label class="label required" data-localize="BEGIN_WITH">起始数字</label>
+										<label class="input"><input input-number ng-model="data.username_beginwith" min="1" max="999" class="form-control" type="number" min="1" required ng-pattern="/^\s*(\d{1,})\s*$/"></label>
+									</div>
+								</div>
+								<div class="row"><div ng-show="data.username_prefix && data.username_beginwith" class="note col col-sm-12" param1="{{addZero(data.username_type, data.username_prefix, data.username_beginwith)}}" data-localize="USER_NAME_IS_"></div></div>
+								<div class="row"><div ng-show="!(data.username_prefix && data.username_beginwith)" class="note col col-sm-12" data-localize="USER_NAME_IS_NOT"></div></div>
+							</section>
+						</div>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-primary" ng-click="ok()" ng-disabled="runtimeForm.$invalid || nameForm.$invalid" localize="确定">确定</button>
+	<button type="button" class="btn btn-default" ng-click="close()" localize="取消">取消</button>
+</div>

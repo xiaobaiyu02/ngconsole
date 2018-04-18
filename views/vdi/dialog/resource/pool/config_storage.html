@@ -1,0 +1,75 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" localize="配置存储"></h4>
+</div>
+<div class="modal-body">
+		<form class="form-horizontal" name="configStorageForm" novalidation>
+			<div class="form-group">
+				<label class="col-xs-4 control-label" localize="主机"></label>
+				<div class="col-xs-6">
+					<input type="text" disabled class="form-control" ng-model="host">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4 control-label" localize="系统盘镜像存储设备"></label>
+				<div class="col-xs-6">
+					<select class="form-control" data-ng-options="lun.name for lun in luns track by lun.uuid" ng-model="$parent.imagePropertyLun" required ng-change="filterStorage($parent.imagePropertyLun,1)"></select>
+					<div class="control-bar clearfix" ng-show="$parent.imagePropertyLun._total_size">
+						<div class="progress progress-xs control-bar-l">
+							<div class="progress-bar progress-bar-primary" style="width:{{($parent.imagePropertyLun._used_size/$parent.imagePropertyLun._total_size * 100)}}%" role="progressbar"></div>
+						</div>
+						<div class="control-bar-r">{{$parent.imagePropertyLun._used_size}}/{{$parent.imagePropertyLun._total_size}}GB</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4 control-label" localize="数据盘镜像存储设备"></label>
+				<div class="col-xs-6">
+					<select class="form-control" data-ng-options="lun.name for lun in luns track by lun.uuid" ng-model="$parent.imageCapacityLun" required ng-change="filterStorage($parent.imageCapacityLun,2)"></select>
+					<div class="control-bar clearfix" ng-show="$parent.imageCapacityLun._total_size">
+						<div class="progress progress-xs control-bar-l">
+							<div class="progress-bar progress-bar-primary" style="width:{{($parent.imageCapacityLun._used_size/$parent.imageCapacityLun._total_size * 100)}}%" role="progressbar" style=""></div>
+						</div>
+						<div class="control-bar-r">{{$parent.imageCapacityLun._used_size}}/{{$parent.imageCapacityLun._total_size}}GB</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4 control-label" localize="系统盘存储设备"></label>
+				<div class="col-xs-6">
+					<select class="form-control" data-ng-options="lun.name for lun in sys_luns track by lun.uuid" ng-model="$parent.propertyLun" required></select>
+					<div class="control-bar clearfix" ng-show="$parent.propertyLun._total_size">
+						<div class="progress progress-xs control-bar-l">
+							<div class="progress-bar progress-bar-primary" style="width:{{($parent.propertyLun._used_size/$parent.propertyLun._total_size * 100)}}%" role="progressbar" style=""></div>
+						</div>
+						<div class="control-bar-r">{{$parent.propertyLun._used_size}}/{{$parent.propertyLun._total_size}}GB</div>
+					</div>
+				</div>
+				<div class="col-xs-2"><img ng-show="loading_lun" src="img/loadingtext.gif" width="24px" height="24px"/></div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4 control-label" localize="数据盘存储设备"></label>
+				<div class="col-xs-6">
+					<select class="form-control"  data-ng-options="lun.name for lun in data_luns track by lun.uuid" ng-model="$parent.capacityLun" required></select>
+					<div class="control-bar clearfix" ng-show="$parent.capacityLun._total_size">
+						<div class="progress progress-xs control-bar-l">
+							<div class="progress-bar progress-bar-primary" style="width:{{($parent.capacityLun._used_size/$parent.capacityLun._total_size * 100)}}%" role="progressbar" style=""></div>
+						</div>
+						<div class="control-bar-r">{{$parent.capacityLun._used_size}}/{{$parent.capacityLun._total_size}}GB</div>
+					</div>
+				</div>
+				<div class="col-xs-2"><img ng-show="loading_lun" src="img/loadingtext.gif" width="24px" height="24px"/></div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4 control-label" localize="主机缓存设备"></label>
+				<div class="col-xs-6">
+					<select class="form-control" data-ng-model="hostLun" data-ng-options="lun.name for lun in hostluns" required></select>
+				</div>
+			</div>
+			<footer class="text-right">
+				<button type="button" ng-show="!loading" class="btn btn-primary" ng-click="ok()" localize="确定"></button>
+				<button type="button" ng-show="!loading" class="btn btn-default" ng-click="close()" localize="取消"></button>
+                <img ng-show="loading" src="img/loadingtext.gif" width="24px" height="24px"/>
+			</footer>
+		</form>
+</div>

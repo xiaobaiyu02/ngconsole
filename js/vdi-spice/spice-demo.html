@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body{overflow: hidden;}
+		iframe{
+			position: absolute;
+			top: 40px;
+			left: 0px;
+			width: 100%;
+			bottom: 0px;
+		}
+	</style>
+</head>
+<body>
+	<div>工具栏</div>
+	<iframe id="webSpice" src="" frameborder="0" marginheight="0" marginwidth="0" style="width:100%;height:100%;"></iframe>
+	<script>
+	var token=location.hash.replace(/^#/gi,"");
+	var webSpice=document.getElementById("webSpice");
+	webSpice.src="vdi-client/index.html?host=172.16.201.188&port=6082&token="+token+"&password="; //dnNSuqzP
+
+	</script>
+</body>
+</html>

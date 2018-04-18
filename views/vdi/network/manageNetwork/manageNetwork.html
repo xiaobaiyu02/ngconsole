@@ -1,0 +1,79 @@
+<section>
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div data-widget-grid class="jarviswidget">
+				<!-- widget div-->
+				<div class="noborder">
+					<!-- widget edit box -->
+					<div class="jarviswidget-editbox">
+						<!-- This area used as dropdown edit box -->
+					</div>
+					<!-- end widget edit box -->
+
+					<!-- widget content -->
+					<div class="widget-body no-padding">
+						<div class="form-inline no-footer">
+							<div class="dt-toolbar">
+								<div class="col-xs-6 col-sm-6">
+									<button class="btn btn-primary btn-xs dropdown-toggle isBatch" data-toggle="dropdown" data-ng-class="{disabled:loading || rows.length == 0}"><i class="fa icon-jj-all"></i> <span data-localize="修改"></span> <span class="caret"></span></button>
+									<ul class="dropdown-menu">
+										<li style="cursor:pointer; position:relative;"><a class="btn isBatch" data-localize="修改管理网络" data-ng-click="modify('management')" data-ng-class="{disabled:manage_rowsHA.length==rows.length}"></a><span class="parameterdisabled" data-ng-if="manage_rowsHA.length==rows.length"></span></li>
+                                        <li class="divider"></li>
+                                        <li style="cursor:pointer; position:relative;"><a class="btn isBatch" data-localize="修改镜像网络" data-ng-click="modify('image')" data-ng-class="{disabled:img_rowsHA.length==img_rows.length}"></a><span class="parameterdisabled" data-ng-if="img_rowsHA.length==img_rows.length"></span></li>
+									</ul>
+								</div>
+								<div class="right_side col-xs-6 col-sm-6">
+									<div class="pull-right filter"> <span localize="显示"></span> <select ng-change="pageSizeChange()" data-ng-model="pagesize"data-ng-options="pagesize for pagesize in pagesizes"></select> <span localize="项结果"></span> </div>
+								</div> 
+							</div>
+						</div>
+						<div class="table-responsive">
+							<table data-vdi-grid
+								class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox table-vertical-center">
+								<thead class="vdi_header">
+									<tr>
+                                        <th localize="主机名"></th>
+                                        <th localize="类型"></th>
+                                        <th localize="管理网络"></th>
+                                        <th localize="镜像网络"></th>
+									</tr>
+								</thead>
+								<tbody class="vdi_body">
+									<tr data-ng-repeat="item in rows | paging:currentPage:pagesize:rows">
+                                        <td width="15%">{{ item.host_name }}</td>
+                                        <td data-ng-if="!item.controller_and_compute && item.host_type=='controller'" data-localize="主控节点"></td>
+                                        <td data-ng-if="!item.controller_and_compute && item.host_type=='compute'" data-localize="计算节点"></td>
+                                        <td data-ng-if="item.controller_and_compute" data-localize="主控节点/计算节点"></td>
+										<td>{{ item.management_dev }}/{{ item.management_ip }}</td>
+										<td data-ng-if="item.host_type=='controller'">{{ item.image_dev }}/{{ item.image_ip }}</td>
+										<td data-ng-if="(item.host_type=='compute' && item.status=='active' && item.image_ip && item._connect) || (item.host_type=='compute' && item.status!=='active')">{{ item.image_dev }}/{{ item.image_ip }}</td>
+										<td data-ng-if="item.host_type=='compute' && item.status=='active' && (!item._connect || !item.image_ip)"><i class="icon icon-jj-Warning txt-color-redjj" data-localize-title="镜像网络无法连通"></i></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="tips" data-ng-if="loading" data-localize="LOADING_TEXT"></div>
+						<div class="tips" data-ng-if="!loading && rows.length == 0" data-localize="NO_MATCHING_DATA"></div>
+						<div data-ng-include="'includes/pagination.html'"></div>
+					</div>
+				</div>
+<!-- 				<section class="context_wrapper">
+					<div data-ng-if="currentItem" class="menu_wrapper grid_context_menu">
+						<ul class="menu_item_list">
+							<li class="menu_item"><a class="menu_label" href="javascript:"><span data-localize="修改"></span><i></i></a>
+								<div class="menu_wrapper sub_menu">
+									<ul class="menu_item_list">
+										<li class="menu_item"><a class="menu_label" data-localize="修改管理网络" data-ng-click="modify('management')"></a></li>
+										<li class="menu_split"></li>
+										<li class="menu_item"><a class="menu_label" data-localize="修改镜像网络" data-ng-click="modify('image')"></a></li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</section> -->
+			</div>
+		</article>
+	</div>
+</section>
+<script>pageSetUp();</script>

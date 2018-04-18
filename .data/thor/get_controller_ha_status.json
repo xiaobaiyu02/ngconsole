@@ -1,0 +1,19 @@
+{
+	"code": 0,
+	"result": {
+		"data_sync": "synced",
+		"is_split_brain": false,
+		"ha_mode": "active_passive",
+		"floating_ip": "172.16.101.151",
+		"roles": [
+			{
+				"ip": "172.16.101.150",
+				"role": "active"
+			},
+			{
+				"ip": "172.16.101.152",
+				"role": "passive"
+			}
+		]
+	}
+}

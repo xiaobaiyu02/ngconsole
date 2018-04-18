@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title data-localize='编辑'></title>
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<meta name="robots" content="nofollow" />
+	<meta name="description" content="A HTML5 based RDP client">
+	<meta name="viewport" content="width=device-width height=device-height user-scalable=no">
+	<meta name="cursor-event-mode" content="native">
+	<meta name="touch-event-mode" content="pure-with-mouse-conversion">
+	<link rel="stylesheet" id="vdi_skins_url" type="text/css" media="screen">
+	<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-production.min.css">
+	<script src="js/libs/jquery-2.1.1.js"></script>
+	<script src="js/bootstrap/bootstrap.min.js"></script>
+	<script src="js/notification/SmartNotification.min.js"></script>
+	<script src="js/libs/angular/angular.js"></script>
+	<script src="js/libs/angular/angular-resource.js"></script>
+	<script src="js/libs/angular/ui-bootstrap-custom-tpls-0.11.0.js"></script>
+	<style>
+		iframe{
+			position: absolute;
+			top: 32px;
+			left: 0px;
+			width: 100%;
+			height: calc(100% - 32px);
+			bottom: 0px;
+		}
+		body,html{overflow: hidden;height: 100%;width: 100%}
+		.toolbar{
+		    height:32px;
+		    line-height:32px;
+		    border-bottom:#333;
+		    background:#ccc;
+		    position:fixed;
+		    z-index: 999;
+		    top:0;
+		    left:0;
+		    width:100%;
+		    padding:0 16px;
+		}
+		.update_tem{
+		    display: inline-block;
+		    width: 18%;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    white-space: nowrap;
+		    position: relative;
+		    top: 5px;
+		}
+		.tab-content{
+		    padding: 20px 0;
+		}
+		.nav-tabs>li>a{
+		    color: #666;
+		}
+	</style>
+	<script type="text/javascript">
+	    window.$$$storage = {
+	        getSessionStorage: function(key){
+	            return sessionStorage.getItem('vdi_'+ key);
+	        },
+	        setSessionStorage: function(key, value){
+	            sessionStorage.setItem('vdi_'+ key, value);
+	        },
+	        clearSessionStorage: function(){
+	            sessionStorage.clear()
+	        }
+	    }
+	</script>
+	<script src="../js/env.js"></script>
+</head>
+<body data-ng-controller="browserSpiceController" style="text-align: center;">
+<div  class="toolbar smart-style-0">
+    <b>{{ name }}</b>
+    <b id="noVNC_status">Loading</b>
+    <div style="float:right;">
+        <a class="btn btn-xs btn-primary" href="javascript:" data-ng-click="CAD()"><i class="fa icon-uniF01E"></i><span data-localize="发送">发送</span> (Ctrl+alt+del)</a>
+    </div>
+</div>
+<iframe id="webSpice" class="iframe" src="" frameborder="0" marginheight="0" marginwidth="0"></iframe>
+<!-- <script type="text/javascript" src='personal_login/js/webLoginSpice.js'></script> -->
+<script>$BootScript("webLoginSpice")</script>
+<script>var $$$MAIN_MODULE = "vdi.webSpice";</script>
+<script>
+if($$$storage.getSessionStorage('current_theme')){
+    $(document.body).addClass($$$storage.getSessionStorage('current_theme'));
+}
+else{
+    $(document.body).addClass("smart-style-0");
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<div class="modal-body padding-10">
+	<form class="form-horizontal ng-pristine ng-valid" name="addStorageForm"  novalidate>
+		<fieldset>
+			<legend><header><span localize="调整范围">调整范围</span><button type="button" class="close" ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button></header></legend>
+			<div class="form-group">
+				<label class="col-xs-3 control-label required" localize="开始IP">开始IP</label>
+				<div class="col-xs-7">
+					<input type="text" type="text" format-ip ng-model="start" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label required" localize="结束IP">结束IP</label>
+				<div class="col-xs-7">
+					<input type="text" type="text" format-ip ng-model="end" required>
+				</div>
+			</div>
+			<div class="col-md-12 text-right padding-10">
+				<button class="btn btn-primary" ng-class="{disabled:!addStorageForm.$valid}" type="button" ng-click="ok()" ng-show="!submiting" localize="确定"> 确定</button>
+				<img src="img/loadingtext.gif" style="width:24px;height:24px;" ng-show="submiting">
+				<button class="btn btn-default" type="button" ng-click="close()" localize="取消"> 取消</button>
+			</div>
+		</fieldset>
+	</form>
+</div>

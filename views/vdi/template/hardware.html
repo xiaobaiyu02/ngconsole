@@ -1,0 +1,72 @@
+<section>
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="jarviswidget" data-widget-grid>
+				<!-- widget div-->
+				<div class="noborder">
+					<div class="jarviswidget-editbox"></div>
+					<div class="widget-body no-padding">
+						<section class="dt-toolbar">
+							<div class="left_side col-sm-6">
+								<a class="btn btn-primary btn-xs " data-dialog="addHardwareTemplateDialog" data-dialog-size="md" data-dialog-url="template/template_hardware_add.html"><i class="icon-jj-addddd fa"></i> <span data-localize="新增"></span></a>
+								<a class="btn btn-danger btn-xs isBatch" data-ng-class="{disabled:!checkOne()}" data-ng-click="delete()" href="javascript:"><i class="icon-jj-delete fa"></i> <span data-localize="删除"></span></a>
+							</div>
+						</section>
+						<div class="table-responsive noborderbottom">
+							<div class="padding-20">
+								<div class="row">
+							        <div class="col-xs-4 col-sm-3" data-id="{{item.id}}" data-ng-repeat="item in rows">
+							            <div class="panel pricing-big relative panel-primary">
+							                <div class="panel-heading smart-form mypanelhead hardwarepanelhead">
+							                	<div class="checkbox row">
+							                		<div class="col-md-2 col-sm-2 col-xs-2">
+							                			<label class="checkbox-inline">
+															<input data-ng-model="item._selected" data-ng-checked="item._selected" type="checkbox" data-ng-value="item.id" name="checkbox-inline" class="checkbox style-0"><span></span>
+														</label>
+								                		</div>
+													<h2 class="head-title col-md-10 col-sm-10 col-xs-10" title="{{item.name}}">{{item.name}}</h2>
+												</div>
+							                    <div class="panel-cont panel-cont flex">
+							                    	<img ng-src="img/hardware_model.png" class="panel-picture">
+								                    <ul class="panel-mess mypanel-mess">
+								                    	<li class="panel-item">
+								                    		<label data-localize="CPU"></label>
+								                    		<div class="item-flex">{{item.cpu_num}}</div>
+								                    	</li>
+								                    	<li class="panel-item">
+								                    		<label data-localize="内存"></label>
+								                    		<div class="item-flex">{{item.memory_mb/1024}}G</div>
+								                    	</li>
+								                    	<li class="panel-item">
+								                    		<label data-localize="系统盘"></label>
+								                    		<div class="item-flex">{{item.system_gb}}G</div>
+								                    	</li>
+								                    	<li class="panel-item" data-ng-if="item.local_gb>1">
+								                    		<label data-localize="数据盘"></label>
+							                    			<div class="item-flex">{{item.local_gb}}G</div>
+								                    	</li>
+								                    	<li class="panel-item" data-ng-if="item.local_gb1>1">
+								                    		<label data-localize="数据盘"></label>
+							                    			<div class="item-flex">{{item.local_gb1}}G</div>
+								                    	</li>
+								                  	</ul>
+							                  	</div>
+							                </div>
+							                <div class="panel-footbar primary hardware_panelfooter">
+												<a href="javascript:void(0)" class="icon" data-localize-title="删除模版"  data-ng-click="delete(item)"><i class="fa fa-trash-o"></i></a>
+							                </div>
+							            </div>
+							        </div>
+					    		</div>
+					    		<div class="tips" data-ng-if="loading" data-localize="LOADING_TEXT"></div>
+								<div class="tips" data-ng-if="!loading && rows.length == 0" data-localize="NO_MATCHING_DATA"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</article>
+	</div>
+</section>
+<script>pageSetUp();</script>

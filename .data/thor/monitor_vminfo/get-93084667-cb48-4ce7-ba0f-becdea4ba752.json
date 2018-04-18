@@ -1,0 +1,106 @@
+{
+    "code": 0,
+    "data": {
+        "result": {
+            "cpu": {
+                "system": 0,
+                "user": 0
+            },
+            "disk": {
+                "read_speed": 0,
+                "write_speed": 0
+            },
+            "mem": {
+                "free": 3459477504,
+                "total": 4294434816
+            },
+            "net": {
+                "read_speed": 3384,
+                "write_speed": 64
+            },
+            "process_list": [
+                {
+                    "command": "System",
+                    "cpu": 0,
+                    "mem": 73728,
+                    "pid": 4,
+                    "time": 8837,
+                    "user": "SYSTEM"
+                },
+                {
+                    "command": "smss",
+                    "cpu": 0,
+                    "mem": 376832,
+                    "pid": 260,
+                    "time": 8837,
+                    "user": "SYSTEM"
+                },
+                {
+                    "command": "csrss",
+                    "cpu": 0,
+                    "mem": 1449984,
+                    "pid": 352,
+                    "time": 8835,
+                    "user": "SYSTEM"
+                },
+                {
+                    "command": "wininit",
+                    "cpu": 0,
+                    "mem": 1179648,
+                    "pid": 400,
+                    "time": 8835,
+                    "user": "SYSTEM"
+                },
+                {
+                    "command": "csrss#1",
+                    "cpu": 0,
+                    "mem": 1622016,
+                    "pid": 416,
+                    "time": 8835,
+                    "user": "SYSTEM"
+                },
+                {
+                    "command": "winlogon",
+                    "cpu": 0,
+                    "mem": 2301952,
+                    "pid": 456,
+                    "time": 8835,
+                    "user": "SYSTEM"
+                },
+                {
+                    "command": "services",
+                    "cpu": 0,
+                    "mem": 3944448,
+                    "pid": 492,
+                    "time": 8835,
+                    "user": "SYSTEM"
+                },
+                {
+                    "command": "lsass",
+                    "cpu": 0,
+                    "mem": 2981888,
+                    "pid": 508,
+                    "time": 8835,
+                    "user": "SYSTEM"
+                },
+                {
+                    "command": "lsm",
+                    "cpu": 0,
+                    "mem": 1429504,
+                    "pid": 516,
+                    "time": 8835,
+                    "user": "SYSTEM"
+                },
+                {
+                    "command": "svchost#6",
+                    "cpu": 0,
+                    "mem": 6332416,
+                    "pid": 572,
+                    "time": 8834,
+                    "user": "NETWORK SERVICE"
+                }
+            ]
+        },
+        "success": true
+    }
+}

@@ -1,0 +1,36 @@
+{
+	"code": 0,
+	"user": {
+		"ad_server": null,
+		"address": null,
+		"class_id": null,
+		"contact": null,
+		"createdDate": 1456303010000.0,
+		"created_at": 1456303010000.0,
+		"email": null,
+		"group": null,
+		"id": 1,
+		"instance_num": 0,
+		"keys": "Summary,Resource,Console,Pool,Storage,Network,ManageNetwork,VirtualSwitch,DataNetwork,DHCP,Desktop,Teaching_desktop,Personal_desktop,Template,Teaching_template,Personal_template,Hardware_template,Terminal,Classroom,Terminal_Manage,User,Role_Manage,Administrator,Common_user,Domain_user,Monitor,Host_monitoring,Desktop_monitoring,Alarm_information,Alarm_policy,Timetable,Course_list,Plan,Timer_switch,HA,desktop_ha,System,System_deploy,System_desktop,System_backup,System_ISO,USB_redirection,System_set,System_upgrade,Operation_log,About",
+		"last_login": "172.16.133.110",
+		"name": "admin",
+		"password": null,
+		"permission": 1,
+		"pool": [
+			16,
+			13,
+			12,
+			8,
+			7,
+			6,
+			5,
+			2,
+			1
+		],
+		"real_name": "admin",
+		"role": 0,
+		"role_desc": "\u7ba1\u7406\u5458",
+		"sex": null,
+		"user_num": null
+	}
+}

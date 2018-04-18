@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title data-localize='编辑'></title>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="robots" content="nofollow" />
+<meta name="description" content="A HTML5 based RDP client">
+<meta name="viewport" content="width=device-width height=device-height user-scalable=no">
+<meta name="cursor-event-mode" content="native">
+<meta name="touch-event-mode" content="pure-with-mouse-conversion">
+<link rel="stylesheet" type="text/css" media="screen" href="../../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="../../css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="../../css/vkb.css">
+<link rel="stylesheet" id="vdi_skins_url" type="text/css" media="screen">
+<style>
+body{ margin:32px 0 0;}
+.toolbar{
+    height:32px;
+    line-height:32px;
+    border-bottom:#333;
+    background:#ccc;
+    position:fixed;
+    z-index: 999;
+    top:0;
+    left:0;
+    width:100%;
+    padding:0 16px;
+}
+.update_tem{
+    display: inline-block;
+    width: 18%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: relative;
+    top: 5px;
+}
+.tab-content{
+    padding: 20px 0;
+}
+.nav-tabs>li>a{
+    color: #666;
+}
+</style>
+<script src="../../js/libs/jquery-2.1.1.js"></script>
+<script src="../../js/bootstrap/bootstrap.min.js"></script>
+<!-- <script src="js/novnc/vnc.js"></script> -->
+<script src="../../js/libs/angular/angular.js"></script>
+<script src="../../js/libs/angular/angular-resource.js"></script>
+<script src="../../js/libs/angular/ui-bootstrap-custom-tpls-0.11.0.js"></script>
+<script src="../../js/rdp/modernizr.js"></script>
+<script src="../../js/rdp/mootools.js"></script>
+<!-- <script src="js/rdp/simpletabs.js"></script> -->
+<script src="../../js/rdp/wsgate.js"></script>
+<script src="../../js/rdp/vkb.js"></script>
+<script type="text/javascript">
+    window.$$$storage = {
+        getSessionStorage: function(key){
+            return sessionStorage.getItem('vdi_'+ key);
+        },
+        setSessionStorage: function(key, value){
+            sessionStorage.setItem('vdi_'+ key, value);
+        },
+        clearSessionStorage: function(){
+            sessionStorage.clear()
+        }
+    }
+</script>
+<script src="../env.js"></script>
+</head>
+
+<body style="display:none">
+<div data-ng-controller="rdpController">
+    <div id="extracommands"  class="toolbar smart-style-0">
+        <b>{{ name }}</b>
+        <b id="rdp_status">Loading</b>
+        <div style="float:right;">
+            <a class="btn btn-xs btn-primary" href="javascript:" data-ng-click="start()"><i class="fa icon-uniF01E"></i><span data-localize="开机">开机</span></a>
+            <a class="btn btn-xs btn-primary" href="javascript:" data-ng-click="shutdown()"><i class="fa icon-uniF01E"></i><span data-localize="关机">关机</span></a>
+            <a class="btn btn-xs btn-primary" data-ng-if="!is_template && !is_sysDesktop" data-ng-disabled='(!installed && is_windows) || saveTem_loading' href="javascript:" data-ng-click="updateTemplate()"><i class="fa icon-uniF01E"></i><span data-ng-if="!is_template" data-localize="保存模板">保存模板</span></a>
+            <a class="btn btn-xs btn-primary" data-ng-if="is_template && !is_sysDesktop" href="javascript:" data-ng-click="updateTemplate()"><i class="fa icon-uniF01E"></i><span data-localize="更新模板">更新模板</span></a>
+            <a class="btn btn-xs btn-primary" href="javascript:" data-ng-click="loadISO()"><i class="fa icon-uniF01E"></i><span data-localize="加载ISO">加载ISO</span></a>
+            <a class="btn btn-xs btn-primary" href="javascript:" data-ng-click="CAD()"><i class="fa icon-uniF01E"></i><span data-localize="发送">发送</span> (Ctrl+alt+del)</a>
+        </div>
+        <ul style="display: none;">
+
+            <li id="ctrlaltdelete">
+                Ctrl+Alt+Delete
+            </li>
+            <li id="alttab">
+                Alt+Tab
+            </li>
+            <li id="keyboardlanguage">
+                Multilanguage keyboard
+            </li>
+        </ul>
+        <button id="disconnect" type="button" style="display: none !important;">Disconnect</button>
+    </div>
+    <div id="IMEhelper" style="z-index:1111;visibility:hidden;height:auto;width:auto;display:inline;position:absolute;background-color:#ffffff;"></div>
+    <canvas id="screen">
+        <p class="error">Sorry, It looks as though your browser does not support the canvas tag.</p>
+    </canvas>
+
+    <div id="dvLoading" style="position:fixed; left:45%; top:45%; visibility:hidden;"><img src=""></div>
+    <noscript><p class="error">Please enable JavaScript.</p></noscript>
+    <table width="400px" id="maindialog" class="invisible" style="display: none !important;">
+       <tr>
+            <td>
+                <div style="margin-left:auto; margin-right:auto; width:60%; position:relative;">
+                    <a href="http://www.cloudbase.it">
+                        <img src='http://cloudbase.it/wp-content/uploads/2012/10/CBSL_web_logo3.png' style="margin-left:auto; margin-right:auto;">
+                    </a>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="rdpdialog" class="dialog">
+                    <h4 title="Main connection settings">General</h4>
+                    <div>
+                        <form onkeypress="if (event.keyCode == 13) { document.getElementById('rdpconnect').focus();document.getElementById('rdpconnect').click(); return event.preventDefault();}">
+                            <fieldset>
+                                <legend>Session parameters</legend>
+                                <table>
+                                    <tr>
+                                        <td class="key"><label for="host">Hostname:</label></td>
+                                        <td><input id="rdphost" type="text" name="host" value="" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key"><label for="user">User:</label></td>
+                                        <td><input id="rdpuser" type="text" name="user" value=""  /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key"><label for="pass">Password:</label></td>
+                                        <td><input id="rdppass" type="password" name="pass" value="" autocomplete="off"  /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key"><label for="dtsize">Desktop size:</label></td>
+                                        <td>
+                                            <select id="dtsize" name="dtsize">
+                                                <option>640x480</option>
+                                                <option>800x600</option>
+                                                <option>1024x768</option>
+                                                <option>1280x960</option>
+                                                <option>1280x1024</option>
+                                                <option value="auto" selected>Available Area</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="buttons" colspan="2"><input id="rdpconnect" type="button" value="Connect" /></td>
+                                    </tr>
+                                </table>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <h4 title="Advanced session parameters">Advanced</h4>
+                    <div>
+                        <form onsubmit="event.preventDefault(); return false;">
+                            <fieldset>
+                                <legend>Advanced session parameters</legend>
+                                <table>
+                                    <tr>
+                                        <td class="key"><label for="port">Port:</label></td>
+                                        <td><input id="rdpport" name="port" type="text" size="6" maxlen="5" value="3389"  /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key"><label for="pcb">PCB (vmID):</label></td>
+                                        <td><input id="rdppcb" type="text" name="pcb" value="" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key"><label for="perf">Performance:</label></td>
+                                        <td>
+                                            <select id="perf" name="perf" >
+                                                <option value="0" >LAN</option>
+                                                <option value="1" >Broadband</option>
+                                                <option value="2" >Modem</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key"><label for="nowallp">Disable wallpaper:</label></td>
+                                        <td><input id="nowallp" name="nowallp" type="checkbox" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key"><label for="nowdrag">Disable full window drag:</label></td>
+                                        <td><input id="nowdrag" name="nowdrag" type="checkbox" disabled="disabled" checked="checked"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key"><label for="nomani">Disable menu animation:</label></td>
+                                        <td><input id="nomani" name="nomani" type="checkbox" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key"><label for="notheme">Disable theming:</label></td>
+                                        <td><input id="notheme" name="notheme" type="checkbox" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key"><label for="nonla">Disable network level authentication:</label></td>
+                                        <td><input id="nonla" name="nonla" type="checkbox" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key"><label for="notls">Disable TLS:</label></td>
+                                        <td><input id="notls" name="notls" type="checkbox" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="key"><label for="fntlm">Force NTLM auth:</label></td>
+                                        <td>
+                                            <select id="fntlm" name="fntlm" >
+                                                <option value="0" >disabled</option>
+                                                <option value="1" >NTLM v1</option>
+                                                <option value="2" >NTLM v2</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </fieldset>
+                        </form>
+                        <br />
+                    </div>
+                    <h4 title="Show version info">About</h4>
+                    <div class="about">
+                        <h2>FreeRDP WebConnect</h2>
+                        Version 1.2.0.Unknown
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table width="240px" id="mousehelper" class="invisible" style="display: none !important;">
+        <tr>
+            <td>
+                <div id="mousedialog" class="dialog">
+                    <form>
+                        <fieldset>
+                            <legend>Click properties</legend>
+                            <table>
+                                <tr>
+                                    <td class="key"><label class="big" for="rclick">Right</label></td>
+                                    <td><input id="rclick" name="rclick" type="checkbox" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="key"><label class="big" for="mclick">Middle</label></td>
+                                    <td><input id="mclick" name="mclick" type="checkbox" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="key"><label class="big" for="aclick">Alt</label></td>
+                                    <td><input id="aclick" name="aclick" type="checkbox" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="key"><label class="big" for="sclick">Shift</label></td>
+                                    <td><input id="sclick" name="sclick" type="checkbox" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="key"><label class="big" for="cclick">Control</label></td>
+                                    <td><input id="cclick" name="cclick" type="checkbox" /></td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </form>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script type="text/ng-template" id="/update-template.html">
+</script>
+
+<script type="text/ng-template" id="/select-iso.html">
+    <section id='widget-grid'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+            <button type='button' class='close' data-ng-click='close()'><span aria-hidden='true'>×</span>
+            <span class='sr-only'>Close</span></button>
+            <h4 class='modal-title' id='mySmallModalLabel' data-localize='选择ISO'></h4>
+        </div>
+        <div class='modal-body'>
+            
+            <form class='form-horizontal'>
+                <ul class="nav nav-tabs" id="selectIsoTabs">
+                    <li class="active"><a href="#systemTab" data-toggle="tab" data-localize="系统包">系统包</a></li>
+                    <li><a href="#packageTab" data-toggle="tab" data-localize="软件包">软件包</a></li>
+                    <li><a href="#otherTab" data-toggle="tab" data-localize="其它">其它</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="systemTab">
+                        <select class='form-control' data-ng-model='iso' data-ng-options='iso.name for iso in selectIsos.system track by iso.id'>
+                            <option value=''> NO ISO</option>
+                        </select>
+                    </div>
+                    <div class="tab-pane" id="packageTab">
+                        <select class='form-control' data-ng-model='iso' data-ng-options='iso.name for iso in selectIsos.package track by iso.id'>
+                            <option value=''> NO ISO</option>
+                        </select>
+                    </div>
+                    <div class="tab-pane" id="otherTab">
+
+                        <select class='form-control' data-ng-model='iso' data-ng-options='iso.name for iso in selectIsos.other track by iso.id'>
+                            <option value=''> NO ISO</option>
+                        </select>
+                    </div>
+                </div>
+                <footer class='text-right'><button class='btn btn-primary' data-ng-click='ok(iso)' data-localize='确定'></button><button class='btn btn-default' data-ng-click='close()' style='margin-left:5px;' data-localize='取消'></button>
+                </footer>
+            </form>
+        </div>
+    </section>
+</script>
+
+<script>$BootScript("spiceModifyRdp")</script>
+<script>var $$$MAIN_MODULE = "vdi.rdp";</script>
+<script>
+if($$$storage.getSessionStorage('current_theme')){
+    $(document.body).addClass($$$storage.getSessionStorage('current_theme'));
+}
+else{
+    $(document.body).addClass("smart-style-0");
+}
+</script>
+</body>
+</html>
+

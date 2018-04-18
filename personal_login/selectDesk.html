@@ -1,0 +1,32 @@
+<div class="container-fluid" ng-controller="selectDeskControl as selectCtrl">
+    <section class="loginWrap">
+      <div class="select-desk-wrap">
+          <!-- <div class="logoWrap"><img src="img/logo.png"></div> -->
+          <oem-image></oem-image>
+          <h3 class="topBar">
+            <a ng-click="selectCtrl.toback()" class="goback" style="text-decoration: none;cursor: pointer;"><i class="icon icon-arm-left"></i></a>
+            <div localize="请选择个人桌面"></div>
+          </h3>
+          <a class="left-arrow" ng-click="selectCtrl.prevPage()" ng-if="selectCtrl.prev"><span class="icon-arm-back"></span></a>
+          <a class="right-arrow" ng-click="selectCtrl.nextPage()" ng-if="selectCtrl.next"><span class="icon-arm-Next"></span></a>
+          <div class="deskList">
+          <div class="loadingbuffer" ng-if="selectCtrl.loadingbuffer"><span class="loadingImg"></span></div>
+            <label ng-if="!selectCtrl.dataset.length" class="no-bind-desk" localize="您没有绑定桌面"></label>
+            <ul class="desk-list-group" ng-class={true:"isLeft",false:"isRight"}[selectCtrl.flag]>
+              <li class="scence-item" ng-repeat="(key, value) in selectCtrl.dataset">
+                <div ng-click="selectCtrl.connectVnc(value)">
+                  <div class="img">
+                    <img ng-src="{{value.image.src}}">
+                  </div>
+                  <div class="descWrap">
+                    <h4 class="name" title="{{value.display_name}}" ng-if="!value.pool_name">{{value.display_name}}</h4>
+                    <h4 class="name" title="{{value.pool_name}}/{{value.display_name}}" ng-if="value.pool_name">{{value.pool_name}}/{{value.display_name}}</h4>
+                    <p class="type">{{value.image.os_type}}</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </section>
+</div>

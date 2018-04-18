@@ -1,0 +1,96 @@
+<section id="widget-grid">
+		<div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	          <h4 class="modal-title" id="mySmallModalLabel" data-localize="新增教室"></h4>
+	        </div>
+	        <div class="modal-body">
+				<form class="form-horizontal" name="addClassroomFrom" method="post" novalidate>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required" for="name" data-localize="名称"></label>
+						<div class="col-xs-6">
+							<input class="form-control"
+								type="text"
+								name="name"
+								data-ng-minlength="{{min_namelength}}" data-ng-maxlength="{{max_namelength}}" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}"
+								required
+								data-ng-model="data.name"
+								data-ng-trim="true"
+							>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label" for="desc" data-localize="描述"></label>
+						<div class="col-xs-6">
+							<textarea class="form-control"
+								style="height: 80px;" 
+								rows="4"
+								name="desc"
+								data-localize="不能超过30位字符"
+								maxlength="30"
+								data-ng-maxlength="30"
+								data-ng-model="data.desc"
+								data-ng-trim="false"
+							>
+							</textarea>
+						</div>
+					</div>	
+<!-- 					<div class="form-group">
+						<label class="col-xs-3 control-label required" for="resource" data-localize="资源池"></label>
+						<div class="col-xs-6">
+							<select class="form-control" name="resource" data-ng-model="data.resource" data-ng-options="resource.name for resource in resources"></select>
+						</div>
+					</div> -->
+					<div class="form-group ">
+						<label class="col-xs-3 control-label required" for="network" data-localize="网络"></label>
+						<div class="col-xs-6">
+							<select class="form-control" data-ng-options="network.name for network in networks track by network.id"
+								data-ng-change="switchSubnet(data.network)"
+								data-ng-model="data.network">
+							</select>
+						</div>
+					</div>
+					<div class="form-group ">
+						<label class="col-xs-3 control-label required" for="subnet" data-localize="子网"></label>
+						<div class="col-xs-6">
+							<select class="form-control" data-ng-disabled="network_loading" data-ng-show="subnets.length!==0" data-ng-options="subnet.name+' ('+ subnet.start_ip + '~' + subnet.end_ip +')' for subnet in subnets track by subnet.id"
+								data-ng-model="data.subnet">
+							</select>
+							<select class="form-control" data-ng-disabled="subnets.length===0" data-ng-show="subnets.length===0"><option data-localize="无"></option></select>
+						</div>
+					</div>
+					<div class="form-group ">
+						<hr style="margin: 10px 0">
+					</div>
+					<div class="form-group ">
+						<label class="col-xs-3 control-label" for="start_ip" data-localize="终端起始IP"></label>
+						<div class="col-xs-6">
+							<!-- <div data-ng-if="!network.dhcp"></div> -->
+							<input type="text" name="start_ip" format-ip ip-required="false" ng-model="data.ip_start" ng-required="data.ip_end">
+						</div>
+					</div>
+					<div class="form-group ">
+						<label class="col-xs-3 control-label" for="ip_end" data-localize="终端结束IP"></label>
+						<div class="col-xs-6">
+							<!-- <div data-ng-if="!network.dhcp"></div> -->
+							<input type="text" name="ip_end" format-ip ip-required="false" ng-model="data.ip_end" ng-required="data.ip_start">
+						</div>
+					</div>
+					<div class="form-group ">
+						<label class="col-xs-3 control-label"></label>
+						<div class="col-xs-6">
+							<span style="color: #969696" data-localize='clientIPTips'></span>
+						</div>
+					</div>
+				    <footer class="text-right">
+		    			<button type="submit" name="submit" class="btn btn-primary myfooterbtn"
+		    					data-ng-disabled="addClassroomFrom.$invalid || isUnchanged() || (data.ip_start && data.ip_end == undefined) || (data.ip_start == undefined && data.ip_end)" 
+		    					data-ng-click="ok()" data-localize="提交"></button>
+		    			<button class="btn btn-default myfooterbtn"
+		    					data-ng-click="close()" data-localize="取消"></button>
+		    		</footer>
+				</form>
+	        </div>
+      </div>
+
+</section>

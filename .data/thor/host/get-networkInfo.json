@@ -1,0 +1,86 @@
+{
+    "bond_networks": [],
+    "bond_types": [
+        "activebackup",
+        "broadcast",
+        "roundrobin",
+        "random",
+        "loadbalance",
+        "lacp"
+    ],
+    "code": 0,
+    "dev_states": {
+        "eth0": true,
+        "eth1": false,
+        "eth2": false,
+        "eth3": false
+    },
+    "dns": [
+        "202.103.24.68"
+    ],
+    "gateway": "172.16.0.1",
+    "host_ip": "172.16.201.188",
+    "networks": [
+        {
+            "has_bond": false,
+            "iface": "eth3",
+            "ips": [],
+            "ips_editable": [],
+            "isup": false,
+            "mac": "00:1e:67:9c:8f:96",
+            "member": [],
+            "mode": null,
+            "name": "eth3",
+            "netmasks": [],
+            "speed": ""
+        },
+        {
+            "has_bond": false,
+            "iface": "eth2",
+            "ips": [],
+            "ips_editable": [],
+            "isup": false,
+            "mac": "00:1e:67:9c:8f:95",
+            "member": [],
+            "mode": null,
+            "name": "eth2",
+            "netmasks": [],
+            "speed": ""
+        },
+        {
+            "has_bond": false,
+            "iface": "eth1",
+            "ips": [],
+            "ips_editable": [],
+            "isup": false,
+            "mac": "00:1e:67:9c:8f:94",
+            "member": [],
+            "mode": null,
+            "name": "eth1",
+            "netmasks": [],
+            "speed": ""
+        },
+        {
+            "has_bond": false,
+            "iface": "eth0",
+            "ips": [
+                "172.16.201.188"
+            ],
+            "ips_editable": [
+                {
+                    "is_image": true,
+                    "is_management": true
+                }
+            ],
+            "isup": true,
+            "mac": "00:1e:67:9c:8f:93",
+            "member": [],
+            "mode": null,
+            "name": "eth0",
+            "netmasks": [
+                "255.255.0.0"
+            ],
+            "speed": "1000"
+        }
+    ]
+}

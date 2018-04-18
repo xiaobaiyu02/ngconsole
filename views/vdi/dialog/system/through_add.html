@@ -1,0 +1,88 @@
+<section id="widget-grid">
+		<div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	          <h4 class="modal-title" id="mySmallModalLabel" ng-if="!data.edit" data-localize="绑定桌面"></h4>
+	          <h4 class="modal-title" id="mySmallModalLabel" ng-if="data.edit" data-localize="编辑绑定桌面"></h4>
+	        </div>
+	        <div class="modal-body">
+				<form class="form-horizontal" name="addsnapshotFrom" method="post" novalidate>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required" for="name" data-localize="设备名称"></label>
+						<div class="col-xs-8">
+							<span style="line-height: 32px;">{{ data.manufacturer }}</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label" for="desc" data-localize="资源池/接人主机"></label>
+						<div class="col-xs-8">
+							<span style="line-height: 32px;">{{ data.resource_info }}</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required" localize="绑定桌面类型"></label>
+						<div class="col-xs-4">
+							<select class="form-control" data-ng-model="data.type" data-ng-change='changeType(data.type)' required>
+								<option value="" localize="--请选择--"></option>
+								<option value="2" localize='教学桌面'></option>
+								<option value="1" localize='个人桌面'></option>
+								<option value="3" localize='系统桌面'></option>
+							</select>
+						</div>
+						<div class="col-xs-4" data-ng-if="data.type=='2'"  >
+							<select class="form-control" data-ng-model="data.scene" data-ng-change='getTeaches(data.scene)' ng-options="scene.name for scene in scenes track by scene.id" required>
+								<option value="" localize="--请选择--"></option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required" localize="选择桌面"></label>
+						<div class="col-xs-4" data-ng-if="!data.type">
+							<select class="form-control">
+								<option value="" localize="--请选择--"></option>
+							</select>
+						</div>
+						<div class="col-xs-4" data-ng-if="data.type=='2'">
+							<select class="form-control" required data-ng-disabled="teachLoading" data-ng-model="data.teach" ng-options="teach.display_name for teach in teaches track by teach.id" required>
+								<option value="" localize="--请选择--"></option>
+							</select>
+						</div>
+						<img class="col-xs-1" ng-if="data.type=='2' && teachLoading" style="margin-top: 5px;" src='./img/HLloading.gif' width='24px'>
+						<div class="col-xs-8"  data-ng-if="data.type=='1'">
+							<div class="mytreecontrol">
+								<span style="position: relative;left: 15px;top: -8px;" ng-show="!loadDesktops && desktops && !desktops.length" localize="无可用个人桌面"></span>
+								<img ng-src="img/loadingtext.gif" ng-show="loadDesktops" style="display: block;margin: 0 auto;" height="24" width="24">
+								<treecontrol ng-show="!loadDesktops && desktops.length"
+								    class="tree-classic my-tree"
+								    tree-model="desktops"
+								    options="desktopsTreeOptions"
+								    expanded-nodes="data.expandedNodes"
+								    selected-node="data.selected_desktop"
+								>
+								<span>{{ node.dept_name || node.desktop_name || node.domain_name || node.name }}</span>
+								<span ng-if="node.desktop_num">({{ node.desktop_num }})</span>
+								</treecontrol>
+							</div>
+						</div>
+						<div class="col-xs-4" data-ng-if="data.type=='3'">
+							<select class="form-control" required  data-ng-model="data.sys_desktop" ng-options="sys_desktop.name for sys_desktop in sys_desktops" required>
+								<option value="" localize="--请选择--"></option>
+							</select>
+						</div>
+					</div>
+					
+				    <footer class="text-right">
+				    	<img ng-if="submiting" src="img/loadingtext.gif" width="24px" height="24px">
+				    	<div ng-show="!submiting">
+				    		<button type="submit" name="submit" class="btn btn-primary myfooterbtn"
+				    				data-ng-disabled="addsnapshotFrom.$invalid || (data.type == '2' && teachLoading) || (data.type == '1' && !data.selected_desktop)"
+				    				data-ng-click="ok()" data-localize="提交"></button>
+				    		<button class="btn btn-default myfooterbtn"
+				    				data-ng-click="close()" data-localize="取消"></button>
+				    	</div>
+		    		</footer>
+				</form>
+	        </div>
+      </div>
+
+</section>

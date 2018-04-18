@@ -1,0 +1,80 @@
+<div class="modal-body padding-10">
+	<form class="form-horizontal" name="boundNetcardForm" class=""  novalidate>
+		<fieldset>
+			<legend>
+				<header>
+					<button type="button" class="close" ng-click="close()">
+						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+					</button>
+					<span ng-show="type==='add'" localize="新增bond"></span>
+					<span ng-show="type==='edit'" localize="编辑bond"></span>
+				</header>
+			</legend>
+            <div class="form-group">
+                <label class="col-xs-3 control-label required" localize="名称"></label>
+                <div class="col-xs-7">
+                    <input ng-disabled="type==='edit'" class="form-control"  type="text" minlength="2" maxlength="20" data-localize="LIMITE_LETTER" data-ng-model="name" ng-pattern="/^[a-zA-Z][a-zA-Z0-9]+$/" required>
+                </div>
+            </div>
+            <div class="form-group">
+            	<label class="col-xs-3 control-label" localize="bond类型"></label>
+            	<div class="col-xs-7">
+            		<select name="" class="form-control" ng-init="bond_type = bond_type || bond_types[0]" ng-model="bond_type" ng-options="type for type in bond_types" required></select>
+            	</div>
+            	<label class="col-xs-1" style="position: relative;top: 6px;left: -10px;">
+            	    <a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='bondTips' data-placement="bottom" data-html="true" data-content="" data-original-title="" title=""><i class="fa fa-question-circle"></i></a>
+            	</label>
+            	
+            </div>
+            <div class="form-group">
+            	<label class="col-xs-3 control-label" localize="NETCARD"></label>
+            	<div class="col-xs-7">
+					<div class="tagarea" ng-class="{'border-red':!(netcards|selectedFilter).length}">
+						<div class="tag-wrap">
+							<img src="img/loadingtext.gif" ng-if="netcards==undefined" height="20" width="20" alt="">
+							<div ng-show="netcards.length>0">
+								<label class="tag" ng-class="{on:item._selected}" ng-repeat="item in netcards" >
+									 <input type="checkbox" ng-model="item._selected" ng-change="selectOneHost()">
+									 {{item.name}}
+								</label>
+							</div>
+							<div ng-show="netcards.length==0">
+								<span localize="无可绑定网卡"></span>
+							</div>
+						</div>
+					</div>
+					<div class="tag-checkbox" ng-show="netcards.length">
+						<label class="checkbox-inline checkbox-align">
+							<input type="checkbox" class="checkbox style-0 ng-pristine ng-valid" ng-model="data.is_all" ng-change="selectAllHost(data.is_all)">
+							<span localize="全选"></span>
+						</label>
+					</div>
+				</div>
+            </div>
+            <div class="form-group" ng-repeat-start="ip in ips track by $index">
+				<label class="col-xs-3 control-label required">IP</label>
+				<div class="col-xs-7">
+					<input type="text" format-ip ng-model="ip.ip" ng-disabled="ip.uneditable" required>
+				</div>
+			</div>
+			<div class="form-group" ng-repeat-end>
+				<label class="col-xs-3 control-label required" localize="子网掩码"></label>
+				<div class="col-xs-7">
+					<input  type="text" format-ip data-ng-model="ip.netmask" ng-disabled="ip.uneditable"  required>
+				</div>
+				<div class="col-xs-1" ng-show="!ip.uneditable"><a href="javascript:void(0);" class="btn btn-default btn-xs txt-color-blueLight" data-ng-click="minus_ip($index)"><i class="fa fa-minus fa-lg"></i></a></div>
+			</div>
+			<div class="from-group">
+				<div class="col-xs-2 col-xs-offset-3">
+					<a ng-show="ips.length < 4" href="javascript:void(0);" class="btn btn-default btn-xs txt-color-blueLight" data-ng-click="add_ip()"><i class="fa fa-plus fa-lg"></i></a>
+				</div>
+			</div>
+			<div class="col-md-12 text-right padding-10">
+				<button ng-show="!loadding" class="btn btn-primary"  ng-disabled="(boundNetcardForm.$invalid) || (get_select_nets_length() === 0)" type="button" ng-click="ok()" localize="确定"></button>
+				<button ng-show="!loadding" class="btn btn-default" type="button" ng-click="close()" localize="取消"></button>
+                <img ng-show="loadding" src="img/loadingtext.gif" width="20px" height="20px"/>
+			</div>
+		</fieldset>
+	</form>
+</div>
+<script>pageSetUp();</script>

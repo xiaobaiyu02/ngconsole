@@ -1,0 +1,26 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" localize="修改桌面计算机名">修改桌面计算机名</h4>
+</div>
+<div class="modal-body">
+	<fieldset>
+		<form class="form-horizontal" name="alterSceneForm" novalidate>
+			<div class="form-group">
+				<label class="col-sm-3 control-label"  localize="桌面计算机名">桌面计算机名</label>
+				<div class="col-sm-7">
+						<input class="form-control" maxlength="15" ng-maxlength="15" ng-minlength="2" type="text" data-ng-model="vm_hostname" ng-pattern="/^\s*[A-Za-z]+([A-Za-z0-9|-]+)\s*$/" required></input>
+				</div>
+			</div>
+			<footer class="text-right">
+				<div>
+					<button type="button" class="btn btn-primary" ng-click="post()" ng-disabled="alterSceneForm.$invalid"  localize="确定">
+						确定
+					</button>
+					<button type="button" class="btn btn-default" ng-click="close()"  localize="取消">                      
+						取消
+					</button>
+				</div>
+			</footer>
+		</form>
+	</fieldset>
+</div>

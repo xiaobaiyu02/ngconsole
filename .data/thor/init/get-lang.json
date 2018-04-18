@@ -1,0 +1,38 @@
+{
+    "code": 0,
+    "current_lang_type": "e-vdi",
+    "lang_types": [
+        {
+            "created_at": null,
+            "id": 409,
+            "key": "e-vdi",
+            "lang_type": "e-vdi",
+            "name": "E-VDI",
+            "title": "E-VDI"
+        },
+        {
+            "created_at": null,
+            "id": 410,
+            "key": "pc",
+            "lang_type": "pc",
+            "name": "\u4e91PC",
+            "title": "\u4e91PC"
+        },
+        {
+            "created_at": null,
+            "id": 411,
+            "key": "classCh",
+            "lang_type": "classCh",
+            "name": "\u4e91\n\u6559\u5ba4\u4e2d\u6587",
+            "title": "\u4e91\u6559\u5ba4"
+        },
+        {
+            "created_at": null,
+            "id": 412,
+            "key": "classEn",
+            "lang_type": "classEn",
+            "name": "\u4e91\u6559\u5ba4\u82f1\u6587",
+            "title": "Cloud Class"
+        }
+    ]
+}

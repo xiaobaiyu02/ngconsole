@@ -1,0 +1,15 @@
+{
+    "code": 0,
+    "linux_images": [],
+    "liunx_count": 0,
+    "now": 1496632876336.8782,
+    "other_count": 0,
+    "other_images": [],
+    "running": 0,
+    "shutoff": 0,
+    "sync_mode": "scp",
+    "temp_insts": 0,
+    "type_code": 3,
+    "win_count": 0,
+    "win_images": []
+}

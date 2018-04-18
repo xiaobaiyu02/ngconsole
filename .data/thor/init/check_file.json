@@ -1,0 +1,35 @@
+{
+	"code": 0,
+	"result": [
+		{
+			"filename": "kvm-win8-1_data.img",
+			"path": "/opt/template/system/kvm-win8-1_data.img",
+			"size": 98566144,
+			"unit": "B"
+		},
+		{
+			"filename": "android_redirect_data.img",
+			"path": "/opt/template/system/android_redirect_data.img",
+			"size": 96468992,
+			"unit": "B"
+		},
+		{
+			"filename": "hyper-v-win8-2_data2.img",
+			"path": "/opt/template/system/hyper-v-win8-2_data2.img",
+			"size": 171966464,
+			"unit": "B"
+		},
+		{
+			"filename": "win7_\u7cfb\u7edf\u76d8.img",
+			"path": "/opt/template/system/win7_\u7cfb\u7edf\u76d8.img",
+			"size": 8216641536,
+			"unit": "B"
+		},
+		{
+			"filename": "vmconnect-GPU-win10_data.img",
+			"path": "/opt/template/system/vmconnect-GPU-win10_data.img",
+			"size": 138412032,
+			"unit": "B"
+		}
+	]
+}

@@ -1,0 +1,76 @@
+<div class="modal-body no-padding">
+	<form action="" name="editRoleFrom" class="smart-form checkout_form" novalidate>
+		<header class="myheader"><span data-localize="编辑角色"></span><button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button></header>
+		<fieldset>
+			<div class="row">
+				<section class="col col-6">
+					<section>
+						<label class="label required" data-localize="名称"></label>
+						<label class="input" data-ng-class="{'state-success':editRoleFrom.name.$valid && editRoleFrom.name.$dirty,'state-error':editRoleFrom.name.$invalid && editRoleFrom.name.$dirty}" >
+							<input 
+								type="text"
+								name="name"
+								data-ng-minlength="{{min_namelength}}" data-ng-maxlength="{{max_namelength}}" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}"
+								required
+								data-ng-model="data.name"
+								data-ng-trim="false"
+							>
+						</label>						
+					</section>
+					<section>
+						<label class="label" data-localize="描述"></label>
+						<label class="textarea" data-ng-class="{'state-error':editRoleFrom.desc.$invalid && editRoleFrom.desc.$dirty}">
+							<textarea 
+								rows="6"
+								name="desc"
+								data-localize="不能超过30位字符"
+								maxlength="30"
+								data-ng-maxlength="30"
+								data-ng-model="data.desc"
+								data-ng-trim="false"
+							>
+							</textarea>
+						</label>						
+					</section>
+
+				</section>
+
+				<section  class="col col-6">
+						<label class="label required" style="float: left;">
+							<span data-localize="权限分配"></span>
+			    		</label>
+			    		<label class="rolecheckAll">
+			      			<input type="checkbox" class="checkbox" ng-click="selectAll()" data-ng-model="checked"> <span data-localize="全选"></span> 
+			    		</label>				
+
+
+						<section class="rolemanage">
+							<div class="row">
+								<div class="col col-12 selectroles">
+									<div data-ng-repeat="role in data.roles" data-ng-class="{'show':!role._slide,'hide':role._slide}">
+										<span data-ng-if="role.is_group" data-ng-click="slide(role.key,checked = !checked)" data-ng-class="{'role_down_arrow':role._arrow == 'down','role_up_arrow':role._arrow == 'up'}"></span>
+										<label class="checkbox" data-ng-class="{sublist: !role.is_group && !role.nosublist}" >
+											<input data-ng-if="role.is_group" data-ng-disabled="role.key == 'User' || role.key == 'Summary'" type="checkbox" name="checkbox"  data-ng-model="role._selected" ng-click="select(role.key)">
+											<input data-ng-if="!role.is_group" data-ng-disabled="role.key == 'Administrator' || role.key == 'Summary'" type="checkbox" name="checkbox"  data-ng-model="role._selected" ng-change="set(role.belong)">
+											<i></i><span data-localize="{{role.value}}" data-ng-class="{ADMIN: role.key=='Administrator' || role.key == 'Summary' || role.key == 'User'}"></span></label>
+									</div>
+								</div>
+							</div>
+						</section>
+				</section>							
+			</div>
+
+
+
+		</fieldset>
+		<footer class="text-right">
+			<button type="submit" name="submit" class="btn btn-primary myfooterbtn"
+					data-ng-disabled="editRoleFrom.$invalid || isUnchanged()" 
+					data-ng-click="ok()" data-localize="提交"></button>
+			<button type="button" name="reset" class="btn btn-default myfooterbtn"
+					data-ng-click="reset()"
+					data-ng-disabled="isUnchanged()" data-localize="重置"></button>
+			
+		</footer>
+	</form>
+</div>

@@ -1,0 +1,33 @@
+<div class="modal-body no-padding">
+	<form action="" id="terminal_schoolroom_edit" class="smart-form ng-pristine ng-valid" name="addClassroomFrom" ng-submit="addClassroomFrom.$valid"  novalidate>
+		<header class="myheader">
+			<div><span data-localize="分配教室"></span>	
+				<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+			</div>
+		</header>
+		<fieldset>
+			<section>
+				<label class="label required" data-localize="终端列表"></label>
+				<select multiple disabled class="form-control custom-scroll" 
+						data-ng-options="terminal.client_name for terminal in terminallists track by terminal.id"
+						data-ng-model="terminals">
+				</select>
+			</section>
+			<section>
+				<label class="label required" data-localize="教室"></label>
+				<label class="select">
+					<select class="form-control custom-scroll" required
+						data-ng-options="pool.name for pool in poollists track by pool.id"
+						data-ng-model="pool">
+						<option value="" localize="--请选择--"> --请选择-- </option>
+					</select>
+				</label>		
+			</section>
+		
+		</fieldset>
+		<footer>
+			<button type="button" data-ng-click="close()" class="btn btn-default myfooterbtn" data-localize="取消"></button>
+			<button type="submit" name="submit" class="btn btn-primary myfooterbtn" data-ng-disabled="addClassroomFrom.$invalid || isUnchanged()" data-ng-click="ok()" data-localize="确定"></button>
+		</footer>
+	</form>
+</div>

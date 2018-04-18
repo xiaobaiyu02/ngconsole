@@ -1,0 +1,514 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" data-localize="新增教学场景"></h4>
+</div>
+<div class="modal-body">
+	<div role="content">
+		<div data-wizard data-last-text="确定添加"
+			data-btn-unable="submitting"
+			class="widget-body fuelux" style="position: relative; padding-bottom: 40px">
+			<div class="step-pane step-pane-desk active" data-wizard-step data-name="场景属性">
+				<form name="bodyForm1" class="form-vertical" ng-class="{is_error:error}" action="" novalidate>
+					<div class="form-group">
+						<label  class="col-xs-2 control-label required" localize="场景名"></label>
+						<div class="col-xs-10"><input type="text" class="form-control" data-ng-model="step1.sceneName" data-localize="LENGTH_LIMIT" maxlength="20" ng-maxlength="20" ng-minlength="2" param1="2" param2="20" required></div>
+					</div>
+					<div class="form-group">
+						<label class="control-label required col-xs-2" data-localize="资源池"></label>
+						<div class="col-xs-4">
+							<select class="form-control" ng-change="resource_update()" ng-model="step1.resource" ng-disabled="loading_template" ng-options="resource.name for resource in resources" required></select>
+						</div>
+						<label class="control-label col-xs-2" data-localize="教室"></label>
+						<div class="col-xs-4">
+							<select name="" id="" ng-model="step1.classroom" class="form-control" ng-options="classroom.name for classroom in classrooms" required></select>
+		                </div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-2" localize="网络"></label>
+						<div class="col-xs-10">
+							<label class="control-label">{{step1.classroom.network_name}}<span ng-show="step1.classroom.dhcp_start">({{step1.classroom.dhcp_start}}~{{step1.classroom.dhcp_end}})</span></label>
+						</div>
+					</div>		
+					<fieldset class="row">
+						<div class="col-xs-offset-1">
+							<label class="form-label" data-localize="请选择一个教学模板"></label>
+							<div class="jarviswidget nomargin" ng-show="templateNum>0">
+								<header>
+									<ul class="nav nav-tabs pull-left" role="tablist">
+										<li class="active"><a href="#Window" role="tab" data-toggle="tab">Windows</a></li>
+										<li><a href="#Linux" role="tab" data-toggle="tab">Linux</a></li>
+										<li><a href="#else" role="tab" data-toggle="tab" data-localize="其它"></a></li>
+									</ul>
+								</header>
+								<div class="widget-body nopadding">
+									<div class="tab-content template">
+										<div class="tab-pane active" id="Window">
+											<table class="table table-hover table-condensed table-template" ng-if="winTable.length>0">
+												<thead>
+													<tr>
+														<th data-localize="选择"></th>
+														<th data-localize="模板名"></th>
+														<th data-localize="操作系统"></th>
+														<!-- <th data-localize="已用/总大小">已用/总大小</th> -->
+														<th data-localize="创建者"></th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr data-ng-repeat="item in winTable">
+														<td>
+															<div class="radio">
+																<label>
+																	<input ng-value="item" ng-model="step1.image" type="radio" name="radio-inline" class="radiobox style-0" required>
+																	<span></span> 
+																</label>
+															</div>
+														</td>
+														<td>{{item.name}}</td>
+														<td>{{item.os_type}}</td>
+														<!-- <td>{{item.size_desc}}G/{{item.size_total}}G</td> -->
+														<td>{{item.owner_desc}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="tab-pane" id="Linux">
+											<table class="table table-hover table-condensed table-template" ng-if="linTable.length>0">
+												<thead>
+													<tr>
+														<th data-localize="选择"></th>
+														<th data-localize="模板名"></th>
+														<th data-localize="操作系统"></th>
+														<!-- <th data-localize="已用/总大小">已用/总大小</th> -->
+														<th data-localize="创建者"></th>
+													</tr>
+												</thead>
+												<tbody >
+												<tr  data-ng-repeat="item in linTable">
+													<td>
+														<div class="radio">
+															<label>
+																<input ng-value="item" ng-model="step1.image" type="radio" name="radio-inline" class="radiobox style-0" required>
+																<span></span> 
+															</label>
+														</div>
+													</td>
+													<td>{{item.name}}</td>
+													<td>{{item.os_type}}</td>
+													<!-- <td>{{item.size_desc}}G/{{item.size_total}}G</td> -->
+													<td>{{item.owner_desc}}</td>
+												</tr>
+												</tbody>
+											</table>
+										</div>
+										<div class="tab-pane" id="else">
+											<table class="table table-hover table-condensed table-template" ng-if="otherTable.length>0">
+												<thead>
+													<tr>
+														<th data-localize="选择"></th>
+														<th data-localize="模板名"></th>
+														<th data-localize="操作系统"></th>
+														<!-- <th data-localize="已用/总大小">已用/总大小</th> -->
+														<th data-localize="创建者"></th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr data-ng-repeat="item in otherTable">
+														<td>
+															<div class="radio">
+																<label>
+																	<input ng-value="item" ng-model="step1.image" type="radio" name="radio-inline" class="radiobox style-0" required>
+																	<span></span> 
+																</label>
+															</div>
+														</td>
+														<td>{{item.name}}</td>
+														<td>{{item.os_type}}</td>
+														<!-- <td>{{item.size_desc}}G/{{item.size_total}}G</td> -->
+														<td>{{item.owner_desc}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<input type="text"  ng-hide="true" ng-model="step1.image" required>
+									</div>
+								</div>
+							</div>
+							<!-- ng-class="{'border-red':!templateNum.length}" -->
+							<div class="template-loadding" ng-show="!templateNum">
+								<img src="img/loadingtext.gif" ng-if="templateNum==undefined" height="24" width="24" alt="">
+								<div class="template-loadding-center" ng-if="templateNum==0"><span data-localize='MESS_NEWDESKTOP'></span><a  class="btn btn-primary btn-xs" data-localize="查看模板" href="#/template/teach"></a></div>
+							</div>
+						</div>
+					</fieldset>
+				</form>	
+			</div>
+
+			<div class="step-pane step-pane-desk active" data-wizard-step data-name="运行配置">
+				<form name="bodyForm2" class="form-vertical"  ng-class="{is_error:error}">
+					<div class="form-group">
+						<label class="col-xs-2 control-label"  data-localize="硬件模板"></label>
+						<div class="col-xs-8">
+							<select class="form-control" data-ng-model="step2.hardware" data-ng-options="hardware.name for hardware in hardwareList track by hardware.id" required></select>
+							<div class="control-des">
+								<label class="control-label"><span>CPU</span> {{step2.hardware.cpu_num}}<span data-localize="核">核</span></label>
+								<label class="control-label"><span data-localize="内存"></span>{{step2.hardware.memory_mb}}G</label>
+								<label class="control-label"><span data-localize="系统盘"></span>{{step2.hardware.system_gb}}G</label>
+								<label class="control-label" ng-if="step2.hardware.local_gb>1"><span data-localize="数据盘"></span>{{step2.hardware.local_gb}}G</label>
+								<label class="control-label" ng-if="step2.hardware.local_gb1>1"><span data-localize="数据盘"></span>{{step2.hardware.local_gb1}}G</label>
+							</div>
+						</div>
+						<div class="col-xs-2" style="margin-top: 5px;">
+							<a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='filterHardTempTips' data-placement="bottom" data-html="true" data-content="" data-original-title="" title=""><i class="fa fa-question-circle"></i></a>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" data-localize="系统盘还原"></label>
+						<div class="col-xs-3">
+							<select class="form-control" data-ng-model="step2.rollback" data-ng-init="step2.rollback = '1'" data-ng-change="rollbackChange(this)">
+								<option value="0" data-localize="无还原设置"></option>
+								<option value="1" data-localize="每次都还原"></option>
+								<option value="2" data-localize="按周还原"></option>
+								<option value="3" data-localize="按月还原"></option>
+							</select> 
+						</div>
+						<div class="col-xs-3" ng-if="step2.rollback === '2'">
+							<select class="form-control" ng-model="step2.rollback_weekday" data-ng-init="step2.rollback_weekday = '1'">
+								<option value="1" data-localize="周一"></option>
+								<option value="2" data-localize="周二"></option>
+								<option value="3" data-localize="周三"></option>
+								<option value="4" data-localize="周四"></option>
+								<option value="5" data-localize="周五"></option>
+								<option value="6" data-localize="周六"></option>
+								<option value="7" data-localize="周日"></option>
+							</select>
+						</div>
+						<div class="col-xs-3" ng-if="step2.rollback === '3'">
+							<select class="form-control" ng-model="step2.rollback_monthday" data-ng-init="step2.rollback_monthday = '1'">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+								<option value="16">16</option>
+								<option value="17">17</option>
+								<option value="18">18</option>
+								<option value="19">19</option>
+								<option value="20">20</option>
+								<option value="21">21</option>
+								<option value="22">22</option>
+								<option value="23">23</option>
+								<option value="24">24</option>
+								<option value="25">25</option>
+								<option value="26">26</option>
+								<option value="27">27</option>
+								<option value="28">28</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group" ng-show="step2.hardware.local_gb>1">
+						<label class="col-sm-2 control-label" data-localize="数据盘还原"></label>
+						<div class="col-xs-3">
+							<select class="form-control" data-ng-model="step2.data_rollback" data-ng-init="step2.data_rollback = '1'">
+								<option value="0" data-localize="无还原设置"></option>
+								<option value="1" data-localize="每次还原"></option>
+								<option value="2" data-localize="按周还原"></option>
+								<option value="3" data-localize="按月还原"></option>
+							</select> 
+						</div>
+						<div class="col-xs-3" ng-if="step2.data_rollback === '2'">
+							<select class="form-control" ng-model="step2.data_rollback_weekday" data-ng-init="step2.data_rollback_weekday = '1'">
+								<option value="1" data-localize="周一"></option>
+								<option value="2" data-localize="周二"></option>
+								<option value="3" data-localize="周三"></option>
+								<option value="4" data-localize="周四">周四</option>
+								<option value="5" data-localize="周五">周五</option>
+								<option value="6" data-localize="周六">周六</option>
+								<option value="7" data-localize="周日">周日</option>
+							</select>
+						</div>
+						<div class="col-xs-3" ng-if="step2.data_rollback === '3'">
+							<select class="form-control" ng-model="step2.data_rollback_monthday" data-ng-init="step2.data_rollback_monthday = '1'">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+								<option value="16">16</option>
+								<option value="17">17</option>
+								<option value="18">18</option>
+								<option value="19">19</option>
+								<option value="20">20</option>
+								<option value="21">21</option>
+								<option value="22">22</option>
+								<option value="23">23</option>
+								<option value="24">24</option>
+								<option value="25">25</option>
+								<option value="26">26</option>
+								<option value="27">27</option>
+								<option value="28">28</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group" ng-if="step1.resource.type=='kvm'">
+						<div class="col-xs-4 col-xs-offset-2">
+							<label class="checkbox-inline checkbox-align">
+								<input type="checkbox" class="checkbox style-0" ng-model="step2.gpu_auto_assignment" data-ng-init="step2.gpu_auto_assignment = false">
+								<span><i class="font-normal" localize="显卡虚拟化"></i></span>
+							</label>
+						</div>
+					</div>
+					<div class="form-group" ng-if="step1.resource.type=='hyper-v'">
+						<label class="col-sm-2 control-label" data-localize="GPU加速"></label>
+						<div class="col-xs-3">
+							<select class="form-control" data-ng-model="step2.has_gpu" data-ng-init="step2.has_gpu = 'share'">
+								<option value="share" data-localize="显卡共享"></option>
+								<option value="through" data-localize="显卡直通"></option>
+								<option value="false" data-localize="不启用"></option>
+							</select> 
+						</div>
+						<label style="position: relative;top: 7px;">
+						    <a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='hasGPUTips' data-placement="right" data-html="true" data-content="" data-original-title="" title=""><i class="fa fa-question-circle"></i></a>
+						</label>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-4 col-xs-offset-2">
+							<label class="checkbox-inline checkbox-align">
+								<input type="checkbox" class="checkbox style-0" ng-model="step2.enable_share">
+								<span><i class="font-normal" localize="自动挂载共享磁盘"></i></span>
+							</label>
+							<label style="position: relative;top: 2px;">
+							    <a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='auto_mountTeachTips' data-placement="right" data-html="true" data-content="" data-original-title="" title=""><i class="fa fa-question-circle"></i></a>
+							</label>
+						</div>
+						<div class="col-xs-4" ng-if='step2.enable_share'>
+							<select class="form-control" required data-ng-model="step2.share_server" ng-options="share_server.net.ip_address for share_server in share_servers">
+								<option value="" localize="--请选择--"></option>
+							</select> 
+						</div>
+						<div class="col-xs-1" style="padding: 4px 0 0 0;" ng-if='step2.enable_share && step2.loading_server'><img src="img/HLloading.gif" alt="" width="20px" height="20px"></div>
+					</div>
+					<div class="form-group">
+						<div class="col-xs-3 col-xs-offset-2">
+							<label class="checkbox-inline checkbox-align">
+								<input type="checkbox" class="checkbox style-0" ng-model="step2.usb_redir">
+								<span><i class="font-normal" localize="启用USB"></i></span>
+							</label>
+						</div>
+						<div class="col-xs-4" ng-show="step2.usb_redir && step1.resource.type=='kvm'">
+							<div class="radio">
+								<label>
+									<input type="radio" class="radiobox style-0" value="2.0" ng-model="step2.usb_version">
+									<span>USB2.0</span> 
+								</label>
+								<label>
+		                            <a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='USBRedictTips' data-placement="right" data-html="true" data-content="" data-original-title="" title=""><i class="fa fa-question-circle"></i></a>
+		                        </label>
+							</div>
+							<div class="radio">
+								<label>
+									<input type="radio" class="radiobox style-0" ng-disabled="step2.usb3_disabled" value="3.0" ng-model="step2.usb_version">
+									<span>USB3.0</span> 
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group" ng-show="step2.usb3_disabled && step1.resource.type=='kvm' && step2.usb_redir">
+						<div class="col-xs-9 col-xs-offset-2">
+							<p class="note" localize="USB_NOTE"><!-- 说明：当桌面操作系统为windows 7及其以上版本,才能启用USB3.0重定向--></p>
+						</div>
+					</div>
+					<div class="form-group" ng-show='step2.isWin'>
+						<div class="col-xs-4 col-xs-offset-2">
+							<label class="checkbox-inline checkbox-align">
+								<input type="checkbox" class="checkbox style-0" ng-model="step2.expand_enabled">
+								<span><i class="font-normal" localize="支持扩展屏"></i></span>
+							</label>
+							<label style="position: relative;top: 2px;">
+							    <a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='extendScreenTips' data-placement="right" data-html="true" data-content="" data-original-title="" title=""><i class="fa fa-question-circle"></i></a>
+							</label>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div class="step-pane step-pane-desk active" data-wizard-step data-name="宿主机配置">
+				<form name="bodyForm3" class="form-vertical" ng-class="{is_error:error}">
+					<div class="form-group">
+						<label class="control-label required col-xs-3" data-localize="宿主机"></label>
+						<div class="col-xs-4">
+							<select name="" id="" class="form-control" ng-model="step3.hostType" ng-init="step3.hostType='0'">
+								<option value="0" localize="均衡创建">均衡创建</option>
+								<option value="1" localize="自定义">自定义</option>
+							</select>
+						</div>
+					</div>
+					<!-- 均衡创建 -->
+					<div ng-if="step3.hostType==='0'">
+						<div class="form-group">
+							<div class="col-xs-9 col-xs-offset-3">
+								<div class="tagarea" ng-class="{'border-red':!(hosts|selectedFilter).length}">
+									<div class="tag-wrap">
+										<img src="img/loadingtext.gif" ng-if="loading_host" height="24" width="24" alt="">
+										<div ng-show="hosts.length>0">
+											<label class="tag" title="{{ item.disabled_desc }}" ng-class="{on:item._selected, disabled:item.disabled_tips && item.disabled_tips!==''}" ng-repeat="item in hosts" >
+												 <input type="checkbox" ng-disabled='item.disabled_tips && item.disabled_tips!==""' ng-model="item._selected" ng-change="selectOneHost()">
+												 {{item.host}}
+											</label>
+										</div>
+										<div ng-show="hosts.length==0">
+											<span localize="此资源池无可用主机"><!-- 此资源池无可用主机 --></span>
+										</div>
+									</div>
+								</div>
+								<div class="tag-checkbox" ng-show="hosts.length">
+									<label class="checkbox-inline checkbox-align">
+										<input type="checkbox" class="checkbox style-0 ng-pristine ng-valid" ng-model="step3.is_all" ng-change="selectAllHost(step3.is_all)">
+										<span localize="全选">全选</span>
+									</label>
+									<button type="button" ng-if="!step1.resource.rbd_enabled" ng-disabled="!(hosts|selectedFilter).length" class="btn btn-xs btn-default pull-right" style="margin-top:5px" ng-click="openMoreDialog()" data-localize="高级"></button>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="" class="control-label col-xs-3" localize="桌面数"></label>
+							<div class="col-xs-4">
+								<input type="number" input-number class="form-control" ng-model="step3.desktopNum" ng-disabled="!(hosts|selectedFilter).length" ng-class="{'ng-invalid':step3.desktopNum > (hosts|selectedFilter:'max_instance')}" max="{{hosts|selectedFilter:'max_instance'}}" min="1" ng-required="step3.hostType=='0'" ng-pattern="/^[0-9]*$/">
+							</div>
+							<label class="col-xs-3 note"><span localize="最大"></span>{{hosts|selectedFilter:"max_instance"}}</label>
+						</div>
+					</div>
+					<!-- 均衡创建 end-->
+					<!-- 自定义创建 -->
+					<div ng-if="step3.hostType==='1'">
+						<div class="form-group">
+							<div class="col-xs-9 col-xs-offset-3">
+								<ul class="tagarea" ng-class="{'border-red':!step3.desktopNum2}">
+									<li class="custom-tag" ng-repeat="item in hosts"  title="{{ item.disabled_desc }}">
+										<span class="name">{{item.host}}</span>
+										<input type="number" class="form-control input-sm"  ng-disabled='item.disabled_tips && item.disabled_tips!==""' ng-model="item.instance_num" min="0" max="{{item.max_instance}}" ng-change="getDesktopNumber2()">
+										<span class="des"><span localize="最大">最大</span>{{item.max_instance}}</span>
+									</li>
+									<div ng-show="hosts.length==0">
+										<span localize="此资源池无可用主机">此资源池无可用主机！</span>
+									</div>
+								</ul>
+								<button type="button" ng-if="!step1.resource.rbd_enabled" ng-disabled="!step3.desktopNum2" class="btn btn-xs btn-default pull-right" style="margin-top:5px" ng-click="openMoreDialog()" data-localize="高级"></button>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="" class="control-label col-xs-3" localize="桌面数">桌面数</label>
+							<div class="col-xs-9">
+								<label class="control-label">{{step3.desktopNum2}}</label>
+							</div>
+						</div>
+					</div>
+					<!-- 自定义创建 end-->
+				</form>
+			</div>
+			<div class="step-pane step-pane-desk active"  data-wizard-step data-name="桌面属性">
+				<form class="smart-form form-vertical" name="bodyForm4">
+					<header class="space-line" data-localize="HSOT_NAME_CONFIG">
+						配置计算机名
+					</header>
+					<section>
+						<div class="row">
+							<div class="col col-4">
+								<label class="label" data-localize="FORMAT">格式</label>
+								<label class="select">
+									<select ng-model="step4.hostNameType" ng-init="step4.hostNameType='1'" required>
+										<option value="1" data-localize="PREFIX1">前缀1</option>
+										<option value="2" data-localize="PREFIX01">前缀01</option>
+										<option value="3" data-localize="PREFIX001">前缀001</option>
+									</select></label>
+							</div>
+							<div class="col col-4">
+								<label class="label required" data-localize="PREFIX">前缀</label>
+								<label class="input"><input ng-model="step4.hostNamePre" ng-init="step4.hostNamePre='PC'" maxlength="12" data-localize="LENGTH_LIMIT" param1="2" param2="12" minlength="1" ng-minlength="1" ng-maxlength="12" class="form-control" type="text" ng-pattern="/^\s*[A-Za-z]+([A-Za-z0-9|-]+)\s*$/" required></label>
+							</div>
+							<div class="col col-4">
+								<label class="label required" data-localize="BEGIN_WITH"><!-- 起始数字 --></label>
+								<label class="input"><input input-number ng-model="step4.hostNameBegin" ng-init="step4.hostNameBegin=1" class="form-control" min="1" max="999" type="number"  ng-pattern="/^\s*(\d{1,})\s*$/" required></label>
+							</div>
+						</div>
+						<div class="row" ><div  class="note col col-sm-12" ng-show="step4.hostNamePre && step4.hostNameBegin" param1="{{addZero(step4.hostNameType,step4.hostNamePre,step4.hostNameBegin)}}" data-localize="HOST_NAME_IS_"></div></div>
+						<div class="row" ><div  class="note col col-sm-12" ng-show="!(step4.hostNamePre && step4.hostNameBegin)" data-localize="HOST_NAME_IS_NOT"></div></div>
+					</section>
+					<div ng-show="step1.resource.type === 'kvm'">
+						<div class="checkbox no-padding">
+							<label>
+							  <input type="checkbox" class="checkbox style-0" ng-disabled="step1.resource.type=='hyper-v'" ng-model="step4.MORE" ng-change="clearRDP(this)">
+							  <span data-localize="ADVANCED">高级选项</span>
+							</label>
+							<label ng-show="step4.MORE">
+							  <input type="checkbox" class="checkbox style-0" ng-disabled="step1.resource.type=='hyper-v'" ng-model="step4.RDP">
+							  <span>RDP</span>
+							</label>
+						</div>
+						<div ng-show="step4.MORE">
+							<header class="space-line" data-localize="CONFIGURE_USER_NAME">
+								配置用户名
+							</header>
+							<section>
+								<div class="row">
+									<div class="col col-4">
+										<label class="label" data-localize="FORMAT">格式</label>
+										<label class="select">
+											<select class="" ng-model="step4.userNameType" ng-init="step4.userNameType='1'">
+												<option value="1" data-localize="PREFIX1">前缀 + 1位数字</option>
+												<option value="2" data-localize="PREFIX01">前缀 + 2位数字</option>
+												<option value="3" data-localize="PREFIX001">前缀 + 3位数字</option>
+											</select>
+										</label>
+									</div>
+									<div class="col col-4">
+										<label class="label required" data-localize="PREFIX">前缀</label>
+										<label class="input"><input ng-model="step4.userNamePre" ng-init="step4.userNamePre='K'" maxlength="12" minlength="1" ng-minlength="1" ng-maxlength="12" class="form-control" data-localize="LENGTH_LIMIT" param1="1" param2="12" type="text" ng-pattern="/^\s*[A-Za-z]+([A-Za-z0-9|-]*)\s*$/" required></label>
+									</div>
+									<div class="col col-4">
+										<label class="label required" data-localize="BEGIN_WITH">起始数字</label>
+										<label class="input"><input input-number ng-model="step4.userNameBegin" ng-init="step4.userNameBegin=1" min="1" max="999" class="form-control" type="number" min="1" required ng-pattern="/^\s*(\d{1,})\s*$/"></label>
+									</div>
+								</div>
+								<div class="row"><div ng-show="step4.userNamePre && step4.userNameBegin" class="note col col-sm-12" param1="{{addZero(step4.userNameType,step4.userNamePre,step4.userNameBegin)}}" data-localize="USER_NAME_IS_"></div></div>
+								<div class="row"><div ng-show="!(step4.userNamePre && step4.userNameBegin)" class="note col col-sm-12" data-localize="USER_NAME_IS_NOT"></div></div>
+							</section>
+						</div>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+	<!-- pane end -->
+	<!-- <div ng-if="templateNum==0">
+		<div data-localize='MESS_NEWDESKTOP'>不存在可用的教学模板！</div>
+		<footer class="text-right" >
+			<a type="button" class="btn btn-primary" data-localize="查看模板" href="#/template/teach">
+				查看模板
+			</a>
+			<button type="button" class="btn btn-default" ng-click="close()" data-localize="取消">
+				取消
+			</button>
+		</footer>
+	</div> -->
+</div>

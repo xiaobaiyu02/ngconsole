@@ -1,0 +1,9 @@
+<form action="javascript:" enctype="multipart/form-data" method="POST" class="left">
+	<input name="iso" type="file" style="display:none">
+	<button type="button" ng-disabled="isUploading" class="btn btn-xs btn-default" title="{{btnName}}"><i class="icon icon-jj-Upload"></i></button>
+</form>
+<div class="upload-progress left" ng-show="isUploading">
+	<span class="upload-cancel-icon icon  icon-jj-close-2" id="abortBtn"></span>
+	<div class="upload-mess"><span class="progress-word">{{progressName}}{{progressSize}}</span><span class="progress-percent">{{progressPercent}}</span></div>
+	<div class="progress progress-xs"><div class="progress-bar bg-color-blue" role="progressbar" ng-style="{'width':progressPercent}"></div></div>
+</div>

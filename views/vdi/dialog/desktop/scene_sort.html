@@ -1,0 +1,59 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title"  localize="场景排序">场景排序</h4>
+</div>
+<div class="modal-body">
+	<form name="sortSenceForm" class="form-horizontal" action="" novalidate> 
+		<div>
+			<h3 class="sortdialog-h">{{schoolroom.name}} <span localize="SCHO0L">教室</span></h3>
+			<div class="form-group">
+				<div class="col-xs-8 col-xs-offset-2">
+					<div class="tagarea tagarea-nopadding">
+						<table class="table tabalcell-noborder table-condensed">
+							<thead>
+								<td localize="序号">序号</td>
+								<td localize="场景名">场景名</td>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in scenes track by $index" ng-class="{info:item._actived}" ng-click="select(item)">
+									<td>{{$index+1}}</td>
+									<td>{{item.name}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-xs-2">
+					<p><button type="button" class="btn btn-primary btn-sm" ng-disabled="scenes.length<2" ng-click="up()" ><i class="fa icon-jj-002"></i><span localize="上移"></span></button></p>
+					<p><button type="button" class="btn btn-primary btn-sm" ng-disabled="scenes.length<2" ng-click="down()"><i class="fa icon-jj-003"></i><span localize="下移"></span></button></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="control-label col-xs-2" localize="自动进入">自动进入</label>
+				<div class="col-xs-8">
+					<!-- <div class="input-group"> -->
+<!-- 						<span class="input-group-addon">
+							<span class="checkbox">
+								<label>
+								  <input ng-model="is_auto_enter" type="checkbox" class="checkbox style-0 ng-pristine ng-valid" ng-change="auto_scene=null">
+								  <span></span>
+								</label>
+							</span>
+						</span> -->
+						<select class="form-control" data-ng-model="auto_scene"  ng-options="scene.name for scene in scenes">
+							<option value="" localize="--请选择--"></option>
+						</select>
+					<!-- </div> -->
+				</div>
+			</div>
+			<footer class="text-right">
+					<button type="button" class="btn btn-primary" ng-click="ok()" ng-class="{'disabled':sortSenceForm.$invalid}"  localize="确定">
+						确定
+					</button>
+					<button type="button" class="btn btn-default" ng-click="close()"  localize="取消">
+						取消
+					</button>
+				</footer>
+		</div>
+	</form>
+</div>

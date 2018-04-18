@@ -1,0 +1,56 @@
+<div class="modal-body padding-10">
+	<form class="form-horizontal" name="addPoolForm"  novalidate>
+		<fieldset>
+			<legend>
+				<header>
+					<!-- <span ng-if="network.type =='logic'" localize='普通网络'></span>
+					<span ng-if="network.type =='vlan'">{{network.type | network_type}}</span> -->
+					<button type="button" class="close" ng-click="close()">
+						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+					</button>
+                    <span ng-show="template_type == 'add'" localize="新增资源池"></span>
+					<span ng-show="template_type == 'alter'" localize="编辑资源池"></span>
+				</header>
+			</legend>
+            <div class="form-group">
+                <label class="col-xs-3 control-label required" localize="名称"></label>
+                <div class="col-xs-7">
+                    <input class="form-control"  type="text" maxlength="20" data-ng-model="name" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-3 control-label required" ng-model="type" localize="类型"></label>
+                <div class="col-xs-7">
+                   <select ng-model="virtual_type" ng-disabled="template_type=='alter'" class="form-control" data-ng-change='rbd_enabled = false' required>
+                        <option value="kvm">KVM</option>
+                   		<option value="hyper-v">Hyper-V</option>
+                   </select>
+                </div>
+            </div>
+            <div class="form-group" data-ng-show='virtual_type=="kvm"'>
+                <label class="col-xs-3 control-label" ></label>
+                <div class="col-xs-7">
+                  <label>
+                      <input type="checkbox" class="checkbox" data-ng-model="rbd_enabled" ng-disabled='template_type == "alter" && hostnum'>
+                      <span data-localize="使用分布式存储"></span>
+                  </label>
+                  <label>
+                      <a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='distributedStorageTips' data-placement="right" data-html="true"><i class="fa fa-question-circle"></i></a>
+                  </label>
+                </div>
+            </div>
+            <div class="form-group">
+            	<label class="col-xs-3 control-label" localize="描述"></label>
+            	<div class="col-xs-7">
+            		<textarea ng-model='des' style="resize:none" class="form-control" data-localize="不能超过30位字符" maxlength="30" data-ng-maxlength="30"></textarea>
+            	</div>
+            </div>
+           
+			<div class="col-md-12 text-right padding-10">
+				<button ng-show="!loadding" class="btn btn-primary"  ng-disabled="!addPoolForm.$valid" type="button" ng-click="ok()" localize="确定"></button>
+				<button ng-show="!loadding" class="btn btn-default" type="button" ng-click="close()" localize="取消"></button>
+                <img ng-show="loadding" src="img/loadingtext.gif" width="24px" height="24px"/>
+			</div>
+		</fieldset>
+	</form>
+</div>

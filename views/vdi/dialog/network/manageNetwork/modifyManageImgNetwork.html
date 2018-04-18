@@ -1,0 +1,45 @@
+<div class="modal-body padding-10">
+	<form class="form-horizontal ng-pristine ng-valid" name="modifyManageForm"  novalidate>
+		<fieldset>
+			<legend>
+				<header>
+					<span data-ng-if="type=='management'" localize="修改管理网络"></span>
+					<span data-ng-if="type=='image'" localize="修改镜像网络"></span>
+					<button type="button" class="close" ng-click="close()">
+						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+					</button>
+				</header>
+			</legend>
+			<table cellspacing="0" cellpadding="0" border="0" role="grid"  class="ui-jqgrid-btable table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th localize="主机名"></th>
+						<th data-ng-if="type=='management'" localize="管理网络"></th>
+						<th data-ng-if="type=='image'" localize="镜像网络"></th>
+					</tr>
+				</thead>	
+				<tbody>
+					<tr data-ng-repeat="item in lists track by $index" >
+						<td>
+							{{ item.host_name }}
+						</td>
+						<td>
+							<select style="width: 30%;margin-right: 20px;" data-ng-disabled="item.enable_ha" data-ng-options="network.name for network in item.allNetworks" data-ng-model="item._selectNetwork" data-ng-change="changeIP(item)">
+								<option value="" localize="请选择"></option>
+							</select>
+							<select style="width: 40%" data-ng-disabled="item.enable_ha" data-ng-options="ip.ip for ip in item._selectNetwork.IP track by ip.ip" data-ng-model="item._selectIP">
+								<option value="" localize="请选择"></option>
+							</select>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="col-md-12 text-right padding-10">
+				<button class="btn btn-primary" ng-show="!loading" ng-disabled="!modifyManageForm.$valid || loading || isUnchanged() || hasUnselect()" type="button" ng-click="ok()" localize="确定"></button>
+				<button class="btn btn-default" ng-show="!loading" type="button" ng-click="$close()" localize="取消"> </button>
+                <img ng-show="loading" src="img/loadingtext.gif" width="24px" height="24px"/>
+			</div>
+		</fieldset>
+	</form>
+</div>

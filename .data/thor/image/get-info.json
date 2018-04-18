@@ -1,0 +1,45 @@
+{
+    "code": 0,
+    "created_at": 1495866397000.0,
+    "data_alloc_disk": 0,
+    "data_alloc_disk_2": 0,
+    "data_size_total": "0.00",
+    "enable_gpu": false,
+    "host": "vdi188",
+    "inst_volumes": {
+        "data_image": {},
+        "data_image_base": {},
+        "data_image_size": [],
+        "system_image": {
+            "/opt/ssd": [
+                "c68ff057-3e96-42db-aaf1-2b8d8c02577f"
+            ]
+        },
+        "system_image_base": {
+            "/opt/ssd/_base": [
+                "1ba39804-3174-4021-b5b1-0a88b253e58d"
+            ]
+        }
+    },
+    "instance_count": 31,
+    "instance_id": "8c52e354-ea0b-46d5-a3a9-11c738c188c5",
+    "name": "win7_create",
+    "nets": [
+        {
+            "ip_address": "172.16.151.37",
+            "mac_addr": "fa:16:3e:c5:20:8d",
+            "network_id": "2f4d7f32-10f1-4fac-ba9e-f8e3524dd0d0",
+            "port_id": "0d414634-aff7-4571-8585-e569c09671c0",
+            "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+        }
+    ],
+    "owner": 5,
+    "owner_desc": "xf",
+    "ram": 2048,
+    "start_on_host_boot": false,
+    "status": "alive",
+    "system_alloc_disk": 20,
+    "system_size_total": "20.00",
+    "vcpus": 2,
+    "virtual_type": "kvm"
+}

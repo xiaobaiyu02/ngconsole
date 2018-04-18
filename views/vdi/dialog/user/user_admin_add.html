@@ -1,0 +1,142 @@
+<div class="modal-body no-padding">
+	<form action="" class="smart-form ng-pristine ng-valid" name="addUseradminFrom" ng-submit="addUseradminFrom.$valid"  novalidate>
+		<header class="myheader"><span data-localize="新增管理用户"></span><button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button></header>
+		<fieldset>
+			<div class="row">
+				<section class="col col-6">
+					<label class="label required" data-localize="登录名"></label>
+					<label class="input" data-ng-class="{'state-success':addUseradminFrom.name.$valid && addUseradminFrom.name.$dirty,'state-error':addUseradminFrom.name.$invalid && addUseradminFrom.name.$dirty}">
+						<input 
+						type="text"
+						name="name"
+						data-localize="2~20位英文和数字"
+						maxlength="20"
+						required
+						data-ng-model="data.name"
+						data-ng-pattern="/^[A-Za-z0-9]{2,20}$/"
+						data-ng-trim="false">
+					</label>
+				</section>
+				<input style="display:none;" name="real_name">
+
+				<section class="col col-6">
+					<label class="label required" data-localize="角色">角色</label>
+					<label class="select">
+						<select name="role" ng-model="data.role" data-ng-change="changeRole(this)" data-ng-options="role.name for role in roles" required>
+							<option value="" localize="--请选择--"> --请选择-- </option>
+						</select>
+					</label>
+				</section>
+			</div>
+			
+			<div class="row">
+				<section class="col col-6">
+					<label class="label required" data-localize="姓名"></label>
+					<label class="input" data-ng-class="{'state-success':addUseradminFrom.real_name.$valid && addUseradminFrom.real_name.$dirty,'state-error':addUseradminFrom.real_name.$invalid && addUseradminFrom.real_name.$dirty}">
+						<input
+						type="text"
+						name="real_name"
+						data-ng-minlength="{{min_namelength}}" data-ng-maxlength="{{max_namelength}}" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}"
+						maxlength="20"
+						required
+						data-ng-model="data.real_name"
+						data-ng-trim="false">
+					</label>
+				</section>
+				<section class="col col-6">
+					<div class="inline-group">
+						<label class="label" data-localize="性别"></label>
+						<label class="radio">
+							<input type="radio" name="sex" data-ng-model="data.sex" value="true"><i></i><span data-localize="男"></span>
+						</label>
+						<label class="radio">
+							<input type="radio" name="sex" data-ng-model="data.sex" value="false"><i></i><span data-localize="女"></span>
+						</label>
+					</div>
+				</section>
+			</div>
+
+			<div class="row">
+				<section class="col col-6">
+					<label class="label required" data-localize="密码"></label>
+					<label class="input" data-ng-class="{'state-success':addUseradminFrom.password.$valid && addUseradminFrom.password.$dirty,'state-error':addUseradminFrom.password.$invalid && addUseradminFrom.password.$dirty}"> 
+						<input
+						type="password"
+						name="password"
+						data-ng-minlength="{{min_passwordLe}}" data-ng-maxlength="{{max_passwordLe}}" data-localize="LENGTH_LIMIT" param1="{{min_passwordLe}}" param2="{{max_passwordLe}}"
+						required
+						data-ng-model="data.password"
+						data-ng-trim="false">
+					</label>
+				</section>
+
+				<section class="col col-6">
+					<label class="label required" data-localize="确认密码"></label>
+					<label class="input" data-ng-class="{'state-success':data.password==data.passwordConfirm && addUseradminFrom.passwordConfirm.$dirty,'state-error':data.password!=data.passwordConfirm && addUseradminFrom.passwordConfirm.$dirty}"> 
+						<input 
+						type="password"
+						name="passwordConfirm"
+						data-ng-class="{'passwordConfirm_disabled':!(addUseradminFrom.password.$valid && addUseradminFrom.password.$dirty)}"
+						data-ng-disabled="!(addUseradminFrom.password.$valid && addUseradminFrom.password.$dirty)"
+						data-ng-minlength="{{min_passwordLe}}" data-ng-maxlength="{{max_passwordLe}}" data-localize="LENGTH_LIMIT" param1="{{min_passwordLe}}" param2="{{max_passwordLe}}"
+						required
+						data-ng-model="data.passwordConfirm"
+						data-ng-trim="false">
+					</label>			
+				</section>				
+			</div>
+
+			<div class="row">
+				<section class="col col-6">
+					<label class="label" data-localize="电子邮箱"></label>
+					<label class="input" data-ng-class="{'state-error':addUseradminFrom.user_email.$invalid && addUseradminFrom.user_email.$dirty}"> 
+						<input type="email" name="user_email" data-ng-model="data.email" data-ng-trim="false" maxlength="50" data-localize="不能超过50位字符">
+					</label>
+				</section>
+
+				<section class="col col-6">
+					<label class="label" data-localize="联系电话"></label>
+					<label class="input"  data-ng-class="{'state-error':addUseradminFrom.user_phone.$invalid && addUseradminFrom.user_phone.$dirty}"> 
+						<input type="tel" name="user_phone" data-ng-model="data.contact" data-ng-pattern="/^(\d|\(|\)|\+|\s|-)+$/" data-ng-trim="false" maxlength="30" data-localize="不能超过30位字符">
+					</label>			
+				</section>				
+			</div>
+
+			<div class="row">
+				<section class="col col-sm-12">
+					<label class="form-label required" data-localize="管理范围"></label>
+					<label style="margin: 0 0 4px 20px;">
+					  <input ng-model="_ischeckAll" data-ng-disabled="DISABLED" type="checkbox" class="checkbox style-0" ng-change="checkAll(this)">
+					  <span data-localize="全选"></span>
+					</label>
+					<div class="form-unit">
+						<div class="tagarea" data-ng-class="{terminalscldis:DISABLED}">
+							<div class="tag-checkbox">
+							</div>
+							<div class="tag-wrap">
+								<img src="img/loadingtext.gif" ng-if="schoolroom_loading" height="24" width="24" alt="">
+								<label class="tag" ng-class="{on:schoolroom._selected}" ng-repeat="schoolroom in data.schoolrooms" >
+									 <input type="checkbox" ng-model="schoolroom._selected" ng-change="checkOne(this.$parent)">
+									 {{schoolroom.name}}
+								</label>
+							</div>
+						</div>
+						<div class="disable_power" data-ng-if="DISABLED"></div>
+					</div>
+				</section>
+			</div>
+
+
+		</fieldset>
+
+		<footer class="text-right">
+			<button type="submit" name="submit" class="btn btn-primary myfooterbtn"
+					data-ng-disabled="addUseradminFrom.$invalid || data.password != data.passwordConfirm" 
+					data-ng-click="ok()" data-localize="提交"></button>
+			<button class="btn btn-default myfooterbtn"
+					data-ng-click="close()" data-localize="取消"></button>
+		</footer>
+
+
+	</form>
+</div>

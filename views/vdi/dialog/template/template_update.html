@@ -1,0 +1,40 @@
+<section id='widget-grid'>
+	<div class='modal-content'>
+		<div class='modal-header'>
+			<button type='button' class='close' data-ng-click='close()'>
+				<span aria-hidden='true'>×</span><span class='sr-only'>Close</span>
+			</button>
+			<h4 class='modal-title' id='mySmallModalLabel' data-localize="更新模板"></h4>
+		</div>
+		<div class='modal-body'>
+			<form class='form-horizontal'>
+				<div data-ng-show="!is_personalTemp" style="margin-bottom: 20px;">
+					<p data-localize="UPDATE_TEMPLATE" data-ng-if="hasSchool"></p>
+					<div style="white-space:normal;margin-bottom: 10px;" data-ng-if="hasSchool">
+						<div data-ng-repeat="school in schools" style="margin-bottom:5px;">
+							<span class="update_tem">"{{ school.name }}"<span data-localize="教室"></span></span>
+							<i data-ng-repeat="mode in school.modes" style="border:1px solid #999;border-radius:3px; margin:2px;display:inline-block;padding:2px 8px;">{{ mode.name }}</i>
+						</div>
+					</div>			
+				</div>
+				<div data-ng-show="is_personalTemp && instance_count>1" style="margin-bottom: 20px;">
+					<p data-localize="PERSONAL_TEMP_UPDATE"></p>
+					<p class="ins"><span data-localize="包括"></span><i ng-repeat="ins in instance track by $index">{{ ins }}<span>、</span></i></p>
+					<p data-localize="PERSONAL_TEMP_UPDATE_TOTAL" param1="{{ instance.length || 0 }}"></p>
+					<!-- <p data-localize="TEM_EXIST"></p> -->
+				</div>
+				<cite data-localize="UPDATE_TEMPLATE_TIP"></cite>
+				<footer class='text-right'>
+					<img data-ng-if="loading" src="../../../img/building.gif" width="24px">
+					<button class='btn btn-primary' data-ng-if="!loading" data-ng-click='ok()' data-localize="确定"></button>
+					<button class='btn btn-default' data-ng-if="!loading" data-ng-click='close()' style='margin-left:5px;' data-localize="取消"></button>
+				</footer>
+			</form>
+		</div>
+	</div>
+</section>
+<style type="text/css">
+	.ins i:last-child>span{
+		display: none;
+	}
+</style>

@@ -1,0 +1,540 @@
+{
+    "code": 0,
+    "pools": [
+        {
+            "created_at": "2017-07-07T03:45:38.000000",
+            "description": "hyper-v",
+            "id": "27345a27-e32d-43e3-b7fd-eacb26b1d664",
+            "metadata": {
+                "rbd_enabled": 0,
+                "type": "hyper-v"
+            },
+            "name": "hyper-v",
+            "type": "hyper-v",
+            "updated_at": "2017-07-17T07:42:55.000000"
+        },
+        {
+            "created_at": "2017-06-29T16:45:51.000000",
+            "description": "default",
+            "id": "80cd6466-1f40-4ca7-8974-b476e0f5c968",
+            "metadata": {
+                "type": "libvirt"
+            },
+            "name": "default",
+            "type": "libvirt",
+            "updated_at": "2017-07-17T07:42:26.000000"
+        }
+    ],
+    "servers": [
+        {
+            "created_at": "2017-07-07T03:46:24.000000",
+            "description": null,
+            "disk_gb": 219,
+            "disk_gb_used": 60,
+            "hostname": "vdi131",
+            "id": "ea7e8294-ca22-4dfa-aafc-197403f1c1ec",
+            "ip": "172.16.201.131",
+            "memory_mb": 64387,
+            "memory_mb_used": 12800,
+            "metadata": {
+                "type": "libvirt"
+            },
+            "name": "vdi131",
+            "resource_pool_uuid": "80cd6466-1f40-4ca7-8974-b476e0f5c968",
+            "role": "storage",
+            "service_id": 0,
+            "status": "active",
+            "type": "libvirt",
+            "updated_at": "2017-07-20T10:07:36.000000",
+            "vcpus": 24,
+            "vcpus_used": 12,
+            "workload": 0
+        },
+        {
+            "created_at": "2017-07-07T03:45:57.000000",
+            "description": null,
+            "disk_gb": 499,
+            "disk_gb_used": 200,
+            "hostname": "vdi121",
+            "id": "c904f85e-2aa0-4311-8a8b-a1d8df33ece9",
+            "ip": "172.16.201.121",
+            "memory_mb": 64387,
+            "memory_mb_used": 20992,
+            "metadata": {},
+            "name": "storage_node_27345a27-e32d-43e3-b7fd-eacb26b1d664",
+            "resource_pool_uuid": "27345a27-e32d-43e3-b7fd-eacb26b1d664",
+            "role": "storage",
+            "service_id": 0,
+            "status": "active",
+            "type": "libvirt",
+            "updated_at": "2017-07-20T10:07:36.000000",
+            "vcpus": 24,
+            "vcpus_used": 20,
+            "workload": 0
+        },
+        {
+            "created_at": "2017-06-29T16:45:55.000000",
+            "description": null,
+            "disk_gb": 499,
+            "disk_gb_used": 200,
+            "hostname": "vdi121",
+            "id": "8d57327d-9560-40ae-bb33-9572a27112a3",
+            "ip": "172.16.201.121",
+            "memory_mb": 64387,
+            "memory_mb_used": 20992,
+            "metadata": {},
+            "name": "storage_node_80cd6466-1f40-4ca7-8974-b476e0f5c968",
+            "resource_pool_uuid": "80cd6466-1f40-4ca7-8974-b476e0f5c968",
+            "role": "storage",
+            "service_id": 0,
+            "status": "active",
+            "type": "libvirt",
+            "updated_at": "2017-07-20T10:07:36.000000",
+            "vcpus": 24,
+            "vcpus_used": 20,
+            "workload": 0
+        }
+    ],
+    "storages": [
+        {
+            "auth_password": null,
+            "auth_username": null,
+            "created_at": "2017-07-19T03:53:54.000000",
+            "description": null,
+            "device_type": "fc",
+            "free_size": 98.97,
+            "ip": "--",
+            "mount_point": null,
+            "name": "\u7279\u8272t",
+            "node_uuid": "8d57327d-9560-40ae-bb33-9572a27112a3",
+            "port": null,
+            "resource_pool_uuid": "80cd6466-1f40-4ca7-8974-b476e0f5c968",
+            "storage_control_ip": "172.16.201.121",
+            "storage_metadata": {
+                "capabilities": {
+                    "free_capacity_gb": 98.97,
+                    "total_capacity_gb": 99.97
+                },
+                "fs_uuid": "",
+                "ha_support": 1,
+                "lun_id": "8",
+                "lvm_type": "thick",
+                "scsi_id": "3660081010087d6f716d88baf00000025",
+                "storage_usability": "instance",
+                "target_iqn": null,
+                "vg_name": "f4553ef2-eb14-4d59-aa5c-1796020d5036"
+            },
+            "storage_type": null,
+            "storage_usability": "instance",
+            "total_size": 99.97,
+            "updated_at": null,
+            "uuid": "f947cd81-c3a4-46e9-9bcc-cd75bca800f8"
+        },
+        {
+            "auth_password": null,
+            "auth_username": null,
+            "created_at": "2017-07-19T01:12:19.000000",
+            "description": null,
+            "device_type": "fc",
+            "free_size": 499.97,
+            "ip": "--",
+            "mount_point": null,
+            "name": "fc-3",
+            "node_uuid": "8d57327d-9560-40ae-bb33-9572a27112a3",
+            "port": null,
+            "resource_pool_uuid": "80cd6466-1f40-4ca7-8974-b476e0f5c968",
+            "storage_control_ip": "172.16.201.121",
+            "storage_metadata": {
+                "capabilities": {
+                    "free_capacity_gb": 499.97,
+                    "total_capacity_gb": 500.0
+                },
+                "fs_uuid": "656fbfcb-1e81-4eed-867c-88a5fc35f9b7",
+                "lun_id": "3",
+                "lvm_type": "thick",
+                "scsi_id": "3660081010087d6f7111d81d9000000d5",
+                "storage_usability": "local",
+                "target_iqn": null,
+                "vg_name": "aa39c131-c5e3-4fd4-a559-cd1fdda3cf0a"
+            },
+            "storage_type": null,
+            "dynamic_lv": true,
+            "storage_usability": "local",
+            "total_size": 500.0,
+            "updated_at": null,
+            "uuid": "69c930d4-e17f-45a3-b8d8-66b04b611c7e"
+        },
+        {
+            "auth_password": null,
+            "auth_username": null,
+            "created_at": "2017-07-19T01:11:58.000000",
+            "description": null,
+            "device_type": "fc",
+            "free_size": 469.72,
+            "ip": "--",
+            "mount_point": null,
+            "name": "fc-1",
+            "node_uuid": null,
+            "port": null,
+            "resource_pool_uuid": "80cd6466-1f40-4ca7-8974-b476e0f5c968",
+            "storage_control_ip": "--",
+            "storage_host_uuid": "01ef66d7-b553-4988-9d40-7a45e7b132b0",
+            "storage_metadata": {
+                "capabilities": {
+                    "free_capacity_gb": 469.72,
+                    "total_capacity_gb": 499.76
+                },
+                "fs_uuid": "84d44548-985d-4580-b2d8-4145a5270e5a",
+                "lun_id": "1",
+                "lvm_type": "thick",
+                "scsi_id": "3660081010087d6f7111d811f000000d3",
+                "storage_type": "image_storage",
+                "storage_usability": "local",
+                "target_iqn": null,
+                "vg_name": "a97928c1-c2b8-437e-abe9-94dea2384156"
+            },
+            "storage_type": "public",
+            "storage_usability": "local",
+            "total_size": 499.76,
+            "updated_at": "2017-07-19T01:13:19.000000",
+            "uuid": "01ef66d7-b553-4988-9d40-7a45e7b132b0"
+        },
+        {
+            "auth_password": null,
+            "auth_username": null,
+            "created_at": "2017-07-07T08:51:14.000000",
+            "description": null,
+            "device_type": "fc",
+            "free_size": 908.28,
+            "ip": "--",
+            "mount_point": null,
+            "name": "fc-2",
+            "node_uuid": "ea7e8294-ca22-4dfa-aafc-197403f1c1ec",
+            "port": null,
+            "resource_pool_uuid": "80cd6466-1f40-4ca7-8974-b476e0f5c968",
+            "storage_control_ip": "172.16.201.131",
+            "storage_metadata": {
+                "capabilities": {
+                    "free_capacity_gb": 908.28,
+                    "total_capacity_gb": 999.97
+                },
+                "fs_uuid": "",
+                "ha_support": 1,
+                "lun_id": "2",
+                "scsi_id": "3660081010087d6f7111d8176000000d4",
+                "storage_usability": "instance",
+                "target_iqn": null,
+                "vg_name": "2f4159f5-8958-4a10-8fe0-329380fb1893"
+            },
+            "storage_type": "test",
+            "storage_usability": "instance",
+            "total_size": 999.97,
+            "updated_at": null,
+            "uuid": "bcf1c48f-2bc4-4c08-b996-1e7ce75b00d9"
+        },
+        {
+            "auth_password": null,
+            "auth_username": null,
+            "created_at": "2017-07-07T03:46:36.000000",
+            "description": "Local SSD storage",
+            "device_type": "local",
+            "free_size": 199.32,
+            "host_ip": "172.16.201.131",
+            "ip": "172.16.201.131",
+            "mount_point": "/opt/ssd",
+            "name": "local_ssd",
+            "node_uuid": "ea7e8294-ca22-4dfa-aafc-197403f1c1ec",
+            "port": null,
+            "resource_pool_uuid": "80cd6466-1f40-4ca7-8974-b476e0f5c968",
+            "storage_control_ip": "172.16.201.131",
+            "storage_host_uuid": "ea7e8294-ca22-4dfa-aafc-197403f1c1ec",
+            "storage_metadata": {
+                "capabilities": {
+                    "free_capacity_gb": 199.32,
+                    "total_capacity_gb": 199.9
+                },
+                "device_name": "/dev/sda3",
+                "storage_usability": "instance"
+            },
+            "storage_order": 1,
+            "storage_type": "\u7cfb\u7edf\u76d8\u955c\u50cf\u5b58\u50a8\u8bbe\u5907",
+            "storage_usability": "instance",
+            "total_size": 199.9,
+            "updated_at": null,
+            "uuid": "760b54c4-3cd5-4cdb-99e0-92d6b94a1922"
+        },
+        {
+            "auth_password": null,
+            "auth_username": null,
+            "created_at": "2017-07-07T03:46:36.000000",
+            "description": "Local SSD storage",
+            "device_type": "local",
+            "free_size": 199.32,
+            "host_ip": "172.16.201.131",
+            "ip": "172.16.201.131",
+            "mount_point": "/opt/ssd",
+            "name": "local_ssd",
+            "node_uuid": "ea7e8294-ca22-4dfa-aafc-197403f1c1ec",
+            "port": null,
+            "resource_pool_uuid": "80cd6466-1f40-4ca7-8974-b476e0f5c968",
+            "storage_control_ip": "172.16.201.131",
+            "storage_host_uuid": "ea7e8294-ca22-4dfa-aafc-197403f1c1ec",
+            "storage_metadata": {
+                "capabilities": {
+                    "free_capacity_gb": 199.32,
+                    "total_capacity_gb": 199.9
+                },
+                "device_name": "/dev/sda3",
+                "storage_usability": "instance"
+            },
+            "storage_order": 3,
+            "storage_type": "\u7cfb\u7edf\u76d8\u5b58\u50a8\u8bbe\u5907",
+            "storage_usability": "instance",
+            "total_size": 199.9,
+            "updated_at": null,
+            "uuid": "760b54c4-3cd5-4cdb-99e0-92d6b94a1922"
+        },
+        {
+            "auth_password": null,
+            "auth_username": null,
+            "created_at": "2017-07-07T03:46:36.000000",
+            "description": "Local SATA storage",
+            "device_type": "local",
+            "free_size": 198.94,
+            "host_ip": "172.16.201.131",
+            "ip": "172.16.201.131",
+            "mount_point": "/opt/sata",
+            "name": "local_sata",
+            "node_uuid": "ea7e8294-ca22-4dfa-aafc-197403f1c1ec",
+            "port": null,
+            "resource_pool_uuid": "80cd6466-1f40-4ca7-8974-b476e0f5c968",
+            "storage_control_ip": "172.16.201.131",
+            "storage_host_uuid": "ea7e8294-ca22-4dfa-aafc-197403f1c1ec",
+            "storage_metadata": {
+                "capabilities": {
+                    "free_capacity_gb": 198.94,
+                    "total_capacity_gb": 219.89
+                },
+                "device_name": "/dev/sda2",
+                "storage_usability": "instance"
+            },
+            "storage_order": 2,
+            "storage_type": "\u6570\u636e\u76d8\u955c\u50cf\u5b58\u50a8\u8bbe\u5907",
+            "storage_usability": "instance",
+            "total_size": 219.89,
+            "updated_at": null,
+            "uuid": "72d5d2ce-02b4-42b8-8d20-cad78f083315"
+        },
+        {
+            "auth_password": null,
+            "auth_username": null,
+            "created_at": "2017-07-07T03:46:36.000000",
+            "description": "Local SATA storage",
+            "device_type": "local",
+            "free_size": 198.94,
+            "host_ip": "172.16.201.131",
+            "ip": "172.16.201.131",
+            "mount_point": "/opt/sata",
+            "name": "local_sata",
+            "node_uuid": "ea7e8294-ca22-4dfa-aafc-197403f1c1ec",
+            "port": null,
+            "resource_pool_uuid": "80cd6466-1f40-4ca7-8974-b476e0f5c968",
+            "storage_control_ip": "172.16.201.131",
+            "storage_host_uuid": "ea7e8294-ca22-4dfa-aafc-197403f1c1ec",
+            "storage_metadata": {
+                "capabilities": {
+                    "free_capacity_gb": 198.94,
+                    "total_capacity_gb": 219.89
+                },
+                "device_name": "/dev/sda2",
+                "storage_usability": "instance"
+            },
+            "storage_order": 4,
+            "storage_type": "\u6570\u636e\u76d8\u5b58\u50a8\u8bbe\u5907",
+            "storage_usability": "instance",
+            "total_size": 219.89,
+            "updated_at": null,
+            "uuid": "72d5d2ce-02b4-42b8-8d20-cad78f083315"
+        },
+        {
+            "auth_password": null,
+            "auth_username": null,
+            "created_at": "2017-07-07T03:45:58.000000",
+            "description": "Local SATA storage",
+            "device_type": "local",
+            "free_size": 314.6,
+            "ip": "172.16.201.121",
+            "mount_point": "/opt/sata",
+            "name": "local_sata",
+            "node_uuid": "c904f85e-2aa0-4311-8a8b-a1d8df33ece9",
+            "port": null,
+            "resource_pool_uuid": "27345a27-e32d-43e3-b7fd-eacb26b1d664",
+            "storage_control_ip": "172.16.201.121",
+            "storage_metadata": {
+                "capabilities": {
+                    "free_capacity_gb": 314.6,
+                    "total_capacity_gb": 499.76
+                },
+                "device_name": "/dev/sda2",
+                "storage_usability": "instance"
+            },
+            "storage_type": null,
+            "storage_usability": "instance",
+            "total_size": 499.76,
+            "updated_at": null,
+            "uuid": "df3251ec-2ccb-43bb-869b-94780377091e"
+        },
+        {
+            "auth_password": null,
+            "auth_username": null,
+            "created_at": "2017-07-07T03:45:57.000000",
+            "description": "Local SSD storage",
+            "device_type": "local",
+            "free_size": 459.88,
+            "ip": "172.16.201.121",
+            "mount_point": "/opt/ssd",
+            "name": "local_ssd",
+            "node_uuid": "c904f85e-2aa0-4311-8a8b-a1d8df33ece9",
+            "port": null,
+            "resource_pool_uuid": "27345a27-e32d-43e3-b7fd-eacb26b1d664",
+            "storage_control_ip": "172.16.201.121",
+            "storage_metadata": {
+                "capabilities": {
+                    "free_capacity_gb": 459.88,
+                    "total_capacity_gb": 499.76
+                },
+                "device_name": "/dev/sdb1",
+                "storage_usability": "instance"
+            },
+            "storage_type": null,
+            "storage_usability": "instance",
+            "total_size": 499.76,
+            "updated_at": null,
+            "uuid": "09943423-dfe8-46c2-956d-45739b4fb784"
+        },
+        {
+            "auth_password": null,
+            "auth_username": null,
+            "created_at": "2017-06-29T16:45:56.000000",
+            "description": "Local SATA storage",
+            "device_type": "local",
+            "free_size": 314.6,
+            "host_ip": "172.16.201.121",
+            "ip": "172.16.201.121",
+            "mount_point": "/opt/sata",
+            "name": "local_sata",
+            "node_uuid": "8d57327d-9560-40ae-bb33-9572a27112a3",
+            "port": null,
+            "resource_pool_uuid": "80cd6466-1f40-4ca7-8974-b476e0f5c968",
+            "storage_control_ip": "172.16.201.121",
+            "storage_host_uuid": "8d57327d-9560-40ae-bb33-9572a27112a3",
+            "storage_metadata": {
+                "capabilities": {
+                    "free_capacity_gb": 314.6,
+                    "total_capacity_gb": 499.76
+                },
+                "device_name": "/dev/sda2",
+                "storage_usability": "instance"
+            },
+            "storage_order": 2,
+            "storage_type": "\u6570\u636e\u76d8\u955c\u50cf\u5b58\u50a8\u8bbe\u5907",
+            "storage_usability": "instance",
+            "total_size": 499.76,
+            "updated_at": null,
+            "uuid": "9fac4fb4-c737-4f1a-9fc6-8a80f84297b7"
+        },
+        {
+            "auth_password": null,
+            "auth_username": null,
+            "created_at": "2017-06-29T16:45:56.000000",
+            "description": "Local SATA storage",
+            "device_type": "local",
+            "free_size": 314.6,
+            "host_ip": "172.16.201.121",
+            "ip": "172.16.201.121",
+            "mount_point": "/opt/sata",
+            "name": "local_sata",
+            "node_uuid": "8d57327d-9560-40ae-bb33-9572a27112a3",
+            "port": null,
+            "resource_pool_uuid": "80cd6466-1f40-4ca7-8974-b476e0f5c968",
+            "storage_control_ip": "172.16.201.121",
+            "storage_host_uuid": "8d57327d-9560-40ae-bb33-9572a27112a3",
+            "storage_metadata": {
+                "capabilities": {
+                    "free_capacity_gb": 314.6,
+                    "total_capacity_gb": 499.76
+                },
+                "device_name": "/dev/sda2",
+                "storage_usability": "instance"
+            },
+            "storage_order": 4,
+            "storage_type": "\u6570\u636e\u76d8\u5b58\u50a8\u8bbe\u5907",
+            "storage_usability": "instance",
+            "total_size": 499.76,
+            "updated_at": null,
+            "uuid": "9fac4fb4-c737-4f1a-9fc6-8a80f84297b7"
+        },
+        {
+            "auth_password": null,
+            "auth_username": null,
+            "created_at": "2017-06-29T16:45:55.000000",
+            "description": "Local SSD storage",
+            "device_type": "local",
+            "free_size": 459.88,
+            "host_ip": "172.16.201.121",
+            "ip": "172.16.201.121",
+            "mount_point": "/opt/ssd",
+            "name": "local_ssd",
+            "node_uuid": "8d57327d-9560-40ae-bb33-9572a27112a3",
+            "port": null,
+            "resource_pool_uuid": "80cd6466-1f40-4ca7-8974-b476e0f5c968",
+            "storage_control_ip": "172.16.201.121",
+            "storage_host_uuid": "8d57327d-9560-40ae-bb33-9572a27112a3",
+            "storage_metadata": {
+                "capabilities": {
+                    "free_capacity_gb": 459.88,
+                    "total_capacity_gb": 499.76
+                },
+                "device_name": "/dev/sdb1",
+                "storage_usability": "instance"
+            },
+            "storage_order": 1,
+            "storage_type": "\u7cfb\u7edf\u76d8\u955c\u50cf\u5b58\u50a8\u8bbe\u5907",
+            "storage_usability": "instance",
+            "total_size": 499.76,
+            "updated_at": null,
+            "uuid": "5f156329-71a5-4d93-b907-521d8e2f3682"
+        },
+        {
+            "auth_password": null,
+            "auth_username": null,
+            "created_at": "2017-06-29T16:45:55.000000",
+            "description": "Local SSD storage",
+            "device_type": "local",
+            "free_size": 459.88,
+            "host_ip": "172.16.201.121",
+            "ip": "172.16.201.121",
+            "mount_point": "/opt/ssd",
+            "name": "local_ssd",
+            "node_uuid": "8d57327d-9560-40ae-bb33-9572a27112a3",
+            "port": null,
+            "resource_pool_uuid": "80cd6466-1f40-4ca7-8974-b476e0f5c968",
+            "storage_control_ip": "172.16.201.121",
+            "storage_host_uuid": "8d57327d-9560-40ae-bb33-9572a27112a3",
+            "storage_metadata": {
+                "capabilities": {
+                    "free_capacity_gb": 459.88,
+                    "total_capacity_gb": 499.76
+                },
+                "device_name": "/dev/sdb1",
+                "storage_usability": "instance"
+            },
+            "storage_order": 3,
+            "storage_type": "\u7cfb\u7edf\u76d8\u5b58\u50a8\u8bbe\u5907",
+            "storage_usability": "instance",
+            "total_size": 499.76,
+            "updated_at": null,
+            "uuid": "5f156329-71a5-4d93-b907-521d8e2f3682"
+        }
+    ]
+}

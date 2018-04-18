@@ -1,0 +1,113 @@
+<div class ="input-number-field-container" >
+	<input ng-model="userNumber" class="input-number-field-input" ng-keydown="keydown($event)" ng-blur="round()" ng-change="setValidation()" ui-input-number-formatter>
+	<span class="input-number-field-arrow">
+		<i class="input-number-add input-number-arrow" ng-mousedown="add(this.addStep)"></i>
+		<i class="input-number-sub input-number-arrow" ng-mousedown="add(-this.addStep)"></i>
+	</span>
+<style type="text/css">
+	.input-number-wraper-sm{
+		display: inline-block;
+		width: 60px;
+	}
+	.input-number-field-container{
+    	border-color: #ccc;
+		min-width: 40px;
+		background-color: #fff;
+		width:100%;
+		position: relative;
+		display: -webkit-flex;
+		border-style: solid;
+		border-width: 1px;
+	}
+	.input-number-wraper-sm .input-number-field-container{
+		padding: 6px;
+		-webkit-transition: all .2s linear;
+	}
+	.input-number-field-container:hover .input-number-field-arrow{
+		opacity: 1;
+	}
+	.input-number-field-container .input-number-field-input{
+		border: none;
+		background-color: transparent;
+		border-radius: none;
+		line-height: 18px;
+		height: 18px;
+		display: inline-block;
+		-webkit-flex:1;
+		flex:1;
+		width: 100%;
+		margin-right: 2px;
+	}
+	input[ui-input-number].ng-invalid+.input-number-field-container
+	{
+		background: #fff0f0;
+    	border-color: #A90329;
+	}
+	.input-number-field-container .input-number-field-input:focus~.input-number-field-arrow{
+		opacity: 1;
+	}
+	.input-number-field-container .input-number-field-arrow {
+		width: 15px;
+		height: 18px;
+		background-color: #F1F1F1;
+		position: relative;
+		-webkit-user-select: none;
+		opacity: 0;
+	}
+	.input-number-field-arrow .input-number-arrow{
+		position: absolute;
+		height: 9px;
+
+	}
+	.input-number-field-arrow .input-number-arrow:active:hover{
+		background-color: #D2D2D2;
+	}
+	.input-number-field-arrow .input-number-arrow:hover{
+		background-color: #ccc;
+	}
+	.input-number-field-arrow .input-number-arrow.input-number-add{
+
+		top: 0px;
+		right: 0px;
+		width: 100%;
+		text-align: center;
+		display: inline-block;
+		line-height: 9px;
+		height: 9px;
+		
+	}
+	.input-number-field-arrow .input-number-arrow.input-number-sub{
+		bottom: 0px;
+		right: 0px;
+		width: 100%;
+		text-align: center;
+		display: inline-block;
+		line-height: 9px;
+		height: 9px;
+	}
+	.input-number-field-arrow .input-number-arrow.input-number-add:before{
+		content: "";
+	    display: inline-block;
+	    border-bottom: 4px solid #505050;
+	    width: 8px;
+	    height: 8px;
+	    border-top: 4px solid transparent;
+	    border-left: 4px solid transparent;
+	    border-right: 4px solid transparent;
+	    margin: 0px 0px 3px 0px;
+	}
+	.input-number-field-arrow .input-number-arrow.input-number-sub:before{
+		content: "";
+	    display: inline-block;
+	    border-top: 4px solid #505050;
+	    width: 8px;
+	    height: 8px;
+	    border-bottom: 4px solid transparent;
+	    border-left: 4px solid transparent;
+	    border-right: 4px solid transparent;
+	    margin: 3px 0px 0px 0px;
+	}
+	
+</style>
+</div>
+

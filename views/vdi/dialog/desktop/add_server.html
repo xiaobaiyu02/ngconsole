@@ -1,0 +1,39 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" localize="加域">加域</h4>
+</div>
+<div class="modal-body">
+	<fieldset>
+		<div class="form-group" ng-if="loading">
+			<label class="col-sm-12 control-label"><img  ng-src="img/loadingtext.gif" alt="" width="24px" height="24px"></label>
+		</div>
+		<form class="form-horizontal" name="addServerForm">
+			<div class="form-group">
+				<label class="col-sm-3 control-label"  localize="MESS_DOMAIN_LABEL">请选择需要加入的域</label>
+				<div class="col-sm-7">
+					<select class="form-control col-sm-10" data-ng-model="server" data-ng-options="server.name for server in servers" required>
+					</select> 
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-xs-7 col-xs-offset-3">
+					<label class="checkbox-inline checkbox-align">
+						<input type="checkbox" class="checkbox style-0"  data-ng-model="is_sid" ng-init="is_sid = true">
+						<span localize="MESS_DOMAIN_SID">修改桌面计算机安全标志符（SID）</span>
+					</label>
+				</div>
+			</div>
+			<footer class="text-right">
+				<img ng-if="submiting" src="img/loadingtext.gif" width="24px" height="24px">
+				<div ng-show="!submiting">
+					<button type="button" ng-disabled="addServerForm.$invalid" class="btn btn-primary" ng-click="post()"  localize="确定">
+						确定
+					</button>
+					<button type="button" class="btn btn-default" ng-click="close()"  localize="取消">
+						取消
+					</button>
+				</div>
+			</footer>
+		</form>
+	</fieldset>
+</div>

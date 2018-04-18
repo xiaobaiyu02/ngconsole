@@ -1,0 +1,219 @@
+{
+	"code": 0,
+	"date": "2017-08-18",
+	"time": "09:41:17",
+	"timestamp": 1503020477000,
+	"timezones": [
+		{
+			"offset": "UTC",
+			"zones": [
+				"Europe/Dublin",
+				"Europe/Lisbon",
+				"Europe/London"
+			]
+		},
+		{
+			"offset": "UTC+01:00",
+			"zones": [
+				"Europe/Paris",
+				"Europe/Amsterdam",
+				"Europe/Berlin",
+				"Europe/Rome",
+				"Europe/Stockholm",
+				"Europe/Vienna"
+			]
+		},
+		{
+			"offset": "UTC+02:00",
+			"zones": [
+				"Asia/Amman",
+				"Asia/Beirut",
+				"Africa/Cairo",
+				"Europe/Athens",
+				"Asia/Jerusalem"
+			]
+		},
+		{
+			"offset": "UTC+03:00",
+			"zones": [
+				"Asia/Baghdad",
+				"Europe/Minsk",
+				"Asia/Kuwait",
+				"Africa/Nairobi"
+																																																																																																																																									]
+		},
+		{
+			"offset": "UTC+04:00",
+			"zones": [
+				"Asia/Muscat",
+				"Asia/Dubai"
+			]
+		},
+		{
+			"offset": "UTC+05:00",
+			"zones": [
+				"Asia/Ashkhabad",
+				"Asia/Karachi"
+			]
+		},
+		{
+			"offset": "UTC+06:00",
+			"zones": [
+				"Asia/Almaty",
+				"Asia/Dacca",
+				"Asia/Bishkek"
+																																																																																																																																																																																																																		]
+		},
+		{
+			"offset": "UTC+07:00",
+			"zones": [
+				"Asia/Bangkok",
+				"Asia/Jakarta"
+			]
+		},
+		{
+			"offset": "UTC+08:00",
+			"zones": [
+				"Asia/Shanghai",
+				"Asia/Chongqing",
+				"Asia/Hong_Kong",
+				"Asia/Singapore",
+				"Asia/Taipei"
+			]
+		},
+		{
+			"offset": "UTC+09:00",
+			"zones": [
+				"Asia/Tokyo",
+				"Asia/Seoul",
+				"Asia/Yakutsk",
+				"Pacific/Palau"
+			]
+		},
+		{
+			"offset": "UTC+10:00",
+			"zones": [
+				"Australia/Sydney",
+				"Asia/Vladivostok",
+				"Australia/Canberra",
+				"Australia/Melbourne",
+				"Australia/Queensland"
+			]
+		},
+		{
+			"offset": "UTC+11:00",
+			"zones": [
+				"Pacific/Guadalcanal",
+				"Pacific/Noumea",
+				"Asia/Sakhalin"
+			]
+		},
+		{
+			"offset": "UTC+12:00",
+			"zones": [
+				"Pacific/Auckland",
+				"Pacific/Fiji",
+				"Pacific/Nauru"
+			]
+		},
+		{
+			"offset": "UTC+13:00",
+			"zones": [
+				"Pacific/Tongatapu",
+				"Pacific/Apia"
+			]
+		},
+		{
+			"offset": "UTC-12:00",
+			"zones": [
+				"International Date Line West"
+			]
+		},
+		{
+			"offset": "UTC-11:00",
+			"zones": [
+				"Pacific/Midway"
+			]
+		},
+		{
+			"offset": "UTC-10:00",
+			"zones": [
+				"US/Hawaii",
+				"Pacific/Honolulu"
+			]
+		},
+		{
+			"offset": "UTC-09:00",
+			"zones": [
+				"US/Alaska",
+				"Pacific/Gambier"
+			]
+		},
+		{
+			"offset": "UTC-08:00",
+			"zones": [
+				"America/Los_Angeles",
+				"America/Tijuana",
+				"America/Vancouver"
+			]
+		},
+		{
+			"offset": "UTC-07:00",
+			"zones": [
+				"America/Phoenix",
+				"America/Arizona"
+			]
+		},
+		{
+			"offset": "UTC-06:00",
+			"zones": [
+				"America/Chicago",
+				"Chile/EasterIsland",
+				"America/Mexico_City",
+				"America/Monterrey"
+			]
+		},
+		{
+			"offset": "UTC-05:00",
+			"zones": [
+				"America/Indianapolis",
+				"America/Panama",
+				"America/Bogota"
+			]
+		},
+		{
+			"offset": "UTC-04:00",
+			"zones": [
+				"America/Asuncion",
+				"America/La_Paz"
+			]
+		},
+		{
+			"offset": "UTC-03:30",
+			"zones": [
+				"Canada/Newfoundland"
+			]
+		},
+		{
+			"offset": "UTC-03:00",
+			"zones": [
+				"America/Buenos_Aires",
+				"America/Cayenne",
+				"America/Sao_Paulo"
+			]
+		},
+		{
+			"offset": "UTC-02:00",
+			"zones": [
+				"Atlantic/South_Georgia"
+			]
+		},
+		{
+			"offset": "UTC-01:00",
+			"zones": [
+				"Atlantic/Azores"
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						]
+		}
+	],
+	"zone": "UTC+08:00"
+}

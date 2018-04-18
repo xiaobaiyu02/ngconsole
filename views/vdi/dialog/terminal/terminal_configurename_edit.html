@@ -1,0 +1,34 @@
+<div class="modal-body no-padding">
+	<form action="" class="smart-form ng-pristine ng-valid" name="editNameFrom" novalidate>
+		<header class="myheader">
+			<div><span data-localize="修改终端名"></span>
+				<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+			</div>
+		</header>
+		<ul class="note" style='margin-left:14px;'>
+			<li data-localize='TERMINAL_NAME_TIP1'></li>
+			<li data-localize='TERMINAL_NAME_TIP2'></li>
+		</ul>
+		<fieldset>
+			<section>
+				<label class="label required" data-localize="终端列表"></label>
+				<select multiple disabled class="form-control custom-scroll" 
+						data-ng-options="terminal.client_name for terminal in terminallists track by terminal.id"
+						data-ng-model="terminals">
+				</select>
+			</section>
+			<section>
+				<label class="label required" data-localize="终端名前缀"></label>
+					<label class="input" data-ng-class="{'state-success':editNameFrom.prename.$valid && editNameFrom.prename.$dirty,'state-error':editNameFrom.prename.$invalid && editNameFrom.prename.$dirty}">
+					<input type="text" name="prename" data-localize="2~20位英文和数字" maxlength="20" data-ng-model="prename" required data-ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9-]{1,19}$/">
+				</label>		
+			</section>
+		
+		</fieldset>
+		<footer>
+			<button type="button" data-ng-click="close()" class="btn btn-default myfooterbtn" data-localize="取消"></button>
+			<button type="submit" name="submit" class="btn btn-primary myfooterbtn" data-ng-disabled="editNameFrom.$invalid" data-ng-click="ok()" data-localize="确定"></button>
+		</footer>
+	</form>
+</div>
+<script>pageSetUp();</script>

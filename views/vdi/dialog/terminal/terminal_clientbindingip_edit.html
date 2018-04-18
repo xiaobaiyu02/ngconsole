@@ -1,0 +1,42 @@
+<div class="modal-body no-padding">
+	<form  class="smart-form ng-pristine ng-valid" name="bindIP" novalidate>
+		<header class="myheader">
+			<div><span data-localize="固定桌面IP"></span>
+				<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+			</div>
+		</header>
+		<ul class="note" style='margin-left:14px;'>
+			<li data-localize='FIXED_IP1'></li>
+			<li data-localize='FIXED_IP2'></li>
+		</ul>
+		<fieldset>
+			<section>
+				<label class="label required" data-localize="终端列表"></label>
+				<select multiple disabled class="form-control custom-scroll" 
+						data-ng-options="terminallist.client_name for terminallist in terminallists"
+						data-ng-model="terminals">
+				</select>
+			</section>
+
+			<section>
+				<label class="label" data-localize="网络"></label>
+				<label class="input" >
+					<input type="text" name="network" disabled data-ng-model="network">
+				</label>
+			</section>
+
+			<section>
+				<label class="label required" data-localize="开始IP"></label>
+				<label class="input classroomNet" >
+					<!-- <input type="text" data-ng-disabled="!dhcp" name="startip" data-ng-model="startIP" required data-ng-pattern="/^\s*((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))\s*$/" data-ng-class='{passwordConfirm_disabled:!dhcp}'> -->
+					<input type="text" name="startip" format-ip start="ip_start" end="ip_end" ng-model="startIP" ng-required>
+				</label>
+			</section>
+		</fieldset>
+		<footer>
+			<button type='button' data-ng-click="close()" class="btn btn-default myfooterbtn" data-localize="取消"></button>
+			<button type='submit' data-ng-click="ok()" disabled data-ng-disabled="bindIP.$invalid || isUnchanged()" class="btn btn-primary myfooterbtn" data-localize="确定"></button>
+		</footer>
+	</form>
+</div>
+<script>pageSetUp()</script>

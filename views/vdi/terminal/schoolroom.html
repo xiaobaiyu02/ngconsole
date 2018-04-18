@@ -1,0 +1,79 @@
+<section>
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-sm-12">
+			<div class="jarviswidget" data-widget-grid>
+				<!-- widget div-->
+				<div class="noborder">
+					<div class="jarviswidget-editbox"></div>
+					<div class="widget-body no-padding">
+						<section class="dt-toolbar">
+							<div class="left_side col-xs-6 left-btn-group">
+								<div data-ng-show="owner">
+									<a class="btn btn-primary btn-xs" data-dialog="addSchoolroomDialog" data-dialog-size="md" data-dialog-url="terminal/terminal_schoolroom_add.html"><i class="icon-jj-addddd fa"></i> <span data-localize="新增"></span></a>
+									<a class="btn btn-danger btn-xs isBatch" data-ng-class="{disabled:!selectNoDefault()}" data-ng-click="delete(item)" href="javascript:"><i class="icon-jj-delete fa"></i> <span data-localize="删除"></span></a>
+									<a class="btn btn-primary btn-xs" data-ng-class="{disabled:!onlyOneItem()}" ng-click="sendMessage()"><i class="icon-jj-addddd fa"></i> <span data-localize="发布消息"></span></a>
+									<a class="btn btn-primary btn-xs" data-ng-class="{disabled:!onlyOneItem()}" ng-click="closeMessage()"><i class="icon-jj-addddd fa"></i> <span data-localize="关闭消息"></span></a>
+								</div>
+							</div>
+							<div class="right_side col-xs-6">
+								<div class="pull-right filter"> <span data-localize="显示"></span> <input min="1" max="500" placeholder="1-500" type="number" class="mysmallinput" input-number data-ng-model="pagesize" data-ng-change="pageSizeChange()"> <span data-localize="项结果"></span></div>
+								<div class="pull-right dataTables_filter search"><label><span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span> <input type="search" maxlength="20" class="form-control" ng-model="searchText" ></label></div>
+							</div>
+						</section>
+						<div class="table-responsive">
+							<table
+								class="table table-striped table-condensed table-hover smart-form has-tickbox table-vertical-center"
+								width="100%">
+								<thead class="vdi_grid_header">
+									<tr>
+										<th ><label data-ng-show="owner" class="checkbox"><input type="checkbox" data-ng-model="checkedAll" data-ng-change="selectAllChange(checkedAll)" data-ng-checked="checkAll(all)" name="checkbox-inline"><i></i></label></th>
+										<th ng-model="nameSort" ng-click="nameSort = !nameSort;sort('name', nameSort)" data-localize="教室名称"></th>
+										<!-- <th ng-model="resource_pool_nameSort" ng-click="resource_pool_nameSort = !resource_pool_nameSort;sort('resource_pool_name', resource_pool_nameSort)"  data-localize="资源池"></th> -->
+										<th data-localize="网络"></th>
+										<th data-localize="终端IP范围"></th>
+										<th ng-model="user_numSort" ng-click="user_numSort = !user_numSort;sort('user_num', user_numSort)" data-localize="授权管理员数"></th>
+										<th ng-model="terminalCountSort" ng-click="terminalCountSort = !terminalCountSort;sort('terminalCount', terminalCountSort)" data-localize="当前终端数"></th>
+										<th ng-model="sceneCountSort" ng-click="sceneCountSort = !sceneCountSort;sort('sceneCount', sceneCountSort)" data-localize="当前场景数"></th>
+										<th data-localize="描述"></th>
+										<th data-localize="操作"></th>
+									</tr>
+								</thead>
+								<tbody class="vdi_grid_body">
+									<tr data-contextmenu data-id="{{item.id}}" data-ng-repeat="item in rows | filter:searchText | paging:currentPage:pagesize">
+										<td><label data-ng-if="owner" class="checkbox"><input data-ng-model="item._selected" data-ng-checked="item._selected" type="checkbox" data-ng-value="item.id" name="checkbox-inline"><i></i></label></td>
+										<td>{{ item.name }}</td>
+										<!-- <td>{{ item.resource_pool_name }}</td> -->
+										<td>{{ item.network_name }}<span data-ng-if="item.subnet_name">/{{ item.subnet_name }} ({{ item.dhcp_start }}~{{ item.dhcp_end }})</span></td>
+										<td><span data-ng-if="item.ip_start">{{item.ip_start + '-' + item.ip_end}}</span></td>
+										<td>{{ item.user_num }}</td>
+										<td>{{ item.terminalCount }}</td>
+										<td>{{ item.sceneCount }}</td>
+										<td>{{ item.desc }}</td>
+										<td><a class="btn btn-xs btn-default" data-dialog="editSchoolroomDialog" data-dialog-size="md" data-dialog-url="terminal/terminal_schoolroom_edit.html" data-localize-title="编辑"><i class="fa icon-jj-Write"></i></a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="tips" data-ng-if="loading" data-localize="LOADING_TEXT"></div>
+						<div class="tips" data-ng-if="!loading && rows.length == 0" data-localize="NO_MATCHING_DATA"></div>
+						<div data-ng-include="'includes/pagination.html'"></div>
+					</div>
+				</div>
+
+				<section class="context_wrapper">
+					<div data-ng-if="currentItem" class="menu_wrapper grid_context_menu">
+						<ul class="menu_item_list">
+							<li class="menu_item" ><a data-dialog="editSchoolroomDialog" data-ng-model="currentItem" data-dialog-size="md" data-dialog-url="terminal/terminal_schoolroom_edit.html" data-localize="编辑"></a></li>
+							<li data-ng-if="owner" class="menu_item" data-ng-click="sendMessage(currentItem)"><a class="menu_label" href="javascript:" data-localize="发布消息"></a></li>
+							<li data-ng-if="owner" class="menu_item" data-ng-click="closeMessage(currentItem)"><a ng-disabled="currentItem.message" class="menu_label" href="javascript:" data-localize="关闭消息"></a></li>
+							<li data-ng-if="owner && currentItem.id != 1" class="menu_item" data-ng-click="delete(currentItem)"><a class="menu_label" href="javascript:" data-localize="删除"></a></li>
+						</ul>
+					</div>
+				</section>
+
+			</div>
+		</article>
+	</div>
+</section>
+<script>pageSetUp();</script>
+

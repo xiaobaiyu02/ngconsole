@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <button ng-hide="loading" type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title" localize="一键关机"></h4>
+</div>
+<div class="modal-body">
+    <div localize="onekeyShutdownTips"></div>
+</div>
+<div class="modal-footer">
+    <img ng-show="loading" src="img/loadingtext.gif" alt="" width="24" height="24">
+    <button class="btn btn-primary btn-sm" ng-hide="loading" ng-click="shutdown()" localize="确定"></button>
+</div>

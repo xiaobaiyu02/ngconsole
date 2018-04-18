@@ -1,0 +1,46 @@
+<div id="PageBottomBar" data-ng-controller="TaskListController" style="display: none">
+	<div class="progress_wrapper">
+		<div class="progress_resize_handler" data-ng-click="toggleTaskList()">
+			<i class="fa fa-reorder up_arrow"></i>
+			<i class="fa fa-reorder down_arrow"></i>
+		</div>
+		<div class="progress_body row no-margin no-padding">
+			<div class="progress_content">
+				<div class="progress_list_wrapper">
+					<table
+						class="table table-bordered table-striped table-condensed table-hover has-tickbox"
+						width="100%">
+						<thead class="vdi_header">
+							<tr>
+								<th data-localize="序号"></th>
+								<th data-localize="操作类型"></th>
+								<th data-localize="对象名称"></th>
+								<th data-localize="开始时间"></th>
+								<th data-localize="结束时间"></th>
+								<th data-localize="操作人员"></th>
+								<th data-localize="状态"></th>
+								<th data-localize="详细"></th>
+							</tr>
+						</thead>
+						<tbody class="vdi_body">
+							<tr data-ng-repeat="item in rows">
+								<td>{{ item.id }}</td>
+								<td><span data-localize="{{ item.task_type }}"></span></td>
+								<td class="nowrap">{{ item.task_target }}</td>
+								<td class="nowrap">{{ item.created_at | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+								<td class="nowrap">{{ item.task_time | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+								<td>{{ item.user }}</td>
+								<td>
+									<i class="fa  icon-jj-right txt-color-greenjj" data-ng-if="item.status==1"></i>
+									<i class="fa icon-jj-wrong .txt-color-redjj" data-ng-if="item.status==2"></i>
+									<img data-ng-src="img/building.gif" data-ng-if="item.status==0" width="13" height="13">
+								</td>
+								<td>{{ item.task_exception }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

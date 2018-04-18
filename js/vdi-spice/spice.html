@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title data-localize='编辑'></title>
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<link rel="stylesheet" type="text/css" media="screen" href="../../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="../../css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="../../css/smartadmin-production.min.css">
+	<link rel="stylesheet" id="vdi_skins_url" type="text/css" media="screen">
+	<script src="../../js/libs/jquery-2.1.1.js"></script>
+	<script src="../../js/bootstrap/bootstrap.min.js"></script>
+	<script src="../../js/libs/angular/angular.js"></script>
+	<script src="../../js/libs/angular/angular-resource.js"></script>
+	<script src="../../js/libs/angular/ui-bootstrap-custom-tpls-0.11.0.js"></script>
+	<style>
+		iframe{
+			position: absolute;
+			top: 32px;
+			left: 0px;
+			width: 100%;
+			bottom: 0px;
+		}
+		body,html{overflow: hidden;height: 100%;width: 100%}
+		.toolbar{
+		    height:32px;
+		    line-height:32px;
+		    border-bottom:#333;
+		    background:#ccc;
+		    position:fixed;
+		    z-index: 999;
+		    top:0;
+		    left:0;
+		    width:100%;
+		    padding:0 16px;
+		}
+		.update_tem{
+		    display: inline-block;
+		    width: 18%;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    white-space: nowrap;
+		    position: relative;
+		    top: 5px;
+		}
+		.tab-content{
+		    padding: 20px 0;
+		}
+		.nav-tabs>li>a{
+		    color: #666;
+		}
+	</style>
+	<script type="text/javascript">
+	    window.$$$storage = {
+	        getSessionStorage: function(key){
+	            return sessionStorage.getItem('vdi_'+ key);
+	        },
+	        setSessionStorage: function(key, value){
+	            sessionStorage.setItem('vdi_'+ key, value);
+	        },
+	        clearSessionStorage: function(){
+	            sessionStorage.clear()
+	        }
+	    }
+	</script>
+	<script src="../env.js"></script>
+</head>
+<body data-ng-controller="teachTplSpiceController" class="toolbar smart-style-0">
+	<div>
+	    <b>{{ name }}</b>
+	    <b id="noVNC_status">Loading</b>
+	    <div style="float:right;">
+	        <a class="btn btn-xs btn-primary" href="javascript:" data-ng-click="start()"><i class="fa icon-uniF01E"></i><span data-localize="开机">开机</span></a>
+	        <a class="btn btn-xs btn-primary" href="javascript:" data-ng-click="shutdown()"><i class="fa icon-uniF01E"></i><span data-localize="关机">关机</span></a>
+	        <a class="btn btn-xs btn-primary" data-ng-if="!is_template && !is_systemTemp" data-ng-disabled='(!installed && is_windows) || saveTem_loading' href="javascript:" data-ng-click="updateTemplate()"><i class="fa icon-uniF01E"></i><span data-ng-if="!is_template" data-localize="保存模板">保存模板</span></a>
+	        <a class="btn btn-xs btn-primary" data-ng-if="is_template && !is_systemTemp" href="javascript:" data-ng-click="updateTemplate()"><i class="fa icon-uniF01E"></i><span data-localize="更新模板">更新模板</span></a>
+	        <a class="btn btn-xs btn-primary" href="javascript:" data-ng-click="loadISO()"><i class="fa icon-uniF01E"></i><span data-localize="加载ISO">加载ISO</span></a>
+	        <a class="btn btn-xs btn-primary" href="javascript:" data-ng-click="CAD()"><i class="fa icon-uniF01E"></i><span data-localize="发送">发送</span> (Ctrl+alt+del)</a>
+	        <a class="btn btn-xs btn-primary" data-ng-if="is_systemTemp && making_installed"  data-ng-disabled="saveTem_loading" href="javascript:" data-ng-click="updateTemplate(true)"><i class="fa icon-uniF01E"></i><span data-localize="我已安装完成"></span><img ng-if="saveTem_loading" style="width: 10px;position: relative;bottom: 1px;left: 2px;" src="../../img/HLloading.gif"></a>
+	    </div>
+		<!--<div>工具栏</div>-->
+	</div>
+	<iframe id="webSpice" src="" frameborder="0" marginheight="0" marginwidth="0" style="width:100%;height:100%;"></iframe>
+
+	<script type="text/ng-template" id="/update-template.html">
+	</script>
+
+	<script type="text/ng-template" id="/select-iso.html">
+	<section id='widget-grid'>
+	    <div class='modal-content'>
+	        <div class='modal-header'>
+	        <button type='button' class='close' data-ng-click='close()'><span aria-hidden='true'>×</span>
+	        <span class='sr-only'>Close</span></button>
+	        <h4 class='modal-title' id='mySmallModalLabel' data-localize='选择ISO'></h4>
+	    </div>
+	    <div class='modal-body'>
+	        
+	        <form class='form-horizontal'>
+	            <ul class="nav nav-tabs" id="selectIsoTabs">
+	                <li class="active"><a href="#systemTab" data-toggle="tab" data-localize="系统包">系统包</a></li>
+	                <li><a href="#packageTab" data-toggle="tab" data-localize="软件包">软件包</a></li>
+	                <li><a href="#otherTab" data-toggle="tab" data-localize="其它">其它</a></li>
+	            </ul>
+	            <div class="tab-content">
+	                <div class="tab-pane active" id="systemTab">
+	                    <select class='form-control' data-ng-model='iso' data-ng-options='iso.name for iso in selectIsos.system track by iso.id' ng-init="$index=0">
+	                        <option value> NO ISO</option>
+	                    </select>
+	                </div>
+	                <div class="tab-pane" id="packageTab">
+	                    <select class='form-control' data-ng-model='iso' data-ng-options='iso.name for iso in selectIsos.package track by iso.id'>
+	                        <option value> NO ISO</option>
+	                    </select>
+	                </div>
+	                <div class="tab-pane" id="otherTab">
+
+	                    <select class='form-control' data-ng-model='iso' data-ng-options='iso.name for iso in selectIsos.other track by iso.id'>
+	                        <option value> NO ISO</option>
+	                    </select>
+	                </div>
+	            </div>
+	            <footer class='text-right'><button class='btn btn-primary' data-ng-click='ok(iso)' data-localize='确定'></button><button class='btn btn-default' data-ng-click='close()' style='margin-left:5px;' data-localize='取消'></button>
+	            </footer>
+	        </form>
+	    </div>
+	</section>
+	</script>
+	<script>$BootScript("spiceModify")</script>
+	<script>var $$$MAIN_MODULE = "vdi.spice";</script>
+</body>
+</html>

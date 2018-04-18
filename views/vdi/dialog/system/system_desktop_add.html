@@ -1,0 +1,85 @@
+<div class="modal-body padding-10">
+	<form class="form-horizontal" name="systemDesktopAddForm"  novalidate>
+		<legend>
+			<header>
+				<span localize="新增">新增</span>
+				<button type="button" class="close" ng-click="close()">
+					<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+				</button>
+			</header>
+		</legend>
+		<fieldset>
+			<div class="form-group">
+				<label for="" class="control-label col-xs-3 required" localize="名称">名称</label>
+				<div class="col-xs-8">
+					<input type="text" name="name" class="form-control" ng-model="data.name" localize="LENGTH_LIMIT" param1="2" param2="20" ng-maxlength="20" ng-minlength="2" maxlength="20" minlength="2" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-xs-3 required" localize="宿主机">宿主机</label>
+				<div class="col-xs-8">
+					<div class="tagarea" ng-class="{'border-red':!(hosts|selectedFilter).length}">
+						<div class="tag-wrap">
+							<img src="img/loadingtext.gif" ng-if="host_loading" height="24" width="24" alt="">
+							<div ng-show="!host_loading">
+								<label class="tag" ng-class="{on:item._selected}" ng-repeat="item in hosts" >
+									 <input type="checkbox" ng-model="item._selected" ng-change="selectOneHost()">
+									 {{item.host}}
+								</label>
+							</div>
+							<div ng-show="hosts.length==0">
+								<span localize="此资源池无可用主机">此资源池无可用主机！</span>
+							</div>
+						</div>
+					</div>
+					<div class="tag-checkbox">
+						<label class="checkbox-inline checkbox-align">
+							<input type="checkbox" class="checkbox style-0" ng-model="data.is_all" ng-change="selectAllHost(data.is_all)" ng-disabled="hosts.length==0">
+							<span localize="全选">全选</span>
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label required" localize="处理器">处理器</label>
+				<div class="btn-group col-xs-8">
+			        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="1">1</label>
+			        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="2">2</label>
+			        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="3">3</label>
+			        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="4">4</label>
+			        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="8">8</label>
+			         <div class="input-group my_input_group">
+				      <div class="input-number-wraper-sm"><input name="cpu" ui-input-number step="1" max="32" min="1" ng-model="data.cpu_num" ng-init="data.cpu_num=1" data-ng-trim="false" required></div>
+				      <span></span>
+				      <div class="input-group-addon input-group-addon-disk"><span localize='核'>核</span></div>
+				    </div>
+		    	</div>
+		    	<label class="col-xs-1 note hardwarenote">1-32<span localize='核'>核</span></label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-3 control-label required" localize="内存">内存</label>
+				<div class="btn-group col-xs-8">
+			        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="1.5">1.5GB</label>
+		    		<label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="2">2GB</label>
+			        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="2.5">2.5GB</label>
+			        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="3">3GB</label>
+			        <div class="input-group my_input_group">
+				      <div class="input-number-wraper-sm"><input name="memory" ui-input-number step="0.5" max="64" min="1" ng-model="data.memory_mb" ng-init="data.memory_mb=1.5" required></div>
+				      <span></span>
+				      <div class="input-group-addon input-group-addon-disk">GB</div>
+				    </div>
+		    	</div>
+		    	<label class="col-xs-1 note hardwarenote">1-64GB</label>
+		    </div>
+		    <footer class="text-right padding-10">
+				<img src="img/loadingtext.gif" ng-if="loading" height="24" width="24" alt="">
+				<button type="button" class="btn btn-primary" ng-class="{disabled:systemDesktopAddForm.$invalid || loading || (hosts|selectedFilter).length === 0}" ng-click="ok()" localize="确定">
+					确定
+				</button>
+				<button type="button" class="btn btn-default" ng-click="close()" localize="取消">
+					取消
+				</button>
+			</footer>
+		</div>
+	</form>
+</div>

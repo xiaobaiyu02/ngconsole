@@ -1,0 +1,15 @@
+{
+    "code": 0,
+    "policy": null,
+    "unused_modes": [
+        {
+            "mode_id": 20,
+            "mode_name": "test-xf",
+            "mode_resource_pool_id": "7d2cdd1f-de04-4a3b-b583-d188dbdd1d53"
+        }
+    ],
+    "unused_vms": [],
+    "used_modes": [],
+    "used_vms": [],
+    "vm_hosts": {}
+}

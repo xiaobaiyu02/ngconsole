@@ -1,0 +1,90 @@
+<section id="widget-grid">
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div data-widget-grid class="jarviswidget">
+				<!-- widget div-->
+				<div class="noborder">
+					<div class="jarviswidget-editbox"></div>
+					<div class="widget-body no-padding">
+						<div class="form-inline no-footer">
+							<div class="dt-toolbar">
+								<div class="col-xs-6 col-sm-6">
+                                    <button class="btn btn-primary btn-xs" ng-click="add()"><i class="fa icon-jj-addddd"></i>&nbsp;<span localize="新增">新增</span></button>
+                                    <button class="btn btn-danger btn-xs" ng-click="delete()" data-ng-class="{disabled:!checkOne()}"><i class="fa icon-jj-delete"></i>&nbsp;<span localize="删除">删除</span></button>
+                                    <!-- <button class="btn btn-danger btn-xs" data-ng-class="{disabled:!checkOne()}" ng-click="delete()"><i class="fa icon-jj-delete"></i>&nbsp;<span localize="删除">删除</span></button> -->
+								</div>
+								<div class="right_side col-xs-6 col-sm-6">
+									<!-- <div class="pull-right filter"> <span localize="显示"></span> <select ng-change="pageSizeChange()" data-ng-model="pagesize"data-ng-options="pagesize for pagesize in pagesizes"></select> <span localize="项结果"></span> </div> -->
+								</div> 
+							</div>
+						</div>
+						<div class="table-responsive">
+							<table data-vdi-grid
+								class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox table-vertical-center">
+								<thead class="vdi_header">
+									<tr>
+										<th><label class="checkbox"><input type="checkbox" data-ng-model="checkedAll" data-ng-change="selectAllChange(checkedAll)" data-ng-checked="checkAll(all)" name="checkbox-inline"><i></i></label></th>
+
+                                        <th localize="策略名称">策略名称</th>
+                                        <th localize="描述">描述</th>
+
+                                        <th localize="优先级">优先级</th>
+                                        <th localize="响应时间">响应时间</th>
+
+                                        <th localize="启用状态">启用状态</th>
+								
+                                        <th localize="操作">操作</th>
+									</tr>
+								</thead>
+								<tbody class="vdi_body">
+									
+									<tr data-ng-repeat="item in rows">
+										<td><label class="checkbox"><input data-ng-model="item._selected" data-ng-checked="item._selected" type="checkbox" data-ng-value="item.id" name="checkbox-inline"><i></i></label></td>
+
+                                        <td>{{item.name}}</td>
+										<td>{{item.desc}}</td>
+
+                                        <td>
+                                        	<span localize="低" ng-if="item.priority == 1"></span>
+                                        	<span localize="中" ng-if="item.priority == 2"></span>
+                                        	<span localize="高" ng-if="item.priority == 3"></span></td>
+                                        <td>{{item.ha_response_time}}</td>
+
+										<td>
+											<!-- <span ng-if="item.enable_ha" localize="启用"></span> -->
+											<!-- <span ng-if="!item.enable_ha" localize="未启用"></span> -->
+											<div>
+												<span class="switch" ng-if="!item.active_loadding">
+													<input type="checkbox" name="start_interval" class="switch-checkbox" id="start_interval{{$index}}" ng-model="item.enable_ha">
+													<label class="switch-label" data-swchon-text="ON" data-swchoff-text="OFF" ng-click="active(item)">
+													</label>
+												</span>
+												<img ng-src="img/loadingtext.gif" ng-if="item.active_loadding" height="24" width="24">
+											</div>
+										</td>
+                                        <td class="nowrap"> 
+                                        	<div>
+                                        		<button localize-title='查看详情' class="btn btn-xs btn-default" ng-click="view(item)"><i class="fa icon-jj-look"></i></button>
+                                        		<button localize-title='编辑' class="btn btn-xs btn-default" ng-click="edit(item)"><i class="fa icon-jj-Write"></i></button>
+                                        		<button localize-title='删除' class="btn btn-xs btn-default" ng-click="delete(item)"><i class="fa icon-jj-delete"></i></button>
+                                        	</div>
+                                        </td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="tips" data-ng-if="loading"  localize="LOADING_TEXT">数据正在加载...</div>
+						<div class="tips" data-ng-if="!loading && rows.length == 0"  localize="NO_MATCHING_DATA">没有匹配数据</div>
+						<div data-ng-include="'includes/pagination.html'"></div>
+					</div>
+					<!-- end widget content -->
+				</div>
+				<!-- end widget div -->
+			</div>
+			<!-- end widget -->
+		</article>
+		<!-- WIDGET END -->
+	</div>
+	<!-- end row -->
+</section>
+<script>pageSetUp();</script>

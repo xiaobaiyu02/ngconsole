@@ -1,0 +1,64 @@
+<div class="modal-body padding-10">
+	<form class="form-horizontal ng-pristine ng-valid" name="addSubNetworkForm"  novalidate>
+		<fieldset>
+			<legend>
+				<header>
+					<span localize="新增子网"  ng-if="title_type!=='update'">新增子网</span>
+					<span localize="编辑子网" ng-if="title_type==='update'">编辑子网</span>
+					<button type="button" class="close" ng-click="close()">
+						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+					</button>
+				</header>
+			</legend>
+            <div class="form-group">
+                <label class="col-xs-3 control-label required" localize="子网名称">子网名称</label>
+                <div class="col-xs-7">
+                    <input class="form-control"  type="text" maxlength="20" data-ng-minlength="{{min_namelength}}" data-ng-maxlength="{{max_namelength}}" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}" data-ng-model="network.name" required ng-disabled="update">
+                </div>
+            </div>
+            <div>
+				<div class="form-group">
+					<label class="col-xs-3 control-label required" localize="开始IP">开始IP</label>
+					<div class="col-xs-7" >
+						<input type="text" format-ip ng-model="network.dhcp_start" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 control-label required" localize="结束IP">结束IP</label>
+					<div class="col-xs-7">
+						<input type="text" format-ip ng-model="network.dhcp_end" required>
+					</div>
+				</div>
+				<div class="form-group" ng-show="title_type!=='update'">
+					<label class="col-xs-3 control-label required" localize="子网掩码">子网掩码</label>
+					<div class="col-xs-7">
+						<input type="text" format-ip data-ng-model="network.netmask" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3 control-label required" localize="网关">网关</label>
+					<div class="col-xs-7">
+						<input type="text" format-ip data-ng-model="network.gateway" required>
+					</div>
+				</div>
+	            <div class="form-group">
+	                <label class="col-xs-3 control-label">DNS1</label>
+	                <div class="col-xs-7">
+	                	<input type="text" format-ip ip-required="false" data-ng-model="network.dns1">
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label class="col-xs-3 control-label">DNS2</label>
+	                <div class="col-xs-7">
+	                	<input format-ip ip-required="false" type="text" data-ng-model="network.dns2">
+	                </div>
+	            </div>
+            </div>
+			<div class="col-md-12 text-right padding-10">
+				<button class="btn btn-primary" ng-show="!loadding" ng-disabled="!addSubNetworkForm.$valid" type="button" ng-click="ok()" localize="确定">确定</button>
+				<button class="btn btn-default" ng-show="!loadding" type="button" ng-click="close()" localize="取消"> 取消</button>
+                <img ng-show="loadding" src="img/loadingtext.gif" width="24px" height="24px"/>
+			</div>
+		</fieldset>
+	</form>
+</div>

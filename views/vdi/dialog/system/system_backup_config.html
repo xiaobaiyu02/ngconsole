@@ -1,0 +1,82 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" localize="备份配置">备份配置</h4>
+</div>
+<div class="modal-body">
+	<form name="systemBackupForm" class="form-horizontal" novalidate>
+		<div class="form-group">
+			<label localize="保留数量" class="control-label col-xs-3">保留数量</label>
+			<div class="col-xs-4"><input placeholder="30 - 360" type="number" input-number max="360" min="30" ng-model="data.max" class="form-control" required></div>
+			<p class="note" localize="系统保留的备份文件数量">系统保留的备份文件数量</p>
+		</div>
+		<hr>
+		<div class="form-group">
+			<label localize="自动备份" class="control-label col-xs-3">自动备份</label>
+			<div class="col-xs-4">
+				<label class="checkbox-inline">
+					<input type="checkbox" class="checkbox" ng-model="data.auto">
+					<span localize="启用">启用</span>
+				</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label localize="备份周期" class="control-label col-xs-3">备份周期</label>
+			<div class="col-xs-4">
+				<select class="form-control" ng-model="data.backup_period" ng-disabled="!data.auto" ng-required="data.auto">
+					<option value="" localize="请选择"></option>
+					<option value="1" localize="每天">每天</option>
+					<option value="2" localize="每周">每周</option>
+				</select>
+			</div>
+			<div class="col-xs-4" ng-show="data.backup_period == 2">
+				<select class="form-control" ng-model="data.backup_weekday" ng-disabled="!data.auto" ng-required="data.auto && data.backup_period == 2">
+					<option  localize="请选择"></option>
+					<option value="1" localize="周一"></option>
+					<option value="2" localize="周二"></option>
+					<option value="3" localize="周三"></option>
+					<option value="4" localize="周四"></option>
+					<option value="5" localize="周五"></option>
+					<option value="6" localize="周六"></option>
+					<option value="7" localize="周日"></option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-3" localize="备份时间">备份时间</label>
+			<div class="col-xs-4">
+				<timepicker ng-class="{'timepicker-disabled': !data.auto}" data-ng-model="data.backup_time" ng-required="data.auto" hour-step="1" minute-step="1" show-meridian="false"></timepicker></div>
+		</div>
+		<!-- <div class="form-group">
+			<label class="control-label col-xs-3" localize="备份路径">备份路径</label>
+			<div class="col-xs-9 radio">
+				<label>
+					<input class="radiobox" value="local" ng-model="lun_type" type="radio" name="radio-inline" ng-change="clearlun()" required>
+					<span localize="本地存储"></span> 
+				</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="radio col-xs-offset-3 col-xs-3">
+				<label>
+					<input value="remote" ng-model="lun_type" type="radio" name="radio-inline" class="radiobox style-0" required>
+					<span localize="远端存储"></span> 
+				</label>
+			</div>
+				<label class="control-label" style="float:left" localize="存储设备">存储设备</label>
+				<div class="col-sm-4">
+					<select class="form-control" data-ng-model="lun_id" ng-disabled="lun_type==='local'" data-ng-options="lun.uuid as lun.name for lun in luns"  ng-required="lun_type ==='remote'">
+						<option value="" localize="--请选择--"></option>
+					</select>
+				</div>
+		</div> -->
+		<footer class="text-right">
+			<img ng-show="submitting" ng-src="img/loadingtext.gif" alt="" width="24px" height="24px">
+			<button ng-show="!submitting" type="button" ng-disabled="systemBackupForm.$invalid" class="btn btn-primary" ng-click="ok()" localize="确定">
+				确定
+			</button>
+			<button ng-show="!submitting" type="button" class="btn btn-default" ng-click="close()" localize="取消">
+				取消
+			</button>
+		</footer>
+	</form>
+</div>

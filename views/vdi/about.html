@@ -1,0 +1,67 @@
+<section>
+	<div class="row">		
+		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="padding:0px 0px 0px 40px">
+			<header><h2><strong data-localize="ABOUT_NAME"></strong> <br><small>{{pmis.build}}</small></h2></header>
+			<p data-localize='许可内容'></p>
+			<ul class="has-style">
+				<li data-localize='MAX_CONTECT' param1='{{pmis.instance_num_quota || 0}}'></li>
+			</ul>
+			<p ng-show="pmis.remain_days && pmis.remain_days<=10000" class="font-sm license-alert license-alert-danger" data-localize='PERIOD_TIME' param1='{{pmis.license_time}}' param2='{{pmis.remain_days}}'></p>        	
+			<p ng-show="pmis.remain_days && pmis.remain_days>10000" class="font-sm license-alert license-alert-danger" localize="无限期"></p>
+			<a class="btn btn-sm btn-primary" href="javascript:" data-dialog="UpdateLicenseDialog" data-dialog-url="license/addlicense.html" data-dialog-size="md" data-localize='更新授权'></a>
+			<table cellspacing="0" cellpadding="0" border="0" role="grid" style="margin: 40px 0 40px 0;" class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox table-vertical-center">
+				<thead>
+					<tr>
+						<th localize="组件名称"></th>
+						<th localize="备注"></th>
+						<th localize="操作"></th>
+					</tr>
+				</thead>	
+				<tbody>
+					<tr>
+						<td localize='Windows客户端1'></td>
+						<td localize='安装在windows系统下的客户端'></td>
+						<td><a class="btn btn-xs btn-default" href="{{ domain }}/thor/download_win_client" localize-title="下载"><i class="fa icon-jj-Download"></i></a></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<button class="btn btn-default btn-sm" ng-click="help()" localize="桌面部署帮助"></button>
+			<!--div class="col-md-12 col-sm-12 row" style="padding-top: 10px;">
+				<h4><strong data-localize="售后服务">售后服务</strong></h4>
+				<h6><strong data-localize="在线客服">在线客服</strong></h6>
+				<p>
+					<a target="_blank" ng-href="http://wpa.qq.com/msgrd?v=3&uin=188368715&site=qq&menu=yes"><img border="0" src="data:image/png;base64,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"/></a>
+				</p>
+				<h6><strong data-localize="售后电话">售后电话</strong></h6>
+				<p>
+					<span>4001-027-580</span>
+				</p>
+			</div-->
+		</div>
+		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">	
+			<header><h2 class="text-center"><strong data-localize='许可协议'></strong></h2></header>
+			<div class="xukexieyi">
+				<p style='text-indent:2em;' data-localize='ABOUT'></p>
+				<ol>
+					<li data-localize='ABOUT1'></li>
+					<li data-localize='ABOUT2'></li>
+					<li data-localize='ABOUT3'></li>
+					<li data-localize='ABOUT4'></li>
+					<li data-localize='ABOUT5'></li>
+					<li data-localize='ABOUT6'></li>
+					<li data-localize='ABOUT7'></li>
+					<li data-localize='ABOUT8'></li>
+					<li data-localize='ABOUT9'></li>
+					<li data-localize='ABOUT10'></li>
+				 </ol>
+			<div>
+		</div>
+	</div>
+</section>
+<script>pageSetUp();</script>
+<style>
+	.xukexieyi p,ol>li{
+		line-height:25px;
+	}
+</style>

@@ -1,0 +1,40 @@
+<div class="login_wrapper">
+	<p class="login_logo " data-ng-if="current_theme =='smart-style-0'"><img key="login_style0" base64/></p>
+	<p class="login_logo " data-ng-if="current_theme =='smart-style-1'"><img key="login_style1" base64/></p>
+
+	<form id="login-form" class="smart-form" novalidate>
+		<table class="layout">
+			<tr>
+				<td>
+					<label class="input"> <i class="icon-append fa fa-user"></i>
+						<input type="text" name="username" maxlength="20" data-ng-model="username" required>
+						<b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> <span localize="用户名">用户名</span></b></label>
+				</td>
+				<td>
+					<label class="input"> <i class="icon-append fa fa-lock"></i>
+						<input type="password" maxlength="20" name="password" data-ng-model="password" required>
+						<b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> <span localize="密码">密码</span></b> </label>
+			<!--div class="note"><a href="forgotpassword.html">Forgot password?</a></div-->
+				</td>
+				<td>
+					<button type="submit" class="btn btn-primary" localize="登录" ng-disabled="loading" data-ng-click="login()"></button>
+				</td>
+			</tr>
+		</table>
+	</form>
+    <!--<div class="version">Version 4.0</div>-->
+	<div class="copyright">
+		<!--<p>版权所有：武汉噢易云计算有限公司</p>-->
+
+        <p localize="噢易云计算"></p>
+        <p><a data-localize-href="WEBSITE_login_a" target="_blank" data-localize="WEBSITE_init"></a></p>
+	</div>
+</div>
+
+<div class="right_bottom">Ver {{version}}</div><div id="hint_bar" class="alert alert-warning fade in ng-hide" ng-show="!$root.is_chrome">
+	<button class="close" data-dismiss="alert">
+	×
+	</button>
+	<i class="fa-fw fa fa-warning"></i>
+	<span localize='chromeTips'></span>
+</div>

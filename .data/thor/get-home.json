@@ -1,0 +1,31 @@
+{
+    "code": 0,
+    "info": {
+        "client_cnt": 0,
+        "client_total": 23,
+        "cpu_cnt": 24,
+        "cpu_rate": 1.4166666666666667,
+        "cpu_v_running": 35,
+        "cpu_v_total": 308,
+        "disk_cnt": 599,
+        "disk_remain": 318,
+        "disk_used": 281,
+        "host_master": 0,
+        "host_running": 1,
+        "host_shutdown": 0,
+        "host_total": 1,
+        "image_cnt": 13,
+        "instance_cnt": 146,
+        "mem_remain": 16,
+        "mem_used": 46,
+        "memory_cnt": 62,
+        "mode_instance_cnt": 120,
+        "person_instance_cnt": 26,
+        "schoolroom_cnt": 0,
+        "schoolroom_total": 1,
+        "user_cnt": 16
+    },
+    "is_system_init": true,
+    "remain_days": null,
+    "step": 1
+}

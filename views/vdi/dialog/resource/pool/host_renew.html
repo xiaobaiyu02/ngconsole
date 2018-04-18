@@ -1,0 +1,25 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" localize="恢复主机"></h4>
+</div>
+<div class="modal-body">
+	<fieldset>
+		<div class="form-group" ng-if="loading">
+			<label class="col-sm-12 control-label"><img  ng-src="img/loadingtext.gif" alt="" width="24px" height="24px"></label>
+		</div>
+		<form data-ng-show="host_deleted_list.length" class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-3 control-label" localize="选择主机IP"></label>
+				<div class="col-sm-7">
+					<select class="form-control" data-ng-model="host" data-ng-options="ip(host) for host in host_deleted_list">
+					</select>
+				</div>
+			</div>
+			<footer class="text-right">
+				<button type="button" class="btn btn-primary" ng-click="post()" localize="确定"> </button>
+				<button type="button" class="btn btn-default" ng-click="close()" localize="取消"> </button>
+			</footer>
+		</form>
+		<div data-ng-show="host_deleted_list.length==0"  class="padding10" localize="MESS_NORESTOREIP"></div>
+	</fieldset>
+</div>

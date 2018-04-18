@@ -1,0 +1,25 @@
+#delay=1
+{
+	"code": 0,
+	"data_image": [
+		{
+			"name": "147_\u6570\u636e\u76d8.img",
+			"virtual_type": "kvm"
+		}
+	],
+	"system_image": [
+		{
+			"name": "win7_\u7cfb\u7edf\u76d8.img",
+			"virtual_type": "kvm"
+		}, {
+			"name": "win8_\u7cfb\u7edf\u76d8.img",
+			"virtual_type": "kvm"
+		}, {
+			"name": "win10_\u7cfb\u7edf\u76d8.img",
+			"virtual_type": "kvm"
+		}, {
+			"name": "win11_\u7cfb\u7edf\u76d8.img",
+			"virtual_type": "kvm"
+		}
+	]
+}

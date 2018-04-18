@@ -1,0 +1,138 @@
+<section id="widget-grid">
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div
+				class="jarviswidget"
+				data-widget-grid
+				data-widget-editbutton="true"
+				data-widget-colorbutton="true"
+				data-widget-togglebutton="true"
+				data-widget-deletebutton="false"
+				data-widget-fullscreenbutton="true"
+				data-widget-custombutton="true"
+				data-widget-collapsed="false"
+				data-widget-sortable="true">
+				<!-- widget div-->
+				<div class="noborder">
+					<div class="jarviswidget-editbox"></div>
+					<div class="widget-body no-padding">
+						<!-- <div class="form-inline no-footer clearfix">
+							<div class="dt-toolbar">
+								<div class="left_side col-xs-12 col-sm-12">
+									<a class="btn btn-xs btn-primary isBatch" href="javascript:" data-ng-class="{disabled:!checkOne()}" data-ng-click="restart()"><i class="fa icon-jj-Restart"></i>&nbsp;<span localize="重启">重启</span></a>
+									<a class="btn btn-xs btn-primary isBatch" href="javascript:" data-ng-class="{disabled:!checkOne()}" data-ng-click="poweroff()"><i class="fa icon-jj-shutdown"></i>&nbsp;<span localize="关机">关机</span></a>
+								</div>
+								<div class="right_side hidden-xs">
+								</div>
+							</div>
+						</div> -->
+                        <div class="row ha-header" ng-if="haEnabled">
+                            <div class="col-xs-6 ha-header-block">
+                                <img ng-src="{{'/img/ha/ha-' + (ha.is_split_brain ? 'blue' : 'green') + '.png'}}" class="ha-header-block-icon"/>
+                                <div class="ha-header-block-info">
+                                    <p><span localize="HA启用状态"></span><span localize="已启用"></span></p>
+                                    <p><span localize="数据同步状态"></span><span ng-style="{color: ha.data_sync == 'unsynced' ? 'red' : ''}">{{ ha | haDataStatus }}</span></p>
+                                    <p><span localize="HA运行状态"></span><span ng-style="{color: ha.is_split_brain ? 'red' : ''}">{{ ha | haRunningStatus }}</span></p>
+                                    <p><span localize="浮动IP地址"></span>{{ ha.floating_ip }}</p>
+                                </div>
+                                <div class="ha-header-block-tools">
+                                    <button class="btn btn-block btn-sm btn-primary" ng-click="viewDetail()" localize="查看详情"></button>
+                                    <button class="btn btn-block btn-sm btn-primary" ng-disabled="!switchable" ng-click="switchBrain()" localize="主备控切换"></button>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 ha-header-block">
+                                <img src="/img/ha/info.png" class="ha-header-block-icon"/>
+                                <div class="ha-header-block-info" localize="ha.boottips"></div>
+                                <div class="ha-header-block-tools">
+                                    <button class="btn btn-block btn-sm btn-primary" ng-click="onekeyShutdown()" localize="一键关机"></button>
+                                </div>
+                            </div>
+                        </div>
+						<div class="padding-20">
+							<div class="row">
+								<div class="tips" data-ng-if="loading" localize="LOADING_TEXT">数据正在加载...</div>
+								<div class="tips" data-ng-if="!loading && rows.length == 0" localize="NO_MATCHING_DATA">没有匹配数据</div>
+						        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+						        	data-ng-repeat="item in rows track by $index">
+
+						            <div class="panel pricing-big" ng-class="{'panel-primary':item.status=='active','panel-darken':item.status!='active'} ">
+						            	<div class="ribbon" ng-if="item.role ==='controller'">
+							            	<img data-ng-if="current_theme =='smart-style-0'" key="host_style0" base64>
+							            	<img data-ng-if="current_theme =='smart-style-1'" key="host_style1" base64>
+						            	</div>
+						            	<div class="ribbon" ng-if="item.role ==='backup'">
+							            	<img data-ng-if="current_theme =='smart-style-0'" key="backuphost_style0" base64>
+							            	<img data-ng-if="current_theme =='smart-style-1'" key="backuphost_style1" base64>
+						            	</div>
+ 										<div class="panel-heading smart-form mypanelhead">
+						                	<div class="padding-left-15">
+												<!-- <label class="checkbox-inline">
+													<input type="checkbox" class="checkbox style-0" data-ng-model="item._selected" data-ng-checked="item._selected" data-ng-value="item.id" ><span></span>
+												</label> -->
+											</div>
+						                    <div class="panel-cont">
+							                    <ul>
+							                    	<li class="panel-item panel-title">
+							                    		<label><img  ng-show="item.status==='building'" ng-src="img/ajax-loader.gif" style="width:48px;height:48px;"></label>
+							                    		<h2 class="item-flex">
+							                    			<div class="host_title" title="{{item.hostname}}">{{item.hostname}}</div>
+							                    			<span class="small">{{item.ip}}</span>
+							                    			<span class="small red" ng-show="item.status==='inactive'" localize="服务状态异常"></span>
+							                    			<span class="small" ng-show="item.status==='maintenance'" localize="维护中...">维护中...</span>
+							                    			<span class="small" ng-show="item.status==='building'" localize="创建中...">创建中...</span>
+							                    			<span class="small" ng-show="item.status==='active'||item.status==='offline'">&nbsp;</span>
+							                    		</h2>
+							                    	</li>
+							                    	<li class="panel-item">
+							                    		<label>CPU</label>
+							                    		<div class="item-flex">
+                                                            <div>{{item.cpu_idle?(100 - item.cpu_idle).toFixed(1):0.0}}% &nbsp;<span class="pull-right">100%</span></div>
+							                    			<div class="progress progress-micro">
+																<div class="progress-bar  progress-bar-primary" role="progressbar" ng-class="{'bg-color-greenLight':item.cpu_idle&&item.cpu_idle>=60,'bg-color-yellowLight':item.cpu_idle&&item.cpu_idle>20&&item.cpu_idle<60,'bg-color-redLight':item.cpu_idle&&item.cpu_idle<20}" ng-style="{width:(item.cpu_idle?(100 - item.cpu_idle):0.0)+'%'}"></div>
+															</div>
+							                    		</div>
+							                    	</li>
+							                    	<li class="panel-item">
+							                    		<label localize="内存">内存</label>
+							                    		<div class="item-flex">
+							                    			<div><span class="pull-left">{{item.memory_mb_used}}</span>&nbsp;<span class="pull-right">{{item.memory_mb}} GB</span> </div>
+							                    			<div class="progress progress-micro">
+																<div class="progress-bar  progress-bar-primary" role="progressbar" ng-class="{'bg-color-greenLight':item.memory_mb_used/item.memory_mb*100<=60,'bg-color-redLight':item.memory_mb_used/item.memory_mb*100>=80,'bg-color-yellowLight':item.memory_mb_used/item.memory_mb*100>60&&item.memory_mb_used/item.memory_mb*100<80}" ng-style="{width:(item.memory_mb_used/item.memory_mb*100)+'%'}"></div>
+															</div>
+							                    		</div>
+							                    	</li>
+							                    	<li class="panel-item">
+							                    		<label localize="存储"></label>
+							                    		<div class="item-flex">
+							                    			<div><span class="pull-left">{{item.disk_gb_used}}</span>&nbsp;<span class="pull-right">{{item.disk_gb}} GB</span> </div>
+							                    			<div class="progress progress-micro">
+																<div class="progress-bar  progress-bar-primary" role="progressbar" ng-class="{'bg-color-greenLight':item.disk_gb_used/item.disk_gb*100<=60,'bg-color-redLight':item.disk_gb_used/item.disk_gb*100>=80,'bg-color-yellowLight':item.disk_gb_used/item.disk_gb*100>60&&item.disk_gb_used/item.disk_gb*100<80}" ng-style="{width:(item.disk_gb_used/item.disk_gb*100)+'%'}"></div>
+															</div>
+							                    		</div>
+							                    	</li>
+							                  	</ul>
+						                  	</div>
+						                  	<div class="panel-footbar" data-ng-class="{'darken':item.status!='active','primary':item.status=='active'}">
+						                  		<a class="icon" href="javascript:" data-ng-click="restart(item)" data-localize-title="重启"><i class="fa icon-jj-Restart"></i></a>
+												<a class="icon" ng-if="item.role ==='controller'" href="javascript:" data-ng-click="poweroff(item)" data-localize-title="关机"><i class="fa icon-jj-shutdown"></i></a>
+												<a class="icon" ng-if="item.role ==='backup'" href="javascript:" data-ng-click="poweroffBackup(item)" data-localize-title="关机"><i class="fa icon-jj-shutdown"></i></a>
+
+						                		<a href="javascript:void(0)" data-ng-if="(item.status=='active' || item.status=='inactive') && item.role ==='controller'" class="icon" data-localize-title="HA配置" ng-click="openHAConfigDialog(item)"><i class="fa icon-jj-001"></i></a>
+						                		<a href="javascript:void(0)" class="icon" data-localize-title="高级" ng-click="openHostMoreDialog(item)"><i class="fa icon-jj-010"></i></a>
+							                </div>
+						                </div>
+						            </div>
+						        </div>
+				    		</div>
+						</div>
+					</div>
+					<!-- end widget content -->
+				</div>
+				<!-- end widget div -->
+			</div>
+			<!-- end widget -->
+		</article>
+		<!-- WIDGET END -->
+	</div>
+	<!-- end row -->
+</section>

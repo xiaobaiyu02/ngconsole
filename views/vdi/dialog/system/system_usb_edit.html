@@ -1,0 +1,105 @@
+<section id="widget-grid">
+		<div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	          <h4 class="modal-title" id="mySmallModalLabel" data-localize="编辑USB重定向"></h4>
+	        </div>
+	        <div class="modal-body">
+				<form class="form-horizontal" name="addhardwareForm" method="post">
+					<div class="form-group">
+						<label class="col-xs-3 control-label" localize="USB_TYPE"></label>
+						<div class="col-xs-8">
+							<select class="form-control" data-ng-model="data.class_id" data-ng-options="class_id.value for class_id in types track by class_id.key">
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required" for="priority" data-localize="优先级"></label>
+						<div class="col-xs-8">
+							<input class="form-control" id="priority" type="number"
+								name="priority"
+								required
+								data-ng-model="data.priority"
+								placeholder="1-999"
+								data-ng-pattern="/^\s*([1-9]|[1-9][0-9]|[1-9][0-9]{2})\s*$/"
+								data-ng-trim="false"
+							>
+						</div>
+						<label style="position: relative;top: 4px;">
+								<a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='USB1Tips' data-placement="right" data-html="true" data-content="" data-original-title="" title=""><i class="fa fa-question-circle"></i></a>
+						</label>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required" for="rule_name" data-localize="RULE_NAME"></label>
+						<div class="col-xs-8">
+							<input class="form-control" id="rule_name" type="text"
+								name="rule_name"
+								required
+								data-ng-model="data.rule_name"
+								data-ng-minlength="{{min_namelength}}" data-ng-maxlength="{{max_namelength}}" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}"
+								data-ng-trim="false"
+							>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required" for="product_id" data-localize="PID"></label>
+						<div class="col-xs-8">
+							<input class="form-control" id="product_id" type="text"
+								name="product_id"
+								required
+								data-ng-model="data.product_id"
+								data-localize="PID_LIMIT"
+								data-ng-pattern="/^[a-f0-9A-F]{4}$|^-1$/"
+								data-ng-trim="false"
+							>
+						</div>
+						<label style="position: relative;top: 4px;">
+								<a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='USB2Tips' data-placement="right" data-html="true" data-content="" data-original-title="" title=""><i class="fa fa-question-circle"></i></a>
+						</label>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label required" for="vendor_id" data-localize="VID"></label>
+						<div class="col-xs-8">
+							<input class="form-control" id="vendor_id" type="text"
+								name="vendor_id"
+								required
+								data-ng-model="data.vendor_id"
+								data-localize="PID_LIMIT"
+								data-ng-pattern="/^[a-f0-9A-F]{4}$|^-1$/"
+								data-ng-trim="false"
+							>
+						</div>
+						<label style="position: relative;top: 4px;">
+								<a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='USB3Tips' data-placement="right" data-html="true" data-content="" data-original-title="" title=""><i class="fa fa-question-circle"></i></a>
+						</label>
+					</div>
+
+					<div class="form-group">
+						<label class="col-xs-3 control-label" data-localize="IS_REDIRECT"></label>
+						<div class="col-xs-8">
+							<label class="radio radio-inline">
+								<input type="radio" class="radiobox" name="style-0a" data-ng-model="data.allow" ng-value="true">
+								<span data-localize="是" style="margin-right: 20px;"></span> 
+							</label>
+							<label class="radio radio-inline">
+								<input type="radio" class="radiobox" name="style-0a" data-ng-model="data.allow" ng-value="false">
+								<span data-localize="否"></span>  
+							</label>
+						</div>
+					</div>
+
+				    <footer class="text-right">
+				    	<button type="submit" name="button" disabled="disabled" class="btn btn-primary"
+								data-ng-disabled="addhardwareForm.$invalid || isUnchanged()"
+								data-ng-click="ok()" data-localize="提交"></button>
+						<button type='button' name="reset" class="btn btn-default"
+								data-ng-click="reset()"
+								data-ng-disabled="isUnchanged()" data-localize="重置"></button>
+					</footer>
+				</form>
+	        </div>
+
+      </div>
+
+</section>
+<script>setTimeout(function(){ pageSetUp(); })</script>

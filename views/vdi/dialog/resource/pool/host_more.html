@@ -1,0 +1,309 @@
+<div class="padding-10">
+	<div class="modal-header">
+		<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span></button>
+		<h4 class="modal-title" localize="高级"></h4>
+    </div>
+<div class="form-horizontal table-form" name="hostMoreForm" novalidate>
+	<div class="widget-body">
+		<ul id="myTab1" class="nav nav-tabs bordered">
+			<li class="active">
+				<a href="#s1" data-toggle="tab" localize="本地网络"></a>
+			</li>
+			<li class="" ng-if="!rbd_enabled">
+				<a href="#s2" data-toggle="tab" localize="本地存储"></a>
+			</li>
+			<li class="">
+				<a href="#s3" data-toggle="tab" localize="硬件信息"></a>
+			</li>
+			<li class="">
+				<a href="#s4" data-toggle="tab" localize="桌面设置"></a>
+			</li>
+			<li class="" ng-show="enable_gpu_module">
+				<a href="#s5" data-toggle="tab" localize="GPU显卡"></a>
+			</li>
+			<li class="">
+				<a href="#s6" data-toggle="tab" localize="系统服务"></a>
+			</li>
+		</ul>
+		<div class="tab-content padding-10 ">
+			<div class="tab-pane active" id="s1">
+				<div style="min-height: 300px;"  ng-show="loading_nic"><img src="img/loadingtext.gif" style="width:24px;height:24px;"></div>
+				<div ng-hide="loading_nic">
+	                <form name="networkForm" novalidate>
+						<table ng-show="networks.length" cellspacing="0" cellpadding="0" border="0" role="grid"  class="ui-jqgrid-btable table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th  localize="网卡名称"></th>
+									<th  localize="MAC地址"></th>
+									<th><span localize="网卡类型"></span>Mb/s</th>
+									<th>IP/<span localize="子网掩码"></span></th>
+
+	                                <th  localize="状态"></th>
+									<th  localize="操作"></th>
+								</tr>
+							</thead>	
+							<tbody>
+								<tr data-ng-repeat="item in networks track by $index" ng-class="{'read_tr':item.readonly,'edit_tr':!item.readonly}">
+									<td>{{item.name}}</td>
+									<td>{{item.mac}}</td>
+
+									<td>{{item.speed}}</td>
+									<td>
+										<div ng-repeat="ip in item._ips track by $index" class="host-ip">
+											<p ng-show="item.readonly || ip.value.uneditable">
+												<input  type="text" ng-model="ip.value.ip" data-ng-readonly="true" class="small host_more_input" ng-pattern="/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/">
+												<input  type="text" ng-model="ip.value.netmask" data-ng-readonly="true" class="small host_more_input" ng-pattern="/^(254|252|248|240|224|192|128|0)\.0\.0\.0$|^(255\.(254|252|248|240|224|192|128|0)\.0\.0)$|^(255\.255\.(254|252|248|240|224|192|128|0)\.0)$|^(255\.255\.255\.(254|252|248|240|224|192|128|0))$/ ">
+												<span ng-show="ip.value.ip_editable.is_management">（<i data-localize="管理网络"></i>）</span>
+												<span ng-show="ip.value.ip_editable.is_image">（<i data-localize="镜像网络"></i>）</span>
+											</p>
+											<p ng-show="!item.readonly && !ip.value.uneditable">
+												<input  type="text" ng-model="ip.model.ip" data-ng-readonly="false" class="small host_more_input" ng-pattern="/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/" required>
+												<input  type="text" ng-model="ip.model.netmask" data-ng-readonly="false" class="small host_more_input" ng-pattern="/^(254|252|248|240|224|192|128|0)\.0\.0\.0$|^(255\.(254|252|248|240|224|192|128|0)\.0\.0)$|^(255\.255\.(254|252|248|240|224|192|128|0)\.0)$|^(255\.255\.255\.(254|252|248|240|224|192|128|0))$/ " required>
+												<a href="javascript:void(0);" class="btn btn-default btn-xs txt-color-blueLight" data-ng-click="minus_ip(ip,item._ips)"><i class="fa fa-minus fa-lg"></i></a>
+											</p>
+										</div>
+										<a ng-show="item._ips.length < 4 && !item.readonly" href="javascript:void(0);" class="btn btn-default btn-xs txt-color-blueLight" data-ng-click="add_ip(item)"><i class="fa fa-plus fa-lg"></i></a>
+									</td>
+
+									<td>
+										<span localize="启用" ng-show="item.isup"></span>
+										<span localize="未启用" ng-show="!item.isup"></span>
+									</td>
+									<td>
+										<div>
+											<img src="img/loadingtext.gif" style="width:24px;height:24px;" ng-show="item.submiting">
+											<button localize-title='编辑' class="btn btn-xs btn-default" ng-show="netEditable() && !item.submiting"  ng-click="item.readonly = false"><i class="fa icon-jj-Write"></i></button>
+											<button localize-title='取消' class="btn btn-xs btn-default" ng-show="!item.readonly && !item.submiting"  ng-click="cancel(item)"><i class="fa icon-jj-recovery"></i></button>
+											<button localize-title='保存' class="btn btn-xs btn-default" ng-show="!item.readonly && !item.submiting" ng-click="ok(item)" ng-disabled="networkForm.$invalid" ><i class="fa icon-jj-Preservation"></i></button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+	                	<button ng-show="virtual_type === 'kvm'" style="margin-bottom: 18px;" class="btn btn-sm btn-primary" type="button" ng-disabled="!networks.length" ng-click="bound_netcard()"><i class="fa"></i><span localize="新增bond"></span></button>
+						<table ng-show="bond_networks" cellspacing="0" cellpadding="0" border="0" role="grid"  class="ui-jqgrid-btable table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th  localize="名称"></th>
+									<th localize="bond类型"></th>
+
+									<th localize="绑定网卡"></th>
+									<th  localize="MAC地址"></th>
+
+									<th>IP/<span localize="子网掩码"></span></th>
+									<th localize="状态"></th>
+
+									<th  localize="操作"></th>
+								</tr>
+							</thead>	
+							<tbody>
+								<tr data-ng-repeat="item in bond_networks track by $index" ng-class="{'read_tr':item.readonly,'edit_tr':!item.readonly}">
+									<td>{{item.name}}</td>
+									<td>{{ item.mode }}</td>
+
+									<td>
+										<p>{{item.member.join(",")}}</p>
+									</td>
+									<td>{{item.mac}}</td>
+
+									<td>
+										<div ng-repeat="ip in item._ips track by $index" class="host-ip">
+											<p ng-show="item.readonly || ip.value.uneditable">
+												<input  type="text" ng-model="ip.value.ip" data-ng-readonly="true" class="small host_more_input" ng-pattern="/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/">
+												<input  type="text" ng-model="ip.value.netmask" data-ng-readonly="true" class="small host_more_input" ng-pattern="/^(254|252|248|240|224|192|128|0)\.0\.0\.0$|^(255\.(254|252|248|240|224|192|128|0)\.0\.0)$|^(255\.255\.(254|252|248|240|224|192|128|0)\.0)$|^(255\.255\.255\.(254|252|248|240|224|192|128|0))$/ ">
+												<span ng-show="ip.value.ip_editable.is_management">（<i localize="管理网络"></i>）</span>
+												<span ng-show="ip.value.ip_editable.is_image">（<i localize="镜像网络"></i>）</span>
+											</p>
+											<p ng-show="!item.readonly && !ip.value.uneditable">
+												<input  type="text" ng-model="ip.model.ip" data-ng-readonly="false" class="small host_more_input" ng-pattern="/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/" required>
+												<input  type="text" ng-model="ip.model.netmask" data-ng-readonly="false" class="small host_more_input" ng-pattern="/^(254|252|248|240|224|192|128|0)\.0\.0\.0$|^(255\.(254|252|248|240|224|192|128|0)\.0\.0)$|^(255\.255\.(254|252|248|240|224|192|128|0)\.0)$|^(255\.255\.255\.(254|252|248|240|224|192|128|0))$/ " required>
+												<a href="javascript:void(0);" class="btn btn-default btn-xs txt-color-blueLight" data-ng-click="minus_ip(ip,item._ips)"><i class="fa fa-minus fa-lg"></i></a>
+											</p>
+										</div>
+										<a ng-show="item._ips.length < 4 && !item.readonly" href="javascript:void(0);" class="btn btn-default btn-xs txt-color-blueLight" data-ng-click="add_ip(item)"><i class="fa fa-plus fa-lg"></i></a>
+									</td>
+									<td>
+										<span localize="启用" ng-show="item.isup"></span>
+										<span localize="未启用" ng-show="!item.isup"></span>
+									</td>
+									<td>
+										<div>
+											<img src="img/loadingtext.gif" style="width:24px;height:24px;" ng-show="item.submiting">
+											<div ng-hide="item.submiting">
+												<button localize-title='编辑' class="btn btn-xs btn-default" ng-show="item.readonly"  ng-click="edit_bond(item)"><i class="fa icon-jj-Write"></i></button>
+												<!-- <button localize-title='保存' class="btn btn-xs btn-default" ng-show="!item.readonly" ng-disabled="networkForm.$invalid" ng-click="ok(item)"><i class="fa icon-jj-Preservation"></i></button> -->
+												<!-- <button localize-title='取消' class="btn btn-xs btn-default" ng-show="!item.readonly"  ng-click="cancel(item)"><i class="fa icon-jj-recovery"></i></button> -->
+												<button title='删除'  ng-show="item.has_bond" class="btn btn-xs btn-default" ng-click="unbundle_netcard(item)"><i class="fa icon-jj-delete"></i></button>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+					<form name="dnsForm">
+						<div class="host-ip">
+							<label class="host_more_label" localize="网关"></label>
+							<input type="text" ng-show="data._readonly===true" style="background: #ddd;vertical-align: middle;"  class="small" data-ng-readonly="true" ng-model="data._gateway.value">
+							<input type="text" ng-show="data._readonly===false" class="small host_more_input" ng-model="data._gateway.model" ng-pattern="/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/">
+
+							<label class="host_more_label" ng-repeat-start="dns in data._dnss track by $index"><span localize="首选" ng-show="$index === 0"></span><span ng-show="$index === 1" localize="备用"></span>DNS</label>
+							<input type="text" ng-show="data._readonly===true"  style="background: #ddd" class="small" data-ng-readonly="true" ng-model="dns.value" >
+							<input  ng-repeat-end type="text" ng-show="data._readonly === false" class="small host_more_input" ng-model="dns.model" ng-pattern="/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/">
+
+							<img src="img/loadingtext.gif" style="width:24px;height:24px;vertical-align: middle;" ng-show="data.submiting">
+							<button localize-title='编辑' class="btn btn-xs btn-default" ng-show="data._readonly && !data.submiting"  ng-click="data._readonly = false"><i class="fa icon-jj-Write"></i></button>
+							<button localize-title='取消' class="btn btn-xs btn-default" ng-show="!data._readonly && !data.submiting"  ng-click="cancelDns(data)"><i class="fa icon-jj-recovery"></i></button>
+							<button localize-title='保存' class="btn btn-xs btn-default" ng-show="!data._readonly && !data.submiting" ng-click="okDns(data)" ng-disabled="dnsForm.$invalid || dnsForm.$pristine" ><i class="fa icon-jj-Preservation"></i></button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="s2" ng-if="!rbd_enabled">
+				<table cellspacing="0" cellpadding="0" border="0" role="grid"  class="ui-jqgrid-btable table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th  localize="磁盘"></th>
+							<th  localize="总容量()" param1="(GB)"></th>
+							<th  localize="可用空间()" param1="(GB)"></th>
+						</tr>
+					</thead>	
+					<tbody>
+						<tr data-ng-repeat="item in storages track by $index">
+							<td>{{item.name}}</td>
+							<td>{{item.total}}</td>
+							<td>{{item.no_used}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="tab-pane fade" id="s3">
+				<table style="width:80%;margin:0 auto" cellspacing="0" cellpadding="0" border="0" role="grid"  class="table table-bordered table-condensed">
+					<tbody>
+						<!-- <tr>
+							<td  localize="品牌">品牌</td>
+							<td></td>
+						</tr> -->
+							
+						<tr>
+							<td  localize="CPU">CPU</td>
+							<td>
+								<p ng-repeat="cpu in hardware.cpu">{{cpu.count}}×{{cpu.value}}</p>
+								<p ng-show="hardware.cpu.length === 0" localize="未获取到信息"></p>
+							</td>
+						</tr>
+							
+
+						<tr>
+							<td  localize="内存">内存</td>
+							<td>
+								<p ng-repeat="memory in hardware.memory">{{memory.count}}×{{memory.value}}</p>
+								<p ng-show="hardware.memory.length === 0" localize="未获取到信息"></p>
+							</td>
+						</tr>
+							
+						<tr>
+							<td  localize="硬盘">硬盘</td>
+							<td>
+								<p ng-repeat="disk in hardware.disk">{{disk.count}}×{{disk.value}}</p>
+							</td>
+						</tr>
+						<tr>
+							<td localize="显卡">显卡</td>
+							<td>
+								<p ng-repeat="gpu in hardware.graphic_card">{{gpu.count}} × {{gpu.value}}</p>
+								<p ng-show="hardware.graphic_card.length === 0" localize="未获取到信息"></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="tab-pane fade" id="s4">
+				<form class="padding-20 background-white  form-horizontal " name="hostMaxInstanceForm" novalidate>
+					<div class="form-group">
+						<label class="col-xs-4  col-md-4 control-label" localize="MESS_MAXSETINSTANCE"><!-- 可同时创建最大桌面数: --></label>
+						<div class="col-xs-3  col-md-3">
+							<input type="text" class="form-control nodirty" placeholder="{{item.max_instance}}"  ng-model="max_instance"  ng-pattern="/^\s*[1-9][0-9]?\s*$/" required>
+						</div>
+						 <div class="col-xs-4">
+                            <button type="button" class="btn btn-primary" ng-class="{disabled:hostMaxInstanceForm.$invalid || insBtn_unable}" ng-click="saveMaxInstance()" localize="保存"></button>
+                            <img ng-show="insBtn_unable" src="img/loadingtext.gif" width="30px" height="30px"  alt="">
+                        	<i ng-class="{opacity:insForm_suc}" class="fa txt-color-greenjj icon-jj-Complete succuss-tag-icon"></i>
+                        </div>
+					</div>
+<!-- 					<div class="form-group">
+						<div class="col-xs-offset-4">
+                        	<span class="help-block help-block-host"><i class="fa fa-warning"></i> <span localize="重启服务器生效"></span></span>
+                        </div>
+					</div> -->
+				</form>
+			</div>
+			<div class="tab-pane fade" id="s5" ng-show="enable_gpu_module">
+				<div ng-show="loading_GPU" style="min-height: 300px;" ng-show="loading_server"><img src="img/loadingtext.gif" style="width:24px;height:24px;"></div>
+				<form ng-show="!loading_GPU" class="padding-20 background-white  form-horizontal " name="hostGPUForm" novalidate>
+					<div class="form-group">
+						<label class="col-xs-4 control-label"></label>
+						<div class="col-xs-3">
+							<label class="checkbox-inline checkbox-align">
+								<input type="checkbox" class="checkbox style-0" ng-model="$parent.GPU_V" ng-disabled="saving || GPU_V_loading" ng-change="changeGPU_V(GPU_V)">
+								<span localize="显卡虚拟化"></span>
+								<img ng-show="GPU_V_loading" src="img/loadingtext.gif" width="20px" height="20px"  alt="">
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4  col-md-4 control-label" localize="GPU虚拟化上限值"></label>
+						<div class="col-xs-3  col-md-3">
+							<input type="number" min="1" input-number min="{{ GPU_V_min }}" max="{{ GPU_V_max }}" ng-pattern="/^[0-9]*$/" class="form-control nodirty" placeholder="{{ GPU_V_min + '~'+GPU_V_max }}" ng-model="GPU_V_num" ng-required="GPU_V" ng-disabled="saving || GPU_V_loading || !GPU_V">
+						</div>
+							<div class="col-xs-4">
+							<button type="button" class="btn btn-primary" ng-class="{disabled:hostGPUForm.$invalid || !GPU_V || saving || !(GPU_V_num>=GPU_V_min && GPU_V_num<=GPU_V_max) || GPU_V_loading}" ng-click="saveGPUV()" localize="保存"></button>
+							<img ng-show="saving" src="img/loadingtext.gif" width="20px" height="20px"  alt="">
+							<i ng-class="{opacity:sav_suc}" class="fa txt-color-greenjj icon-jj-Complete succuss-tag-icon"></i>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="tab-pane fade" id="s6">
+				<div style="min-height: 300px;" ng-show="loading_server"><img src="img/loadingtext.gif" style="width:24px;height:24px;"></div>
+				<table ng-show="!loading_server" cellspacing="0" cellpadding="0" border="0" role="grid" class="table table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th localize="服务名称"></th>
+							<th localize="状态"></th>
+							<th localize="操作"></th>
+						</tr>
+					</thead>	
+					<tbody>
+						<tr data-ng-repeat="server in servers">
+							<td>{{ server.name }}</td>
+							<td ng-class="{red: server.status!=='active'}">
+								<span localize="启用" ng-if="server.status=='active'"></span>
+								<span localize="停止" ng-if="server.status!=='active'"></span>
+							</td>
+							<td>
+								<button class="btn btn-xs btn-default" ng-if="server.status=='active'" data-ng-click="recover(server)" localize-title="重启服务"><i class="fa icon-jj-Recovery-1"></i></button>
+								<button class="btn btn-xs btn-default" ng-if="server.status!=='active'" data-ng-click="start(server)" localize-title="启动服务"><i class="fa icon-jj-Play"></i></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<style>
+	#s1 .host_more_label{
+		margin-left: 10px;
+		margin-right: 5px;
+	}
+	#s1 .host_more_input{
+		width: 120px;
+		padding: 1px 5px;
+		vertical-align: middle;
+	}
+	#s1 .host_more_input[readonly]{
+		border: 1px solid transparent;
+	}
+</style>

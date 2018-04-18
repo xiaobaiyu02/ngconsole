@@ -1,0 +1,9 @@
+{
+	"code": 0,
+	"name": "recycle_public",
+	"value": {
+		"active": false,
+		"broken_min": 5,
+		"run": "shutdown"
+	}
+}

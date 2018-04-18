@@ -1,0 +1,73 @@
+<section id="widget-grid">
+		<div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	          <h4 class="modal-title" id="mySmallModalLabel" data-localize="编辑域控制器"></h4>
+	        </div>
+	        <div class="modal-body">
+				<form class="form-horizontal" name="addUseradminFrom" method="post" ng-submit="addUseradminFrom.$valid"  novalidate>			
+					<div class="form-group">
+						<label class="col-xs-3 control-label" for="serverAddress" data-localize="服务器地址"></label>
+						<div class="col-xs-8" data-ng-class="{'state-success':addUseradminFrom.host.$valid && addUseradminFrom.host.$dirty,'state-error':addUseradminFrom.host.$invalid && addUseradminFrom.host.$dirty}">
+<!-- 							<input class="form-control" id="serverAddress" type="text"
+								name="host"
+								data-ng-model="data.host"
+								data-ng-trim="false"
+							> -->
+							<input class="form-control" id="serverAddress" type="text" name="host" format-ip ng-model="data.host">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-xs-3 control-label" for="domainAdministrator" data-localize="域管理员"></label>
+						<div class="col-xs-8" data-ng-class="{'state-success':addUseradminFrom.user.$valid && addUseradminFrom.user.$dirty,'state-error':addUseradminFrom.user.$invalid && addUseradminFrom.user.$dirty}">
+							<input class="form-control" id="domainAdministrator" type="text"
+								name="user"
+								data-ng-model="data.user"
+								data-ng-trim="false"
+							>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-xs-3 control-label" for="domainPassword" data-localize="密码"></label>
+						<div class="col-xs-8" data-ng-class="{'state-success':addUseradminFrom.passwd.$valid && addUseradminFrom.passwd.$dirty,'state-error':addUseradminFrom.passwd.$invalid && addUseradminFrom.passwd.$dirty}">
+							<input class="form-control" id="domainPassword" type="password"
+								name="passwd"
+								data-ng-model="data.passwd"
+								data-ng-trim="false"
+							>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-xs-3 control-label" for="domainDescription" data-localize="描述"></label>
+						<div class="col-xs-8" data-ng-class="{'state-success':addUseradminFrom.desc.$valid && addUseradminFrom.desc.$dirty,'state-error':addUseradminFrom.desc.$invalid && addUseradminFrom.desc.$dirty}">
+							<textarea class="form-control" id="domainDescription" rows="3"
+								name="desc"
+								data-ng-model="data.desc"
+								data-localize="不能超过30位字符"
+								maxlength="30"
+								data-ng-maxlength="30"
+								data-ng-trim="false"
+							>
+							</textarea>
+						</div>
+					</div>
+
+
+					<footer class="text-right">
+				    	<button type="submit" name="button" disabled="disabled" class="btn btn-primary"
+								data-ng-disabled="addUseradminFrom.$invalid" ng-if="!submiting && !afterSubmiting"
+								data-ng-click="ok()" data-localize="提交"></button>
+						<button type='button' name="reset" class="btn btn-default"
+								data-ng-click="reset()" ng-if="!submiting && !afterSubmiting"
+								data-ng-disabled="isUnchanged()" data-localize="重置"></button>
+						<img src="img/loadingtext.gif" alt="" ng-if="submiting" class="loadingtext" style="width:24px;height:24px;"> 
+					</footer>
+				</form>
+	        </div>
+
+      </div>
+
+</section>

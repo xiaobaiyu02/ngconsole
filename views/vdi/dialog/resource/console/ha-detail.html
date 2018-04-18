@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title" localize="查看控制节点 HA 状态详情"></h4>
+</div>
+<div class="modal-body">
+    <img ng-show="firstLoading" src="img/loadingtext.gif" alt="" width="24" height="24">
+    <div class="ha-detail-header" ng-if="!firstLoading">
+        <p><span localize="HA启用状态"></span><span localize="已启用"></span></p>
+        <p><span localize="数据同步状态"></span><span ng-style="{color: ha.data_sync == 'unsynced' ? 'red' : ''}">{{ ha | haDataStatus }}</span></p>
+        <p><span localize="HA运行状态"></span><span ng-style="{color: ha.is_split_brain ? 'red' : ''}">{{ ha | haRunningStatus }}</span></p>
+        <p><span localize="浮动IP地址"></span>
+            {{ha.floating_ip}}
+            <button class="btn btn-primary btn-sm pull-right" localize="button.refresh" ng-click="refresh()"></button>
+        </p>
+    </div>
+    <div class="ha-detail-body" ng-if="!firstLoading">
+        <canvas ha-drawwer data="detail">canvas not supported!</canvas>
+        <div style="display: none;">
+            <img id="ha-detail-main-ctrl" src="/img/ha/main-ctrl.png"/>
+            <img id="ha-detail-sub-ctrl" src="/img/ha/sub-ctrl.png"/>
+            <img id="ha-detail-arbitration" src="/img/ha/arbitration.png"/>
+            <img id="ha-detail-error" src="/img/ha/error.png"/>
+            <img id="ha-detail-warn" src="/img/ha/warn.png"/>
+        </div>
+        <div class="ha-detail-legend">
+            <p class="legend-icon-green" localize="数据同步网络"></p>
+            <p class="legend-icon-blue" localize="管理网络"></p>
+            <p class="legend-icon-error" localize="断开连接"></p>
+            <p class="legend-icon-warn" localize="连接状态未知"></p>
+        </div>
+    </div>
+</div>

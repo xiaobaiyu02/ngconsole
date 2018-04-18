@@ -1,0 +1,42 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" localize="配置公共存储">配置公共存储</h4>
+</div>
+<div class="modal-body">
+	<fieldset>
+		<form class="form-horizontal" name="configPublicStorageForm">
+			<div class="form-group">
+				<div class="radio col-xs-offset-3 col-xs-7">
+					<label>
+						<input value="local" ng-model="lun_type" type="radio" name="radio-inline" class="radiobox style-0" ng-change="clearlun()" required>
+						<span localize="本地存储"></span> 
+					</label>
+				</div>
+				
+			</div>
+			<div class="form-group">
+				<div class="radio col-xs-offset-3 col-xs-3">
+					<label>
+						<input value="remote" ng-model="lun_type" type="radio" name="radio-inline" class="radiobox style-0" required>
+						<span localize="远端存储"></span> 
+					</label>
+				</div>
+				<label class="control-label" style="float:left" localize="存储设备">存储设备</label>
+				<div class="col-sm-4">
+					<select class="form-control" data-ng-model="lun_id" ng-disabled="lun_type==='local'" data-ng-options="lun.uuid as lun.name for lun in luns"  ng-required="lun_type ==='remote'">
+						<option value="" localize="--请选择--"></option>
+					</select>
+				</div>
+			</div>
+			<footer class="text-right">
+				<img ng-show="submitting" ng-src="img/loadingtext.gif" alt="" width="24px" height="24px">
+				<button ng-show="!submitting" type="button" ng-disabled="configPublicStorageForm.$invalid" class="btn btn-primary" ng-click="ok()" localize="确定">
+					确定
+				</button>
+				<button ng-show="!submitting" type="button" class="btn btn-default" ng-click="close()" localize="取消">
+					取消
+				</button>
+			</footer>
+		</form>
+	</fieldset>
+</div>

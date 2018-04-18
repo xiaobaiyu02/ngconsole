@@ -1,0 +1,175 @@
+<section>
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div data-widget-grid class="jarviswidget">
+				<header class="nobgheader">
+					<div class="col-xs-12" style="padding-left: 8px;">
+						<span data-localize="选择教室"></span>&nbsp;&nbsp;<select class="selectclassroomName filter" ng-model="select" data-ng-options="item.name for item in classrooms"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+						<span class="totalmess"
+							data-localize="CLIENT_DESC"
+		                    data-localize-title="HELP"
+		                    param1="{{(rows | filter:searchText | filter:select.name).length}}"
+		                    param2="{{(rows | filter:searchText | filter:select.name | filter:{is_up:true}).length}}"
+		                    param3="{{(rows | filter:searchText | filter:select.name | filter:{is_up:false}).length}}">
+						</span>
+					</div>
+				</header>
+				<!-- widget div-->
+				<div class="noborder">
+					<!-- widget edit box -->
+					<div class="jarviswidget-editbox">
+						<!-- This area used as dropdown edit box -->
+					</div>
+					<!-- end widget edit box -->
+
+					<!-- widget content -->
+					<div class="widget-body no-padding">
+						<section class="dt-toolbar makefloat">
+							<div class="left_side left-btn-group">
+								<a class="btn btn-xs btn-primary isBatch" data-ng-class="{disabled:!checkOne()}" data-dialog="configureClassroomDialog" data-dialog-size="sm" data-dialog-url="terminal/terminal_configureclassroom_edit.html"><i class="fa icon-jj-classroom"></i> <span data-localize="分配教室"></span></a>
+								<div class="btn-group">
+									<button data-ng-class="{disabled:!checkOne()}" class="btn btn-primary btn-xs dropdown-toggle isBatch" data-toggle="dropdown"><i class="fa icon-jj-all"></i> <span data-localize="排序"></span> <span class="caret"></span></button>
+									<ul class="dropdown-menu">
+										<li style="cursor:pointer"><a class="btn isBatch" data-ng-click="clientManualSort()" data-localize="人工排序" data-dialog="clientSortDialog" data-dialog-size="fs" data-dialog-url="terminal/clientSort.html" data-ng-class="{disabled:!checkOne()}"><span class="parameterdisabled" data-localize-title="vdiTerminalClientManage_TIP5" data-ng-if="!checkOne()"></span></a></li>
+                                        <li class="divider"></li>
+                                        <li style="cursor:pointer; position:relative;"><a class="btn isBatch" data-ng-click="clientAutoSort()" data-localize="自动排序" data-dialog="clientSortDialog" data-dialog-size="fs" data-dialog-url="terminal/clientSort.html" data-ng-class="{disabled:!checkOne()}" ></a><span class="parameterdisabled" data-localize-title="vdiTerminalClientManage_TIP5" data-ng-if="!checkOne()"></span></li>
+									</ul>
+								</div>
+								<div class="btn-group">
+									<button data-ng-class="{disabled:!checkOne()}" class="btn btn-primary btn-xs dropdown-toggle isBatch" data-toggle="dropdown"><i class="fa icon-jj-005"></i> <span data-localize="设置终端"></span> <span class="caret"></span></button>
+									<ul class="dropdown-menu">
+                                        <li style="cursor:pointer; position:relative;"><a class="btn isBatch" data-ng-click="configurename()" data-localize-title="vdiTerminalClientManage_TIP4" data-ng-class="{disabled:!selectUp()}" data-localize="修改终端名"></a><span class="parameterdisabled" data-localize-title="vdiTerminalClientManage_TIP3" data-ng-if="!selectUp()"></span></li>
+                                        <li class="divider"></li>
+                                        <li style="cursor:pointer; position:relative;"><a class="btn isBatch" data-ng-click="configure()" data-localize-title="vdiTerminalClientManage_TIP2" data-ng-class="{disabled:!selectUp()}" data-localize="设置运行参数" data-dialog="configureTerminalParameterDialog" data-dialog-size="md" data-dialog-url="terminal/terminal_calculateconfigureparameter_edit.html"></a><span class="parameterdisabled" data-localize-title="vdiTerminalClientManage_TIP1" data-ng-if="!selectUp()"></span></li>
+									</ul>
+								</div>
+								<div class="btn-group">
+									<button data-ng-class="{disabled:!checkOne()}" class="btn btn-primary btn-xs dropdown-toggle isBatch" data-toggle="dropdown"><i class="fa icon-jj-IP"></i> <span data-localize="设置桌面IP"></span> <span class="caret"></span></button>
+									<ul class="dropdown-menu">
+                                        <li style="cursor:pointer"><a class="btn isBatch" data-localize="固定桌面IP" data-dialog="clientBindingIpDialog" data-dialog-size="sm" data-dialog-url="terminal/terminal_clientbindingip_edit.html"></a></li>
+                                        <li class="divider"></li>
+                                        <li style="cursor:pointer"><a class="btn isBatch" data-ng-click="cancelBindingIp()" data-localize="取消桌面IP"></a></li>
+									</ul>
+								</div>
+								<!-- <a class="btn btn-xs btn-primary isBatch" data-ng-class="{disabled:!checkOne()}" data-dialog="clientBindingIpDialog" data-dialog-size="sm" data-dialog-url="terminal/terminal_clientbindingip_edit.html"><i class="fa icon-jj-IP"></i> <span data-localize="固定桌面IP"></span></a> -->
+								<a class="btn btn-xs btn-primary isBatch" data-ng-class="{disabled:!checkOne()}" data-ng-click="wakeup()" href="javascript:"><i class="fa icon-jj-boot"></i> <span data-localize="唤醒"></span></a>
+								<a class="btn btn-xs btn-primary isBatch" data-ng-class="{disabled:!checkOne()}" data-ng-click="closeTerminal()" data-ng-class="{graydisabled:ables}"><i class="fa icon-jj-shutdown"></i> <span data-localize="关机"></span></a>
+								<a class="btn btn-xs btn-primary isBatch" data-ng-class="{disabled:!checkOne()}" data-ng-click="rebootTerminal()" data-ng-class="{graydisabled:ables}"><i class="fa icon-jj-Restart"></i> <span data-localize="重启"></span></a>
+								<!-- <a class="btn btn-xs btn-primary isBatch" data-ng-class="{disabled:!checkOne()}" data-ng-click="terminate()" href="javascript:" data-ng-class="{graydisabled:ables}"><i class="fa icon-jj-breakoff"></i> <span data-localize="中断会话"></span></a> -->
+								<a class="btn btn-xs btn-danger isBatch" data-ng-class="{disabled:!checkOne()}" href="javascript:" data-ng-click="delete()"><i class="icon-jj-delete fa"></i> <span data-localize="删除"></span></a>
+								<!-- <a class="btn btn-xs btn-primary isBatch" data-ng-class="{disabled:!checkOne()}" href="javascript:" data-ng-click="editPass()"><i class="icon-jj-delete fa"></i> <span data-localize="终端密码"></span></a> -->
+								<a class="btn btn-xs btn-primary isBatch" href="javascript:" data-ng-click="dynamicPass()"><i class="icon-jj-Key fa"></i> <span data-localize="动态密码"></span></a>
+							</div>
+							<div class="right_side">
+								<div class="pull-right filter"> <span data-localize="显示"></span> <input min="1" max="500" placeholder="1-500" style="width: 54px;" type="number" class="mysmallinput" input-number data-ng-model="pagesize" data-ng-change="pageSizeChange()"> <span data-localize="项结果"></span></div>
+								
+								<div class="pull-right dataTables_filter search"><label><span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span> <input type="search" maxlength="20" class="form-control" ng-model="searchText" ng-change="updateData(searchText,select)"></label></div>
+							</div>
+						</section>
+						<div class="table-responsive">
+							<table data-vdi-grid
+								class="table table-vertical-center table-striped table-condensed table-hover smart-form has-tickbox"
+								width="100%">
+								<thead class="vdi_header">
+									<tr>
+										<th><label class="checkbox"><input type="checkbox" data-ng-model="checkedAll" data-ng-change="selectAllChange(checkedAll)" data-ng-checked="checkAll(all)" name="checkbox-inline"><i></i></label></th>
+										<th ng-model="client_nameSort" ng-click="client_nameSort = !client_nameSort;sort('client_name', client_nameSort)" data-localize="终端名"></th>
+										<th ng-model="client_typeSort" ng-click="client_typeSort = !client_typeSort;sortClientType(client_typeSort)" data-localize="类型"></th>
+										<th ng-model="orderSort" ng-click="orderSort = !orderSort;sort('order', orderSort)" data-localize="登录序号"></th>
+										<th data-localize="终端IP/MAC" ng-model="client_IPSort" ng-click="client_IPSort = !client_IPSort;sortClientIP(client_IPSort)"></th>
+										<th data-localize="固定桌面IP" ng-model="target_IPSort" ng-click="target_IPSort = !target_IPSort;sortTargetIP(target_IPSort)"></th>
+										<th ng-model="is_upSort" ng-click="is_upSort = !is_upSort;sort('is_up', is_upSort)" data-localize="运行状态"></th>
+										<th ng-model="inst_display_nameSort" ng-click="inst_display_nameSort = !inst_display_nameSort;instNameSort('inst_display_name', inst_display_nameSort)" data-localize="接入桌面"></th>
+										<th ng-model="launched_atSort" ng-click="launched_atSort = !launched_atSort;sort('launched_at', launched_atSort)" data-localize="接入时间"></th>
+										<th ng-model="running_timeSort" ng-click="running_timeSort = !running_timeSort;sort('running_time', running_timeSort)" data-localize="接入时长"></th>
+									</tr>
+								</thead>
+								<tbody class="vdi_body">
+									<tr data-id="{{item.id}}"
+										data-contextmenu
+										data-ng-model="item"
+										data-ng-repeat="item in rows | filter:searchText | paging:currentPage:pagesize">
+										<td>
+											<label class="checkbox">
+												<input type="checkbox" name="checkbox-inline"
+													data-ng-model="item._selected" 
+													data-ng-checked="item._selected"  
+													data-ng-value="item.id"
+													data-ng-click="addselect(item)"
+													>
+												<i></i>
+											</label>
+										</td>
+										<td>{{ item.client_name }}</td>
+										<td>
+											<span data-ng-if="item.client_type === 97">android</span>
+											<span data-ng-if="item.client_type === 98">arm</span>
+											<span data-ng-if="item.client_type === 99">linux</span>
+											<span data-ng-if="item.client_type === 1 || item.client_type === 999">windows</span>
+										</td>
+										<td>{{ item.order }}<!-- <i data-ng-if="item.order_status == 2 && item.order != null" class="fa icon-jj-lock"> --></td>
+										<td>{{ item.client_ip }}<br>{{ item.client_mac }}</td>
+										<td>{{ item.target_ip }}</td>
+										<td><span class="status32" data-ng-class="{shutdown:!item.is_up,running:item.is_up}"></span></td>
+										<td title="{{ item.inst_name }}" ng-if="!item.mode_id&&!item.person_pool_id">
+											<a ng-show='item.can_jump_person' href="#/desktop/personal?name={{item.inst_display_name}}">{{ item.inst_display_name }}</a>
+											<span ng-show='!item.can_jump_person'>{{ item.inst_display_name }}</span>
+										</td>
+										<td title="{{ item.inst_name }}" ng-if="item.mode_id&&!item.person_pool_id">
+											<a ng-show='item.can_jump_teach' href="#/desktop/teach/{{ item.mode_id }}?name={{item.inst_display_name}}">{{ item.inst_display_name }}</a>
+											<span ng-show='!item.can_jump_teach'>{{ item.inst_display_name }}</span>
+										</td>
+										<td title="{{ item.inst_name }}" ng-if="item.person_pool_id">
+											<a ng-show='item.can_jump_person_pool' href="#/desktop/poolList/{{item.person_pool_id}}?{{item.inst_display_name}}&&client={{item.person_pool_name}}">{{ item.inst_display_name }}</a>
+											<span ng-show='!item.can_jump_person_pool'>{{ item.inst_display_name }}</span>
+										</td>
+										<td>{{ item.launched_at | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+										<td>{{ item.running_time }}</td>
+
+										
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="tips" data-ng-if="loading" data-localize="LOADING_TEXT"></div>
+						<div class="tips" data-ng-if="!loading && rows.length == 0" data-localize="NO_MATCHING_DATA"></div>
+						<div data-ng-include="'includes/pagination.html'"></div>
+					</div>
+				</div>
+				<section class="context_wrapper">
+					<div data-ng-if="currentItem" class="menu_wrapper grid_context_menu">
+						<ul class="menu_item_list">
+							<li class="menu_item"><a class="menu_label" data-localize="分配教室" data-dialog="configureClassroomDialog" data-dialog-size="sm" data-dialog-url="terminal/terminal_configureclassroom_edit.html"></a></li>
+							<li class="menu_item"><a class="menu_label" data-ng-class="{disabled:currentItem.status}" href="javascript:"><span data-localize="设置终端"></span><i></i></a>
+								<div class="menu_wrapper sub_menu">
+									<ul class="menu_item_list">
+										<li class="menu_item"><a class="menu_label" data-ng-class="{graydisabled:!currentItem.is_up}" data-localize="修改终端名" data-ng-click="configurename(currentItem)"></a><span class="parameterdisabled" data-localize-title="CLIENT_TIP1" data-ng-if="!currentItem.is_up"></span></li>
+										<li class="menu_split"></li>
+										<li class="menu_item"><a class="menu_label" data-ng-class="{graydisabled:!currentItem.is_up}" data-ng-click="setSingle(true)" data-dialog="configureTerminalParameterDialog" data-dialog-size="md" data-dialog-url="terminal/terminal_calculateconfigureparameter_edit.html" data-localize="设置运行参数"></a><span class="parameterdisabled" data-localize-title="CLIENT_TIP2" data-ng-if="!currentItem.is_up"></span></li>
+									</ul>
+								</div>
+							</li>
+							<li class="menu_item"><a class="menu_label" href="javascript:"><span data-localize="设置桌面IP"></span><i></i></a>
+								<div class="menu_wrapper sub_menu">
+									<ul class="menu_item_list">
+										<li class="menu_item"><a class="menu_label" data-localize="固定桌面IP" data-dialog="clientBindingIpDialog" data-dialog-size="sm" data-dialog-url="terminal/terminal_clientbindingip_edit.html"></a></li>
+										<li class="menu_split"></li>
+										<li class="menu_item"><a class="menu_label" data-ng-class="{graydisabled:!currentItem.target_ip}" data-localize="取消桌面IP" data-ng-click="cancelBindingIp(currentItem)"></a><span class="parameterdisabled" data-localize-title="CANCELIP_TIP" data-ng-if="!currentItem.target_ip"></span></li>
+									</ul>
+								</div>
+							</li>
+							<!-- <li class="menu_item"><a class="menu_label" href="javascript:" data-dialog="clientBindingIpDialog" data-dialog-size="sm" data-dialog-url="terminal/terminal_clientbindingip_edit.html" data-localize="固定桌面IP"></a></li> -->
+							<li class="menu_item"><a class="menu_label" href="javascript:" data-ng-click="view(currentItem)" data-ng-class="{graydisabled:!currentItem.inst_display_name}" data-localize="查看桌面"></a><span class="parameterdisabled" data-localize-title="CLIENT_TIP7" data-ng-if="!currentItem.inst_display_name"></span></li>
+							<li class="menu_item"><a class="menu_label" href="javascript:" data-ng-click="wakeup(currentItem)" data-ng-class="{graydisabled:currentItem.is_up}" data-localize="唤醒"></a><span class="parameterdisabled" data-localize-title="CLIENT_TIP3" data-ng-if="currentItem.is_up"></span></li>
+							<li class="menu_item"><a class="menu_label" href="javascript:" data-ng-click="closeTerminal(currentItem)" data-ng-class="{graydisabled:!currentItem.is_up}" data-localize="关机"></a><span class="parameterdisabled" data-localize-title="CLIENT_TIP4" data-ng-if="!currentItem.is_up"></span></li>
+							<li class="menu_item"><a class="menu_label" href="javascript:" data-ng-click="rebootTerminal(currentItem)" data-ng-class="{graydisabled:!currentItem.is_up}" data-localize="重启"></a><span class="parameterdisabled" data-localize-title="CLIENT_TIP4" data-ng-if="!currentItem.is_up"></span></li>
+							<!-- <li class="menu_item"><a class="menu_label" href="javascript:" data-ng-click="terminate(currentItem)" data-ng-class="{graydisabled:!currentItem.is_up}" data-localize="中断会话"></a><span class="parameterdisabled" data-localize-title="CLIENT_TIP5" data-ng-if="!currentItem.is_up"></span></li> -->
+							<li class="menu_item"><a class="menu_label" href="javascript:" data-ng-click="delete(currentItem)" data-ng-class="{graydisabled:currentItem.is_up}" data-localize="删除"></a><span class="parameterdisabled" data-localize-title="CLIENT_TIP6" data-ng-if="currentItem.is_up"></span></li>
+						</ul>
+					</div>
+				</section>
+			</div>
+		</article>
+	</div>
+</section>
+<script>pageSetUp();</script>

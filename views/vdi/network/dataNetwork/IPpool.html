@@ -1,0 +1,77 @@
+<section id="widget-grid">
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div data-widget-grid class="jarviswidget">
+				<!-- widget div-->
+				<div class="noborder">
+					<div class="jarviswidget-editbox"></div>
+					<div class="widget-body no-padding">
+						<div class="form-inline no-footer">
+							<div class="dt-toolbar">
+								<div class="left_side col-xs-6 col-sm-6">
+									<a class="btn btn-xs btn-primary"  href="#/network/dataNetwork/{{cur_network_id}}"><i class="fa  icon-jj-recovery"></i>&nbsp;<span localize="返回">返回</span></a>
+<!-- 									<a class="btn btn-xs btn-primary"  href="javascript:" data-dialog="newNetworkIPDialog" data-dialog-url="resource/IP_new.html" data-dialog-size="md"><i class="fa  icon-jj-addddd"></i>&nbsp;<span localize="调整范围">调整范围</span></a> -->
+									<!-- <a class="btn btn-xs btn-danger isBatch" data-ng-click="delete()" href="javascript:" data-ng-class="{disabled:!checkOne()}"><i class="fa icon-jj-delete"></i>&nbsp;<span localize="删除">删除</span></a> -->
+								</div>
+								<div class="right_side col-xs-6 col-sm-6">
+									<div class="pull-right filter"> <span localize="显示"></span> <input min="1" max="500" placeholder="1-500" type="number" input-number class="mysmallinput"  ng-change="pageSizeChange()" ng-init="pagesize=10;pagesizes=[10,20,30]" data-ng-model="pagesize"></input> <span localize="项结果"></span> </div>
+								</div>
+							</div>
+						</div>
+						<div class="table-responsive">
+							<table data-vdi-grid
+								class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox table-vertical-center"
+								width="100%">
+								<thead class="vdi_header">
+									<tr>
+										<!-- <th><label class="checkbox"><input type="checkbox" data-ng-model="checkedAll" data-ng-change="selectAllChange(checkedAll)" data-ng-checked="checkAll(all)" name="checkbox-inline"><i></i></label></th> -->
+										<!-- <th localize="禁用启用">启用/禁用</th> -->
+
+										<th style="width:200px;cursor:pointer;"  ng-model="IPSort" ng-click="IPSort = !IPSort;sortIP(IPSort)">IP</th>
+										<th localize="分配类型">分配类型</th>
+
+										<th localize="名称">名称</th>
+										<th localize="终端名">终端名</th>
+
+										<th localize="所有人">所有人</th>
+										<th localize="教室">教室</th>
+									</tr>
+								</thead>
+								<tbody class="vdi_body">
+									
+									<tr data-ng-repeat="item in rows | filter:searchText | paging:currentPage:pagesize:rows">
+										<!-- <td><label class="checkbox"><input data-ng-model="item._selected" data-ng-checked="item._selected" type="checkbox" data-ng-value="item.id" name="checkbox-inline"><i></i></label></td> -->
+										<td>{{ item.ip }} </td>
+										<td>
+											<!-- 0:非桌面，1：教学桌面，2：个人桌面 -->
+											<span ng-show="item.is_mode==1" localize="教学桌面"></span>
+											<span ng-show="item.is_mode==2" localize="个人桌面"></span>
+											<span ng-show="item.is_mode==3" localize="教学模板"></span>
+											<span ng-show="item.is_mode==4" localize="个人模板"></span>
+											<span ng-show="item.is_mode==5" localize="系统桌面"></span>
+										</td>
+
+										<td>{{ item.instance_name }}</td>
+										<td>{{ item.client_name }}</td>
+
+										<td>{{ item.user_name }}</td>
+										<td>{{ item.pool_name }}</td>			
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="tips" data-ng-if="loading"  localize="LOADING_TEXT">数据正在加载...</div>
+						<div class="tips" data-ng-if="!loading && rows.length == 0"  localize="NO_MATCHING_DATA">没有匹配数据</div>
+						<div data-ng-include="'includes/pagination.html'"></div>
+					</div>
+					<!-- end widget content -->
+				</div>
+				<!-- end widget div -->
+			</div>
+			<!-- end widget -->
+		</article>
+		<!-- WIDGET END -->
+	</div>
+	<!-- end row -->
+</section>
+<script>pageSetUp();</script>

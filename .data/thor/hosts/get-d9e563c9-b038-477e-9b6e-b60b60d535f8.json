@@ -1,0 +1,37 @@
+{
+	"code": 0,
+	"host_cnt_error": 0,
+	"host_cnt_running": 1,
+	"hosts_list": [
+		{
+			"cpu_used": 26,
+			"created_at": "2017-07-07T08:09:35.000000",
+			"disk_used": 82.17000000000002,
+			"external_ip": null,
+			"h_cpu": 24,
+			"h_disk": 447.13,
+			"h_mem": "31",
+			"host": "WIN-BR8BPUOCTOA",
+			"id": "68f72345-0bdc-4281-aa9d-a098b5d2441d",
+			"image_storage_capacity": "38bf0395-c84c-4e63-b34a-98aa6bb45328",
+			"image_storage_performance": "7f7504f9-a277-4bbf-ae33-388955c9ed38",
+			"inst_run": 7,
+			"inst_total": 17,
+			"ip": "172.16.111.102",
+			"is_console": false,
+			"max_instance": 30,
+			"mem_used": "24",
+			"rbd_enabled": false,
+			"root_password": "1q!",
+			"status": "active",
+			"storage_capacity": "38bf0395-c84c-4e63-b34a-98aa6bb45328",
+			"storage_performance": "7f7504f9-a277-4bbf-ae33-388955c9ed38",
+			"storage_uuid": "984b2538-697c-4c38-91bd-460afb27b249",
+			"virtual_type": "hyper-v"
+		}
+	],
+	"rbd_enabled": false,
+	"resource_pool": "62d167ac-6e9a-43a0-8ed5-28f573b3ff63",
+	"server_count": 1,
+	"virtual_type": "hyper-v"
+}

@@ -1,0 +1,37 @@
+<div class="modal-body no-padding">
+	<form action="" class="smart-form ng-pristine ng-valid" name="transmissionForm" ng-submit="transmissionForm.$valid"  novalidate>
+		<header class="myheader">
+			<div><span data-localize="透传"></span>	
+				<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+			</div>
+		</header>
+		<fieldset>
+			<section>
+				<label class="label required" data-localize="请选择个人桌面"></label>
+				<div class="select-personal">
+					<label class="radio" data-ng-repeat="desktop in desktops">
+						<input type="radio" name="sex" data-ng-model="device.desktop" value="{{ desktop.id }}"><i></i><span>{{ desktop.name }}</span>
+					</label>
+				</div>
+			</section>
+			<section>
+				<label class="label" data-localize="描述"></label>
+				<textarea class="form-control"
+					style="height: 80px;padding: 6px 12px;width: 90%" 
+					rows="4"
+					name="desc"
+					data-localize="不能超过30位字符"
+					maxlength="30"
+					data-ng-maxlength="30"
+					data-ng-model="device.desc"
+					data-ng-trim="false"
+				>
+				</textarea>
+			</section>
+		</fieldset>
+		<footer>
+			<button type="button" data-ng-click="close()" class="btn btn-default myfooterbtn" data-localize="取消"></button>
+			<button type="submit" name="submit" class="btn btn-primary myfooterbtn" data-ng-disabled="isUnchanged()" data-ng-click="ok()" data-localize="确定"></button>
+		</footer>
+	</form>
+</div>

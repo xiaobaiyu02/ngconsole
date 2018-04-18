@@ -1,0 +1,26 @@
+<div class="modal-body padding-10">
+	<form class="form-horizontal ng-pristine ng-valid" name="addSubNetworkForm"  novalidate>
+		<fieldset>
+			<legend>
+				<header>
+					<span localize="编辑网络">编辑网络</span>
+					<button type="button" class="close" ng-click="close()">
+						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+					</button>
+				</header>
+			</legend>
+            <div class="form-group">
+                <label class="col-xs-3 control-label required" localize="名称">名称</label>
+                <div class="col-xs-7">
+                    <input class="form-control"  type="text" maxlength="20" data-ng-minlength="{{min_namelength}}" data-ng-maxlength="{{max_namelength}}" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}" data-ng-model="network.name" required>
+                </div>
+            </div>
+
+			<div class="col-md-12 text-right padding-10">
+				<button class="btn btn-primary" ng-show="!loadding" ng-disabled="!addSubNetworkForm.$valid || isUnchanged()" type="button" ng-click="ok()" localize="确定">确定</button>
+				<button class="btn btn-default" ng-show="!loadding" type="button" ng-click="$close()" localize="取消"> 取消</button>
+                <img ng-show="loadding" src="img/loadingtext.gif" width="24px" height="24px"/>
+			</div>
+		</fieldset>
+	</form>
+</div>

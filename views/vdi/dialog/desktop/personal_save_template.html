@@ -1,0 +1,172 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<!-- <h4 class="modal-title" localize="存为模板" data-ng-if="is_copy">存为模板</h4> -->
+	<h4 class="modal-title" localize="COPY_TEM" data-ng-if="is_copy || currentItem">模板另存为</h4>
+	<h4 class="modal-title" localize="保存模板" data-ng-if="saveTemp">保存模板</h4>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal ng-pristine ng-valid" name="saveTemplate" novalidate>
+		<div data-ng-if="currentItem" class="form-group">
+			<label class="col-xs-3 control-label" localize="桌面名">桌面</label>
+			<div class="col-xs-6">
+				<label class="control-label">{{currentItem.display_name}}</label>
+			</div>
+		</div>
+		<div class="form-group" data-ng-show="is_copy || currentItem">
+			<label class="col-xs-3 control-label required" localize="模板名称">模板名称</label>
+			<div class="col-xs-6">
+				<input class="form-control" type="text" ng-model="name" required data-ng-minlength="2" data-ng-maxlength="20" data-localize="LENGTH_LIMIT" param1="{{2}}" param2="{{20}}">
+			</div>
+		</div>
+		<div class="form-group" data-ng-show="is_copy || currentItem">
+			<label class="col-xs-3 control-label" data-localize="描述"></label>
+			<div class="col-xs-6">
+				<textarea class="form-control"
+					style="height: 60px;" 
+					rows="4"
+					name="desc"
+					data-localize="不能超过30位字符"
+					maxlength="30"
+					data-ng-maxlength="30"
+					data-ng-model="description"
+				>
+				</textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 control-label required" localize="模板类型">模板类型</label>
+			<div class="col-xs-6">
+				<label class="radio radio-inline">
+					<input type="radio" class="radiobox" name="style-0a" ng-model="type" value="1" required>
+					<span localize="教学模板">教学模板</span> 	
+				</label>
+				<label class="radio radio-inline">
+					<input type="radio" class="radiobox" name="style-0a" ng-model="type" value="2">
+					<span localize="个人模板">个人模板</span>  
+				</label>
+			</div>
+		</div>
+		<div class="form-group" data-ng-show="currentItem.virtual_type=='hyper-v'">
+			<label class="col-xs-3 control-label required" data-localize="账户名"></label>
+			<div class="col-xs-6">
+				<input class="form-control"
+					type="text"
+					ng-minlength="2" ng-maxlength="20"
+					ng-required='currentItem.virtual_type=="hyper-v"'
+					data-ng-init='username="vdi_user"'
+					data-ng-model="username">
+			</div>
+			<label style="position: relative;top: 6px;">
+			    <a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='temCopyOrRegisterTip' data-placement="bottom" data-html="true"><i class="fa fa-question-circle"></i></a>
+			</label>
+		</div>
+		<div class="form-group" data-ng-show="currentItem.virtual_type=='hyper-v'">
+			<label class="col-xs-3 control-label" ng-class="{'required':currentItem.virtual_type=='hyper-v'}" data-localize="密码"></label>
+			<div class="col-xs-6">
+				<input class="form-control"
+				type="password"
+				ng-required='currentItem.virtual_type=="hyper-v"'
+				data-ng-minlength="{{min_passwordLe}}" data-ng-maxlength="{{max_passwordLe}}" data-localize="LENGTH_LIMIT" param1="{{min_passwordLe}}" param2="{{max_passwordLe}}"
+				data-ng-model="userPassword"
+				data-ng-trim="false">
+			</div>
+		</div>
+		<div class="form-group" data-ng-show="currentItem.virtual_type=='hyper-v'">
+			<label class="col-xs-3 control-label" ng-class="{'required':currentItem.virtual_type=='hyper-v'}" data-localize="确认密码"></label>
+			<div class="col-xs-6">
+				<input class="form-control"
+				type="password"
+				ng-class="{'unequals':userPassword!==userPasswordConfirm}"
+				ng-required='currentItem.virtual_type=="hyper-v"'
+				data-ng-minlength="{{min_passwordLe}}" data-ng-maxlength="{{max_passwordLe}}" data-localize="LENGTH_LIMIT" param1="{{min_passwordLe}}" param2="{{max_passwordLe}}"
+				data-ng-model="userPasswordConfirm"
+				data-ng-disabled="!userPassword"
+				data-ng-trim="false">
+			</div>
+		</div>
+		<div class="form-group ">
+			<label class="col-xs-3 control-label required" data-localize="所有人"></label>
+			<div class="col-xs-6">
+				<select class="form-control" ng-model="owner" data-ng-options="owner.name for owner in owners track by owner.id" required></select>
+			</div>
+		</div>
+<!-- 		<div class="form-group" ng-if="currentItem.virtual_type=='hyper-v'">
+			<div class="col-xs-offset-3 col-xs-9">
+				<label class="checkbox-inline checkbox-align">
+					<input ng-disabled="host_loading" type="checkbox" class="checkbox style-0" ng-model="currentItem.enable_gpu" ng-change="getVirtualHost()">
+					<span localize="启用GPU加速"></span>
+				</label>
+			</div>
+		</div> -->
+		<div class="form-group ">
+				<label class="col-xs-3 control-label required" data-localize="宿主机"></label>
+				<div class="col-xs-6">
+					<select class="form-control" required data-ng-options="host.host_name for host in hosts track by host.host_uuid"
+						data-ng-disabled="host_loading"
+						data-ng-change="getNetwork(host)"
+						data-ng-model="host">
+					</select>
+				</div>
+				<div class="col-xs-2"><img src="img/loadingtext.gif" ng-if="host_loading" height="24" width="24" alt=""></div>
+		</div>
+		<div class="form-group ">
+			<label class="col-xs-3 control-label required" for="network" data-localize="网络"></label>
+			<div class="col-xs-6">
+				<select class="form-control" data-ng-options="network.name for network in networks track by network.id"
+					ng-disabled="net_loading"
+					data-ng-change="switchSubnet(network, this)"
+					data-ng-model="network"
+					required>
+				</select>
+			</div>
+			<div class="col-xs-2"><img src="img/loadingtext.gif" ng-if="net_loading" height="24" width="24" alt=""></div>
+		</div>
+		<div class="form-group ">
+			<label class="col-xs-3 control-label required" for="subnet" data-localize="子网"></label>
+			<div class="col-xs-6">
+				<select class="form-control" data-ng-disabled="network_loading" data-ng-options="subnet.name+' ('+ subnet.start_ip + '~' + subnet.end_ip +')' for subnet in subnets track by subnet.id"
+					data-ng-change="switchIps(subnet, this)"
+					data-ng-model="subnet">
+					<option value="" localize="不分配"></option>
+				</select>
+			</div>
+			<div class="col-xs-2"><img src="img/loadingtext.gif" ng-show="network_loading" height="24" width="24" alt=""></div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 control-label" data-localize="绑定IP"></label>
+			<div class="col-xs-6">
+				<div class="input-group">
+					<span class="input-group-addon" style="padding: 0 4px;">
+						<label style="margin-top: 3px;">
+							<select data-ng-model="bind_ip_type" ng-disabled='bind_ip_type.value=="none"' ng-options="type.name for type in types track by type.value" ng-change='bind_ip.value=nul'></select>
+						</label>
+					</span>
+					<label class="text classroomNet " data-ng-class="{bind_ip_able:bind_ip_type.value=='static' && subnets.length===0,bind_ip_disable:bind_ip_type.value!=='static' || subnets.length===0}" style="margin: 0;">
+						<input type="text" format-ip data-ng-if="bind_ip_type.value==='static'" start="subnet.start_ip" end="subnet.end_ip" class="form-control" ng-model="bind_ip.value" required>
+					</label>
+				</div>
+			</div>
+			<div class="col-xs-2"><img src="img/loadingtext.gif" ng-show="port_loading" height="24" width="24" alt=""></div>
+		</div>
+	</form>
+	<footer class="text-right">
+		<img data-ng-if="temCopy" src="./img/building.gif" width="24px">
+		<button ng-if="!submiting && !saveTemp" type="button" class="btn btn-primary" ng-class="{disabled:saveTemplate.$invalid || userPassword!==userPasswordConfirm}" data-ng-disabled="temCopy" ng-click="ok()" localize="确定">
+			确定
+		</button>
+		<button ng-if="saveTemp" type="button" class="btn btn-primary" ng-class="{disabled:!type}" ng-click="ok()" localize="确定">
+			确定
+		</button>
+		<button type="button" class="btn btn-default" ng-click="close()" localize="取消" ng-if="!submiting && !afterSubmiting">
+			取消
+		</button>
+<!-- 		<a ng-if="afterSubmiting && (type=='2')" class="btn btn-primary" localize="查看模板" href="#/template/personal">
+			查看模板
+		</a>
+		<a ng-if="afterSubmiting && (type=='1')" class="btn btn-primary" localize="查看模板" href="#/template/teach">
+			查看模板
+		</a> -->
+		<img src="img/loadingtext.gif" alt="" ng-if="submiting" class="loadingtext" style="width:24px;height:24px;"> 
+	</footer>
+</div>
+<script>setTimeout(function(){ pageSetUp(); })</script>

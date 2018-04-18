@@ -1,0 +1,1 @@
+{"interfaces": {"eth2": {"speed": "", "mac": "00:0c:29:83:1c:10", "type": "Ethernet", "cidr": [], "state": "DOWN"}, "eth1": {"speed": "", "mac": "00:0c:29:83:1c:06", "type": "Ethernet", "cidr": [], "state": "DOWN"}, "eth0": {"speed": "1000", "mac": "00:0c:29:83:1c:fc", "type": "Ethernet", "cidr": ["172.16.114.3/16"], "state": "UP"}}, "gateway": "172.16.0.1", "dns": []}

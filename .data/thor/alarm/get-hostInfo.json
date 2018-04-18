@@ -1,0 +1,52 @@
+{
+	"code": 0,
+	"result": [
+		{
+			"hosts": [
+				{
+					"host_name": "vdi188",
+					"host_uuid": "-1",
+					"ip": "172.16.201.188"
+				}
+			],
+			"name": "\u4e3b\u63a7",
+			"type": "control"
+		},
+		{
+			"hosts": [
+				{
+					"host_name": "WIN-TVIV6LJI8IE",
+					"host_uuid": "6ba063fe-82c9-4df6-b266-ac8f9fddb226",
+					"ip": "172.16.201.167",
+					"type": "hyper-v"
+				},
+				{
+					"host_name": "WIN-BR8BPUOCTOA",
+					"host_uuid": "68f72345-0bdc-4281-aa9d-a098b5d2441d",
+					"ip": "172.16.111.102",
+					"type": "hyper-v"
+				}
+			],
+			"name": "hyperv",
+			"type": "resource"
+		},
+		{
+			"hosts": [
+				{
+					"host_name": "vdiagent114",
+					"host_uuid": "10f534a5-b236-4490-a1af-d19fa86a19a9",
+					"ip": "172.16.153.114",
+					"type": "libvirt"
+				},
+				{
+					"host_name": "vdi188",
+					"host_uuid": "abf1887a-eef8-42aa-9a02-0057d8768435",
+					"ip": "172.16.201.188",
+					"type": "libvirt"
+				}
+			],
+			"name": "default",
+			"type": "resource"
+		}
+	]
+}

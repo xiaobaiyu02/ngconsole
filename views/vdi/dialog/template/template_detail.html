@@ -1,0 +1,123 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" localize="模板详情"></h4>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal templateDetail" style="height: 400px;overflow-y: scroll;overflow-x: hidden;">
+		<div class="form-group">
+			<label class="col-xs-4" data-localize="名称">名称</label>
+			<span class="col-xs-6">{{ data.name }}</span>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-4">CPU</label>
+			<span class="col-xs-6">{{ data.vcpus }}</span>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-4" data-localize="内存"></label>
+			<span class="col-xs-6">{{ data.ram/1024 || 0 }} GB</span>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-4" data-localize="系统盘"></label>
+			<span class="col-xs-6">{{ data.system_alloc_disk }} GB</span>
+		</div>
+		<div class="form-group" data-ng-if="data.data_alloc_disk>1">
+			<label class="col-xs-4" data-localize="数据盘"></label>
+			<span class="col-xs-6">{{ data.data_alloc_disk }} GB</span>
+		</div>
+		<div class="form-group" data-ng-if="data.data_alloc_disk_2>1">
+			<label class="col-xs-4" data-localize="数据盘"></label>
+			<span class="col-xs-6">{{ data.data_alloc_disk_2 }} GB</span>
+		</div>
+<!-- 		<div class="form-group" data-ng-if="data.virtual_type == 'hyper-v'">
+			<label class="col-xs-4"  data-localize="GPU加速"></label>
+			<span class="col-xs-6" data-ng-if="data.enable_gpu" data-localize="已启用"></span>
+			<span class="col-xs-6" data-ng-if="!data.enable_gpu" data-localize="未启用"></span>
+		</div> -->
+		<hr/>
+		<div class="form-group">
+			<label class="col-xs-4" data-localize="类型"></label>
+			<span class="col-xs-6">{{ data.virtual_type }}</span>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-4" data-localize="宿主机"></label>
+			<span class="col-xs-6">{{ data.host }}</span>
+		</div>
+		<div class="form-group" data-ng-if="data.inst_volumes.system_image_base.imgs.length">
+			<div data-ng-repeat="item in data.inst_volumes.system_image_base.imgs">
+				<div class="col-xs-12">
+					<strong class="col-xs-4 text-right" data-localize="系统盘镜像"></strong>
+				</div>
+				<div class="col-xs-12">
+					<label class="col-xs-4 text-right" data-localize="位置"></label>
+					<span class="col-xs-8">{{ item.location }}</span>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="form-group" data-ng-if="data.inst_volumes.data_image_base.imgs.length">
+			<div data-ng-repeat="item in data.inst_volumes.data_image_base.imgs">
+				<div class="col-xs-12">
+					<strong class="col-xs-4 text-right" data-localize="数据盘镜像"></strong>
+				</div>
+				<div class="col-xs-12">
+					<label class="col-xs-4 text-right" data-localize="位置"></label>
+					<span class="col-xs-8">{{ item.location }}</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group" data-ng-if="data.inst_volumes.system_image.imgs.length">
+			<div data-ng-repeat="item in data.inst_volumes.system_image.imgs">
+				<div class="col-xs-12">
+					<strong class="col-xs-4 text-right" data-localize="系统盘"></strong>
+				</div>
+				<div class="col-xs-12">
+					<label class="col-xs-4 text-right" data-localize="位置"></label>
+					<span class="col-xs-8">{{ item.location }}</span>
+				</div>
+			</div>
+		</div>
+		<div class="form-group" data-ng-if="data.inst_volumes.data_image.imgs.length">
+			<div data-ng-repeat="item in data.inst_volumes.data_image.imgs">
+				<div class="col-xs-12">
+					<strong class="col-xs-4 text-right" data-localize="数据盘"></strong>
+				</div>
+				<div class="col-xs-12">
+					<label class="col-xs-4 text-right" data-localize="位置"></label>
+					<span class="col-xs-8">{{ item.location }}</span>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-4" data-localize="网络"></label>
+			<span class="col-xs-6">{{ data.network.name }}</span>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-4" data-localize="子网"></label>
+			<span class="col-xs-6" data-ng-if="data.subnet">{{ data.subnet }}</span>
+			<span class="col-xs-6" data-ng-if="!data.subnet" data-localize="不分配"></span>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-4" data-localize="绑定IP"></label>
+			<span class="col-xs-6" data-ng-if="data.nets[0].ip_address">{{ data.nets[0].ip_address }}</span>
+			<span class="col-xs-6" data-ng-if="!data.nets[0].ip_address" data-localize="不分配"></span>
+		</div>
+		<hr/>
+		<div class="form-group">
+			<label class="col-xs-4" data-localize="关联桌面数"></label>
+			<span class="col-xs-6">{{ data.instance_count }}</span>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-4" data-localize="创建者"></label>
+			<span class="col-xs-6">{{ data.owner_desc }}</span>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-4" data-localize="创建时间"></label>
+			<span class="col-xs-6">{{ data.created_at | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+		</div>
+	</form>
+	<footer class="text-right" style="margin-top: 10px;">
+		<button type="button" class="btn btn-default" ng-click="close()" localize="关闭"></button>
+	</footer>
+</div>

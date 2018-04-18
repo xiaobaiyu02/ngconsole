@@ -1,0 +1,29 @@
+{
+    "code": 0,
+    "result": [
+        {
+            "allocation_pools": [
+                {
+                    "end": "172.16.151.250",
+                    "start": "172.16.151.20"
+                }
+            ],
+            "cidr": "172.16.0.0/16",
+            "dns_nameservers": [
+                "114.114.115.115",
+                "202.103.24.68"
+            ],
+            "enable_dhcp": false,
+            "end_ip": "172.16.151.250",
+            "gateway_ip": "172.16.0.1",
+            "host_routes": [],
+            "id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c",
+            "ip_version": 4,
+            "name": "default",
+            "netmask": "255.255.0.0",
+            "network_id": "2f4d7f32-10f1-4fac-ba9e-f8e3524dd0d0",
+            "start_ip": "172.16.151.20",
+            "tenant_id": "6f51cee9f97f4a79a74816b37af0f6d1"
+        }
+    ]
+}

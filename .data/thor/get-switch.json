@@ -1,0 +1,21 @@
+{
+    "code": 0,
+    "result": {
+        "default": [
+            {
+                "dev": "eth0",
+                "host_id": "abf1887a-eef8-42aa-9a02-0057d8768435",
+                "hostname": "vdi188",
+                "status": "active"
+            }
+        ],
+        "hyperv": [
+            {
+                "dev": "",
+                "host_id": "24de45c8-c5c2-4418-9430-413e4355b28b",
+                "hostname": "XBo-hyperv-01",
+                "status": "active"
+            }
+        ]
+    }
+}

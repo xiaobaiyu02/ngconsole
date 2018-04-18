@@ -1,0 +1,103 @@
+<div class="container-fluid" ng-controller="webRegisterController as registerCtrl">
+      <section class="loginWrap">
+      <!-- <div class="logoWrap"><img src="img/logo.png"></div> -->
+      <oem-image></oem-image>
+      <h3 class="topBar">
+        <a class="goback" style="text-decoration: none;cursor: pointer;" ng-click="registerCtrl.goback()"><i class="icon icon-arm-left"></i></a>
+        <div localize="修改密码"></div>
+      </h3>
+          <div class="row formWrap">
+              <div class="loading" ng-if="registerCtrl.loading"><span class="loadingImg"></span></div>
+              <form class="form-horizontal formLeft col-xs-9 col-sm-10 col-md-10 col-lg-10" role="form" name="webRegisterForm" style="padding:50px 0;">
+                <div class="form-group">
+                  <label for="username" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label control-label-font" localize="用户名"></label>
+                  <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                    <input  type="text" 
+                          class="form-control" 
+                          name="username"
+                          ng-trim="true"
+                          minlength="2" 
+                          maxlength="32" 
+                          localize="2~32位字符"
+                          required
+                          ng-minlength="2"
+                          ng-maxlength="32"
+                          data-ng-pattern="/^[^\u4e00-\u9fa5]{1,32}$/i"
+                          ng-model="registerCtrl.userInfo.username"
+                          ng-class="{false:'myRight',true:'myWarning'}[!webRegisterForm.username.$pristine && webRegisterForm.username.$invalid]" 
+                    >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="password" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label control-label-font" localize="旧密码"></label>
+                  <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                    <input type="password"
+                          class="form-control" 
+                          name="old_password" 
+                          localize="6~20位字符"
+                          minlength="6" 
+                          maxlength="20"
+                          required
+                          ng-minlength="6"
+                          ng-maxlength="20"
+                          data-ng-pattern="/^[^\u4e00-\u9fa5]{5,20}$/i"
+                          ng-model="registerCtrl.userInfo.old_password"
+                          ng-class="{false:'myRight',true:'myWarning'}[!webRegisterForm.old_password.$pristine && webRegisterForm.old_password.$invalid]"
+                      >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="password" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label control-label-font" localize="新密码"></label>
+                  <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                    <input type="password"
+                          class="form-control" 
+                          name="new_password" 
+                          localize="6~20位字符"
+                          minlength="6" 
+                          maxlength="20"
+                          required
+                          ng-trim="true"
+                          ng-minlength="6"
+                          ng-maxlength="20"
+                          data-ng-pattern="/^[^\u4e00-\u9fa5]{5,20}$/i"
+                          ng-model="registerCtrl.userInfo.new_password"
+                          ng-class="{false:'myRight',true:'myWarning'}[!webRegisterForm.new_password.$pristine && webRegisterForm.new_password.$invalid]"
+                      >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="password" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label control-label-font" localize="确认密码"></label>
+                  <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                    <input type="password"
+                          class="form-control" 
+                          name="confirmPsd" 
+                          localize="6~20位字符"
+                          minlength="6" 
+                          maxlength="20"
+                          required
+                          ng-trim="true"
+                          ng-minlength="6"
+                          ng-maxlength="20"
+                          data-ng-pattern="/^[^\u4e00-\u9fa5]{5,20}$/i"
+                          ng-model="registerCtrl.userInfo.confirmPsd"
+                          ng-keydown="registerCtrl.ctrlSend($event)"
+                          ng-class="{false:'myRight',true:'myWarning'}[!webRegisterForm.confirmPsd.$pristine && webRegisterForm.confirmPsd.$invalid]"
+                      >
+                  </div>
+                </div>
+                <div class="form-group" ng-show="registerCtrl.tipsShow" style="text-align: center;">
+                   <label class="col-sm-offset-3 tips col-md-offset-3 col-sm-7 col-md-7 col-lg-7">{{registerCtrl.registerTips}}</label>
+                </div>
+              </form>
+              <div class="loginBtn formRight col-xs-3 col-sm-2 col-md-2 col-lg-2" style="padding-left: 0;">
+                <a class="btn btn-arrow-login"
+                    style="text-decoration: none;" 
+                    ng-click="registerCtrl.webRegister()"
+                    ng-disabled="webRegisterForm.$invalid"
+                    >
+                  <i class="icon icon-arm-rihgt"></i>
+                </a>
+              </div>
+          </div>
+      </section>
+</div>

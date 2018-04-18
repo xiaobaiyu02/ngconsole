@@ -1,0 +1,41 @@
+{
+    "code": 0,
+    "result": [
+        {
+            "cpu_num": 2,
+            "id": 5,
+            "local_gb": 10,
+            "local_gb1": 0,
+            "memory_mb": 2048,
+            "name": "1111",
+            "system_gb": 20
+        },
+        {
+            "cpu_num": 2,
+            "id": 3,
+            "local_gb": 0,
+            "local_gb1": 0,
+            "memory_mb": 4096,
+            "name": "xbo-test",
+            "system_gb": 20
+        },
+        {
+            "cpu_num": 2,
+            "id": 2,
+            "local_gb": 0,
+            "local_gb1": 0,
+            "memory_mb": 3072,
+            "name": "123",
+            "system_gb": 40
+        },
+        {
+            "cpu_num": 2,
+            "id": 1,
+            "local_gb": 0,
+            "local_gb1": 0,
+            "memory_mb": 2048,
+            "name": "default",
+            "system_gb": 20
+        }
+    ]
+}

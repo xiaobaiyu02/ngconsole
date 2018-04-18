@@ -1,0 +1,12 @@
+{
+	"code": 0,
+	"result": {
+		"\u4e3b\u63a7/172.16.201.188": [
+			{
+				"node_uuid": "046d0087-3307-412e-9dfa-2abda66b48dc",
+				"resource_pool_name": "default",
+				"resource_pool_uuid": "7d2cdd1f-de04-4a3b-b583-d188dbdd1d53"
+			}
+		]
+	}
+}

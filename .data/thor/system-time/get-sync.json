@@ -1,0 +1,15 @@
+{
+	"code": 0,
+	"result": [
+		"cn.pool.ntp.org",
+		"hk.pool.ntp.org",
+		"jp.pool.ntp.org",
+		"sg.pool.ntp.org",
+		"time.nist.gov",
+		"time-a.nist.gov",
+		"time-b.nist.gov",
+		"time-nw.nist.gov",
+		"time.windows.com"
+	],
+	"used": "cn.pool.ntp.org"
+}

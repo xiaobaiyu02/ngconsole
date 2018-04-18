@@ -1,0 +1,215 @@
+<section id='widget-grid'>
+	<div class='modal-content'>
+		<div class='modal-header'>
+			<button type='button' class='close' data-ng-click='close()'>
+				<span aria-hidden='true'>×</span><span class='sr-only'>Close</span>
+			</button>
+			<h4 class='modal-title' id='mySmallModalLabel' data-localize="配置属性"></h4>
+		</div>
+		<div class='modal-body'>
+			<form class='form-horizontal' name="modifyTemplate" method="post" novalidate>
+				<div class="form-group">
+					<label class="col-xs-2 control-label required" data-localize="模板名"></label>
+					<div class="col-xs-8">
+						<input class="form-control"
+							type="text"
+							name="name"
+							required
+							data-ng-model="data.name"
+							data-ng-minlength="{{ min_namelength }}"
+							data-ng-maxlength="{{ max_namelength }}"
+							data-ng-trim="true"
+						>
+					</div>
+					<label class="col-xs-2 note" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}"></label>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 control-label" data-localize="描述"></label>
+					<div class="col-xs-8">
+						<textarea class="form-control"
+							style="height: 60px;" 
+							rows="4"
+							name="desc"
+							data-localize="不能超过30位字符"
+							maxlength="30"
+							data-ng-maxlength="30"
+							data-ng-model="data.description"
+						>
+						</textarea>
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-xs-2 control-label" for="network" data-localize="网络"></label>
+					<div class="col-xs-8">
+						<select class="form-control" data-ng-options="network.name for network in networks track by network.id"
+							data-ng-change="switchSubnet(data.network)"
+							data-ng-model="data.network">
+						</select>
+					</div>
+				</div>
+				<div class="form-group ">
+					<label class="col-xs-2 control-label" for="subnet" data-localize="子网"></label>
+					<div class="col-xs-8">
+						<select class="form-control" data-ng-disabled="network_loading" data-ng-options="subnet.name+' ('+ subnet.start_ip + '~' + subnet.end_ip +')' for subnet in data.subnets track by subnet.id"
+							data-ng-change="switchIps(data.subnet)"
+							data-ng-model="data.subnet">
+							<option value="" data-localize="不分配"></option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 control-label" data-localize="设置静态IP"></label>
+<!-- 					<div class="col-xs-8">
+						<select class="form-control" data-ng-options="ip for ip in data.band_ips"  data-ng-disabled="!data.subnet || data.subnets.length===0 || bind_ip_loading"
+							data-ng-model="data.band_ip">
+							<option value="" data-localize="不分配"></option>
+						</select>
+					</div> -->
+					<div class="col-xs-8">
+						<div class="input-group">
+							<span class="input-group-addon" style="padding: 0 4px;">
+								<label style="margin-top: 3px;">
+									<select data-ng-model="data.bind_ip_type" ng-disabled='data.bind_ip_type.value=="none"' ng-options="type.name for type in types track by type.value" ng-change='data.band_ip=nul'></select>
+								</label>
+							</span>
+							<label class="text classroomNet " data-ng-class="{bind_ip_able:data.bind_ip_type.value=='static' && data.subnets.length===0,bind_ip_disable:data.bind_ip_type.value!=='static' || data.subnets.length===0}" style="margin: 0;">
+<!-- 								<select class="form-control" disabled data-ng-if="data.bind_ip_type.value==='static' && data.band_ips[0]=='无可用IP'" data-ng-options="ip for ip in data.band_ips"  ng-init="data.band_ip=data.band_ips[0]"
+									data-ng-model="data.band_ip">
+								</select> -->
+								<input type="text" format-ip data-ng-if="data.bind_ip_type.value==='static'" start="data.subnet.start_ip" end="data.subnet.end_ip" class="form-control" ng-model="data.band_ip" required>
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-2 control-label" data-localize="CPU"></label>
+					<div class="col-xs-8 btn-group">
+				        <label class="btn btn-default" data-ng-model="data.vcpus" btn-radio="1">1</label>
+				        <label class="btn btn-default" data-ng-model="data.vcpus" btn-radio="2">2</label>
+				        <label class="btn btn-default" data-ng-model="data.vcpus" btn-radio="3">3</label>
+				        <label class="btn btn-default" data-ng-model="data.vcpus" btn-radio="4">4</label>
+				        <label class="btn btn-default" data-ng-model="data.vcpus" btn-radio="8">8</label>
+					    <div class="input-group my_input_group">
+					      <!-- <input class="form-control" type="number" name="vcpus"
+								required
+								data-ng-model="data.vcpus"
+								data-ng-pattern="/^\s*([1-8])\s*$/"
+								data-ng-trim="false"
+					      > -->
+					      <div class="input-number-wraper-sm"><input ui-input-number step="1" max="32" min="1" ng-model="data.vcpus" data-ng-trim="false" required></div>
+					      <span></span>
+					      <div class="input-group-addon input-group-addon-disk" data-localize="核"></div>
+					    </div>
+					</div>
+					<label class="col-xs-1 note hardwarenote">1~32<span data-localize="核"></span></label>
+			    </div>
+
+				<div class="form-group">
+					<label class="col-xs-2 control-label" data-localize="内存"></label>
+					<div class="btn-group col-xs-8">
+				        <label class="btn btn-default" data-ng-model="data.ram" btn-radio="1.5">1.5GB</label>
+				        <label class="btn btn-default" data-ng-model="data.ram" btn-radio="2">2GB</label>
+				        <label class="btn btn-default" data-ng-model="data.ram" btn-radio="2.5">2.5GB</label>
+			    		<label class="btn btn-default" data-ng-model="data.ram" btn-radio="3">3GB</label>
+		    			<div class="input-group my_input_group">
+					     <!--  <input class="form-control" type="number" name="ram"
+								required
+								data-ng-model="data.ram"
+								data-ng-pattern="/^\s*([1-8]|1.5|2.5|3.5|4.5|5.5|6.5|7.5)\s*$/"
+								data-ng-trim="false"
+					      > -->
+						      <div class="input-number-wraper-sm">
+						     	 <input ui-input-number step="0.5" max="64" min="1" ng-model="data.ram" data-ng-trim="false" required>
+						      </div>
+						      <span></span>
+						      <div class="input-group-addon input-group-addon-disk">GB</div>
+					    </div>
+			    	</div>
+			    	<label class="col-xs-1 note hardwarenote">1-64GB</label>
+			    </div>
+<!-- 		    	<div class="form-group">
+		    		<label class="col-xs-2 control-label" data-localize="系统盘" style="white-space: nowrap;"></label>
+		    		<div class="col-xs-8">
+		    			<div class="btn-group" style="width:100%;">
+		    		        <label class="btn btn-default" data-ng-model="data.system_alloc_disk" btn-radio="10">10GB</label>
+		    		        <label class="btn btn-default" data-ng-model="data.system_alloc_disk" btn-radio="20">20GB</label>
+		    		        <label class="btn btn-default" data-ng-model="data.system_alloc_disk" btn-radio="30">30GB</label>
+		    		        <label class="btn btn-default" data-ng-model="data.system_alloc_disk" btn-radio="40">40GB</label>
+		    			    <div class="input-group my_input_group">
+		    			      <div class="input-number-wraper-sm"><input ui-input-number step="1" max="100" min="10" ng-model="data.system_alloc_disk" data-ng-trim="false" required></div>
+		    			      <span></span>
+		    			      <div class="input-group-addon input-group-addon-disk">GB</div>
+		    			    </div><label class="col-xs-2 note hardwarenote myhardwarenote">10-100GB</label>
+		    			</div>
+		    			
+		    			<div class="btn-group datapan" style="width:100%;margin: 15px 0 0 0"  data-ng-if="data.data_alloc_disk">
+		    				<span data-localize="数据盘" class="mydatapan"></span>
+		    		        <label class="btn btn-default" data-ng-model="data.data_alloc_disk" btn-radio="5">5GB</label>
+		    		        <label class="btn btn-default" data-ng-model="data.data_alloc_disk" btn-radio="10">10GB</label>
+		    		        <label class="btn btn-default" data-ng-model="data.data_alloc_disk" btn-radio="15">15GB</label>
+		    		        <label class="btn btn-default" data-ng-model="data.data_alloc_disk" btn-radio="20">20GB</label>
+		    			    <div class="input-group my_input_group">
+			    		      	<div class="input-number-wraper-sm"><input ui-input-number step="1" max="500" min="1" ng-model="data.data_alloc_disk" data-ng-trim="false" required></div>
+			    				<span></span>	
+			    				<div class="input-group-addon input-group-addon-disk">GB</div>
+		    			    </div>
+		    			    <label class="col-xs-2 note hardwarenote myhardwarenote">1-500GB</label>
+		    			</div>
+
+		    			<div class="btn-group datapan" style="width:100%;margin: 15px 0 0 0" data-ng-if="data.data_alloc_disk_2">
+		    				<span data-localize="数据盘" class="mydatapan"></span>
+		    		        <label class="btn btn-default" data-ng-model="data.data_alloc_disk_2" btn-radio="5">5GB</label>
+		    		        <label class="btn btn-default" data-ng-model="data.data_alloc_disk_2" btn-radio="10">10GB</label>
+		    		        <label class="btn btn-default" data-ng-model="data.data_alloc_disk_2" btn-radio="15">15GB</label>
+		    		        <label class="btn btn-default" data-ng-model="data.data_alloc_disk_2" btn-radio="20">20GB</label>
+		    			    <div class="input-group my_input_group">
+			    		      	<div class="input-number-wraper-sm"><input ui-input-number step="1" max="500" min="1" ng-model="data.data_alloc_disk_2" data-ng-trim="false" required></div>
+			    				<span></span>	
+			    				<div class="input-group-addon input-group-addon-disk">GB</div>
+		    			    </div>
+		    			    <label class="col-xs-2 note hardwarenote myhardwarenote">1-500GB</label>
+		    			</div>
+		    				
+		    			<div style="margin-top: 15px;" data-ng-hide="old_data_alloc_disk && old_data_alloc_disk_2">
+		    				<a href="javascript:void(0);" class="btn btn-default txt-color-blueLight" data-ng-click="addbtndisk()"><i class="fa fa-plus fa-lg"></i></a>
+		    				<a href="javascript:void(0);" class="btn btn-default txt-color-blueLight" data-ng-click="minusbtndisk()"><i class="fa fa-minus fa-lg"></i></a>
+		    				<span class="control-label">&nbsp;
+		    					<span data-localize="增加">增加</span><span data-ng-if="data.btndisks.length==1">/</span><span data-localize="删除">删除</span><span data-localize="数据盘"></span>&nbsp;&nbsp;
+		    				</span>
+		    			</div>
+		    		</div>
+		        </div> -->
+			    <!-- <div class="form-group"> -->
+			    	<!-- <label class="col-xs-2 control-label"></label> -->
+			    	<!-- <div data-localize="TEM_CONFIG_TIP" class="col-xs-8" style="color: #969696;"></div> -->
+				<!-- </div> -->
+				<div class="form-group" data-ng-if="virtual_type=='kvm'">
+			    	<label class="col-xs-2 control-label"></label>
+			    	<label class="checkbox-inline checkbox-align">
+			    		<input class="checkbox ng-pristine ng-valid" type="checkbox" name="open" data-ng-model="data.enable_gpu" data-ng-disabled='disabled_gpu'>
+			    		<span data-localize="显卡虚拟化"></span>
+			    	</label>
+			    </div>
+			    <div class="form-group" data-ng-if="virtual_type=='hyper-v'">
+			    	<label class="col-xs-2 control-label"></label>
+			    	<label class="checkbox-inline checkbox-align">
+			    		<input class="checkbox ng-pristine ng-valid" type="checkbox" name="open" data-ng-model="data.enable_gpu" data-ng-disabled='disabled_gpu'>
+			    		<span data-localize="显卡直通"></span>
+			    	</label>
+			    	<label style="position: relative;top: 3px;" data-ng-if="virtual_type=='hyper-v'">
+			    	    <a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='GPU_THROUGH_TIP' data-placement="right" data-html="true"><i class="fa fa-question-circle"></i></a>
+			    	</label>
+			    </div>
+				<footer class='text-right'>
+					<img src="img/loadingtext.gif" alt="" ng-if="submit_loading" class="loadingtext" style="width:24px;height:24px;">
+					<button data-ng-if="!submit_loading" class='btn btn-primary' data-ng-click='ok()' data-ng-disabled="modifyTemplate.$invalid || isUnchanged() || !data.network || network_loading" data-localize="确定"></button>
+					<!-- <button class='btn btn-default' data-ng-click='close()' style='margin-left:5px;' data-localize="取消"></button> -->
+					<button data-ng-if="!submit_loading" name="reset" class="btn btn-default"
+								data-ng-click="reset()"
+								data-ng-disabled="isUnchanged()" data-localize="重置"></button>
+				</footer>
+			</form>
+		</div>
+	</div>
+</section>
+<script>setTimeout(function(){ pageSetUp(); })</script>

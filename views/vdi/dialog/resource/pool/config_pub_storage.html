@@ -1,0 +1,24 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" localize="配置公共存储"></h4>
+</div>
+<div class="modal-body">
+	<fieldset>
+		<div class="form-group" ng-if="loading">
+			<label class="col-sm-12 control-label"><img  ng-src="img/loadingtext.gif" alt="" width="24px" height="24px"></label>
+		</div>
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-3 control-label" localize="配置公共存储设备"></label>
+				<div class="col-sm-7">
+					<select class="form-control" data-ng-model="pubLun" data-ng-options="lun.name for lun in luns">
+					</select>
+				</div>
+			</div>
+			<footer class="text-right">
+				<button type="button" class="btn btn-primary" ng-click="ok()" localize="确定"></button>
+				<button type="button" class="btn btn-default" ng-click="close()" localize="取消"></button>
+			</footer>
+		</form>
+	</fieldset>
+</div>

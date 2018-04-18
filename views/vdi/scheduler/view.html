@@ -1,0 +1,298 @@
+<style>
+.vdi_scheduler_week_button{
+	position:relative;
+	padding:20px 0;
+	margin:4px 4px 0 0;
+	text-align:center;
+	width:85px;
+}
+.vdi_scheduler_week_button.selected{
+	background:#456b7b;
+}
+.vdi_scheduler_week_button label.checkbox{
+	position:absolute;
+	top:0;
+	left:3px;
+}
+.vdi_scheduler_week_button label.checkbox i{
+	width:13px;
+	height:13px;
+	display:none;
+}
+.vdi_scheduler_week_button:hover label.checkbox i,
+.vdi_scheduler_week_button label.checkbox input[type="checkbox"]:checked+i{
+	display:block;
+}
+.vdi_scheduler_week_button label.checkbox i::after{
+	font-size:12px;
+	top:-2px;
+	left:-1px;
+}
+.scheduler_label{
+	margin: 0 30px 4px 0;
+}
+table.scheduler{
+	background:#999;
+}
+table.scheduler caption{
+	display:none;
+}
+table.scheduler td, table.scheduler th{
+	background:#fff;
+	font-size:12px/18px;
+}
+table.scheduler th{
+	text-align:center;
+	padding:4px 8px;
+}
+.class_hour_list{
+	margin:0;
+	padding:0;
+	list-style-position:inside;
+	list-style-type:none;/*decimal-leading-zero;*/
+	text-align:center;
+}
+.class_hour_list.no_index{
+	list-style-type:none;
+}
+.class_hour_list li{
+	border-top:1px solid #999;
+	height:48px;
+	line-height:48px;
+}
+.class_hour_list li:first-child{
+	border-top:0 none;
+}
+.class_hour_cell.active{
+	background:red;
+}
+.class_day{
+	position:relative;
+}
+.class_day .scene_in_day{
+	position:absolute;
+	top:0;left:0;
+	bottom:0;right:0;
+	transform:translate(0,0);
+	-moz-transform:translate(0,0);
+	-ms-transform:translate(0,0);
+	-webkit-transform:translate(0,0);
+}
+.scene_in_day .scene_in_day_item{
+	position:absolute;
+	width:100%;
+}
+.scene_in_day_item>.item_body{
+	margin:4px;
+	background:transparent;
+	height:100%;
+	border-radius:4px;
+	position:relative;
+}
+.scene_in_day_item>.item_body .item_dnd_body{
+	height:100%;
+	text-align:center;
+	padding:10px;
+	color:#fff;
+	overflow:hidden;
+	line-height:24px;
+	word-wrap:break-word;
+	word-break:break-word;
+}
+.scene_in_day_item.modifiable>.item_body .item_dnd_body{
+	cursor:move;
+}
+.scene_in_day_item>.item_body .item_dnd_header,
+.scene_in_day_item>.item_body .item_dnd_footer{
+	cursor:n-resize;
+	height:8px;
+	position:absolute;
+	width:100%;
+	background:rgba(255,255,255,.6);
+	display:none;
+}
+.scene_in_day_item.modifiable>.item_body .item_dnd_header,
+.scene_in_day_item.modifiable>.item_body .item_dnd_footer{
+	display:block;
+}
+.scene_in_day_item>.item_body .item_dnd_header:hover,
+.scene_in_day_item>.item_body .item_dnd_footer:hover{
+	background:rgba(255,255,255,.9);
+}
+.scene_in_day_item>.item_body .item_dnd_header{
+	top:0;
+}
+.scene_in_day_item>.item_body .item_dnd_footer{
+	bottom:0;
+}
+.scene_in_day_item>.item_body .item_remove{
+	position:absolute;
+	top:-2px;
+	right:-2px;
+	font-size:14px;
+	width:18px;
+	text-align:center;
+	height:18px;
+	background:#c00;
+	color:#fff;
+	line-height:18px;
+	border-radius:50%;
+	box-shadow:0 0 1px #000;
+	cursor:pointer;
+	display:none;
+}
+.scene_in_day_item.modifiable:hover>.item_body .item_remove{
+	display:block;
+}
+.scene_item{
+/*	border:1px solid #666;
+	border-radius:4px;
+*/	margin:0 8px 8px 0;
+	cursor:move;
+	width:100%;
+	height:36px;
+	text-align:center;
+	line-height:36px;
+	-user-select:none;
+	color:#fff;
+	overflow:hidden;
+	word-wrap:break-word;
+	word-break:break-word;
+}
+.disabled .scene_item{
+	cursor:default;
+}
+.scheduler_canvas{
+
+}
+.scheduler_dnd_canvas{
+	position:fixed;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	background:transparent;
+	z-index:99999;
+}
+.scheduler_dnd_canvas .dnd_handler{
+	position:absolute;
+	opacity:.9;
+}
+.scheduler_dnd_canvas .dnd_masker{
+	width:100%;
+	height:100%;
+	position:relative;
+	background:transparent;
+	cursor:move;
+}
+.btn.disabled{
+	opacity:.8!important;
+}
+</style>
+<div ng-show="weeks.length">
+	<div class="toolbar">
+		<div class="col-xs-8 col-md-8 col-lg-8 col-sm-8">
+			<div class="inline-goup">
+				<label data-localize='教室'></label>
+				<label>
+					<select class="input-sm" ng-disabled="editMode" ng-model="class" ng-change="classChange()" ng-options="class.name for class in classes track by class.id"></select>
+				</label>
+			</div>
+		</div>
+		<div class="col-xs-4 col-md-4 col-lg-4 col-sm-4 text-right">
+			<div class="btn-group">
+				<button class="btn btn-default" ng-class="{disabled: editMode}" ng-click="setting()" data-localize="课时设置"></button>
+			</div>
+		</div>
+	</div>
+	<!--  -->
+	<div data-scheduler-canvas>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<form class="smart-form col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div>
+					<div class="btn btn-default vdi_scheduler_week_button"
+						ng-model="$parent.currentWeek"
+						btn-radio="week"
+						ng-repeat="week in weeks track by $index"
+						ng-class="{disabled: editMode}"
+						style="background:{{ week.current ? '#cde0c4' : '' }}"
+					><label class="checkbox" onclick="arguments && arguments[0] && arguments[0].stopPropagation()"><input ng-model="week.checked" ng-checked="week.checked" type="checkbox"><i></i></label>
+						<div data-localize='{{ week.name }}'></div>
+						<small>{{ week.start | date:"MM/dd" }} - {{ week.end - 864e5 | date:"MM/dd" }}</small>
+					</div>
+				</div>
+				<div>
+					<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style='margin-top:6px;'>
+						<div class="inline-group">
+							<label class="scheduler_label"><i></i><input class="checkbox" ng-disabled="editMode" ng-model="weekCheckAll" ng-checked="checkAllWeeks()" ng-click="checkAllWeeks(weekCheckAll)" type="checkbox"><span data-localize='全选'></span></label>
+							<label class="scheduler_label"><i></i><input class="checkbox" ng-disabled="editMode" ng-model="weekCheckOdd" ng-checked="checkAllOddWeeks()" ng-click="checkAllOddWeeks(weekCheckOdd)" type="checkbox"><span data-localize='单周'></span></label>
+							<label class="scheduler_label"><i></i><input class="checkbox" ng-disabled="editMode" ng-model="weekCheckEven" ng-checked="checkAllEvenWeeks()" ng-click="checkAllEvenWeeks(weekCheckEven)" type="checkbox"><span data-localize='双周'></span></label>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 row" style="padding:8px 0;">
+				<div class="col-sm-5 col-xs-5 col-md-5 col-lg-5">
+					<button ng-disabled="editMode" class="btn btn-danger" ng-click="clearAll()" data-localize='清除全部课表'></button>
+				</div>
+				<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 text-right">
+					<button ng-show="editMode" class="btn btn-success" data-ng-click="save()" data-localize='保存修改'></button>
+					<button
+						class="btn btn-default"
+						ng-model="editMode"
+						btn-checkbox="editMode"
+						ng-class="{disabled: !checkSomeWeeks(true)}"
+						ng-hide="editMode"
+						ng-click="enableEditMode()" data-localize='编辑勾选的周次'
+					></button>
+					<button
+						class="btn btn-default"
+						ng-show="editMode"
+						ng-click="disableEditMode()" data-localize='取消编辑'
+					></button>
+				</div>
+			</div>
+			<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 row">
+				<table ng-show="currentWeek" class="scheduler" width="100%" cellpadding="1" cellspacing="1" border="1">
+					<caption data-localize='编辑模式'></caption>
+					<thead>
+						<tr>
+							<th width="120"></th>
+							<th width="128" class="day" style="background:{{ day.current ? '#cde0c4' : '' }}" data-ng-repeat="day in currentWeek.days"><span data-localie="{{ day.key }}" data-localize="{{ day.name }}"></span></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<ol class="class_hour_list">
+									<li data-ng-repeat="classHour in classHours">
+										<div style="line-height:24px">
+											<b data-localize='CLASS' param1="{{classHour.index}}"></b><br>
+											<small>{{ classHour.start | date:"HH:mm" }} - {{ classHour.end | date:"HH:mm" }}</small>
+										</div>
+									</li>
+								</ol>
+							</td>
+							<td data-ng-repeat="day in currentWeek.days">
+								<schedulerday data-day="day.key" data-modifiable="editMode" data-hours="classHours" data-scenes="day.scenes"></schedulerday>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div ng-hide="currentWeek" class="well text-center" data-localize="OUTOFFSCHULE"></div>
+			</div>
+			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" ng-class="{disabled: !editMode}">
+				<scheduleritems>
+					<scheduleritem data-scene="scene" data-modifiable="editMode" data-ng-repeat="scene in $parent.scenes | filter:{ pool: $parent.class.id }:true "></scheduleritem>
+				</scheduleritems>
+			</div>
+		</div>
+	</div>
+</div>
+<div ng-hide="weeks.length || true">
+	<p data-localize="NOWEEK" class="text-center"></p>
+	<div class="text-center"><button class="btn btn-lg btn-default" ng-class="{disabled: editMode}" ng-click="setting()" data-localize="课时设置"></button></div>
+</div>
+<div class="col-xs-12" style="height:45px;"></div>
+<!--p style="height:800px;">{{ start_time }},<div ng-repeat="date in dates">{{ date.start | date:"yyyy-MM-dd HH:mm" }}, {{ date.scenes.length }}</div>{{ end_time }}</p-->
+<script>pageSetUp()</script>

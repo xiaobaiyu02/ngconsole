@@ -1,0 +1,171 @@
+<section id="widget-grid">
+    <div class="row">
+        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div data-widget-grid class="jarviswidget">
+                <div class="noborder">
+                    <div class="widget-body no-padding">
+                        <section class="dt-toolbar">
+                            <div class="left_side left-btn-group col-xs-6 col-sm-6">
+                                <a class="btn btn-xs btn-primary"  href="#/desktop/pool"><i class=" icon-jj-recovery fa"></i>  &nbsp;<span  localize="返回"></span></a>
+                                <a class="btn btn-xs btn-primary isBatch" data-ng-class="{disabled:!checkOne()}" data-ng-click="start()" href="javascript:"><i class="fa icon-jj-boot"></i>&nbsp;<span localize="开机"></span></a>
+                                <div class="btn-group">
+                                    <button class="btn btn-xs btn-primary dropdown-toggle isBatch" data-ng-class="{disabled:!checkOne()}" data-toggle="dropdown"><i class="fa icon-jj-shutdown"></i>&nbsp;<span localize="关机"></span> <span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="isBatch" data-ng-click="forceShutdown()" href="javascript:" ><span localize="强制关机"></span></a></li>
+                                        <li class="divider"></li>
+                                        <li><a class="isBatch" data-ng-click="natureShutdown()" href="javascript:"><span localize="自然关机"></span></a></li>
+                                    </ul>
+                                </div>
+                                <a class="btn btn-xs btn-primary isBatch" data-ng-class="{disabled:!checkOne()}" data-ng-click="restart()" href="javascript:"><i class="fa  icon-jj-Restart"></i>&nbsp;<span localize="重启"></span></a>
+                                <a class="btn btn-xs btn-primary isBatch" data-ng-class="{disabled:!checkOne()}" data-ng-click="pause()" href="javascript:"><i class="fa icon-jj-pause"></i>&nbsp;<span localize="挂起状态"></span></a>
+                                <a class="btn btn-xs btn-primary isBatch" data-ng-class="{disabled:!checkOne()}" data-ng-click="resume()" href="javascript:"><i class="fa  icon-jj-Recovery"></i>&nbsp;<span localize="唤醒"></span></a>
+                            </div>
+                            <div class="right_side col-xs-6 col-sm-6">
+                                <div class="pull-right filter"> <span localize="显示"></span> <input min="1" max="500" placeholder="1-500" type="number" class="mysmallinput" data-ng-model="pagesize" ng-change="pageSizeChange()" input-number><span localize="项结果"></span> </div>
+                                <div class="pull-right dataTables_filter search"><label><span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span> <input type="search" maxlength="20"  class="form-control" ng-model="searchText" ng-change="updateData(searchText,select)"></label></div>
+                            </div>
+                        </section>
+                        <div class="table-responsive">
+                            <table
+                                class="table table-vertical-center table-striped table-condensed table-hover smart-form has-tickbox"
+                                width="100%">
+                                    <thead class="vdi_header">
+                                        <tr>
+                                            <th><label class="checkbox"><input type="checkbox" data-ng-model="checkedAll" data-ng-change="selectAllChange(checkedAll)" data-ng-checked="checkAll(all)" name="checkbox-inline"><i></i></label></th>
+                                            <th ng-model="desktopSort" ng-click="desktopSort = !desktopSort;sortDesktopName('display_name', desktopSort)" localize="桌面名"></th>
+                                            <th ng-model="runStatus" ng-click="runStatus = !runStatus;sort('status', runStatus)"  localize="运行状态"></th>
+                                            <th localize="桌面IP/MAC"></th>
+                                            <th><span localize="资源池"></span>/<span localize="宿主机"></span></th>
+                                            <th localize="登录终端名/IP"></th>
+                                            <th localize="操作"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="vdi_body">
+                                        <tr ng-class="{'disabled':item.status === 'updating'}"
+                                            data-ng-repeat-start="item in rows | filter:searchText | paging:currentPage:pagesize track by item.id"
+                                            data-id="{{ item.id }}">
+                                            <td><label class="checkbox"><input data-ng-model="item._selected" type="checkbox" ng-click="select_network(item,$index);" name="checkbox-inline"><i></i></label></td>
+                                            <td>    
+                                                <p title="{{item.instance_id}}">{{ item.display_name }}</p>
+                                                <p ng-if="item.usb_redir || item.usb3_redir">
+                                                    <span class="fa icon-jj-usb flag-icon"></span>
+                                                </p>
+                                                <p ng-if="item.mark_ha">
+                                                    <span class="fa icon-jj-HA flag-icon"></span>
+                                                </p>
+                                                <p ng-if="item.gpu_type == 'share'" data-localize-title="显卡共享"><span class="fa icon-jj-025 flag-icon"></span></p>
+                                                <p ng-if="item.gpu_type == 'through'" data-localize-title="显卡直通"><span class="fa icon-jj-026 flag-icon"></span></p>
+                                                <p ng-if="item.status === 'updating'" data-localize="正在更新"></p>
+                                            </td>
+                                            <td><span ng-if="item.status=='running' && !item.task_state" localize-title="开机状态" class="status32" ng-class="item.status"></span>
+												<span ng-if="item.status=='shutdown' && !item.task_state" localize-title="关机状态" class="status32" ng-class="item.status"></span>
+												<span ng-if="item.status=='paused' && !item.task_state" localize-title="挂起状态" class="status32" ng-class="item.status"></span>
+												<span ng-if="item.status=='nostate' && !item.task_state" localize-title="未知状态" class="status32" ng-class="item.status"></span>
+												<span ng-if="(item.status=='error' && !item.task_state) || (item.status=='crashed' && !item.task_state)" localize-title="错误状态" class="status32" ng-class="item.status"></span>
+												<span ng-if="item.task_state" title="{{ item.tips }}" class="status32 building"></span>
+												<p>{{ item.running_time }}</p></td>
+                                            <td><p>{{ item.ips }}</p><p>{{ item.mac }}</p></td>
+                                            <td>
+                                                <p>{{item.resource_pool_name}}</p>
+                                                <p>{{item.hostname}}</p>
+                                            </td>
+                                            <td data-ng-if="linkTerminal && inCurrentUserPool(item.client_pool)">
+                                                <a href="#/terminal/client?client_pool={{ item.client_pool }}&ip={{item.client_ip}}">
+                                                    <p>{{ item.client_name }}</p>
+                                                    <p>{{ item.client_ip }}</p>
+                                                </a></td>
+                                            <td data-ng-if="!linkTerminal || !inCurrentUserPool(item.client_pool)">
+                                                <p>{{ item.client_name }}</p>
+                                                <p>{{ item.client_ip }}</p></td>
+                                            <td>
+                                                <button class="btn btn-xs btn-default"  data-ng-click="view(item)" localize-title="查看桌面" ng-disabled="item.status!=='running'"><i class="fa icon-jj-look"></i></button>
+                                                <button ng-disabled="loading_detail" class="btn btn-xs btn-default" ng-show="!item._expand"  data-ng-click="expand(item)" localize-title="更多详情"><i class="fa icon-jj-014"></i></button>
+                                                <button ng-disabled="loading_detail" class="btn btn-xs btn-default" ng-show="item._expand" data-ng-click="expand(item)" ><i class="fa icon-jj-015"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr ng-show="item._expand">
+                                            <td colspan="11">
+                                                <table class="vtop-table" ng-show="!loading_detail">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="vdi_expend-wrap">
+                                                                    <label localize="网络"></label>
+                                                                    <div class="form-group clearfix">
+                                                                        <label class="col-sm-3 text-right"  localize="网络"></label>
+                                                                        <div class="col-sm-9 margin-b-5">{{item.detailData.network.name}}</div>
+                                                                        <label class="col-sm-3 text-right"  localize="子网"></label>
+                                                                        <div class="col-sm-9" ng-show="item.detailData.subnet_name"><p class="margin-b-5" >{{item.detailData.subnet_name}}({{item.detailData.allocation_pools[0].start}} ~ {{item.detailData.allocation_pools[0].end}})</p></div>
+                                                                        <div class="col-sm-9" ng-show="!item.detailData.subnet_name"><p  class="margin-b-5" localize="不分配"></p></div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td style="width:28%">
+                                                                <div class="vdi_expend-wrap">
+                                                                    <label localize="还原设置"></label>
+                                                                    <div class="form-group clearfix">
+                                                                        <label class="col-sm-3 text-right"  localize="系统盘"></label>
+                                                                        <div class="col-sm-9 margin-b-5">{{item.detailData.rollback_desc}}</div>
+                                                                        <label ng-show="item.detailData.data_rollback!==null" class="col-sm-3 text-right"  localize="数据盘"></label>
+                                                                        <div ng-show="item.detailData.data_rollback!==null" class="col-sm-9"><p  class="margin-b-5">{{item.detailData.data_rollback_desc}}</p></div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="vdi_expend-wrap">
+                                                                    <label data-localize="系统盘镜像"></label>
+                                                                    <div class="form-group clearfix" ng-repeat="(key,ids) in item.detailData.inst_volumes.system_image_base track by key">
+                                                                        <label class="col-sm-3 text-right"  localize="位置"></label>
+                                                                        <div class="col-sm-9 margin-b-5">{{key}}</div>
+                                                                    </div>
+                                                                    <div ng-show="getObjLength(item.detailData.inst_volumes.system_image_base)==0">
+                                                                        <label class="col-sm-3 text-right"  localize="无"></label>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="vdi_expend-wrap">
+                                                                    <label data-localize="系统盘"></label>
+                                                                    <div class="form-group clearfix" ng-repeat="(key,ids) in item.detailData.inst_volumes.system_image track by key">
+                                                                        <label class="col-sm-3 text-right"  localize="位置"></label>
+                                                                        <div class="col-sm-9 margin-b-5">{{key}}</div>
+                                                                    </div>
+                                                                    <div ng-show="getObjLength(item.detailData.inst_volumes.system_image)==0">
+                                                                        <label class="col-sm-3 text-right"  localize="无"></label>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td style="width: 20%;">
+                                                                <div class="vdi_expend-wrap">
+                                                                    <label data-localize="数据盘"></label>
+                                                                    <div class="form-group clearfix" ng-repeat="(key,ids) in item.detailData.inst_volumes.data_image track by key">
+                                                                        <label class="col-sm-3 text-right"  localize="位置"></label>
+                                                                        <div class="col-sm-9 margin-b-5">{{key}}</div>
+                                                                    </div>
+                                                                    <div ng-show="getObjLength(item.detailData.inst_volumes.data_image)==0">
+                                                                        <label class="col-sm-3 text-right"  localize="无"></label>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div ng-if="loading_detail" style="min-height: 200px"><img ng-src="img/HLloading.gif"  height="32" width="32" alt=""></div>
+                                            </td>
+                                        </tr>
+                                        <tr data-ng-repeat-end></tr>
+                                    </tbody>
+                            </table>
+                        </div>
+                        <div class="tips" data-ng-if="loading"  localize="LOADING_TEXT">数据正在加载...</div>
+                        <div class="tips" data-ng-if="!loading && rows.length == 0" localize="NO_MATCHING_DATA">没有匹配数据</div>
+                        <div data-ng-include="'includes/pagination.html'"></div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+

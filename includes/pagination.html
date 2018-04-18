@@ -1,0 +1,23 @@
+<div data-grid-pagination data-ng-show="($parent.totalCount || $parent.rows.length) > 0" class="dt-toolbar-footer row">
+	<div class="col-sm-6 col-xs-12 hidden-xs">
+		<div class="dataTables_info" role="status" data-localize="PAGE" param1="{{ getStart() }}" param2="{{ getEnd() }}" param3="{{ $parent.totalCount || $parent.getFilterRows().length }}"></div>
+	</div>
+	<div class="col-md-6">
+		<div class="dataTables_paginate paging_simple_numbers">
+			<pagination
+				boundary-links="true"
+				total-items="totalCount || getFilterRows().length"
+				items-per-page="pagesize"
+				data-ng-model="$parent.currentPage"
+				data-ng-change="pageChange()"
+				rotate="true"
+				max-size="10"
+				class="pagination-sm"
+				previous-text="&lsaquo;"
+				next-text="&rsaquo;"
+				first-text="&laquo;"
+				last-text="&raquo;"
+			></pagination>
+		</div>
+	</div>
+</div>

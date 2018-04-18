@@ -1,0 +1,12 @@
+# 模板文件？叫这个名字不合适
+# 先说说语法吧：
+# 以 # 开头的行是注释，就像你现在看到的这样
+# 以 + 开头的行表示要包含的文件，可以是 glob 语法识别的任意路径
+# 以 - 开头的行表示不包含的文件，可以是 glob 语法识别的任意路径
+# 这个文件丢给 ../tools/templateLoader.js 处理
+
+
++ ../includes/*.html
++ ../views/**/*.html
+- ../views/vdi/system/device.html
+- ../views/vdi/system/endlogs.html

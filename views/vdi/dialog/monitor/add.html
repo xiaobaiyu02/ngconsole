@@ -1,0 +1,188 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" ng-show="pageType=='add'" localize="新增告警策略">新增告警策略</h4>
+	<h4 class="modal-title" ng-show="pageType=='alter'"" localize="修改告警策略">修改告警策略</h4>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal" id="addMonitorAlarmForm" name="configMonitorAlarmForm" action="" novalidate>
+		<div class="form-group">
+			<label class="control-label col-xs-2 required" localize="名称">名称</label>
+			<div class="col-xs-9"><input type="text" data-localize="LENGTH_LIMIT" param1="2" param2="20" ng-maxlength="20" ng-minlength="2" ng-model="data.name" class="form-control" required></div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-2" localize="描述">描述</label>
+			<div class="col-xs-9"><textarea ng-model="data.desc" class="form-control" cols="30" rows="4" data-ng-maxlength="30" maxlength="30" data-localize="不能超过30位字符"></textarea></div>
+		</div>
+		<fieldset>
+			<div class="form-group">
+				<label for="" class="control-label col-xs-2 required" localize='告警项'>告警项</label>
+				<div class="col-xs-3">
+					<label class="checkbox-inline">
+						  <input type="checkbox" class="checkbox style-0"  
+						  	data-ng-model="alarm_settings['node.cpu_util_rate'].enabled">
+						  <span localize="CPU利用率">CPU利用率</span>
+					</label>
+				</div>
+				<div class="col-xs-3">
+					<label for="" class="control-label">≥</label>
+					<input type="number" min="1" max="100"
+						class="form-control form-control-inline" 
+						ng-disabled="!alarm_settings['node.cpu_util_rate'].enabled" 
+						ng-model="alarm_settings['node.cpu_util_rate'].cond_value" 
+						ng-required="alarm_settings['node.cpu_util_rate'].enabled">%
+				</div>
+				<div class="col-xs-4">
+					<label for="" class="control-label" localize="持续">持续</label>
+					<input type="number" ng-pattern="/^\+?[1-9][0-9]*$/"
+						min="1"
+						class="form-control form-control-inline" 
+						ng-disabled="!alarm_settings['node.cpu_util_rate'].enabled"
+						ng-model="alarm_settings['node.cpu_util_rate'].cond_duration" 
+						ng-required="alarm_settings['node.cpu_util_rate'].enabled">
+					<span localize="分钟">分钟</span>
+				</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-3 col-xs-offset-2">
+						<label class="checkbox-inline">
+							  <input type="checkbox" class="checkbox style-0"  
+							  	data-ng-model="alarm_settings['node.mem_util_rate'].enabled">
+							  <span localize="内存利用率">内存利用率</span>
+						</label>
+					</div>
+					<div class="col-xs-3">
+						<label for="" class="control-label">≥</label>
+						<input type="number" min="1" max="100" class="form-control form-control-inline" 
+							ng-disabled="!alarm_settings['node.mem_util_rate'].enabled" 
+							ng-model="alarm_settings['node.mem_util_rate'].cond_value" 
+							ng-required="alarm_settings['node.mem_util_rate'].enabled">%
+					</div>
+					<div class="col-xs-4">
+						<label for="" class="control-label" localize="持续">持续</label>
+						<input type="number" ng-pattern="/^\+?[1-9][0-9]*$/"
+							min="1"
+							class="form-control form-control-inline" 
+							ng-disabled="!alarm_settings['node.mem_util_rate'].enabled" 
+							ng-model="alarm_settings['node.mem_util_rate'].cond_duration" 
+							ng-required="alarm_settings['node.mem_util_rate'].enabled">
+						<span localize="分钟">分钟</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-3 col-xs-offset-2">
+						<label class="checkbox-inline">
+							  <input type="checkbox" class="checkbox style-0" 
+							  data-ng-model="alarm_settings['node.mount_point_util_rate'].enabled">
+							  <span localize="磁盘使用空间">磁盘使用空间</span>
+						</label>
+					</div>
+					<div class="col-xs-4">
+						<label for="" class="control-label">≥</label>
+						<input type="number" min="1" max="100" class="form-control form-control-inline" 
+						ng-disabled="!alarm_settings['node.mount_point_util_rate'].enabled" 
+						ng-model="alarm_settings['node.mount_point_util_rate'].cond_value" 
+						ng-required="alarm_settings['node.mount_point_util_rate'].enabled">%
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-3 col-xs-offset-2">
+						<label class="checkbox-inline">
+							  <input type="checkbox" class="checkbox style-0"  data-ng-model="alarm_settings['node.disk_io'].enabled">
+							  <span localize="磁盘IO利用率">磁盘IO利用率</span>
+						</label>
+					</div>
+					<div class="col-xs-3">
+						<label for="" class="control-label">≥</label>
+						<input type="number" min="1" max="100" class="form-control form-control-inline" 
+						ng-disabled="!alarm_settings['node.disk_io'].enabled" 
+						ng-model="alarm_settings['node.disk_io'].cond_value" 
+						ng-required="alarm_settings['node.disk_io'].enabled">%
+					</div>
+					<div class="col-xs-4">
+						<label for="" class="control-label" localize="持续">持续</label>
+						<input type="number" ng-pattern="/^\+?[1-9][0-9]*$/"
+							min="1"
+							class="form-control form-control-inline" 
+							ng-disabled="!alarm_settings['node.disk_io'].enabled" 
+							ng-model="alarm_settings['node.disk_io'].cond_duration" 
+							ng-required="alarm_settings['node.disk_io'].enabled">
+						<span localize="分钟">分钟</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-3 col-xs-offset-2">
+						<label class="checkbox-inline">
+							  <input type="checkbox" class="checkbox style-0"  data-ng-model="alarm_settings['node.network_util_rate'].enabled">
+							  <span localize="网络上下行速率">网络上下行速率</span>
+						</label>
+					</div>
+					<div class="col-xs-3">
+						<label for="" class="control-label">≥</label>
+						<input type="number" min="1" max="100"
+							class="form-control form-control-inline" 
+							ng-disabled="!alarm_settings['node.network_util_rate'].enabled" 
+							ng-model="alarm_settings['node.network_util_rate'].cond_value" 
+							ng-required="alarm_settings['node.network_util_rate'].enabled">%
+					</div>
+					<div class="col-xs-4">
+						<label for="" class="control-label" localize="持续">持续</label>
+						<input type="number" ng-pattern="/^\+?[1-9][0-9]*$/"
+							min="1"
+							class="form-control form-control-inline" 
+							ng-disabled="!alarm_settings['node.network_util_rate'].enabled" 
+							ng-model="alarm_settings['node.network_util_rate'].cond_duration" 
+							ng-required="alarm_settings['node.network_util_rate'].enabled">
+						<span localize="分钟">分钟</span>
+					</div>
+				</div>
+		</fieldset>
+		<div class="form-group">
+			<label for="" class="control-label col-xs-2 required" localize="主机">主机</label>
+			<div class="col-xs-9">
+				<ul class="border-wrap-ul">
+					<img ng-show="loading" src="img/loadingtext.gif" width="24px" height="24px"/>
+					<li class="border-wrap-li" ng-repeat="pool in pools">
+						<label class="checkbox-inline" ng-hide="pool.name=='主控节点'">
+							<input type="checkbox" ng-model="pool._selected" class="checkbox" ng-change="checkAll(pool)">
+							<span>{{pool.name}}</span>
+						</label>
+						<dl class="border-wrap-dl">
+							<dd class="border-wrap-dd" ng-repeat="host in pool.hosts">
+								<label class="checkbox-inline">
+									<input type="checkbox" ng-model="host._selected" ng-change="checkOne(pool)" class="checkbox">
+									<span><span ng-show="pool.name=='主控节点'" localize="主控"></span>{{host.host_name}}</span>
+								</label>
+							</dd>
+						</dl>
+					</li>
+				</ul>
+				
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="" class="col-xs-2 control-label" localize="告警邮件">告警邮件</label>
+			<div class="col-xs-9">
+				<label class="checkbox-inline">
+					<input type="checkbox" class="checkbox" ng-model="data.email_enabled">
+					<span localize="发送告警邮件">发送告警邮件</span>
+				</label>
+			</div>
+		</div>
+		<div class="form-group" ng-show="data.email_enabled">
+			<div class="col-xs-9 col-xs-offset-2">
+				<textarea name="" id="" ng-model="data.email_address" cols="30" rows="4" textarea-email localize-placeholder="MONITOR_EMAILL_MESS" class="form-control" ng-required="data.email_enabled"></textarea>
+			</div>
+		</div>
+		<footer class="text-right">
+			<img ng-if="submiting" src="img/loadingtext.gif" width="24px" height="24px">
+			<div ng-show="!submiting">
+				<button type="button" class="btn btn-primary" ng-disabled="configMonitorAlarmForm.$invalid || !data.host_ids.length || check_alarm_null()" ng-click="ok()" localize="确定">
+					确定
+				</button>
+				<button type="button" class="btn btn-default" ng-click="close()" localize="取消">
+					取消
+				</button>
+			</div>
+		</footer>
+	</form>
+</div>

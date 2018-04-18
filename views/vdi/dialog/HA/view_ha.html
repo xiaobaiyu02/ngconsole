@@ -1,0 +1,91 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" localize="查看桌面HA详情">查看桌面HA详情</h4>
+</div>
+<div class="modal-body">
+	<fieldset>
+		<form class="form-horizontal" novalidate>
+			<div class="form-group">
+				<label class="col-xs-4 control-label" localize="策略名称">策略名称</label>
+				<label class="col-xs-6 control-label text-left">{{data.policy.name}}</label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4 control-label" localize="策略描述">策略描述</label>
+				<label class="col-xs-6 control-label text-left" ng-if="data.policy.desc">{{data.policy.desc}}</label>
+				<label class="col-xs-6 control-label text-left" ng-if="!data.policy.desc" localize="无"></label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4 control-label" localize="资源池">资源池</label>
+				<label class="col-xs-6 control-label text-left">{{data.policy.resource_pool_name}}</label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4 control-label" localize="桌面类型">桌面类型</label>
+				<label class="col-xs-6 control-label text-left" localize="个人桌面" ng-show="data.policy.type_code==2"></label>
+				<label class="col-xs-6 control-label text-left" localize="教学桌面" ng-show="data.policy.type_code==1"></label>
+			</div>
+			<div class="form-group" ng-show="data.policy.type_code==2">
+				<label class="col-xs-4 control-label" localize="个人桌面">个人桌面</label>
+				<div class="col-xs-6">
+					<dl class="ha-new-wrap">
+						<dt class="col-xs-12">
+							<label class="ha-wrap-left-width col-xs-6" localize="桌面"></label>
+							<label localize="所在宿主机" class="col-xs-6"></label>
+						</dt>
+						<dd ng-repeat="item in data.used_vms" class="col-xs-12">
+							<label class="ha-wrap-left-width col-xs-6">{{item.vm_name}}</label>
+							<label class="col-xs-6">{{item.vm_hostname}}</label>
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="form-group" ng-show="data.policy.type_code==1">
+				<label class="col-xs-4 control-label" localize="教学场景">教学场景</label>
+				<label class="col-xs-6 control-label text-left" ng-if="data.used_modes.length">{{data.used_modes[0].mode_name}}</label>
+				<label class="col-xs-6 control-label text-left" ng-if="!data.used_modes.length" localize="无"></label>
+
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4 control-label" localize="宿主机分布">宿主机分布</label>
+				<div class="col-xs-6">
+					<dl class="ha-new-wrap">
+						<dt class="col-xs-12">
+							<label localize="主机" class="ha-wrap-left-width col-xs-6"></label>
+							<label localize="桌面数" class="col-xs-6"></label>
+						</dt>
+						<dd class="col-xs-12" ng-repeat="(key,value) in data.vm_hosts">
+							<label class="ha-wrap-left-width col-xs-6">{{key}}</label>
+							<label class="col-xs-6">{{value}}</label>
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" localize="优先级"  class="col-xs-4 control-label">优先级</label>
+				<label ng-show="data.policy.priority==1" for="" class="col-xs-2 control-label text-left" localize="低"></label>
+				<label ng-show="data.policy.priority==2" for="" class="col-xs-2 control-label text-left" localize="中"></label>
+				<label ng-show="data.policy.priority==3" for="" class="col-xs-2 control-label text-left" localize="高"></label>
+				<label for="" class="col-xs-2 control-label"><span localize="响应时间"></span>(s)</label>
+				<label for="" class="col-xs-2 control-label text-left">{{data.policy.ha_response_time}}</label>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-4 control-label" localize="HA宿主机范围">HA宿主机范围</label>
+				<div class="col-xs-6">
+					<dl class="ha-new-wrap">
+						<dt class="col-xs-12">
+							<label localize="主机" class="ha-wrap-left-width col-xs-5"></label>
+							<label class="col-xs-7" localize="所有桌面数"></label>
+						</dt>
+						<dd class="col-xs-12" ng-repeat="(key,value) in data.policy.load_host_scope">
+							<label class="ha-wrap-left-width col-xs-5">{{key}}</label>
+							<label class="col-xs-7">{{value}}</label>
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="col-md-12 text-right padding-10">
+				<img ng-hide="ready" src="img/loadingtext.gif" width="32px" height="32px"/>
+				<button class="btn btn-default" ng-show="!submiting" type="button" ng-click="close()" localize="关闭">关闭</button>
+			</div>
+		</form>
+	</fieldset>
+</div>

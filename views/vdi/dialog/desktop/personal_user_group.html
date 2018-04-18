@@ -1,0 +1,32 @@
+<div class="modal-body no-padding">
+    <form action="" class="smart-form" name="selectDepart" ng-submit="selectDepart.$valid"  novalidate>
+        <header class="myheader">
+            <div><span data-localize="选择用户"></span>
+                <button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            </div>
+        </header>
+        <div class="tips" data-ng-if="loading" data-localize="LOADING_TEXT" style="padding-bottom: 20px;"></div>
+        <div class="tips" data-ng-if="!loading && treedata.length == 0" data-localize="NO_MATCHING_DATA" style="padding-bottom: 20px;"></div>
+        <fieldset data-ng-if="!loading && treedata.length">
+            <section>
+                <div class="panel-body switch_mode" style="padding: 10px 0;height: 230px">
+                    <treecontrol
+                        class="tree-classic no-padding userCommon-tree"
+                        tree-model="treedata"
+                        options="opts"
+                        on-selection="showSelected(node, selected)"
+                        expanded-nodes="expandnodes"
+                        selected-node="selected"
+                    >
+                        <i id="departmentIcon"></i>{{ node.name }}&nbsp;<span ng-if="node.id!==-1 && node.user_num!==null">({{ node.desktop_num }})</span>
+                    </treecontrol>
+                </div>
+            </section>
+        
+        </fieldset>
+        <footer>
+            <button type="button" data-ng-click="close()" class="btn btn-default myfooterbtn" data-localize="取消"></button>
+            <button type="submit" name="submit" class="btn btn-primary myfooterbtn" data-ng-disabled="selectDepart.$invalid" data-ng-click="ok()" data-localize="确定"></button>
+        </footer>
+    </form>
+</div>

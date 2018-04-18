@@ -1,0 +1,38 @@
+<div class="modal-body no-padding">
+	<form action="" class="smart-form" name="commonMoveTo" ng-submit="commonMoveTo.$valid"  novalidate>
+		<header class="myheader">
+			<div><span data-localize="移动至组"></span>
+				<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+			</div>
+		</header>
+		<fieldset>
+			<section>
+				<label class="label required" data-localize="已选中用户"></label>
+				<label class="textarea">
+					<textarea class="form-control" rows="4" readonly ng-model="selectedPerson"></textarea>
+				</label>
+				
+			</section>
+			<section>
+				<label class="label required" data-localize="移动至"></label>
+				<div class="panel-body switch_mode" style="padding: 10px 0;">
+                    <treecontrol
+                        class="tree-classic no-padding userCommon-tree"
+                        tree-model="treedata"
+                        options="opts"
+                        on-selection="showSelected(node, selected)"
+                        expanded-nodes="expandnodes"
+                        selected-node="selected"
+                    >
+                        <i id="departmentIcon"></i>{{ node.name }}&nbsp;({{ node.user_num }})
+                    </treecontrol>
+                </div>
+			</section>
+		
+		</fieldset>
+		<footer>
+			<button type="button" data-ng-click="close()" class="btn btn-default myfooterbtn" data-localize="取消"></button>
+			<button type="submit" name="submit" class="btn btn-primary myfooterbtn" data-ng-disabled="!selected" data-ng-click="ok()" data-localize="确定"></button>
+		</footer>
+	</form>
+</div>

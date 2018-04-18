@@ -1,0 +1,630 @@
+{
+    "code": 0,
+    "result": [
+        {
+            "client_name": null,
+            "device_id": "5efaed7e-ff74-448c-b046-b4285b08cfd2",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.20",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "win7",
+            "ip": "172.16.151.20",
+            "is_mode": 4,
+            "user_name": "clf"
+        },
+        {
+            "client_name": null,
+            "device_id": "558bc70b-abae-402f-92ff-7fb336aa9da2",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.200",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "wyq1",
+            "ip": "172.16.151.200",
+            "is_mode": 2,
+            "user_name": "wyq"
+        },
+        {
+            "client_name": null,
+            "device_id": "64a6187b-fd71-4b78-8d67-f00e8856ed06",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.21",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "zjc win7-kvm-001",
+            "ip": "172.16.151.21",
+            "is_mode": 2,
+            "user_name": "zjc"
+        },
+        {
+            "client_name": null,
+            "device_id": "4c45b81c-ecf8-4209-a8b4-45be400c4656",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.22",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "zjc win7-kvm-002",
+            "ip": "172.16.151.22",
+            "is_mode": 2,
+            "user_name": "zjc"
+        },
+        {
+            "client_name": null,
+            "device_id": "067715ed-f1ce-4a72-b351-7e48305a7550",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.23",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "123-001",
+            "ip": "172.16.151.23",
+            "is_mode": 2,
+            "user_name": "zjc"
+        },
+        {
+            "client_name": null,
+            "device_id": "c705da3d-718a-41d3-b6bb-88198f3e6506",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.24",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "123-002",
+            "ip": "172.16.151.24",
+            "is_mode": 2,
+            "user_name": "zjc"
+        },
+        {
+            "client_name": null,
+            "device_id": "97722bb3-1e72-4dae-9430-c79e124fdff6",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.25",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "test1",
+            "ip": "172.16.151.25",
+            "is_mode": 3,
+            "user_name": "admin"
+        },
+        {
+            "client_name": null,
+            "device_id": "b601227d-5681-4899-aae4-e3484b4d0265",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.26",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "USB-3.0",
+            "ip": "172.16.151.26",
+            "is_mode": 2,
+            "user_name": "clf"
+        },
+        {
+            "client_name": null,
+            "device_id": "14718367-6258-4bc6-a945-d2fd95fae3f9",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.27",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "test2222",
+            "ip": "172.16.151.27",
+            "is_mode": 4,
+            "user_name": "admin"
+        },
+        {
+            "client_name": null,
+            "device_id": "734ff265-7fbc-4a04-a2dc-dda58ab72213",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.28",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "test-aa-001",
+            "ip": "172.16.151.28",
+            "is_mode": 2,
+            "user_name": "xf"
+        },
+        {
+            "client_name": null,
+            "device_id": "2e75559f-df0b-4366-936f-e8760c1144e4",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.29",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "test-aa-hy-001",
+            "ip": "172.16.151.29",
+            "is_mode": 2,
+            "user_name": "xf"
+        },
+        {
+            "client_name": null,
+            "device_id": "0caa8af1-d295-458d-813d-57c450edf571",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.30",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "ubuntu-16.10-gnome",
+            "ip": "172.16.151.30",
+            "is_mode": 4,
+            "user_name": "clf"
+        },
+        {
+            "client_name": null,
+            "device_id": "90febcef-fc2d-4021-9f7a-e5ec87680c78",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.31",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "ubuntu-16.04-gnome",
+            "ip": "172.16.151.31",
+            "is_mode": 4,
+            "user_name": "clf"
+        },
+        {
+            "client_name": null,
+            "device_id": "f2a068d9-8a7f-481f-85a9-7bd09642bbd1",
+            "device_owner": "compute:d9e563c9-b038-477e-9b6e-b60b60d535f8",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.32",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "xbo-\u522b\u5220",
+            "ip": "172.16.151.32",
+            "is_mode": 4,
+            "user_name": "admin"
+        },
+        {
+            "client_name": null,
+            "device_id": "e866743d-0ae8-4999-bb98-03094cb9608d",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.33",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "aaa",
+            "ip": "172.16.151.33",
+            "is_mode": 3,
+            "user_name": "lyh"
+        },
+        {
+            "client_name": null,
+            "device_id": "c8b384e2-10c9-407f-b80f-a9bda5d882b0",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.34",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "test",
+            "ip": "172.16.151.34",
+            "is_mode": 2,
+            "user_name": "admin"
+        },
+        {
+            "client_name": null,
+            "device_id": "4deee539-2659-4c68-8430-dc2dd3e5ccce",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.35",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "win7",
+            "ip": "172.16.151.35",
+            "is_mode": 3,
+            "user_name": "clf"
+        },
+        {
+            "client_name": null,
+            "device_id": "1f7a44be-acac-4d60-aa61-f809b1d15f63",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.36",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "win7_reg",
+            "ip": "172.16.151.36",
+            "is_mode": 3,
+            "user_name": "xf"
+        },
+        {
+            "client_name": null,
+            "device_id": "8c52e354-ea0b-46d5-a3a9-11c738c188c5",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.37",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "win7_create",
+            "ip": "172.16.151.37",
+            "is_mode": 3,
+            "user_name": "xf"
+        },
+        {
+            "client_name": null,
+            "device_id": "ceee56c2-f589-4dd7-a45c-305893b5a2bc",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.38",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "ezgo12A-amd64-kde",
+            "ip": "172.16.151.38",
+            "is_mode": 4,
+            "user_name": "clf"
+        },
+        {
+            "client_name": null,
+            "device_id": "3eddf29e-9153-4801-9d1a-be8d94686a79",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.39",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "ezgo12A-i386-kde",
+            "ip": "172.16.151.39",
+            "is_mode": 4,
+            "user_name": "clf"
+        },
+        {
+            "client_name": null,
+            "device_id": "3d62cb2a-b12b-42ff-a072-07cd17297141",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.40",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "zwForAndroid",
+            "ip": "172.16.151.40",
+            "is_mode": 2,
+            "user_name": "zw"
+        },
+        {
+            "client_name": null,
+            "device_id": "401e80db-2da1-46e2-8c6f-d6ecae552d47",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.41",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "ubuntu-14.04",
+            "ip": "172.16.151.41",
+            "is_mode": 4,
+            "user_name": "clf"
+        },
+        {
+            "client_name": null,
+            "device_id": "4a60799e-ad76-498b-99f3-399a1df3b422",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.42",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "ubuntu-16.10-gnome",
+            "ip": "172.16.151.42",
+            "is_mode": 2,
+            "user_name": "clf"
+        },
+        {
+            "client_name": null,
+            "device_id": "6caf84f5-60ae-43f1-bb1b-10c4b8fe2fc3",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.44",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "ezgo12A-i386-kde",
+            "ip": "172.16.151.44",
+            "is_mode": 2,
+            "user_name": "clf"
+        },
+        {
+            "client_name": null,
+            "device_id": "16f56d77-8c1c-4881-95e1-b3b88cd0f750",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.45",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "yyh-test",
+            "ip": "172.16.151.45",
+            "is_mode": 2,
+            "user_name": "yueyihua"
+        },
+        {
+            "client_name": null,
+            "device_id": "93084667-cb48-4ce7-ba0f-becdea4ba752",
+            "device_owner": "compute:7d2cdd1f-de04-4a3b-b583-d188dbdd1d53",
+            "fixed_ips": [
+                {
+                    "ip_address": "172.16.151.49",
+                    "subnet_id": "0f21359c-f5b9-4d0f-acc2-bb7c9edb972c"
+                }
+            ],
+            "instance_name": "zjctest-001",
+            "ip": "172.16.151.49",
+            "is_mode": 2,
+            "user_name": "zjc"
+        },
+        {
+            "client_name": "android-client",
+            "display_name": "android-client",
+            "ip": "172.16.151.43",
+            "is_mode": 0,
+            "pool_id": 1,
+            "pool_name": "default"
+        },
+        {
+            "client_name": "xiaofei-PC001",
+            "display_name": "xiaofei-PC001",
+            "ip": "172.16.151.66",
+            "is_mode": 0,
+            "pool_id": 1,
+            "pool_name": "default"
+        }
+    ],
+    "unused_ips": [
+        "172.16.151.46",
+        "172.16.151.47",
+        "172.16.151.48",
+        "172.16.151.50",
+        "172.16.151.51",
+        "172.16.151.52",
+        "172.16.151.53",
+        "172.16.151.54",
+        "172.16.151.55",
+        "172.16.151.56",
+        "172.16.151.57",
+        "172.16.151.58",
+        "172.16.151.59",
+        "172.16.151.60",
+        "172.16.151.61",
+        "172.16.151.62",
+        "172.16.151.63",
+        "172.16.151.64",
+        "172.16.151.65",
+        "172.16.151.67",
+        "172.16.151.68",
+        "172.16.151.69",
+        "172.16.151.70",
+        "172.16.151.71",
+        "172.16.151.72",
+        "172.16.151.73",
+        "172.16.151.74",
+        "172.16.151.75",
+        "172.16.151.76",
+        "172.16.151.77",
+        "172.16.151.78",
+        "172.16.151.79",
+        "172.16.151.80",
+        "172.16.151.81",
+        "172.16.151.82",
+        "172.16.151.83",
+        "172.16.151.84",
+        "172.16.151.85",
+        "172.16.151.86",
+        "172.16.151.87",
+        "172.16.151.88",
+        "172.16.151.89",
+        "172.16.151.90",
+        "172.16.151.91",
+        "172.16.151.92",
+        "172.16.151.93",
+        "172.16.151.94",
+        "172.16.151.95",
+        "172.16.151.96",
+        "172.16.151.97",
+        "172.16.151.98",
+        "172.16.151.99",
+        "172.16.151.100",
+        "172.16.151.101",
+        "172.16.151.102",
+        "172.16.151.103",
+        "172.16.151.104",
+        "172.16.151.105",
+        "172.16.151.106",
+        "172.16.151.107",
+        "172.16.151.108",
+        "172.16.151.109",
+        "172.16.151.110",
+        "172.16.151.111",
+        "172.16.151.112",
+        "172.16.151.113",
+        "172.16.151.114",
+        "172.16.151.115",
+        "172.16.151.116",
+        "172.16.151.117",
+        "172.16.151.118",
+        "172.16.151.119",
+        "172.16.151.120",
+        "172.16.151.121",
+        "172.16.151.122",
+        "172.16.151.123",
+        "172.16.151.124",
+        "172.16.151.125",
+        "172.16.151.126",
+        "172.16.151.127",
+        "172.16.151.128",
+        "172.16.151.129",
+        "172.16.151.130",
+        "172.16.151.131",
+        "172.16.151.132",
+        "172.16.151.133",
+        "172.16.151.134",
+        "172.16.151.135",
+        "172.16.151.136",
+        "172.16.151.137",
+        "172.16.151.138",
+        "172.16.151.139",
+        "172.16.151.140",
+        "172.16.151.141",
+        "172.16.151.142",
+        "172.16.151.143",
+        "172.16.151.144",
+        "172.16.151.145",
+        "172.16.151.146",
+        "172.16.151.147",
+        "172.16.151.148",
+        "172.16.151.149",
+        "172.16.151.150",
+        "172.16.151.151",
+        "172.16.151.152",
+        "172.16.151.153",
+        "172.16.151.154",
+        "172.16.151.155",
+        "172.16.151.156",
+        "172.16.151.157",
+        "172.16.151.158",
+        "172.16.151.159",
+        "172.16.151.160",
+        "172.16.151.161",
+        "172.16.151.162",
+        "172.16.151.163",
+        "172.16.151.164",
+        "172.16.151.165",
+        "172.16.151.166",
+        "172.16.151.167",
+        "172.16.151.168",
+        "172.16.151.169",
+        "172.16.151.170",
+        "172.16.151.171",
+        "172.16.151.172",
+        "172.16.151.173",
+        "172.16.151.174",
+        "172.16.151.175",
+        "172.16.151.176",
+        "172.16.151.177",
+        "172.16.151.178",
+        "172.16.151.179",
+        "172.16.151.180",
+        "172.16.151.181",
+        "172.16.151.182",
+        "172.16.151.183",
+        "172.16.151.184",
+        "172.16.151.185",
+        "172.16.151.186",
+        "172.16.151.187",
+        "172.16.151.188",
+        "172.16.151.189",
+        "172.16.151.190",
+        "172.16.151.191",
+        "172.16.151.192",
+        "172.16.151.193",
+        "172.16.151.194",
+        "172.16.151.195",
+        "172.16.151.196",
+        "172.16.151.197",
+        "172.16.151.198",
+        "172.16.151.199",
+        "172.16.151.201",
+        "172.16.151.202",
+        "172.16.151.203",
+        "172.16.151.204",
+        "172.16.151.205",
+        "172.16.151.206",
+        "172.16.151.207",
+        "172.16.151.208",
+        "172.16.151.209",
+        "172.16.151.210",
+        "172.16.151.211",
+        "172.16.151.212",
+        "172.16.151.213",
+        "172.16.151.214",
+        "172.16.151.215",
+        "172.16.151.216",
+        "172.16.151.217",
+        "172.16.151.218",
+        "172.16.151.219",
+        "172.16.151.220",
+        "172.16.151.221",
+        "172.16.151.222",
+        "172.16.151.223",
+        "172.16.151.224",
+        "172.16.151.225",
+        "172.16.151.226",
+        "172.16.151.227",
+        "172.16.151.228",
+        "172.16.151.229",
+        "172.16.151.230",
+        "172.16.151.231",
+        "172.16.151.232",
+        "172.16.151.233",
+        "172.16.151.234",
+        "172.16.151.235",
+        "172.16.151.236",
+        "172.16.151.237",
+        "172.16.151.238",
+        "172.16.151.239",
+        "172.16.151.240",
+        "172.16.151.241",
+        "172.16.151.242",
+        "172.16.151.243",
+        "172.16.151.244",
+        "172.16.151.245",
+        "172.16.151.246",
+        "172.16.151.247",
+        "172.16.151.248",
+        "172.16.151.249",
+        "172.16.151.250"
+    ]
+}

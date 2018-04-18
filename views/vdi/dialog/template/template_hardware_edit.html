@@ -1,0 +1,111 @@
+<section id="widget-grid">
+		<div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	          <h4 class="modal-title" id="mySmallModalLabel">编辑硬件模板</h4>
+	        </div>
+	        <div class="modal-body">
+				<form class="form-horizontal" name="addhardwareForm" method="post">
+					<div class="form-group">
+						<label class="col-xs-2 control-label required" for="hardwareName">名称</label>
+						<div class="col-xs-9">
+							<input class="form-control" id="hardwareName" type="text"
+								name="name"
+								required
+								data-ng-model="data.name"
+								data-ng-minlength="{{min_namelength}}" data-ng-maxlength="{{max_namelength}}" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}"
+								data-ng-trim="true"
+							>
+						</div>
+						<div class="addharddisk"><i class="fa-plus-square"></i></div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label">处理器</label>
+						<div class="btn-group col-xs-10">
+					        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="1">1核</label>
+					        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="2">2核</label>
+					        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="3">3核</label>
+				    		<label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="4">4核</label>
+					        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="5">5核</label>
+					        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="6">6核</label>
+					        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="8">8核</label>
+					        <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="16">16核</label>
+				    	</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label">内存</label>
+						<div class="btn-group col-xs-10">
+					        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="512">512M</label>
+					        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="1024">1G</label>
+					        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="2028">2G</label>
+					        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="3072">3G</label>
+				    		<label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="4096">4G</label>
+					        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="8192">8G</label>
+					        <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="16384">16G</label>
+				    	</div>
+				    </div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label">系统盘</label>
+						<div class="col-xs-10">
+							<div class="myjarviswidget systemdisk" >
+								<div class="btn-group">
+							        <label class="btn btn-default" data-ng-model="data.system_gb" btn-radio="10">10G</label>
+							        <label class="btn btn-default" data-ng-model="data.system_gb" btn-radio="20">20G</label>
+							        <label class="btn btn-default" data-ng-model="data.system_gb" btn-radio="30">30G</label>
+							        <label class="btn btn-default" data-ng-model="data.system_gb" btn-radio="40">40G</label>
+							        <label class="btn btn-default" data-ng-model="data.system_gb" btn-radio="50">50G</label>
+							        <label class="btn btn-default" data-ng-model="data.system_gb" btn-radio="60">60G</label>
+								    <div class="input-group my_input_group">
+								      <input class="form-control" type="text" placeholder="10-500" name="system_gb"
+											required
+											data-ng-model="data.system_gb"
+											data-ng-pattern="/^\s*([0-9][0-9]{0,1}|[1-4][0-9]{2}|500)\s*$/"
+											data-ng-trim="false"
+								      >
+								      <span></span>
+								      <div class="input-group-addon">G</div>
+								    </div>
+								</div>
+ 							</div>
+						</div>
+				    </div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label">数据盘</label>
+						<div class="col-xs-10">
+							<div class="myjarviswidget systemdisk" >
+								<div class="btn-group">
+							        <label class="btn btn-default" data-ng-model="data.local_gb" btn-radio="20">20G</label>
+							        <label class="btn btn-default" data-ng-model="data.local_gb" btn-radio="40">40G</label>
+							        <label class="btn btn-default" data-ng-model="data.local_gb" btn-radio="60">60G</label>
+							        <label class="btn btn-default" data-ng-model="data.local_gb" btn-radio="80">80G</label>
+							        <label class="btn btn-default" data-ng-model="data.local_gb" btn-radio="100">100G</label>
+							        <label class="btn btn-default" data-ng-model="data.local_gb" btn-radio="300">300G</label>
+								    <div class="input-group my_input_group">
+								      <input class="form-control" type="text" placeholder="10-500" name="local_gb"
+								      		 required
+											 data-ng-model="data.local_gb"
+											 data-ng-pattern="/^\s*([0-9][0-9]{0,1}|[1-4][0-9]{2}|500)\s*$/"
+											 data-ng-trim="false"
+								      >
+								      <span></span>
+								      <div class="input-group-addon">G</div>
+								    </div>
+								</div>
+ 							</div>
+						</div>
+				    </div>
+				    <footer class="text-right">
+				    	<button type="submit" name="submit" disabled="disabled" class="btn btn-primary"
+								data-ng-disabled="addhardwareForm.$invalid || isUnchanged()"
+								data-ng-click="edit()">提交</button>
+						<button type='button' name="reset" class="btn btn-default"
+								data-ng-click="reset()"
+								data-ng-disabled="isUnchanged()">重置</button>
+					</footer>
+				</form>
+	        </div>
+
+      </div>
+
+</section>
+

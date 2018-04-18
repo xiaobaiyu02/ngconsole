@@ -1,0 +1,200 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" localize="模板注册"></h4>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal ng-pristine ng-valid" name="registerTemplate" novalidate>
+		<div class="form-group ">
+			<label class="col-xs-3 control-label required" for="select-1" data-localize="系统盘镜像"></label>
+			<div class="col-xs-6">
+				<select class="form-control" ng-model="sys_iso" required data-ng-options="sys_iso.name for sys_iso in sys_isos"  data-ng-change="getDataImgs(sys_iso)">
+					<option value="" localize="--请选择--"> --请选择-- </option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group ">
+			<label class="col-xs-3 control-label" for="select-1" data-localize="数据盘镜像"></label>
+			<div class="col-xs-6">
+				<select class="form-control" ng-model="data_iso" data-ng-options="data_iso.name for data_iso in data_isos1" data-ng-change="filterDataISO(data_iso, data_iso2)">
+					<option value="" localize="--请选择--"> --请选择-- </option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group ">
+			<label class="col-xs-3 control-label" for="select-1" data-localize="数据盘镜像"></label>
+			<div class="col-xs-6">
+				<select class="form-control" ng-model="data_iso2" data-ng-options="data_iso2.name for data_iso2 in data_isos2" data-ng-change="filterDataISO(data_iso, data_iso2)">
+					<option value="" localize="--请选择--"> --请选择-- </option>
+				</select>
+			</div>
+		</div>
+
+<!-- 		<div class="form-group">
+			<label class="col-xs-3 control-label" for="select-1" data-localize="选择模板" required></label>
+			<div class="col-xs-6">
+				<select class="form-control" ng-model="templ" data-ng-options="templ for templ in templs">
+					<option value="" localize="请选择"> 请选择 </option>
+				</select>
+			</div>
+		</div> -->
+		<div class="form-group">
+			<label class="col-xs-3 control-label required" data-localize="模板名"></label>
+			<div class="col-xs-6">
+				<input class="form-control"
+					type="text"
+					name="name"
+					required
+					data-ng-model="name"
+					data-ng-minlength="{{ min_namelength }}"
+					data-ng-maxlength="{{ max_namelength }}"
+					data-ng-trim="false"
+				>
+			</div>
+			<label class="col-xs-3 note" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}"></label>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 control-label" data-localize="描述"></label>
+			<div class="col-xs-6">
+				<textarea class="form-control"
+					style="height: 60px;overflow:hidden;" 
+					rows="4"
+					name="desc"
+					data-localize="不能超过30位字符"
+					maxlength="30"
+					data-ng-maxlength="30"
+					data-ng-model="description"
+				>
+				</textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 control-label required" localize="模板类型">模板类型</label>
+			<div class="col-xs-9">
+				<label class="radio radio-inline">
+					<input type="radio" class="radiobox" name="style-0a" ng-model="type" value="1" required>
+					<span localize="教学模板">教学模板</span> 	
+				</label>
+				<label class="radio radio-inline">
+					<input type="radio" class="radiobox" name="style-0a" ng-model="type" value="2">
+					<span localize="个人模板">个人模板</span>
+				</label>
+			</div>
+		</div>
+		<div class="form-group ">
+			<label class="col-xs-3 control-label" for="select-1" data-localize="操作系统"></label>
+			<div class="col-xs-6">
+				<select class="form-control" ng-model="os_type" data-ng-options="os_type.value for os_type in os_types track by os_type.key"></select>
+			</div>
+		</div>
+		<div class="form-group" data-ng-show="sys_iso.virtual_type=='hyper-v'">
+			<label class="col-xs-3 control-label required" data-localize="账户名"></label>
+			<div class="col-xs-6">
+				<input class="form-control"
+					type="text"
+					ng-minlength="2" ng-maxlength="20"
+					ng-required='sys_iso.virtual_type=="hyper-v"'
+					data-ng-init='username="vdi_user"'
+					data-ng-model="username">
+			</div>
+			<label style="position: relative;top: 6px;">
+			    <a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='temCopyOrRegisterTip' data-placement="bottom" data-html="true"><i class="fa fa-question-circle"></i></a>
+			</label>
+		</div>
+		<div class="form-group" data-ng-show="sys_iso.virtual_type=='hyper-v'">
+			<label class="col-xs-3 control-label" ng-class="{'required':sys_iso.virtual_type=='hyper-v'}" data-localize="密码"></label>
+			<div class="col-xs-6">
+				<input class="form-control"
+				type="password"
+				ng-required='sys_iso.virtual_type=="hyper-v"'
+				data-ng-minlength="{{min_passwordLe}}" data-ng-maxlength="{{max_passwordLe}}" data-localize="LENGTH_LIMIT" param1="{{min_passwordLe}}" param2="{{max_passwordLe}}"
+				data-ng-model="userPassword"
+				data-ng-trim="false">
+			</div>
+		</div>
+		<div class="form-group" data-ng-show="sys_iso.virtual_type=='hyper-v'">
+			<label class="col-xs-3 control-label" ng-class="{'required':sys_iso.virtual_type=='hyper-v'}" data-localize="确认密码"></label>
+			<div class="col-xs-6">
+				<input class="form-control"
+				type="password"
+				ng-required='sys_iso.virtual_type=="hyper-v"'
+				data-ng-minlength="{{min_passwordLe}}" data-ng-maxlength="{{max_passwordLe}}" data-localize="LENGTH_LIMIT" param1="{{min_passwordLe}}" param2="{{max_passwordLe}}"
+				data-ng-model="userPasswordConfirm"
+				ng-class="{'unequals':userPassword!==userPasswordConfirm}"
+				data-ng-disabled="!userPassword"
+				data-ng-trim="false">
+			</div>
+		</div>
+		<div class="form-group ">
+			<label class="col-xs-3 control-label" for="select-1" data-localize="所有人"></label>
+			<div class="col-xs-6">
+				<select class="form-control" ng-model="owner" data-ng-options="owner.name for owner in users track by owner.id"></select>
+			</div>
+		</div>
+		<div class="form-group ">
+			<label class="col-xs-3 control-label required" for="network" data-localize="宿主机"></label>
+			<div class="col-xs-6">
+				<select class="form-control" name="host" required data-ng-options="host.host_name for host in hosts track by host.host_uuid"
+					required 
+					data-ng-disabled="host_loading"
+					data-ng-change="getNetwork(host)"
+					data-ng-model="host">
+					<option value="" localize="--请选择--"></option>
+				</select>
+			</div>
+<!-- 			<label class="col-xs-2 checkbox-inline checkbox-align" data-ng-if="sys_iso.virtual_type=='hyper-v'" style="white-space: nowrap;">
+				<input class="checkbox ng-pristine ng-valid" type="checkbox" name="open" data-ng-model="enable_gpu" data-ng-change="getVirtualHost(sys_iso.virtual_type, enable_gpu)">
+				<span data-localize="启用GPU加速">启用GPU加速</span>
+			</label> -->
+		</div>
+		<div class="form-group ">
+			<label class="col-xs-3 control-label required" for="network" data-localize="网络"></label>
+			<div class="col-xs-6">
+				<select class="form-control" required data-ng-options="network.name for network in networks track by network.id"
+					data-ng-change="switchSubnet(network, this)"
+					data-ng-model="network">
+				</select>
+			</div>
+		</div>
+		<div class="form-group ">
+			<label class="col-xs-3 control-label required" for="subnet" data-localize="子网"></label>
+			<div class="col-xs-6">
+				<select class="form-control" data-ng-disabled="network_loading" data-ng-options="subnet.name+' ('+ subnet.start_ip + '~' + subnet.end_ip +')' for subnet in subnets track by subnet.id"
+					data-ng-change="switchIps(subnet, this)"
+					data-ng-model="subnet">
+					<option value="" data-localize="不分配"></option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 control-label" data-localize="绑定IP"></label>
+			<div class="col-xs-6">
+				<div class="input-group">
+					<span class="input-group-addon" style="padding: 0 4px;">
+						<label style="margin-top: 3px;">
+							<select data-ng-model="bind_ip_type" ng-disabled='bind_ip_type.value=="none"' ng-options="type.name for type in types track by type.value" ng-change='bind_ip.value=nul'></select>
+						</label>
+					</span>
+					<label class="text classroomNet " data-ng-class="{bind_ip_able:bind_ip_type.value=='static' && subnets.length===0,bind_ip_disable:bind_ip_type.value!=='static' || subnets.length===0}" style="margin: 0;">
+<!-- 						<select class="form-control" disabled data-ng-if="bind_ip_type.value==='static' && band_ips[0]=='无可用IP'" data-ng-options="ip for ip in band_ips"  data-ng-disabled="subnets.length===0 || bind_ip_loading"
+							data-ng-model="bind_ip.value" ng-init="bind_ip.value=band_ips[0]">
+						</select> -->
+						<input type="text" format-ip data-ng-if="bind_ip_type.value==='static'" start="subnet.start_ip" end="subnet.end_ip" class="form-control" ng-model="bind_ip.value" required>
+					</label>
+				</div>
+			</div>
+		</div>
+	</form>
+	<footer class="text-right">
+		<span data-ng-if="templs.length == 0" style="margin-right:10px;" data-localize="无可注册模板"></span>
+		<img data-ng-if="temCopy" src="./img/building.gif" width="24px">
+		<button ng-if="!submiting && !afterSubmiting" type="submit" name="submit" class="btn btn-primary" ng-class="{disabled:registerTemplate.$invalid || (userPassword && userPasswordConfirm && userPassword!==userPasswordConfirm) || network_loading || host_loading}" ng-click="ok()" localize="确定">
+			确定
+		</button>
+		<button type="button" class="btn btn-default" ng-click="close()" localize="取消" ng-if="!submiting && !afterSubmiting">
+			取消
+		</button>
+		<!-- <span data-ng-if="submiting" style="margin:2px 10px 0 0;position: relative;top: 3px;" data-localize="REGISTER_TIP"></span> -->
+		<img src="img/loadingtext.gif" alt="" ng-if="submiting" class="loadingtext" style="width:24px;height:24px;"> 
+	</footer>
+</div>
+<script>setTimeout(function(){ pageSetUp(); })</script>

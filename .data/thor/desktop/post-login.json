@@ -1,0 +1,53 @@
+{
+    "code": 0,
+    "vms": [
+        {
+            "display_name": "admintest-003",
+            "id": 1291,
+            "image": {
+                "id": 7,
+                "os_type": "Windows7"
+            }
+        },
+        {
+            "display_name": "admintest-001",
+            "id": 1293,
+            "image": {
+                "id": 7,
+                "os_type": "Windows7"
+            }
+        },
+        {
+            "display_name": "admin-003",
+            "id": 1303,
+            "image": {
+                "id": 7,
+                "os_type": "Windows7"
+            }
+        },
+        {
+            "display_name": "admin-001",
+            "id": 1305,
+            "image": {
+                "id": 7,
+                "os_type": "Windows7"
+            }
+        },
+        {
+            "display_name": "default123-004",
+            "id": 2193,
+            "image": {
+                "id": 7,
+                "os_type": "Windows7"
+            }
+        },
+        {
+            "display_name": "default123-001",
+            "id": 2196,
+            "image": {
+                "id": 7,
+                "os_type": "Windows7"
+            }
+        }
+    ]
+}

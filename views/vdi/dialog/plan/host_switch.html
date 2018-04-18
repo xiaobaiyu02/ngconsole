@@ -1,0 +1,134 @@
+<section id="widget-grid">
+    <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="mySmallModalLabel" ng-if="!isEdit" data-localize="新增主机定时开关机"></h4>
+          <h4 class="modal-title" id="mySmallModalLabel" ng-if="isEdit" data-localize="编辑主机定时开关机"></h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" name="addClassroomFrom" method="post" novalidate>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label required" for="name" data-localize="任务名"></label>
+                    <div class="col-xs-9">
+                        <input class="form-control"
+                            type="text"
+                            name="name"
+                            data-ng-minlength="{{min_namelength}}" data-ng-maxlength="{{max_namelength}}" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}"
+                            required
+                            data-ng-model="data.name"
+                            data-ng-trim="true"
+                        >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label" for="desc" data-localize="描述"></label>
+                    <div class="col-xs-9">
+                        <textarea class="form-control"
+                            style="height: 80px;" 
+                            rows="4"
+                            name="desc"
+                            data-localize="不能超过30位字符"
+                            maxlength="30"
+                            data-ng-maxlength="30"
+                            data-ng-model="data.description"
+                            data-ng-trim="false"
+                        >
+                        </textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label required" data-localize="执行任务"></label>
+                    <div class="col-xs-10">
+                        <!-- <div class="row">
+                            <div class="col-xs-3">
+                                <label class="checkbox-inline checkbox-align">
+                                    <input class="checkbox" type="checkbox" name="open" data-ng-model="data.open">
+                                    <span data-localize="开机" style="white-space: nowrap;"></span>
+                                </label>
+                            </div>
+                            <div class="col-xs-7" style="padding: 0">
+                                <label class="col-xs-4 control-label" style="bottom: 3px;white-space: nowrap;" data-localize="执行时间"></label>
+                                <div class="col-xs-4" style="white-space: nowrap;">
+                                    <input class='planTime' ng-required="data.open" data-ng-disabled="!data.open" data-ng-class="{gray: !data.open}" type="number" min='0' max='23' data-ng-pattern="/^\d+$/" name="openHouer" data-ng-model="data.openHouer" ipt-number>
+                                    <span data-localize="时"></span>
+                                </div>
+                                <div class="col-xs-4" style="white-space: nowrap;">
+                                    <input class='planTime' ng-required="data.open" data-ng-disabled="!data.open" data-ng-class="{gray: !data.open}" type="number" min='0' max='59' data-ng-pattern="/^\d+$/" name="openMinute" data-ng-model="data.openMinute" ipt-number>
+                                    <span data-localize="分"></span>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label class="checkbox-inline checkbox-align">
+                                    <input class="checkbox" type="checkbox" name="off" data-ng-model="data.off">
+                                    <span data-localize="关机" style="white-space: nowrap;"></span>
+                                </label>
+                            </div>
+                            <div class="col-xs-7" style="padding: 0">
+                                <label class="col-xs-4 control-label" style="bottom: 3px;white-space: nowrap;" data-localize="执行时间"></label>
+                                <div class="col-xs-4" style="white-space: nowrap;">
+                                    <input class='planTime' ng-required="data.off" data-ng-disabled="!data.off" data-ng-class="{gray: !data.off}" type="number" min='0' max='23' data-ng-pattern="/^\d+$/" name="offHouer" data-ng-model="data.offHouer" ipt-number>
+                                    <span data-localize="时"></span>
+                                </div>
+                                <div class="col-xs-4" style="white-space: nowrap;">
+                                    <input class='planTime' ng-required="data.off" data-ng-disabled="!data.off" data-ng-class="{gray: !data.off}" type="number" min='0' max='59' data-ng-pattern="/^\d+$/" name="offMinute" data-ng-model="data.offMinute" ipt-number>
+                                    <span data-localize="分"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--VDI-4.4.2V 新增功能-->
+                <div class="form-group">
+                    <label class="col-xs-2 control-label required" for="time" data-localize='执行周期'></label>
+                    <div class="col-xs-9">
+                        <div class="weekwrap" style="border:1px solid #ccc;padding:0px 13px;">
+                            <label class="checkbox-inline checkbox-align week-label" data-ng-repeat="week in weeks">
+                                <input class="checkbox" type="checkbox" name="selectWeek" ng-model="week._selected" data-ng-change="selectOneWeek()">
+                                <span>{{ week.name }}</span>
+                            </label>
+                        </div>
+                        <label class="checkbox-inline checkbox-align">
+                            <input class="checkbox" type="checkbox" name="allSelected" ng-model="$parent.selectAll" data-ng-change='selectAllWeek($parent.selectAll)'>
+                            <span data-localize="全选"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label required" data-localize="选择主机"></label>
+                    <div class="col-xs-9">
+                        <ul class="border-wrap-ul">
+                            <img ng-show="loading" src="img/loadingtext.gif" width="24px" height="24px"/>
+                            <li class="border-wrap-li" ng-repeat="pool in pools">
+                                <label class="checkbox-inline" ng-hide="pool.name=='主控节点'">
+                                    <input type="checkbox" ng-model="pool._selected" class="checkbox" ng-change="checkAll(pool)">
+                                    <span>{{pool.name}}</span>
+                                </label>
+                                <dl class="border-wrap-dl">
+                                    <dd class="border-wrap-dd" ng-repeat="host in pool.hosts">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" ng-model="host._selected" ng-change="checkOne(pool)" class="checkbox">
+                                            <span><span ng-show="pool.name=='主控节点'" localize="主控"></span>{{host.host_name}}</span>
+                                        </label>
+                                    </dd>
+                                </dl>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                    
+                </div>
+
+                <footer class="text-right">
+                    <button type="submit" name="submit" class="btn btn-primary myfooterbtn"
+                            data-ng-disabled="addClassroomFrom.$invalid || !data.host_ids.length || !checkWeek() || (!data.open && !data.off)"
+                            data-ng-click="ok()" data-localize="提交"></button>
+                    <button class="btn btn-default myfooterbtn"
+                            data-ng-click="close()" data-localize="取消"></button>
+                </footer>
+            </form>
+        </div>
+  </div>
+
+</section>

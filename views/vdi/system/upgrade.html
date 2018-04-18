@@ -1,0 +1,68 @@
+<section id="widget-grid">
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div data-widget-grid class="jarviswidget">
+				<!-- widget div-->
+				<div class="noborder">
+					<div class="widget-body no-padding">
+						<div class="form-inline no-footer">
+							<div class="dt-toolbar">
+							</div>
+						</div>
+						<div class="table-responsive">
+							<table data-vdi-grid
+								class="table table-striped table-condensed table-hover smart-form has-tickbox"
+								width="100%">
+								<thead class="vdi_header">
+									<tr>
+										<th localize="类型">类型</th>
+										<th localize="当前版本">当前版本</th>
+										<th localize="升级包">升级包</th>
+										<th localize="已升级组件数/组件总数">已升级组件数/组件总数</th>
+										<th localize="操作">操作</th>
+									</tr>
+								</thead>
+								<tbody class="vdi_body">
+									<tr ng-repeat-start="arr in rows"></tr>
+									<tr ng-repeat="item in arr">
+										<td class="nowrap">{{ item.type }}</td>
+										<td>{{ item.version }}</td>
+										<td>{{ item.newer_version }}</td>
+										<td>{{ item.new_client_count}}/{{ item.client_count }}</td>
+										<td ng-show="$first" rowspan="{{arr.length}}" class="ver_middle" width="340" height="35">
+											<div class="updata-btn-wraper">
+												<button class="btn btn-xs btn-default left margin-r-10"  ng-click="upgrade(item)" localize-title="立即升级" data-ng-show="item.need_update && item.newer_version"><i class="fa  icon-jj-update"></i></button>
+												<button class="btn btn-xs btn-default left margin-r-10" ng-click="viewDetail(item.owner)" localize-title="查看未升级组件详情" ng-show="(item.new_client_count < item.client_count) && (item.owner=='win_client' || item.owner=='lin_client' || item.owner=='arm_client' || item.owner=='android_client')"><i class="fa icon-jj-look"></i></button>
+												<div ng-show="item.updatable" 
+													 ui-web-upload="upgrade_bin_upload{{item._idx}}"
+													 ui-upload-config="uploadConfig"
+													 ui-upload-limit="10G"
+													 ui-upload-type="{{item.packtype}}"
+													 ui-upload-btn-name="上传系统包"
+													 template-url="views/vdi/common/ui-web-upload2.html"
+													 ui-upload-url="/thor/admin/upgrade/{{item.owner}}"
+													 finish-handel="finish()"
+												></div>
+											</div>
+										</td>
+									</tr>
+									<tr ng-repeat-end></tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="tips" data-ng-if="loading" localize="LOADING_TEXT">数据正在加载...</div>
+						<div class="tips" data-ng-if="!loading && rows.length == 0"  localize="NO_MATCHING_DATA">没有匹配数据</div>
+					</div>
+				<!-- widget div end -->
+			</div>
+		</article>
+	</div>
+</section>
+<style>
+
+#uploadISO-queue{
+	float:left;
+	height:32px;
+}
+</style>
+<script>pageSetUp();</script>

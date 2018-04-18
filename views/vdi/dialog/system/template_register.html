@@ -1,0 +1,188 @@
+<form action="test.php" method="get" id="form" target="_blank"/>
+    <input type="hidden" name="name" value="ck">
+    <input type="hidden"id="pwd"  name="id" value="123456">
+    <input type="submit" style="display:none;"  value="提交"> 
+</form>
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" localize="注册系统桌面"></h4>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal ng-pristine ng-valid" name="registerTemplate" data-ng-class="{'is_error': devices_selected.length==0}" novalidate>
+		<div>
+			<div class="form-group">
+				<label class="col-xs-2 control-label required" data-localize="名称"></label>
+				<div class="col-xs-4">
+					<input class="form-control"
+						type="text"
+						name="display_name"
+						required
+						data-ng-model="display_name"
+						data-ng-minlength="{{ min_namelength }}"
+						data-ng-maxlength="{{ max_namelength }}"
+						data-ng-trim="false"
+						data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}"
+					>
+				</div>
+				<label class="col-xs-2 control-label required"  localize="系统桌面类型"></label>
+				<div class="col-xs-3">
+					<select class="form-control" name="type" ng-model="type" ng-init="type='5'" required>
+						<option value="5" data-localize="共享服务"></option>
+						<option value="4" data-localize="其他桌面"></option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group ">
+				<label class="col-xs-2 control-label required"  localize="资源池"></label>
+				<div class="col-xs-4">
+					<select class="form-control" name="source_pool" ng-model="source_pool" ng-options="source_pool.name for source_pool in pools" ng-change="get_host(source_pool.uuid)" required>
+						<option value="" data-localize="--请选择--"></option>
+					</select>
+				</div>
+				<label class="col-xs-2 control-label required"  localize="计算节点"></label>
+				<div class="col-xs-3">
+					<select class="form-control" name="node" ng-model="node" ng-options="node.host for node in hosts" ng-change="get_devices(node.host)" required>
+						<option value="" data-localize="--请选择--"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-2 control-label" data-localize="CPU"></label>
+				<div class="col-xs-9 btn-group">
+			        <label class="btn btn-default" data-ng-model="vcpus" btn-radio="1">1</label>
+			        <label class="btn btn-default" data-ng-model="vcpus" btn-radio="2">2</label>
+			        <label class="btn btn-default" data-ng-model="vcpus" btn-radio="3">3</label>
+			        <label class="btn btn-default" data-ng-model="vcpus" btn-radio="4">4</label>
+			        <label class="btn btn-default" data-ng-model="vcpus" btn-radio="8">8</label>
+				    <div class="input-group my_input_group">
+						<div class="input-number-wraper-sm"><input ui-input-number step="1" max="32" min="1" ng-model="vcpus" data-ng-trim="false" required></div>
+				      <span></span>
+				      <div class="input-group-addon input-group-addon-disk" data-localize="核"></div>
+				    </div>
+				</div>
+				<label class="col-xs-1 note hardwarenote">1~32<span data-localize="核"></span></label>
+		    </div>
+			<div class="form-group">
+				<label class="col-xs-2 control-label" data-localize="内存"></label>
+				<div class="btn-group col-xs-9">
+			        <label class="btn btn-default" data-ng-model="ram" btn-radio="32">32GB</label>
+			        <label class="btn btn-default" data-ng-model="ram" btn-radio="40">40GB</label>
+			        <label class="btn btn-default" data-ng-model="ram" btn-radio="48">48GB</label>
+		    		<label class="btn btn-default" data-ng-model="ram" btn-radio="64">64GB</label>
+	    			<div class="input-group my_input_group">
+					      <div class="input-number-wraper-sm">
+							 <div class="input-number-wraper-sm"><input ui-input-number step="0.5" max="64" min="1" ng-model="ram" data-ng-trim="false" required></div>
+					      </div>
+					      <span></span>
+					      <div class="input-group-addon input-group-addon-disk">GB</div>
+				    </div>
+		    	</div>
+		    	<label class="col-xs-1 note hardwarenote">1-64GB</label>
+		    </div>
+		    <div class="form-group">
+				<label class="col-xs-2 control-label required" data-localize="系统盘"></label>
+				<div class="col-xs-4">
+					<select class="form-control" ng-model="sys_iso" required data-ng-options="sys_iso.name for sys_iso in sys_isos"  data-ng-change="getDataImgs(sys_iso)">
+						<option value="" localize="--请选择--"> --请选择-- </option>
+					</select>
+				</div>
+		    </div>
+		    <div class="form-group">
+				<label class="col-xs-2 control-label" data-localize="数据盘"></label>
+				<div class="col-xs-4">
+					<select class="form-control" ng-model="data_iso" data-ng-options="data_iso.name for data_iso in data_isos1" data-ng-change="filterDataISO(data_iso, data_iso2)">
+						<option value="" localize="--请选择--"> --请选择-- </option>
+					</select>
+				</div>
+		    </div>
+		    <div ng-repeat="net in nets">
+		    	<div class="form-group">
+		    		<label class="col-xs-2 control-label" for="network"><span data-localize="网络"></span><span>{{ $index+1 }}</span></label>
+		    		<div class="col-xs-3">
+		    			<select class="form-control" data-ng-options="network.name for network in net.networks track by network.id" ng-change="get_subnet(net.network, net.key)"
+		    				data-ng-model="net.network">
+		    			</select>
+		    		</div>
+		    		<div class="col-xs-2" style="white-space: nowrap;top: 5px">
+		    			<img src="img/loadingtext.gif" ng-if="loading" height="20" width="20" alt="">
+		    			<a data-ng-if="!loading" ng-hide="nets.length>2" href="javascript:void(0);" class="btn btn-xs btn-default txt-color-blueLight" data-ng-click="addNet()"><i class="fa fa-plus fa-lg"></i></a>
+		    			<a ng-hide="$index===0" href="javascript:void(0);" class="btn btn-xs btn-default txt-color-blueLight" data-ng-click="minusNet(net)"><i class="fa fa-minus fa-lg"></i></a>
+		    		</div>
+		    		<label for="" class="control-label col-xs-1" localize="子网" style="white-space: nowrap;">子网</label>
+		    		<div class="col-xs-3">
+		    			<select class="form-control" data-ng-model="net.subnetwork" ng-change="clearBindIp(net.key)" data-ng-options="subnetwork._desc for subnetwork in net.subnetworks track by subnetwork.id">
+		    				<option value="" data-localize="不分配"></option>
+		    			</select>
+					</div>
+					<div class="col-xs-1" style="margin-top: 5px;">
+						<a class="mypopover" htmlpopover='{{multifyNetsTips}}'><i class="fa fa-question-circle"></i></a>
+					</div>
+		    	</div>
+		    	<div class="form-group">
+		    		<label for="" class="control-label col-xs-2">IP</label>
+		    		<div class="col-xs-3">
+		    			<select class="form-control" ng-change="net.ip = null" data-ng-options='IPmode.name for IPmode in net.IPmodes track by IPmode.value'  data-ng-model="net.IPmode" ng-disabled='net.IPmode.value==0' required></select>
+		    		</div>
+		    		<div class="col-xs-1"></div>
+		    		<div ng-if="net.IPmode.value=='2'">
+		    			<label for="" class="control-label col-xs-2" localize="固定IP">固定IP</label>
+		    			<div class="col-xs-3">
+		    				<input type="text" format-ip start="net.subnetwork.start_ip" end="net.subnetwork.end_ip" class="form-control" ng-model="net.ip" required>
+		    			</div>
+		    		</div>
+		    	</div>
+		    </div>
+			
+			<div class="form-group">
+				<label class="col-xs-2 control-label"></label>
+				<div class="col-xs-3">
+					<label class="checkbox-inline checkbox-align">
+						<input type="checkbox" class="checkbox style-0" ng-model="start_on_host_boot" >
+						<span localize="随宿主机启动">随宿主机启动</span>
+					</label>
+				</div>
+			</div>
+
+		    <div class="form-group">
+		    	<label class="control-label col-xs-2" localize="选择透传设备"></label>
+		    	<div class="col-xs-9">
+		    		<div class="tagarea">
+		    			<div class="tag-wrap">
+		    				<img src="img/loadingtext.gif" ng-if="host_loading" height="24" width="24" alt="">
+		    				<div ng-show="!host_loading">
+		    					<label class="tag" ng-class="{on:item._selected}" ng-repeat="item in devices" >
+		    						 <input type="checkbox" ng-model="item._selected" ng-change="selectOneHost()">
+		    						 {{item.product_info}}&nbsp;({{item.address}})&nbsp;
+		    					</label>
+		    				</div>
+		    				<div ng-show="devices.length==0">
+		    					<span localize="无设备">无设备！</span>
+		    				</div>
+		    			</div>
+		    		</div>
+		    		<div class="tag-checkbox">
+		    			<label class="checkbox-inline checkbox-align">
+		    				<input type="checkbox" class="checkbox style-0" ng-model="is_all" ng-change="selectAllHost(is_all)" ng-disabled="devices.length==0">
+		    				<span localize="全选">全选</span>
+		    			</label>
+		    			<!-- <label for="" class="note" localize="所选择的PCI-E设备将被透传给分布式文件系统桌面使用">E设备将被透传给分布式文件系统桌面使用</label> -->
+		    		</div>
+
+		    	</div>
+		    </div>
+		</div>
+
+	</form>
+	<footer class="text-right">
+		<img data-ng-if="temCopy" src="./img/building.gif" width="24px">
+		<button ng-if="!submiting && !afterSubmiting" id='finish' type="submit" name="submit" class="btn btn-primary" ng-class="{disabled: registerTemplate.$invalid}" ng-click="ok()" localize="确定">
+			确定
+		</button>
+		<button type="button" class="btn btn-default" ng-click="close()" localize="取消" ng-if="!submiting && !afterSubmiting">
+			取消
+		</button>
+		<!-- <span data-ng-if="submiting" style="margin:2px 10px 0 0;position: relative;top: 3px;" data-localize="REGISTER_TIP"></span> -->
+		<img src="img/loadingtext.gif" alt="" ng-if="submiting" class="loadingtext" style="width:24px;height:24px;"> 
+	</footer>
+</div>

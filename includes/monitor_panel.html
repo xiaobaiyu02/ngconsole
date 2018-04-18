@@ -1,0 +1,20 @@
+<div class="portlet box grey" >
+	<div class="portlet-title clearfix padding-5" >
+		<div class="pull-left">
+			<a href="javascript:" class="btn btn-default btn-xs" ng-click="collapAll()"><i class="fa  icon-jj-Shrinkfrom"></i> </a>
+			<a href="javascript:"class="btn btn-default  btn-xs"  ng-click="openAll()"><i class="fa icon-jj-Open"></i></a>
+		</div>
+		<div class="pull-right" ng-init="showSearch=false" ng-click="showSearch?showSearch=false:showSearch=true"><a href="javascript:"class="btn btn-default  btn-xs"><i class="fa fa-search"></i></a></div>
+	</div>
+	<div class="search" ng-show="showSearch"><input type="search" maxlength="20" localize="请输入搜索内容" ng-model="searchText"></div>
+	<div class="portlet-body fuelux">
+		<ul>
+			<li ng-repeat='item in rows' class='parent'>
+				<a href='#' class='tree-toggle' ng-click="item.opened?item.opened=false:item.opened=true"><em class='fa' ng-class="{'icon-jj-xiala':!item.opened,'icon-jj-sou':item.opened}"></em>&nbsp;{{item.ip}}</a>
+				<ul class='branch' ng-class="{in:item.opened}">
+					<li ng-repeat='subitem in item.names |filter:searchText'> <a href='#' class='tree-toggle' > {{subitem}} </a> </li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="renderer" content="webkit">
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
+	<link rel="icon" sizes="any" mask href="/favicon.ico"/>
+	<title localize="系统初始化"></title>
+	<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="css/font-jj.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-production.min.css">
+	<link rel="stylesheet" href="css/your_style.css">
+	<style type="text/css">
+		aside.left-panel{
+			background: #333;
+		}
+		#main header{
+			background-color: #dbdbdb;
+		}
+		#main header .title{
+			color: #fff;
+			line-height: 30px;
+		}
+		.init-widget{
+			width: auto;
+			min-height: auto;
+		}
+		.init-note{
+			padding-left: 13px;
+			padding-right: 13px;
+		}
+	</style>
+</head>
+<body ng-controller="initController">
+	<div class="init">
+		<init:step style="display:none; height: 100%;">
+			<step:cont data-title="开始初始化">
+				<form class="form-horizontal" name="AuthForm">
+					<div>
+						<div class="form-group">
+							<label class="col-xs-3 col-xs-offset-2 control-label" localize="用户名"></label>
+							<label class="col-xs-2 control-label text-left">{{console.name}}</label>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 col-xs-offset-2 control-label" localize="密码"></label>
+							<label class="col-xs-2"><input class="form-control" name="password" required ng-model="console.password" type="password"></label>
+						</div>
+						<div class="form-group">
+							<div class="col-xs-offset-5 col-xs-6 init-note">
+								<p class="note" localize="INIT_COSOLE_MESS"></p>
+							</div>
+						</div>
+						<div class="form-group text-right">
+							<div class="col-xs-offset-5 col-xs-2">
+								<button class="btn btn-primary btn-absolute" ng-disabled="AuthForm.$invalid || submitting" localize="下一步" ng-click="verifyAuth()"></button>
+							</div>
+						</div>
+					</div>
+				</form>
+				<!-- <section  class="text-center" ng-show="console.is_compute_node" localize="INIT_COMPUTENODE_MESS"></section> -->
+			</step:cont>
+			<step:cont data-title="设置主控节点" data-init-data="get_network()">
+					<form class="form-horizontal" name="consoleForm">
+						<div>
+							<section ng-show="!console.loadding">
+								<div class="form-group">
+									<label class="col-xs-2 col-xs-offset-2 control-label" localize="管理网络"></label>
+									<div class="col-xs-2">
+									<select  class="form-control" ng-options="interface as key for (key,interface) in interfaces" ng-model="console.manage_net" ng-change="console.manage_ip = console.manage_net._ips[0]"  required></select>
+									</div>
+									<div class="col-xs-2">
+									<select  class="form-control" ng-options="ip.ip for ip in console.manage_net._ips track by ip.ip" ng-model="console.manage_ip"  required></select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-2 col-xs-offset-2 control-label" localize="镜像网络"></label>
+									<div class="col-xs-2">
+									<select  class="form-control" ng-options="interface as key for (key,interface) in interfaces" ng-model="console.image_net" ng-change="console.image_ip = console.image_net._ips[0]"  required></select>
+									</div>
+									<div class="col-xs-2">
+									<select  class="form-control" ng-options="ip.ip for ip in console.image_net._ips track by ip.ip" ng-model="console.image_ip" required></select>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-7 col-xs-offset-4 init-note">
+										<p class="note" localize="INIT_COSOLE_MESS2"></p>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-3 col-xs-offset-7">
+										<button class="btn btn-primary btn-absolute" ng-disabled="consoleForm.$invalid" localize="设置主控节点" ng-click="set_console_ip()"></button>
+									</div>
+								</div>
+							</section>
+							<section class="text-center" ng-show="console.loadding">
+								<p><img src="img/loadingtext.gif" alt="" width="24" height="24"><span localize="INIT_CONSOLE_LOADDING_MESS"><!-- 正在设置主控中，这个过程需要大约5分钟时间，请稍候！ --></span></p>
+							</section>
+						</div>
+						
+					</form>
+			</step:cont>
+			<step:cont data-title="激活">
+					<div class="form-group">
+						<div class="col-xs-offset-2 col-xs-10">  
+							<ol>
+								<li localize='LICENSE1' param1='{{ex.url}}'></li>
+								<li localize='LICENSE2'></li>
+						        <li localize='LICENSE3'></li>
+							</ol>
+							<div class="license-div clearfix">
+								<div ui-web-upload="license_upload"
+									ui-upload-limit="10G"
+									ui-upload-btn-name="上传授权文件"
+									ui-upload-url="/thor/init/license"
+									finish-handel="finishUpload()">
+								</div>
+							</div>
+						</div>
+					</div>
+			</step:cont>
+			<step:cont data-title="版本" data-init-data="get_version()">
+				<form class="form-horizontal" name="versionForm">
+					<div class="form-group">
+						<label for="" class="col-xs-3 col-xs-offset-2 control-label text-right" data-localize="版本"></label>
+						<div class="col-xs-2">
+							<select ng-options="item.key as item.name for item in versions" ng-model="versions.selected_lang" class="form-control" required></select>
+						</div>
+					</div>
+					<div class="form-group text-right">
+						<div class="col-xs-offset-5 col-xs-2">
+						<button class="btn btn-primary btn-absolute" ng-disabled="versionForm.$invalid || submitting_version" localize="下一步" ng-click="set_version()"></button>
+						</div>
+					</div>
+				</form>
+			</step:cont>
+		<step:cont data-title="创建数据网络">
+				<form class="form-horizontal" name="networkForm" novalidate>
+					<div class="form-group">
+	                	<label class="col-xs-5 control-label required" localize="网络名称"></label>
+		                <div class="col-xs-3">
+		                    <input class="form-control" name="net_name"  type="text" maxlength="20" ng-init="network.name='default'" data-ng-model="network.name" required ng-disabled="update">
+		                </div>
+		            </div>
+		            <div class="form-group">
+	                	<label class="col-xs-5 control-label required" localize="分布式虚拟交换机名称"></label>
+		                <div class="col-xs-3">
+		                   <input class="form-control"  type="text" maxlength="20" ng-init="network.virtual_name='default'" data-ng-model="network.virtual_name" required ng-disabled="update">
+		                </div>
+		            </div>
+					<div class="form-group">
+	                	<label class="col-xs-5 control-label required" localize="类型"></label>
+		                <div class="col-xs-3">
+		                    <select ng-model="network.type" class="form-control" name="net_type" ng-init="network.type ='flat'">
+		                    	<option value="flat">Flat</option>
+		                    	<option value="vlan">VLAN</option>
+		                    </select>
+		                </div>
+		            </div>
+		            <div class="form-group" data-ng-if="network.type==='vlan'">
+						<label class="col-xs-5 control-label required">vLan ID</label>
+						<div class="col-xs-2">
+							<input class="form-control" type="number" name="net_vlanid" ng-disabled="update" ng-model="network.vlanid" ng-pattern="/^[1-9](\d){0,3}$/" ng-required="network.type=='vlan'">
+						</div>
+					</div>
+					<div class="form-group">
+	                	<label class="col-xs-5 control-label required" localize="子网名称"></label>
+		                <div class="col-xs-3">
+		                    <input class="form-control" name="subnet_name"  type="text" maxlength="20" ng-init="network.subnet_name='default'" data-ng-model="network.subnet_name" required ng-disabled="update">
+		                </div>
+		            </div>
+					<div class="form-group">
+						<label class="col-xs-5 control-label required" localize="开始IP"></label>
+						<div class="col-xs-3">
+							<input type="text" format-ip name="net_startip" ng-model="network.dhcp_start" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-5 control-label required" localize="结束IP"></label>
+						<div class="col-xs-3">
+							<input type="text" format-ip name="net_endip" ng-model="network.dhcp_end" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-5 control-label required" localize="子网掩码"></label>
+						<div class="col-xs-3">
+							<input type="text" format-ip name="net_subnet" data-ng-model="network.netmask" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-5 control-label required" localize="网关"></label>
+						<div class="col-xs-3">
+							<input type="text" format-ip name="net_gateway" data-ng-model="network.gateway" required>
+						</div>
+					</div>
+		            <div class="form-group">
+		                <label class="col-xs-5 control-label">DNS1</label>
+		                <div class="col-xs-3">
+		                	<input type="text" format-ip name="net_dns1" data-ng-model="network.dns1" ip-required="false">
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-xs-5 control-label">DNS2</label>
+		                <div class="col-xs-3">
+		                	<input format-ip type="text" name="net_dns2" data-ng-model="network.dns2" ip-required="false">
+		                </div>
+		            </div>
+		            <div class="form-group text-right">
+						<div class="col-xs-offset-5 col-xs-3">
+							<img  ng-show="loading_net" src="img/loadingtext.gif" alt="" width="24" height="24">
+							<button ng-show="!loading_net" class="btn btn-primary btn-absolute" ng-click="init_network()" ng-disabled="networkForm.$invalid" localize="下一步"></button>
+						</div>
+					</div>
+				</form>
+			</step:cont>
+			<step:cont data-title="导入默认数据" data-init-data="importData()">
+				<form class="form-horizontal" name="dataForm">
+					<div class="form-group">
+						<label class="col-xs-offset-3 col-xs-4 control-label" localize="建立超级管理员账户"></label>
+						<label class="col-xs-2 control-label text-left"><i ng-show="init_data" class="fa txt-color-greenjj icon-jj-Complete"></i></label>
+					</div>
+					<div class="form-group text-right">
+						<div class="col-xs-offset-3 col-xs-4">
+						<button class="btn btn-primary btn-absolute" ng-disabled="!init_data" localize="下一步" ng-click="next()"></button>
+						</div>
+					</div>
+				</form>
+			</step:cont>
+		<step:cont data-title="主控设置" data-init-data="get_console_network()">
+				<form class="form-horizontal" name="agentForm">
+					<section ng-show="!agent.loadding">
+						<div class="form-group">
+							<div class="col-xs-4 col-xs-offset-4">
+								<label class="checkbox-inline checkbox-align">
+									<input type="checkbox" class="checkbox style-0 ng-pristine ng-valid" ng-init="agent.on=true" ng-model="agent.on">
+									<span localize="将该主控添加为计算节点"></span>
+								</label>
+							</div>
+						</div>
+						<div ng-show="agent.on">
+							<div class="form-group">
+								<label class="col-xs-2 col-xs-offset-2 control-label" localize="用户名"></label>
+								<label class="col-xs-2 control-label text-left">{{console.name}}</label>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col-xs-offset-2 control-label" localize="密码"></label>
+								<label class="col-xs-2"><input class="form-control" name="password" required ng-model="console.password" type="password" ng-required="agent.on"></label>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col-xs-offset-2 control-label" localize="管理网络"></label>
+								<div class="col-xs-2">
+									<select  class="form-control" ng-options="net.management_dev for net in agent.manage_nets" ng-model="agent.manage_net" disabled ng-required="agent.on"></select>
+								</div>
+								<div class="col-xs-2">
+									<input  class="form-control" ng-model="agent.manage_net.management_ip" disabled ng-required="agent.on">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 col-xs-offset-2 control-label" localize="数据网络"></label>
+								<div class="col-xs-2">
+									<label class="col-xs-12 control-label text-left" style="padding-left:0px;" localize="网络"></label>
+									<select  class="form-control" ng-model="agent.data_net" ng-options="net.name for net in agent.data_nets" ng-required="agent.on" disabled></select>
+								</div>
+								<div class="col-xs-2">
+									<label class="col-xs-12 control-label text-left" style="padding-left:0px;" localize="分布式虚拟交换机"></label>
+									<input type="text" ng-model="agent.data_net.switch_name" disabled class="form-control" ng-required="agent.on">
+								</div>
+								<div class="col-xs-2">
+									<label class="col-xs-12 control-label text-left" style="padding-left:0px;" localize="映射网络适配器"></label>
+									<select  class="form-control" ng-model="agent.dev" ng-options="key as key for (key, interface) in interfaces">
+										<option value="" localize="无"></option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-xs-offset-4 col-xs-8">
+								<p class="note" localize="INIT_AGENT_MESS"></p>
+							</div>
+						</div>
+						<div class="form-group text-right">
+							<div class="col-xs-offset-4 col-xs-4">
+							<button class="btn btn-primary btn-absolute" ng-disabled="agentForm.$invalid" localize="下一步" ng-click="init_agent()"></button>
+							</div>
+						</div>
+					</section>
+					<section ng-show="agent.loadding" class="text-center">
+						<p><img src="img/loadingtext.gif" alt="" width="24" height="24"><span localize="INIT_AGENT_LOADDING_MESS"><!-- 正在添加计算节点，请稍候！ --></span></p>
+					</section>
+				</form>
+
+			</step:cont>
+			<step:cont  data-title="完成">
+					<div class="form-group">
+						<div class="col-xs-offset-3">
+							<span  localize="MESS_INIT__FINISH"><!-- 恭喜系统初始化完成！现在可以 --></span>
+							<button type="button" class="btn btn-sm btn-primary btn-next loginmanagement" ng-click="gotoLogin()"  ng-disabled="waitComplete" localize="进入管理台"></button>
+							<img src="img/loadingtext.gif" alt="" width="24" height="24" ng-if="waitComplete">
+						</div>
+					</div>
+         </step:cont>
+		</init:step>
+	</div>
+</body>
+
+<script src="js/libs/jquery-2.1.1.js"></script>
+<script src="js/libs/angular/angular.js"></script>
+<script src="js/libs/angular/angular-route.js"></script>
+<script src="js/libs/angular/angular-resource.js"></script>
+
+<script src="js/libs/angular/ui-bootstrap-custom-tpls-0.11.0.js"></script>
+<script src="js/notification/SmartNotification.min.js"></script>
+
+<script src="js/env.js"></script>
+
+<script>$BootScript("init")</script>
+<script>var $$$MAIN_MODULE = "vdi.init";</script>
+</html>

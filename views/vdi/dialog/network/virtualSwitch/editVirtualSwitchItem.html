@@ -1,0 +1,35 @@
+<div class="modal-body padding-10">
+    <form class="form-horizontal ng-pristine ng-valid" name="editVirtualSwitch"  novalidate>
+        <fieldset>
+            <legend>
+                <header>
+                    <span localize="编辑映射网络适配器"></span>
+                    <button type="button" class="close" ng-click="close()">
+                        <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                    </button>
+                </header>
+            </legend>
+            <div class="form-group">
+                <label class="col-xs-3 control-label" localize="关联主机"></label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" disabled data-ng-model="item.hostname" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-3 control-label" data-localize="映射网络适配器"></label>
+                <div class="col-xs-7">
+                    <img data-ng-show="loading_hosts" src="img/loadingtext.gif" width="24px" height="24px"/>
+                    <select data-ng-show="!loading_hosts" class="form-control" data-ng-model="item.dev" data-ng-options="dev for dev in item.devs">
+                        <option value="" localize="无"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-12 text-right padding-10">
+                <button class="btn btn-primary" ng-show="!loading" ng-disabled="editVirtualSwitch.$invalid || loading_hosts || old_dev==item.dev" type="button" ng-click="ok()" localize="确定"></button>
+                <button class="btn btn-default" ng-show="!loading" type="button" ng-click="$close()" localize="取消"> </button>
+                <img ng-show="loading" src="img/loadingtext.gif" width="24px" height="24px"/>
+            </div>
+        </fieldset>
+    </form>
+</div>

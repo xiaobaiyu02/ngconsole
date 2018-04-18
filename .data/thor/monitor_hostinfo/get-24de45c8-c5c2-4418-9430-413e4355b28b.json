@@ -1,0 +1,372 @@
+{
+    "code": 0,
+    "data": {
+        "cpu": {
+            "guest": 0,
+            "guest_nice": 0,
+            "idle": 100.0,
+            "iowait": 0,
+            "irq": 0,
+            "nice": 0,
+            "softirq": 0,
+            "steal": 0,
+            "system": 0.0,
+            "user": 0.0
+        },
+        "disk": {},
+        "mem": {
+            "active": 0,
+            "available": 6802206720,
+            "buffers": 0,
+            "cached": 0,
+            "free": 6802206720,
+            "inactive": 0,
+            "percent": 20.8,
+            "total": 8588808192,
+            "used": 1786601472
+        },
+        "net": {
+            "Ethernet0": {
+                "duplex": "full",
+                "ipv4": [
+                    {
+                        "addr": "172.16.201.205",
+                        "netmask": "255.255.0.0"
+                    }
+                ],
+                "ipv6": null,
+                "isup": true,
+                "mac": [
+                    "00:0C:29:AE:09:00"
+                ],
+                "mtu": null,
+                "recv_rate": 0.0,
+                "sent_rate": 0.0,
+                "speed": 1000000000
+            },
+            "Ethernet1": {
+                "duplex": null,
+                "ipv4": [],
+                "ipv6": null,
+                "isup": false,
+                "mac": "",
+                "mtu": null,
+                "recv_rate": 0.0,
+                "sent_rate": 0.0,
+                "speed": null
+            },
+            "Ethernet2": {
+                "duplex": null,
+                "ipv4": [],
+                "ipv6": null,
+                "isup": false,
+                "mac": "",
+                "mtu": null,
+                "recv_rate": 0.0,
+                "sent_rate": 0.0,
+                "speed": null
+            },
+            "Ethernet3": {
+                "duplex": null,
+                "ipv4": [],
+                "ipv6": null,
+                "isup": false,
+                "mac": "",
+                "mtu": null,
+                "recv_rate": 0.0,
+                "sent_rate": 0.0,
+                "speed": null
+            }
+        },
+        "processs_list": [
+            {
+                "cmdline": [
+                    "C:\\cloudos\\Python27\\python.exe",
+                    "C:\\cloudos\\Python27\\scripts\\auxo-node-script.py",
+                    "--config-file=C:/cloudos/etc/auxo/auxo.conf",
+                    "--config-file=C:/cloudos/etc/auxo/log_conf/auxo-node.conf",
+                    "--log-file=C:/cloudos/var/log/auxo/auxo-node.log"
+                ],
+                "cpu_percent": 50.0,
+                "create_time": 1496303159.0,
+                "cwd": "C:\\cloudos\\Python27\\lib\\site-packages\\win32",
+                "exe": "C:\\cloudos\\Python27\\python.exe",
+                "gids": [
+                    0,
+                    0,
+                    0
+                ],
+                "ionice": 2,
+                "memory_percent": 0.5555881437013234,
+                "name": "python.exe",
+                "num_fds": 0,
+                "pid": 2524,
+                "status": "running",
+                "terminal": null,
+                "uids": [
+                    0,
+                    0,
+                    0
+                ],
+                "username": "NT AUTHORITY\\SYSTEM"
+            },
+            {
+                "cmdline": [
+                    "C:\\Windows\\System32\\svchost.exe",
+                    "-k",
+                    "termsvcs"
+                ],
+                "cpu_percent": 0.0,
+                "create_time": 1496303157.0,
+                "cwd": "C:\\Windows\\system32",
+                "exe": "C:\\Windows\\System32\\svchost.exe",
+                "gids": [
+                    0,
+                    0,
+                    0
+                ],
+                "ionice": 2,
+                "memory_percent": 0.259767263411254,
+                "name": "svchost.exe",
+                "num_fds": 0,
+                "pid": 80,
+                "status": "running",
+                "terminal": null,
+                "uids": [
+                    0,
+                    0,
+                    0
+                ],
+                "username": "NT AUTHORITY\\NETWORK SERVICE"
+            },
+            {
+                "cmdline": [
+                    "C:\\Windows\\system32\\wbem\\wmiprvse.exe"
+                ],
+                "cpu_percent": 0.0,
+                "create_time": 1496632827.0,
+                "cwd": "C:\\Windows\\system32",
+                "exe": "C:\\Windows\\System32\\wbem\\WmiPrvSE.exe",
+                "gids": [
+                    0,
+                    0,
+                    0
+                ],
+                "ionice": 2,
+                "memory_percent": 0.23544537900887846,
+                "name": "WmiPrvSE.exe",
+                "num_fds": 0,
+                "pid": 384,
+                "status": "running",
+                "terminal": null,
+                "uids": [
+                    0,
+                    0,
+                    0
+                ],
+                "username": "NT AUTHORITY\\SYSTEM"
+            },
+            {
+                "cmdline": [
+                    "\\??\\C:\\Windows\\system32\\conhost.exe",
+                    "0x4"
+                ],
+                "cpu_percent": 0.0,
+                "create_time": 1496303324.0,
+                "cwd": "C:\\Windows",
+                "exe": "C:\\Windows\\System32\\conhost.exe",
+                "gids": [
+                    0,
+                    0,
+                    0
+                ],
+                "ionice": 2,
+                "memory_percent": 0.13892088091003907,
+                "name": "conhost.exe",
+                "num_fds": 0,
+                "pid": 404,
+                "status": "running",
+                "terminal": null,
+                "uids": [
+                    0,
+                    0,
+                    0
+                ],
+                "username": "XBO-HYPERV-01\\Administrator"
+            },
+            {
+                "cmdline": [
+                    "C:\\Windows\\System32\\svchost.exe",
+                    "-k",
+                    "LocalServiceNetworkRestricted"
+                ],
+                "cpu_percent": 0.0,
+                "create_time": 1496303157.0,
+                "cwd": "C:\\Windows\\system32",
+                "exe": "C:\\Windows\\System32\\svchost.exe",
+                "gids": [
+                    0,
+                    0,
+                    0
+                ],
+                "ionice": 2,
+                "memory_percent": 0.16495960421140582,
+                "name": "svchost.exe",
+                "num_fds": 0,
+                "pid": 424,
+                "status": "running",
+                "terminal": null,
+                "uids": [
+                    0,
+                    0,
+                    0
+                ],
+                "username": "NT AUTHORITY\\LOCAL SERVICE"
+            },
+            {
+                "cmdline": [
+                    "C:\\Windows\\System32\\InputMethod\\CHS\\ChsIME.exe",
+                    "-Embedding"
+                ],
+                "cpu_percent": 0.0,
+                "create_time": 1496303157.0,
+                "cwd": "C:\\Windows\\system32",
+                "exe": "C:\\Windows\\System32\\InputMethod\\CHS\\ChsIME.exe",
+                "gids": [
+                    0,
+                    0,
+                    0
+                ],
+                "ionice": 2,
+                "memory_percent": 0.16314738537358175,
+                "name": "ChsIME.exe",
+                "num_fds": 0,
+                "pid": 560,
+                "status": "running",
+                "terminal": null,
+                "uids": [
+                    0,
+                    0,
+                    0
+                ],
+                "username": "NT AUTHORITY\\SYSTEM"
+            },
+            {
+                "cmdline": [
+                    "winlogon.exe"
+                ],
+                "cpu_percent": 0.0,
+                "create_time": 1496303156.0,
+                "cwd": "C:\\Windows\\system32",
+                "exe": "C:\\Windows\\System32\\winlogon.exe",
+                "gids": [
+                    0,
+                    0,
+                    0
+                ],
+                "ionice": 2,
+                "memory_percent": 0.10234267436764292,
+                "name": "winlogon.exe",
+                "num_fds": 0,
+                "pid": 624,
+                "status": "running",
+                "terminal": null,
+                "uids": [
+                    0,
+                    0,
+                    0
+                ],
+                "username": "NT AUTHORITY\\SYSTEM"
+            },
+            {
+                "cmdline": [
+                    "LogonUI.exe",
+                    "/flags:0x0",
+                    "/state0:0xa3b11855",
+                    "/state1:0x41c64e6d"
+                ],
+                "cpu_percent": 0.0,
+                "create_time": 1496303426.0,
+                "cwd": "C:\\Windows\\system32",
+                "exe": "C:\\Windows\\System32\\LogonUI.exe",
+                "gids": [
+                    0,
+                    0,
+                    0
+                ],
+                "ionice": 2,
+                "memory_percent": 0.1741637683087754,
+                "name": "LogonUI.exe",
+                "num_fds": 0,
+                "pid": 640,
+                "status": "running",
+                "terminal": null,
+                "uids": [
+                    0,
+                    0,
+                    0
+                ],
+                "username": "NT AUTHORITY\\SYSTEM"
+            },
+            {
+                "cmdline": [
+                    "C:\\Windows\\system32\\lsass.exe"
+                ],
+                "cpu_percent": 0.0,
+                "create_time": 1496303156.0,
+                "cwd": "C:\\Windows\\system32",
+                "exe": "C:\\Windows\\System32\\lsass.exe",
+                "gids": [
+                    0,
+                    0,
+                    0
+                ],
+                "ionice": 2,
+                "memory_percent": 0.1695378412753824,
+                "name": "lsass.exe",
+                "num_fds": 0,
+                "pid": 684,
+                "status": "running",
+                "terminal": null,
+                "uids": [
+                    0,
+                    0,
+                    0
+                ],
+                "username": "NT AUTHORITY\\SYSTEM"
+            },
+            {
+                "cmdline": [
+                    "C:\\cloudos\\Python27\\python.exe",
+                    "C:\\cloudos\\Python27\\scripts\\cinder-volume-script.py",
+                    "--config-file=C:/cloudos/etc/cinder/volume/cinder-storage-f9b50224-cf25-4597-924a-e54adf53fcf7.conf",
+                    "--config-file=C:/cloudos/etc/cinder/log_conf/cinder-storage-f9b50224-cf25-4597-924a-e54adf53fcf7.conf",
+                    "--log-file=C:/cloudos/var/log/cinder/cinder-storage-f9b50224-cf25-4597-924a-e54adf53fcf7.log"
+                ],
+                "cpu_percent": 0.0,
+                "create_time": 1496303402.0,
+                "cwd": "C:\\cloudos\\Python27\\lib\\site-packages\\win32",
+                "exe": "C:\\cloudos\\Python27\\python.exe",
+                "gids": [
+                    0,
+                    0,
+                    0
+                ],
+                "ionice": 2,
+                "memory_percent": 0.9812211207428952,
+                "name": "python.exe",
+                "num_fds": 0,
+                "pid": 724,
+                "status": "running",
+                "terminal": null,
+                "uids": [
+                    0,
+                    0,
+                    0
+                ],
+                "username": "XBO-HYPERV-01\\cloudos"
+            }
+        ]
+    },
+    "hostid": "24de45c8-c5c2-4418-9430-413e4355b28b"
+}

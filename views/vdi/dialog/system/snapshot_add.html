@@ -1,0 +1,133 @@
+<section id="widget-grid">
+		<div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	          <h4 class="modal-title" id="mySmallModalLabel" data-localize="新增自动快照策略"></h4>
+	        </div>
+	        <div class="modal-body">
+				<form class="form-horizontal" name="addsnapshotFrom" method="post" novalidate>
+					<div class="form-group">
+						<label class="col-xs-2 control-label required" for="name" data-localize="名称"></label>
+						<div class="col-xs-8">
+							<input class="form-control"
+								type="text"
+								name="name"
+								data-ng-minlength="{{min_namelength}}" data-ng-maxlength="{{max_namelength}}" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}"
+								required
+								data-ng-model="data.name"
+								data-ng-trim="true"
+							>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label" for="description" data-localize="描述"></label>
+						<div class="col-xs-8">
+							<textarea class="form-control"
+								style="height: 80px;" 
+								rows="4"
+								name="description"
+								data-localize="不能超过30位字符"
+								maxlength="30"
+								data-ng-maxlength="30"
+								data-ng-model="data.description"
+								data-ng-trim="false"
+							>
+							</textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label required" localize="资源池"></label>
+						<div class="col-xs-8">
+							<select class="form-control" data-ng-model="data.resource" ng-change="queryTreeInstances(data.resource)" ng-options="resource.name for resource in resources" required></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label required" localize="个人桌面"></label>
+						<div class="col-xs-8">
+							<div class="mytreecontrol">
+								<span style="position: relative;left: 15px;top: -8px;" ng-show="!loadDesktops && desktops && !desktops.length" localize="无可用个人桌面"></span>
+								<img ng-src="img/loadingtext.gif" ng-show="loadDesktops" style="margin-left: 15px" height="24" width="24">
+								<treecontrol ng-show="!loadDesktops && desktops.length"
+								    class="tree-classic my-tree"
+								    tree-model="desktops"
+								    on-selection="showManageSelected(node, selected, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)"
+								    filter-expression="treeFilter"
+								    expanded-nodes="data.expandedNodes"
+								>
+								<input type="checkbox" data-ng-model='node._selected'><i data-ng-class="{'middle': node._selected=='middle'}"></i>
+								<span>{{ node.dept_name || node.desktop_name || node.domain_name || node.name }}</span>
+								<span ng-if="node.desktop_num">({{ node.desktop_num }})</span>
+								</treecontrol>
+							</div>
+						</div>
+						<div style='margin-top:5px' class="col-xs-8 col-xs-offset-2" localize='此处筛选出不还原的个人桌面'></div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-2 control-label required" localize="周期"></label>
+						<div class="col-xs-3">
+							<select class="form-control" data-ng-model="data.period" data-ng-init="data.period = 'weekly'">
+								<option value="weekly" data-localize="每周快照"></option>
+								<option value="monthly" data-localize="每月快照"></option>
+							</select>
+						</div>
+						<div class="col-xs-5" ng-if="data.period == 'weekly'">
+							<select class="form-control" ng-model="data.week_date" data-ng-init="data.week_date = '1'">
+								<option value="1" data-localize="周一">周一</option>
+								<option value="2" data-localize="周二">周二</option>
+								<option value="3" data-localize="周三">周三</option>
+								<option value="4" data-localize="周四">周四</option>
+								<option value="5" data-localize="周五">周五</option>
+								<option value="6" data-localize="周六">周六</option>
+								<option value="7" data-localize="周日">周日</option>
+							</select>
+						</div>
+						<div class="col-xs-5" ng-if="data.period == 'monthly'">
+							<select class="form-control" ng-model="data.month_date" data-ng-init="data.month_date = '1'">
+								<option value="1" data-localize="一日"></option>
+								<option value="2" data-localize="二日"></option>
+								<option value="3" data-localize="三日"></option>
+								<option value="4" data-localize="四日"></option>
+								<option value="5" data-localize="五日"></option>
+								<option value="6" data-localize="六日"></option>
+								<option value="7" data-localize="七日"></option>
+								<option value="8" data-localize="八日"></option>
+								<option value="9" data-localize="九日"></option>
+								<option value="10" data-localize="十日"></option>
+								<option value="11" data-localize="十一日"></option>
+								<option value="12" data-localize="十二日"></option>
+								<option value="13" data-localize="十三日"></option>
+								<option value="14" data-localize="十四日"></option>
+								<option value="15" data-localize="十五日"></option>
+								<option value="16" data-localize="十六日"></option>
+								<option value="17" data-localize="十七日"></option>
+								<option value="18" data-localize="十八日"></option>
+								<option value="19" data-localize="十九日"></option>
+								<option value="20" data-localize="二十日"></option>
+								<option value="21" data-localize="二一日"></option>
+								<option value="22" data-localize="二二日"></option>
+								<option value="23" data-localize="二三日"></option>
+								<option value="24" data-localize="二四日"></option>
+								<option value="25" data-localize="二五日"></option>
+								<option value="26" data-localize="二六日"></option>
+								<option value="27" data-localize="二七日"></option>
+								<option value="28" data-localize="二八日"></option>
+							</select>
+						</div>
+					</div>
+					
+
+				    <footer class="text-right">
+				    	<img ng-if="submiting" src="img/loadingtext.gif" width="24px" height="24px">
+				    	<div ng-show="!submiting">
+				    		<button type="submit" name="submit" class="btn btn-primary myfooterbtn"
+				    				data-ng-disabled="addsnapshotFrom.$invalid || !selectedUsersNums()"
+				    				data-ng-click="ok()" data-localize="提交"></button>
+				    		<button class="btn btn-default myfooterbtn"
+				    				data-ng-click="close()" data-localize="取消"></button>
+				    	</div>
+		    		</footer>
+				</form>
+	        </div>
+      </div>
+
+</section>

@@ -1,0 +1,423 @@
+<div ng-if="hideStep" role="content" class="col-xs-8 clearfix" style="padding-top: 10px;">
+    <div data-wizard disable-nav="true" data-last-text="完成" class="widget-body fuelux" style="position: relative; padding-bottom: 40px">
+        <!-- 第一步 -->
+        <div class="step-pane active" data-wizard-step data-name="init.import-img">
+            <div ng-controller="importImageStepController">
+            <form class="form-horizontal" name="imgForm" novalidate>
+                <div class="quick-deploy-toolbar clearfix">
+                    <button style="float: left;" class="btn btn-primary" ng-click="importByServer()"><i class="icon-jj-Import"></i><span localize="button.import-by-server"></span></button>
+                    <div ui-web-upload="img_upload"
+                         ui-web-upload-name="src_file"
+                         ui-upload-type="img"
+                         ui-web-upload-params="{upload_type: 'remote'}"
+                         ui-upload-btn-name="button.upload-img"
+                         ui-upload-url="/thor/init/prepare_import_img"
+                         btn-class="btn-primary quick-deploy-upload"
+                         style="float: left;margin-left: 15px;">
+                    </div>
+                </div>
+                
+                <ul class="diskimg-list">
+                    <li ng-repeat="img in imglist track by $index" ng-click="selectSysImage(img)" ng-class="{'quick-deploy-selimg': selectedSysImage === img}" title="{{img.filename}}">{{img.filename|filename}}</li>
+                    <li class="quick-deploy-empty-imgs" ng-if="ctrl.imglist.length === 0" localize="quickdeploy.empty-imgs"></li>
+                </ul>
+                <img src="img/loadingtext.gif" ng-if="loading" class="loadingtext" style="width:24px;height:24px;">
+
+                <p class="quick-deploy-helpmsg" style="position: relative;top:100px;" localize="quickdeploy.helpmsg" ng-if="firstDeployTips"></p>
+            </form>
+            </div>
+        </div>
+
+        <div class="step-pane active" data-wizard-step data-name="init.register-teach-tmpl" next-btn-text="init.register-tmpl">
+            <div ng-controller="registerTeachTemplateStepController">
+            <form name="registerForm" ng-class="{is_error:error}" novalidate>
+                <div class="form-group ">
+                    <label class="col-xs-3 control-label required" for="select-1" data-localize="系统盘镜像"></label>
+                    <div class="col-xs-6">
+                        <div style="border-color: transparent;background-color: transparent;" class="form-control" ng-bind="selectIsoName"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label required" data-localize="模板名"></label>
+                    <div class="col-xs-6">
+                        <input class="form-control"
+                            type="text"
+                            name="name"
+                            required
+                            data-ng-model="name"
+                            data-ng-minlength="{{ min_namelength }}"
+                            data-ng-maxlength="{{ max_namelength }}"
+                            data-ng-trim="false"
+                        >
+                    </div>
+                    <label class="col-xs-3 note" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}"></label>
+                </div>
+                <div class="form-group ">
+                    <label class="col-xs-3 control-label" for="select-1" data-localize="操作系统"></label>
+                    <div class="col-xs-6">
+                        <select class="form-control" ng-model="os_type" data-ng-options="os_type.value for os_type in os_types track by os_type.key"></select>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="col-xs-3 control-label" for="select-1" data-localize="所有人"></label>
+                    <div class="col-xs-6">
+                        <select class="form-control" ng-model="owner" data-ng-options="owner.name for owner in users track by owner.id"></select>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="col-xs-3 control-label required" for="network" data-localize="宿主机"></label>
+                    <div class="col-xs-6">
+                        <select class="form-control" required data-ng-options="host.host_name for host in hosts track by host.host_uuid"
+                            required 
+                            data-ng-disabled="host_loading"
+                            data-ng-change="getNetwork(host)"
+                            data-ng-model="host">
+                            <option value="" localize="--请选择--"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="col-xs-3 control-label required" for="network" data-localize="网络"></label>
+                    <div class="col-xs-6">
+                        <select class="form-control" required data-ng-options="network.name for network in networks track by network.id"
+                            data-ng-change="switchSubnet(network, this)"
+                            data-ng-model="network">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="col-xs-3 control-label required" for="subnet" data-localize="子网"></label>
+                    <div class="col-xs-6">
+                        <select class="form-control" data-ng-disabled="network_loading" data-ng-options="subnet.name+' ('+ subnet.start_ip + '~' + subnet.end_ip +')' for subnet in subnets track by subnet.id"
+                            data-ng-change="switchIps(subnet, this)"
+                            data-ng-model="subnet">
+                            <option value="" data-localize="不分配"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" data-localize="绑定IP"></label>
+                    <div class="col-xs-6">
+                        <div class="input-group">
+                            <span class="input-group-addon" style="padding: 0 4px;">
+                                <label style="margin-top: 3px;">
+                                    <select data-ng-model="bind_ip_type" ng-disabled='bind_ip_type.value=="none"' ng-options="type.name for type in types track by type.value" ng-change='bind_ip.value=nul'></select>
+                                </label>
+                            </span>
+                            <label class="text classroomNet " data-ng-class="{bind_ip_able:bind_ip_type.value=='static' && subnets.length===0,bind_ip_disable:bind_ip_type.value!=='static' || subnets.length===0}" style="margin: 0;">
+                                <input type="text" format-ip data-ng-if="bind_ip_type.value==='static'" start="subnet.start_ip" end="subnet.end_ip" class="form-control" ng-model="bind_ip.value" required>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div ng-show="registerFormLoading" style="position: absolute;top:68px;left:-10px;right:-10px;bottom:-10px;background-color: #fafafa;z-index: 99;">
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" data-id="{{item.id}}" data-ng-repeat="item in teachTemplates">
+                        <div class="panel pricing-big relative" data-ng-class="{'panel-darken':item.status!='alive','panel-primary':item.status=='alive'}">
+                            <div class="panel-heading smart-form mypanelhead">
+                                <div class="checkbox row">
+                                    <h2 class="head-title col-md-12 col-sm-12 col-xs-12">
+                                        <span title="{{item.image_id}}">{{item.name}}</span>
+                                        <div title="{{ item.description }}" class="desc">{{ item.description }}</div>
+                                    </h2>
+                                </div>
+                                <div class="template panel-cont flex">
+                                    <div class="panel-pic" style="position: relative;bottom: 10px;">
+                                        <div class="mynote">
+                                            <span data-ng-if="item.status=='update failed'" data-localize="TEMPLATE_UPDATE_FAILED"></span>
+                                            <span data-ng-if="item.status=='updating'" data-localize="TEMPLATE_UPDATING"></span>
+                                            <span data-ng-if="item.status=='cloning'" data-localize="TEMPLATE_CLONING"></span>
+                                            <span data-ng-if="item.status=='sync failed'" data-localize="TEMPLATE_SYNC_FAILED"></span>
+                                            <span data-ng-if="item.status=='uploading'" data-localize="UPLOADING"></span>
+                                            <span data-ng-if="item.status=='register failed'" data-localize="REGISTER_FAILED"></span>
+                                            <span data-ng-if="item.status=='cloning failed'" data-localize="CLONING_FAILED"></span>
+                                            <span data-ng-if="item.status=='reset failed'" data-localize="RESET_FAILED"></span>
+                                            <span data-ng-if="item.status=='error'" data-localize="CREATE_FAILED"></span>
+
+                                            <span data-ng-if="item.status=='making'" data-localize="MAKING"></span>
+                                            <span data-ng-if="item.status=='saving'" data-localize="SAVING"></span>
+                                            <span data-ng-if="item.status=='saveAs'" data-localize="SAVING"></span>
+                                            <span data-ng-if="item.status=='installed'" data-localize="INSTALLED"></span>
+                                            <span data-ng-if="item.status=='syncing'" data-localize="SYNCING"></span>
+                                            <span data-ng-if="item.status=='building'" data-localize="BUILDING"></span>
+                                            <span data-ng-if="item.status=='making seed'" data-localize="MAKING_SEED"></span>
+                                            <span data-ng-if="item.status=='registering'" data-localize="REGESTER"></span>
+                                        </div>
+                                        <div class="pic-wrap">
+                                            <img ng-src="img/ajax-loader.gif" data-ng-if="item.status =='making' || item.status =='syncing' || item.status == 'making seed'">
+                                            <img ng-src="img/{{ item.icon || 'win7.png' }}" data-ng-if="item.status !== 'making' && item.status !== 'syncing' && item.status != 'making seed'">
+                                        </div>
+                                        <div data-ng-if="item.status!='making' && item.status !='syncing' && item.status!='making seed'">
+                                            <p class="pic-version">{{item.os_type}}</p>
+                                            <p class="memsize">{{item.is_64==true? 64:32}}Bit</p>
+                                        </div>
+                                        <div class="panel-status" >
+                                            <span ng-if="item.instance_status=='running'" localize-title="开机状态" class="status50" ng-class="item.instance_status"></span>
+                                            <span ng-if="item.instance_status=='shutdown'" localize-title="关机状态" class="status50" ng-class="item.instance_status"></span>
+                                            <span ng-if="item.instance_status=='paused'" localize-title="挂起状态" class="status50" ng-class="item.instance_status"></span>
+                                            <span ng-if="item.instance_status=='migrating'" localize-title="迁移状态" class="status50" ng-class="item.instance_status"></span>
+                                            <span ng-if="item.instance_status=='building'" class="status50" ng-class="item.instance_status"></span>
+                                            <span ng-if="item.instance_status=='nostate'" localize-title="未知状态" class="status50" ng-class="item.instance_status"></span>
+                                            <span ng-if="item.instance_status=='error' ||item.instance_status=='crashed'" localize-title="错误状态" class="status50" ng-class="item.instance_status"></span>
+                                            <span ng-if="item.instance_status=='reboot'" localize-title="重启中状态" class="status50" ng-class="item.instance_status"></span>
+                                            <span ng-if="item.instance_status=='updating'" localize-title="更新中状态" class="status50" ng-class="item.instance_status"></span>
+                                         </div>
+                                    </div>
+                                    <ul class="panel-mess">
+                                        <li class="panel-item">
+                                            <label data-localize="系统盘" data-localize-title="系统盘"></label>
+                                            <div class="item-flex">{{item.updateSize?item.updateSize:item.system_size_desc}}G/{{item.system_size_total}}G <span class="template"></span></div>
+                                        </li>
+                                        <li class="panel-item">
+                                            <label data-localize="数据盘" data-localize-title="数据盘"></label>
+                                            <div class="item-flex">{{item.data_size_desc}}G/{{item.data_size_total}}G <span class="template"></span></div>
+                                        </li>
+                                        <li class="panel-item">
+                                            <label data-localize="关联桌面数" data-localize-title="关联桌面数"></label>
+                                            <div class="item-flex">{{item.instance_count}}</div>
+                                        </li>
+                                        <li class="panel-item">
+                                            <label data-localize="创建者" data-localize-title="创建者"></label>
+                                            <div class="item-flex">{{item.owner_desc}}</div>
+                                        </li>
+                                        <li class="panel-item">
+                                            <label data-localize="创建时间" data-localize-title="创建时间"></label>
+                                            <div class="item-flex">{{item.created_at | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="panel-footbar" data-ng-class="{'darken':item.status!='alive','primary':item.status=='alive'}">
+                                <a href="javascript:void(0)" class="icon" data-ng-click="delete(item)" ng-show="item.status === 'register failed'"><i class="fa fa-trash-o" data-localize-title="删除模版"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tips" data-ng-if="loadingTeachTemplates" data-localize="LOADING_TEXT"></div>
+                <div class="tips" data-ng-if="!loadingTeachTemplates && teachTemplates.length == 0" data-localize="NO_MATCHING_DATA"></div>
+            </div>
+            </div>
+        </div>
+
+        <div class="step-pane active" data-wizard-step data-name="init.create-teach-scene" next-btn-text="init.create-teach-scene" prev-btn-text="">
+            <div ng-controller="createTeachSceneController">
+            <form class="form-horizontal" name="createForm" novalidate>
+                <div class="form-group">
+                    <label  class="col-xs-3 control-label required" localize="场景名"></label>
+                    <div class="col-xs-6">
+                        <input type="text" class="form-control" data-ng-model="data.name" data-localize="LENGTH_LIMIT" maxlength="20" ng-maxlength="20" ng-minlength="2" param1="2" param2="20" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="control-label required col-xs-3" localize="桌面数"></label>
+                    <div class="col-xs-6">
+                        <input type="number" input-number class="form-control" ng-model="data.instance_max" max="{{data.max_instance || 100}}" min="1" required ng-pattern="/^[0-9]*$/">
+                    </div>
+                    <label class="col-xs-3 note"><span localize="最大"></span>{{data.max_instance || 100}}</label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-3" data-localize="教室"></label>
+                    <div class="col-xs-6">
+                        <select name="classroom" ng-model="classroom" class="form-control" ng-options="classroom.name for classroom in classrooms" required></select>
+                    </div>
+                </div>
+                <!-- 自定义教室 -->
+                <div ng-if="classroom.id === -1">
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label required" for="name" data-localize="名称"></label>
+                        <div class="col-xs-6">
+                            <input class="form-control"
+                                type="text"
+                                name="name"
+                                data-ng-minlength="{{min_namelength}}" data-ng-maxlength="{{max_namelength}}" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}"
+                                required
+                                data-ng-model="data.classroomName"
+                                data-ng-trim="true"
+                            >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label" for="desc" data-localize="描述"></label>
+                        <div class="col-xs-6">
+                            <textarea class="form-control"
+                                style="height: 80px;" 
+                                rows="4"
+                                name="desc"
+                                data-localize="不能超过30位字符"
+                                maxlength="30"
+                                data-ng-maxlength="30"
+                                data-ng-model="data.desc"
+                                data-ng-trim="false"
+                            >
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-xs-3 control-label required" for="network" data-localize="网络"></label>
+                        <div class="col-xs-6">
+                            <select class="form-control" data-ng-options="network.name for network in networks track by network.id"
+                                data-ng-change="switchSubnet(data.network)"
+                                data-ng-model="data.network">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-xs-3 control-label required" for="subnet" data-localize="子网"></label>
+                        <div class="col-xs-6">
+                            <select class="form-control" data-ng-disabled="network_loading" data-ng-show="subnets.length!==0" data-ng-options="subnet.name+' ('+ subnet.start_ip + '~' + subnet.end_ip +')' for subnet in subnets track by subnet.id" data-ng-model="data.subnet">
+                            </select>
+                            <select class="form-control" data-ng-disabled="subnets.length===0" data-ng-show="subnets.length===0"><option data-localize="无"></option></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" data-localize="硬件模板"></label>
+                    <div class="col-xs-6">
+                        <select class="form-control" data-ng-model="hardware" data-ng-options="hardware.name for hardware in hardwareList track by hardware.id" required></select>
+                        <div class="control-des" ng-if="hardware.id !== -1">
+                            <label class="control-label"><span>CPU</span> {{hardware.cpu_num}}<span data-localize="核">核</span></label>
+                            <label class="control-label"><span data-localize="内存"></span>{{hardware.memory_mb/1024}}G</label>
+                            <label class="control-label"><span data-localize="系统盘"></span>{{hardware.system_gb}}G</label>
+                            <label class="control-label" ng-if="hardware.local_gb > 1"><span data-localize="数据盘"></span>{{hardware.local_gb}}G</label>
+                            <label class="control-label" ng-if="hardware.local_gb1 > 1"><span data-localize="数据盘"></span>{{hardware.local_gb1}}G</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- 自定义模板 -->
+                <div ng-if="hardware.id === -1">
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label required" for="hardwareName" data-localize="名称"></label>
+                        <div class="col-xs-6">
+                            <input class="form-control" id="hardwareName" type="text"
+                                name="name"
+                                required
+                                data-ng-model="data.hardwareName"
+                                data-ng-minlength="{{min_namelength}}" data-ng-maxlength="{{max_namelength}}" data-localize="LENGTH_LIMIT" param1="{{min_namelength}}" param2="{{max_namelength}}"
+                                data-ng-trim="true"
+                            >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label" data-localize="CPU"></label>
+                        <div class="col-xs-6 btn-group">
+                            <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="1">1</label>
+                            <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="2">2</label>
+                            <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="3">3</label>
+                            <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="4">4</label>
+                            <label class="btn btn-default" data-ng-model="data.cpu_num" btn-radio="8">8</label>
+                            <div class="input-group my_input_group">
+                              <!-- <input class="form-control" type="number" name="cpu_num"
+                                    required
+                                    data-ng-model="data.cpu_num"
+                                    data-ng-pattern="/^\s*([1-8])\s*$/"
+                                    data-ng-trim="false"
+                              > -->
+                              <div class="input-number-wraper-sm"><input ui-input-number step="1" max="32" min="1" ng-model="data.cpu_num" data-ng-trim="false" required></div>
+                              <span></span>
+                              <div class="input-group-addon input-group-addon-disk" data-localize="核"></div>
+                            </div>
+                        </div>
+                        <label class="col-xs-3 note hardwarenote">1~32<span data-localize="核"></span></label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label" data-localize="内存"></label>
+                        <div class="btn-group col-xs-6">
+                            <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="1.5">1.5GB</label>
+                            <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="2">2GB</label>
+                            <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="2.5">2.5GB</label>
+                            <label class="btn btn-default" data-ng-model="data.memory_mb" btn-radio="3">3GB</label>
+                            <div class="input-group my_input_group">
+                             <!--  <input class="form-control" type="number" name="memory_mb"
+                                    required
+                                    data-ng-model="data.memory_mb"
+                                    data-ng-pattern="/^\s*([1-8]|1.5|2.5|3.5|4.5|5.5|6.5|7.5)\s*$/"
+                                    data-ng-trim="false"
+                              > -->
+                                  <div class="input-number-wraper-sm"><input ui-input-number step="0.5" max="64" min="1" ng-model="data.memory_mb" ng-init="data.memory_mb = 3" data-ng-trim="false" required></div>
+                                  <span></span>
+                                  <div class="input-group-addon input-group-addon-disk">GB</div>
+                            </div>
+                        </div>
+                        <label class="col-xs-3 note hardwarenote">1-64GB</label>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="col-xs-3 control-label" data-localize="系统盘" style="white-space: nowrap;"></label>
+                        <div class="col-xs-6">
+                            <div class="btn-group" style="width:100%;">
+                                <label class="btn btn-default" data-ng-model="data.system_gb" btn-radio="10">10GB</label>
+                                <label class="btn btn-default" data-ng-model="data.system_gb" btn-radio="20">20GB</label>
+                                <label class="btn btn-default" data-ng-model="data.system_gb" btn-radio="30">30GB</label>
+                                <label class="btn btn-default" data-ng-model="data.system_gb" btn-radio="40">40GB</label>
+                                <div class="input-group my_input_group">
+                                      <!-- <input class="form-control" type="number" name="system_gb"
+                                            required
+                                            data-ng-model="data.system_gb"
+                                            data-ng-pattern="/^\s*([1-9][0-9]|100)\s*$/"
+                                            data-ng-trim="false"
+                                      > -->
+                                      <div class="input-number-wraper-sm"><input ui-input-number step="1" max="500" min="10" ng-model="data.system_gb" data-ng-trim="false" required></div>
+                                      <span></span>
+                                      <div class="input-group-addon input-group-addon-disk">GB</div>
+                                </div>
+                            </div>
+                        </div>
+                        <label class="col-xs-3 note hardwarenote">10-500GB</label>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-offset-3 col-xs-6">
+                            <div class="btn-group datapan" style="width:100%; margin: 15px 0 0 0;" data-ng-repeat="btndisk in btndisks">
+                                <span data-localize="数据盘" class="mydatapan"></span>
+                                <label class="btn btn-default" data-ng-model="btndisk.local_gb" btn-radio="5">5GB</label>
+                                <label class="btn btn-default" data-ng-model="btndisk.local_gb" btn-radio="10">10GB</label>
+                                <label class="btn btn-default" data-ng-model="btndisk.local_gb" btn-radio="15">15GB</label>
+                                <label class="btn btn-default" data-ng-model="btndisk.local_gb" btn-radio="20">20GB</label>
+                                <div class="input-group my_input_group">
+                                  <!-- <input class="form-control" type="number" name="local_gb"
+                                         required
+                                         data-ng-model="btndisk.local_gb"
+                                         data-ng-pattern="/^\s*([1-9]|[1-9][0-9]|[1-4][0-9]{2}|500)\s*$/"
+                                         data-ng-trim="false"
+                                  > -->
+                                    <div class="input-number-wraper-sm">
+                                        <input ui-input-number step="1" max="1024" min="5" ng-model="btndisk.local_gb" data-ng-trim="false" required>
+                                    </div>
+                                    <span></span>
+                                    <div class="input-group-addon input-group-addon-disk">GB</div>
+                                </div>
+                                <label style="right: -70px;" class="note hardwarenote myhardwarenote">5-1024GB</label>
+                            </div>
+                                
+                            <div style="margin-top: 15px;">
+                                <a ng-hide="btndisks.length>1" href="javascript:void(0);" class="btn btn-default txt-color-blueLight" data-ng-click="addbtndisk()"><i class="fa fa-plus fa-lg"></i></a>
+                                <a ng-hide="!btndisks.length" href="javascript:void(0);" class="btn btn-default txt-color-blueLight" data-ng-click="minusbtndisk()"><i class="fa fa-minus fa-lg"></i></a>
+                                <span class="control-label">&nbsp;
+                                    <span data-localize="增加" data-ng-if="btndisks.length<2">增加</span><span data-ng-if="btndisks.length==1">/ </span><span data-localize="删除2" data-ng-if="btndisks.length">删除</span><span data-localize="数据盘"></span>&nbsp;&nbsp;
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3"></label>
+                    <div class="col-xs-6">
+                        <button type="button" class="btn btn-default" ng-click="showAdvanceSceneOptionDialog()" localize="高级"></button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+    <!-- end widget content -->
+    <div class="quick-deploy-wait" ng-if="unknowStep">
+        <img src="img/loadingtext.gif" class="loadingtext"/>
+    </div>
+    <!--mask-->
+    <div ng-if="showMask" class="deploy-mask">
+        <p localize="DEPLOY-TIPS1"></p>
+        <p localize="DEPLOY-TIPS2"></p>
+    </div>
+</div>
+<script>setTimeout(function(){ pageSetUp(); })</script>

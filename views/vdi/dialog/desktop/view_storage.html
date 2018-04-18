@@ -1,0 +1,70 @@
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" data-localize="存储详情">存储详情</h4>
+</div>
+<div class="modal-body">
+	<img src="img/loadingtext.gif" style="width:24px;height:24px;vertical-align: middle;" ng-show="loading">
+	<form class="form-horizontal" name="viewStorageForm" ng-show="!loading" novalidate>
+		<div class="form-group">
+			<label class="col-sm-3 text-right"  localize="主机">主机</label>
+			<div class="col-sm-7">{{data.hostname}}</div>
+		</div>
+		<fieldset>
+			<div class="form-group" ng-repeat="(key,ids) in data.inst_volumes.system_image_base">
+				<label class="col-sm-3 text-right"  localize="系统盘镜像"></label>
+				<div class="col-sm-7 margin-b-5">{{key}}</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			<div class="form-group" ng-repeat="(key,ids) in data.inst_volumes.data_image_base">
+				<label class="col-sm-3 text-right"  localize="数据盘镜像"></label>
+				<div class="col-sm-7 margin-b-5">{{key}}</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			<div class="form-group" ng-repeat="(key,ids) in data.inst_volumes.system_image">
+				<label class="col-sm-3 text-right"  localize="系统盘"></label>
+				<div class="col-sm-7 margin-b-5">{{key}}</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			<div class="form-group" ng-repeat="(key,ids) in data.inst_volumes.data_image">
+				<label class="col-sm-3 text-right"  localize="数据盘"></label>
+				<div class="col-sm-7 margin-b-5">{{key}}</div>
+			</div>
+		</fieldset>
+		<footer class="text-right">
+			<div>
+				<button type="button" class="btn btn-primary" ng-click="close()" localize="关闭">
+					关闭
+				</button>
+			</div>
+		</footer>
+	</form>
+</div>
+
+<style>
+	.fieldset-title{
+		margin-bottom: 0px;
+		font-size: 14px;
+		text-align: right;
+		border-bottom: 0px;
+		position: relative;
+	}
+	.fieldset-title>div{
+		background-color: #fff;
+	}
+	.fieldset-title:before{
+		    content: "";
+		    position: absolute;
+		    width: 100%;
+		    border-top: 1px dashed #ddd;
+		    height: 1px;
+		    display: block;
+		    visibility: visible;
+		    top: 50%;
+	}
+	.margin-b-5{
+		margin-bottom: 5px;
+	}
+</style>

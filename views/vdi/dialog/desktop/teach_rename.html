@@ -1,0 +1,44 @@
+
+<div class="modal-header">
+	<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<h4 class="modal-title" data-localize="修改桌面计算机名">修改桌面计算机名</h4>
+</div>
+<div class="modal-body">
+	<!-- pane begin -->
+	<div role="content">
+		<form class="smart-form form-vertical" name="renameForm">
+			<section>
+				<div class="row">
+					<div class="col col-4">
+						<label class="label" data-localize="FORMAT">格式</label>
+						<label class="select">
+							<select ng-model="hostNameType" ng-init="hostNameType='1'" required>
+								<option value="1" data-localize="PREFIX1">前缀1</option>
+								<option value="2" data-localize="PREFIX01">前缀01</option>
+								<option value="3" data-localize="PREFIX001">前缀001</option>
+							</select></label>
+					</div>
+					<div class="col col-4">
+						<label class="label required" data-localize="PREFIX">前缀</label>
+						<label class="input"><input ng-model="hostNamePre" ng-init="hostNamePre='PC'" class="form-control" maxlength="12" ng-maxlength="12" minlength="1" ng-minlenght="1" placeholder="" ng-pattern="/^\s*[A-Za-z]+([A-Za-z0-9|-]+)\s*$/" type="text" required></label>
+					</div>
+					<div class="col col-4">
+						<label class="label required" data-localize="BEGIN_WITH">起始于</label>
+						<label class="input"><input ng-model="hostNameBegin" ng-init="hostNameBegin=1" class="form-control" placeholder="" max="999" min="1" type="number"  ng-pattern="/^\s*(\d{1,})\s*$/" required></label>
+					</div>
+				</div>
+				<div class="row" ><div  class="note col col-sm-12" ng-show="hostNamePre && hostNameBegin" param1="{{addZero(hostNameType,hostNamePre,hostNameBegin)}}" data-localize="HOST_NAME_IS_"></div></div>
+				<div class="row" ><div  class="note col col-sm-12" ng-show="!(hostNamePre && hostNameBegin)" data-localize="HOST_NAME_IS_NOT"></div></div>
+			</section>
+			<div class="text-right">
+				<button type="button" class="btn btn-primary padding-btn" ng-click="ok()" ng-class="{'disabled':renameForm.$invalid}"  localize="确定">
+					确定
+				</button>
+				<button type="button" class="btn btn-default padding-btn" ng-click="close()"  localize="取消">
+					取消
+				</button>
+
+			</div>
+		</form>
+	</div>
+</div>

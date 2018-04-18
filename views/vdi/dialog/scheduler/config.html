@@ -1,0 +1,95 @@
+<style>
+.class_hour table tr.text-center{
+	display:none;
+}
+.class_hour .form-control{
+	padding:3px;
+}
+.class_hour .time_wrong tbody td input{
+	background: #fff0f0 !important;
+	border-color: #A90329!important;
+}
+</style>
+<div class="padding-10">
+	<div class="modal-header">
+		<button type="button" class="close" data-ng-click="close()"><span aria-hidden="true">×</span></button>
+		<h4 class="modal-title" data-localize='设置'></h4>
+    </div>
+    <form name="schedulerForm">
+		<!-- widget content -->
+		<tabset>
+			<tab heading="周时间"  style='cursor: auto;'>
+				<div class="padding-10">
+					<div class="row">
+						<div class="col-md-4" data-localize='学期开始时间' style="margin-top:7px;"></div>
+						<div class="col-md-8">
+							<p class="input-group">
+								<input type="text"
+									scheduler-input
+									class="form-control"
+									datepicker-popup="yyyy-MM-dd"
+									data-ng-model="$parent.$parent.start_time"
+									is-open="$parent.$parent.startDateOpened"
+									datepicker-options="startDateOptions"
+									data-ng-required="true"
+									ng-change="startTimeChange()"
+									show-weeks="false"
+									show-button-bar="false"
+								>
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" data-ng-click="openStartDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4" data-localize='学期结束时间'></div>
+						<div class="col-md-8">
+							<p class="input-group">
+								<input type="text"
+									scheduler-input
+									class="form-control"
+									datepicker-popup="yyyy-MM-dd"
+									data-ng-model="$parent.$parent.end_time"
+									is-open="$parent.$parent.endDateOpened"
+									min-date="minEndTime()"
+									max-date="maxEndTime()"
+									datepicker-options="endDateOptions"
+									data-ng-required="true"
+									show-weeks="false"
+									show-button-bar="false"
+								>
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" data-ng-click="openEndDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>
+							</p>
+						</div>
+					</div>
+				</div>
+			</tab>
+			<tab heading="课程时间" style='cursor: auto;'>
+				<div class="col-md-6 col-xs-6 col-lg-6 class_hour padding-10" data-ng-repeat="hour in $parent.classHours">
+					<div class="col-md-3 col-xs-3 col-lg-3" style="white-space:nowrap;margin-top:7px;padding:0;" data-localize='CLASS1' param1='{{hour.index}}'></div>
+					<div class="col-md-4 col-xs-4 col-lg-4" style="padding-left:0;">
+						<timepicker
+							data-ng-model="hour.start"
+							data-ng-change="changeStartHours(hour)"
+							hour-step="1" minute-step="5" show-meridian="false"
+							data-ng-required="true"
+							data-ng-class="{ time_wrong: hour.start >= hour.end }"
+						></timepicker>
+					</div>
+					<div class="col-md-4 col-xs-4 col-lg-4" style="padding-right:0;">
+						<timepicker data-ng-model="hour.end" data-ng-change="changeEndHours(hour)" hour-step="1" minute-step="5" show-meridian="false" data-ng-class="{ time_wrong: hour.end <= hour.start }"></timepicker>
+					</div>
+				</div>
+				<div style="clear:both;"></div>
+			</tab>
+		</tabset>
+		<!-- end widget content -->
+		<div style="text-align:right">
+			<button class="btn btn-primary" ng-class="{disabled: !formValid() || !matchInput }" ng-click="ok()" data-localize='确定'></button>
+			<button class="btn btn-default" ng-click="close()" data-localize='取消'></button>			
+		</div>
+	</form>
+</div>

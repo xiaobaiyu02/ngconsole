@@ -1,0 +1,163 @@
+<section>
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="jarviswidget" data-widget-grid>
+				<header class="nobgheader">
+					<div class="col-xs-12" style="padding-left: 8px;">
+						<span data-localize="选择教室"></span>&nbsp;&nbsp;
+						<select class="selectclassroomName filter" ng-model="select" ng-change="updateData(searchText,select);cacheValue(select)" ng-disabled="selectLoading" data-ng-options="item.id as item.name for item in classrooms">
+							<option localize="所有教室" value=''>所有教室</option>
+						</select>&nbsp;&nbsp;<img ng-src="img/loadingtext.gif" ng-if="selectLoading" height="12" width="12" alt="" style="position: relative;bottom:4px">&nbsp;&nbsp;&nbsp;&nbsp;
+						<span class="ng-binding" localize="DESKTOP_TOTAL_MESS"
+							param1="{{ getTotalCount() }}"></span>
+						<span class='desktopStatistic' ng-if="getTotalCount()">
+							<span localize='桌面统计的其中'></span>
+							<img ng-if="!getRunningCount() && !getShutdownCount() && !getErrorCount() && !getPausedCount() && !getNostateCount() && !getOtherCount()" ng-src="img/HLloading.gif" width="10" height="10">
+							<span ng-if="getRunningCount()"><span class="status16 running" localize-title="开机状态"></span> {{ getRunningCount() }} <span localize="个"></span><span class="dohao">, </span></span>
+							<span ng-if="getShutdownCount()"><span class="status16 shutdown" localize-title="关机状态"></span> {{ getShutdownCount() }} <span localize="个"></span><span class="dohao">, </span></span>
+							<span ng-if="getErrorCount()"><span class="status16 error" localize-title="错误状态"></span> {{ getErrorCount() }} <span localize="个"></span><span class="dohao">, </span></span>
+							<span ng-if="getPausedCount()"><span class="status16 paused" localize-title="挂起状态"></span> {{ getPausedCount() }} <span localize="个"></span><span class="dohao">, </span></span>
+							<span ng-if="getNostateCount()"><span class="status16 nostate" localize-title="未知"></span> {{ getNostateCount() }} <span localize="个"></span><span class="dohao">, </span></span>
+							<span ng-if="getOtherCount()"><span class="status16 other" localize-title="其他"></span> {{ getOtherCount() }} <span localize="个"></span><span class="dohao">, </span></span>
+						</span>
+					</div>		
+				</header>
+				<div class="noborder">
+					<div class="jarviswidget-editbox"></div>
+					<div class="widget-body no-padding">
+						<div class="dt-toolbar">
+							<div class="left_side left-btn-group col-xs-6 col-sm-6">
+								<a class="btn btn-xs btn-primary" href="javascript:" ng-disabled="!classrooms.length"  data-dialog="newSceneDialog" data-dialog-url="desktop/scene_new.html" data-dialog-size="md"><i class="fa icon-jj-addddd"></i>&nbsp;<span localize="新增">新增</span></a>
+								<a class="btn btn-xs btn-primary isBatch" data-ng-click="start()" href="javascript:" data-ng-class="{disabled:!checkOne()}"><i class="fa icon-jj-boot"></i>&nbsp;<span localize="场景桌面开机">场景桌面开机</span></a>
+								<div class="btn-group">
+									<button class="btn btn-xs btn-primary dropdown-toggle isBatch" data-toggle="dropdown" data-ng-class="{disabled:!checkOne()}"> <i class="fa icon-jj-shutdown"></i>&nbsp;<span localize="场景桌面关机">场景桌面关机</span> <span class="caret"></span></button>
+									<ul class="dropdown-menu">
+										<li><a class="isBatch" data-ng-click="forceShutdown()" href="javascript:" data-ng-class="{disabled:!checkOne()}"><i class="fa"></i><span localize="强制关机">强制关机</span></a></li>
+										<li class="divider"></li>
+										<li><a class="isBatch" data-ng-click="natureShutdown()" href="javascript:" data-ng-class="{disabled:!checkOne()}"><i class="fa"></i><span localize="自然关机">自然关机</span></a></li>
+									</ul>
+								</div>
+								<a class="btn btn-xs btn-primary isBatch" data-ng-click="sortScene()" href="javascript:" data-ng-class="{disabled:!select||!rows.length}"><i class="fa icon-jj-all"></i>&nbsp;<span localize="场景排序">场景排序</span></a>
+								<a class="btn btn-xs btn-primary isBatch" data-ng-click="restartScene()" href="javascript:" data-ng-class="{disabled:!checkOne()}"><i class="fa icon-jj-Restart"></i>&nbsp;<span localize="场景桌面重启"></span></a>
+								<a class="btn btn-xs btn-danger isBatch" data-ng-click="delete()" href="javascript:" data-ng-class="{disabled:!checkOne()}"><i class="fa  icon-jj-delete"></i>&nbsp;<span localize="删除">删除</span></a>
+							</div>
+							<div class="right_side col-xs-6 col-sm-6">
+								<div class="pull-right filter"> <span localize="显示"></span> <input min="1" max="500" placeholder="1-500" class="mysmallinput" type="number" ng-change="pageSizeChange()" data-ng-model="pagesize" data-ng-options="pagesize for pagesize in pagesizes" input-number><span localize="项结果"></span> </div>
+								<div class="pull-right dataTables_filter search"><label><span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span> <input type="search" maxlength="20" class="form-control" ng-model="searchText" ng-change="updateData(searchText,select)"></label></div>
+							</div>
+						</div>
+						<div class="table-responsive">
+							<table data-vdi-grid
+								class="table table-striped table-condensed table-hover smart-form has-tickbox table-vertical-center"
+								width="100%">
+								<thead class="vdi_header">
+									<tr>
+										<th><label class="checkbox"><input type="checkbox" data-ng-model="checkedAll" data-ng-change="selectAllChange(checkedAll)" data-ng-checked="checkAll(all)" name="checkbox-inline"><i></i></label></th>
+
+										<th ng-model="sceneNameSort" ng-click="sceneNameSort = !sceneNameSort;sort('name', sceneNameSort)" localize="场景名"></th>
+										<th localize="资源池"></th>
+										<th ng-model="schoolroomSort" ng-click="schoolroomSort = !schoolroomSort;sort('schoolroom', schoolroomSort)" localize="所属教室">所属教室</th>
+										<th ng-model="schoolroomSort" ng-click="schoolroomSort = !schoolroomSort;sort('active', schoolroomSort)" localize="激活">激活</th>
+
+										<th localize="在线/桌面数">在线/桌面数</th>
+										<th localize="桌面模板">桌面模板</th>
+										<th localize="硬件模板">硬件模板</th>
+
+										<th localize="还原设置">还原设置</th>
+										<th >RDP</th>
+
+										<th localize="虚拟化类型">虚拟化类型</th>
+									</tr>
+								</thead>
+								<tbody class="vdi_body">
+									<tr style="height:100px;" ng-class="{'disabled':item.status === 'making' || item.status === 'updating' || item.status === 'setting-recoverable'}" data-ng-repeat="item in rows | filter:searchText | paging:currentPage:pagesize track by $index"
+										data-contextmenu
+										data-id="{{ item.id }}">
+										<td>
+											<label class="checkbox"><input data-ng-model="item._selected" ng-disabled="item.status=='making'" data-ng-checked="item._selected" type="checkbox" data-ng-value="item.id" name="checkbox-inline"><i></i></label> </td>
+										<td>
+											<div ng-if="item.status === 'making'">
+												<img ng-src="img/HLloading.gif" height="24" width="24" alt="">
+												<p localize="场景创建中">场景创建中</p>
+											</div>
+											<div ng-if="item.status === 'updating'">
+												<img ng-src="img/HLloading.gif" height="24" width="24" alt="">
+												<p localize="正在更新"></p>
+											</div>
+											<div ng-if="item.status === 'setting-recoverable'">
+												<img ng-src="img/HLloading.gif" height="24" width="24" alt="">
+												<p localize="正在设置还原"></p>
+											</div>
+											<p ng-if="item.status !== 'making' && item.status !== 'updating'  && item.status !== 'setting-recoverable'"><a href="#/desktop/teach/{{item.id}}" >{{ item.name }}</a></p>
+											<p ng-if="item.usb_redir || item.usb3_redir"><span class="fa  icon-jj-usb flag-icon"></span></p>
+											<p ng-if="item.mark_ha"><span class="fa  icon-jj-HA flag-icon"></span></p>
+											<p ng-if="item.gpu_type == 'share'" data-localize-title="显卡共享"><span class="fa icon-jj-025 flag-icon"></span></p>
+											<p ng-if="item.gpu_type == 'through'" data-localize-title="显卡直通"><span class="fa icon-jj-026 flag-icon"></span></p>
+										</td>
+										<td>{{ item.resource_pool_name }}</td>
+										<td>{{ item.schoolroom }}</td>
+										<td>
+											<div>
+												<span class="switch" ng-show="!item.active_loadding">
+													<input type="checkbox" name="start_interval" class="switch-checkbox" id="start_interval{{$index}}" ng-model="item.active">
+													<label class="switch-label" data-swchon-text="ON" data-swchoff-text="OFF" ng-click="active(item.id,$event)">
+													</label>
+												</span>
+												<img ng-src="img/HLloading.gif" ng-if="item.active_loadding" height="24" width="24" alt="">
+											</div></td>
+										
+										<td>{{ item.running_count }} / {{ item.instances_count }} </td>
+										<td>{{ item.image_name }}</td>
+										<td>{{ item.instance_type }}</td>
+
+										<td>
+											<p><span localize="系统盘" class="text-right td-inside-laout">系统盘</span><span class="text-left td-inside-laout">{{item.rollback_desc}}</span></p>
+											<p ng-show="item.data_rollback!==null"><span localize="数据盘" class="text-right td-inside-laout">数据盘</span><span class="text-left td-inside-laout">{{item.data_rollback_desc}}</span></p>
+										</td>
+										<td>
+											<span ng-if="item.is_exam" localize="是"></span>
+											<span ng-if="!item.is_exam" localize="否"></span>
+										</td>
+										<td>{{item.virtual_type}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="tips" data-ng-if="loading"  localize="LOADING_TEXT">数据正在加载...</div>
+						<div class="tips" data-ng-if="!loading && rows.length == 0" localize="NO_MATCHING_DATA">没有匹配数据</div>
+						<div data-ng-include="'includes/pagination.html'"></div>
+					</div>
+				</div>
+				<section class="context_wrapper">
+					<div data-ng-if="currentItem" class="menu_wrapper grid_context_menu">
+						<ul class="menu_item_list">
+							<li class="menu_item" data-ng-class="{disabled:currentItem.running_count==currentItem.instances_count}" data-ng-click="start(currentItem)"><a class="menu_label" href="javascript:" localize="场景桌面开机">场景桌面开机</a></li>
+							<li class="menu_item" data-ng-class="{disabled:currentItem.running_count==0}"><a class="menu_label"  href="javascript:" ><span localize="场景桌面关机">场景桌面关机</span><i></i></a>
+								<div class="menu_wrapper sub_menu">
+									<ul class="menu_item_list">
+										<li class="menu_item" data-ng-click="forceShutdown(currentItem)"><a class="menu_label" href="javascript:" localize="强制关机">强制关机</a></li>
+										<li class="menu_split"></li>
+										<li class="menu_item" data-ng-click="natureShutdown(currentItem)"><a class="menu_label" href="javascript:" onclick="return false;" localize="自然关机">自然关机</a></li>
+									</ul>
+								</div>
+							</li>
+							<li class="menu_item" data-ng-class="{disabled:currentItem.running_count==0}" data-ng-click="restartScene(currentItem)"><a class="menu_label" href="javascript:" localize="场景桌面重启"></a></li>
+							<li class="menu_item" ng-disabled="currentItem.active"  data-ng-click="delete(currentItem)"  ><a class="menu_label" href="javascript:" localize="删除">删除</a></li>
+							<li class="menu_split"></li>
+							<li class="menu_item" ng-disabled="currentItem.running_count > 0" data-dialog="alterSceneDialog" data-dialog-url="desktop/sence_alter.html" data-dialog-size="md"><a class="menu_label" href="javascript:" localize="修改场景">修改场景</a></li>
+							<li class="menu_item"><a class="menu_label" href="javascript:"><span localize="域">域</span><i></i></a>
+								<div class="menu_wrapper sub_menu">
+									<ul class="menu_item_list">
+										<li class="menu_item" ng-disabled="currentItem.ad_server"><a class="menu_label" href="javascript:" ng-click="openAddDomainDialog(currentItem)" localize="加域" >加域</a></li>
+										<li class="menu_split"></li>
+										<li class="menu_item" ng-disabled="!currentItem.ad_server"><a class="menu_label" href="javascript:" ng-click="sceneExitServerDialog(currentItem)" localize="退域">退域</a></li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</section>
+			</div>
+		</article>
+	</div>
+</section>

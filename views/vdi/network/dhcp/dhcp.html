@@ -1,0 +1,59 @@
+<section class='dhcp' style="padding: 20px 0 0 0;">
+    <form class="form-horizontal col-xs-5" name="dhcpFrom" novalidate>
+        <div class="form-group">
+            <div class="col-xs-4 text-right">
+                <label>
+                    <input type="checkbox" class="checkbox style-0" ng-model="DHCPCtrl.data.enable_dhcp" ng-change='DHCPCtrl.changeModify(DHCPCtrl.data.enable_dhcp)'>
+                    <span localize='启用'></span>
+                </label>
+                <label>
+                    <a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='DHCPTips' data-placement="right" data-html="true"><i class="fa fa-question-circle"></i></a>
+                </label>
+            </div>
+            <div class="col-xs-7">
+                <img src="img/loadingtext.gif" data-ng-if="DHCPCtrl.enabling" height="24" width="24" alt="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-4 control-label required" localize="开始IP"></label>
+            <div class="col-xs-7" >
+                <input type="text" format-ip ng-model="DHCPCtrl.data.start" ng-class='{disableDHCP: !DHCPCtrl.data.enable_dhcp}' ng-disabled="!DHCPCtrl.data.enable_dhcp || !DHCPCtrl.modify">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-4 control-label required" localize="结束IP"></label>
+            <div class="col-xs-7">
+                <input type="text" format-ip ng-model="DHCPCtrl.data.end" ng-class='{disableDHCP: !DHCPCtrl.data.enable_dhcp}' ng-disabled="!DHCPCtrl.data.enable_dhcp || !DHCPCtrl.modify">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-4 control-label required" localize="子网掩码"></label>
+            <div class="col-xs-7">
+                <input type="text" format-ip data-ng-model="DHCPCtrl.data.netmask" ng-class='{disableDHCP: !DHCPCtrl.data.enable_dhcp}' ng-disabled="!DHCPCtrl.data.enable_dhcp || !DHCPCtrl.modify">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-4 control-label required" localize="网关"></label>
+            <div class="col-xs-7">
+                <input type="text" format-ip data-ng-model="DHCPCtrl.data.gateway" ng-class='{disableDHCP: !DHCPCtrl.data.enable_dhcp}' ng-disabled="!DHCPCtrl.data.enable_dhcp || !DHCPCtrl.modify">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-4 control-label required">DNS</label>
+            <div class="col-xs-7">
+                <input type="text" format-ip data-ng-model="DHCPCtrl.data.dns" ng-class='{disableDHCP: !DHCPCtrl.data.enable_dhcp}' ng-disabled="!DHCPCtrl.data.enable_dhcp || !DHCPCtrl.modify">
+            </div>
+        </div>
+        <div class="form-group text-right">
+            <label class="col-xs-4 control-label"></label>
+            <div class="col-xs-7">
+                <img src="img/loadingtext.gif" data-ng-if="DHCPCtrl.updating" height="24" width="24" alt="">
+                <button class="btn btn-primary" ng-if="!DHCPCtrl.modify" data-ng-disabled='!DHCPCtrl.data.enable_dhcp' ng-click="DHCPCtrl.modify = true" localize="更改"></button>
+                <button class="btn btn-primary" ng-if="DHCPCtrl.modify && !DHCPCtrl.updating" data-ng-disabled='dhcpFrom.$invalid' ng-click="DHCPCtrl.updateDHCP()" localize="保存"></button>
+                <button class="btn btn-primary" ng-if="DHCPCtrl.modify && !DHCPCtrl.updating" ng-click="DHCPCtrl.modify = false;DHCPCtrl.loadDHCP()" localize="取消" style="margin-left: 10px;"></button>                
+            </div>
+        </div>
+    </form>
+        
+</section>
+<script>pageSetUp();</script>

@@ -1,0 +1,193 @@
+body {
+	background-color:black;
+	padding:0;
+	margin:0;
+}
+
+#integrationBenchmark {
+	display: none;
+	position:absolute;
+	z-index: 10000000000000000000000000;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+#integrationBenchmark .closeButton {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 5px;
+	background-color: #fff;
+	color: #000;
+	cursor: pointer;
+}
+
+#integrationBenchmark .result {
+	font-size: 4em;
+	font-weight: bold;
+	position: absolute;
+	top: 50%;
+	left: 35%;
+	color: #0f0;
+	background-color: #fff;
+}
+
+#launchWordButton {
+	position:absolute;
+	top:50%;
+}
+
+#web-spice-login > div{
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#web-spice-login input{
+	height: 20px;
+	font-size: 16px;
+	padding: 3px;
+}	
+
+#web-spice-login .item-head{
+	margin-right: 10px;
+}
+
+#loading{
+	position:absolute;
+	left:50%;
+	top:50%;
+	margin-left:-100px;
+	margin-top:-100px;
+	display:block;
+	width:150px;
+	height:150px;
+	border-radius:100px;
+}
+
+.ime-disabled{
+	-webkit-ime-mode:  !important disabled;
+	ime-mode:  !important disabled;
+}
+
+#tmpClipBoard{
+	position: absolute;
+	left: -200px;
+	top:0px;
+	width: 100px;
+	border:solid 1px #cccccc;
+	color:white;
+	background-color: transparent;
+}
+
+#tooltip{
+	position: fixed;
+	right: 0px;
+	top:0px;
+	width: 120px;
+	height: 60px;
+	/*display: none;*/
+}
+
+#tooltip button{
+	position: absolute;
+	left: 5px;
+	top:5px;
+	width: 100px;
+	height: 50px;
+	background-color: transparent;
+	border:none;
+	outline: none;
+}
+
+#tooltip button:hover{
+	color:red;
+}
+
+#tooltip button:active{
+	left:7px;
+	top:7px;
+}
+
+#uploadFile{
+  position: absolute; 
+  left: -100px;
+  width: 10px;
+}
+
+.noselect {
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Chrome/Safari/Opera */
+	-khtml-user-select: none; /* Konqueror */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently
+	not supported by any browser */
+}
+
+.right-panel {
+	position: fixed;
+	width:100px;
+	height:auto;
+	right: 0px;
+	top:40%;
+	margin-top: -100px;
+	margin-left: -50px;
+	z-index: 9999999999999999;
+	border-radius: 5px;
+	background-color: #333437;
+	color:red;
+	padding: 5px;
+	display: none;
+	border:solid 1px #848484;
+	cursor: default;
+}
+
+#set-right-panel{
+	position: fixed;
+	right: 0px;
+	top:36%;
+	margin-top: -20px;
+	width: 13px;
+	height: 71px;
+	z-index: 1000;
+	background-repeat: no-repeat;
+}
+
+.set-right-panel-open{
+	background-image: url(../image/收起正常.png);    
+}
+
+#set-right-panel:hover{
+	background-image: url(../image/收起点击.png);
+}
+
+.set-right-panel-close{
+	background-image: url(../image/收起点击.png);
+}
+
+.buttons div{
+	color: white;
+	background: linear-gradient(to bottom, #333437, #535458);
+	border:solid 1px #282828;
+	border-radius: 3px;
+	font-size: 12px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 4px;
+	padding-right: 4px;
+	text-align: center;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.buttons div:hover{
+	background: linear-gradient(to bottom, #535458,#333437);
+}
+
+.buttons div:active{
+	background: linear-gradient(to bottom, #333437, #535458);
+}

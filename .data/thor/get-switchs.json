@@ -1,0 +1,25 @@
+{
+    "code": 0,
+    "result": [
+        {
+            "description": null,
+            "hosts": [
+                {
+                    "dev": "eth0",
+                    "host": "vdi188",
+                    "host_id": "abf1887a-eef8-42aa-9a02-0057d8768435",
+                    "status": "active"
+                },
+                {
+                    "dev": "",
+                    "host": "XBo-hyperv-01",
+                    "host_id": "24de45c8-c5c2-4418-9430-413e4355b28b",
+                    "status": "active"
+                }
+            ],
+            "name": "default",
+            "type": "flat",
+            "uuid": "9f14575e-3d3d-463c-a7d4-7f694de04e40"
+        }
+    ]
+}

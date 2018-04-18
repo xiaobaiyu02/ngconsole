@@ -1,0 +1,317 @@
+<section>
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div data-widget-grid class="jarviswidget">
+			<a class="btn btn-xs btn-primary" href="javascript:" data-dialog="configPublicStorageDialog" data-dialog-url="resource/storage/config_pub_storage.html" data-dialog-size="md"><i class="fa icon-jj-009"></i>&nbsp;<span localize="配置公共存储">配置公共存储</span></a>
+				<header class="storage_header" localize="本地存储">
+				</header>
+				<div class="noborder">
+					<div class="widget-body no-padding">
+						<div class="form-inline no-footer">
+								<div class="storage-dt-toolbar">
+									<div class="row">
+										<div class="left-btn-group left_side col-xs-12 col-sm-4 col-md-4">
+										</div>
+										<div class="right_side col-sm-8 col-xs-10 hidden-xs col-md-8"> 									
+											<span data-localize="资源池">资源池</span>
+											<select class="selectServer" ng-model="select_pool_local" ng-change="filterLocalStorage(select_pool_local.name)"  ng-options="pool.name for pool in pools track by pool.id">
+												<option value="" data-localize="所有">所有</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+						<div class="table-responsive storage-tabel">
+							<table cellpadding="0" cellspacing="0" 
+								class="table table-striped table-condensed table-hover smart-form storage-tabel-first">
+								<thead class="vdi_header">
+									<tr>
+										<th localize="资源池" width="10%">资源池</th>
+										<th localize="主机" width="11%">主机</th>
+
+										<th localize="分配类型" width="11%">分配类型</th>
+										<th localize="存储服务器" width="11%">存储服务器</th>
+										<th localize="存储类型" width="11%">存储类型</th>
+										
+										<th localize="存储名" width="11%">存储名</th>
+										<th width="10%"><span localize="总容量"></span>(GB)</th>
+
+										<th width="5%"><span localize="可用空间"></span>(GB)</th>
+									</tr>
+								</thead>
+								<tbody class="vdi_body rowspan3">
+									<tr ng-repeat="(key,pool) in datas.local_storages">
+										<td>{{key}}</td>
+										<td colspan="9" class="nopadding">
+											<table cellpadding="0" cellspacing="0" class="storage-tabel-second">
+												<tbody>
+													<tr ng-repeat="server in pool.servers track by $index">
+														<td>{{server.ip}}</td>
+														<td colspan="8" class="nopadding">
+															<table cellpadding="0" cellspacing="0" class="storage-tabel-third">
+																<tbody>
+																	<tr ng-repeat="storage in server.storages track by $index">
+																		<td>	
+																			<!-- <span ng-if="storage.storage_type==1" localize="基础镜像存储设备">基础镜像存储设备</span>
+																			<span ng-if="storage.storage_type==2" localize="性能型存储设备">性能型存储设备</span>
+																			<span ng-if="storage.storage_type==3" localize="容量型存储设备">容量型存储设备</span>
+																			<span ng-if="storage.storage_type=='cache'" localize="主机缓存设备">主机缓存设备</span> -->
+																			<span>{{storage.storage_type}}</span>
+																			<!-- <span ng-if="storage.storage_type==4" localize="公共型存储">公共型存储</span> -->
+																		</td>
+																		<td>{{storage.ip}}</td>
+																		<td>{{storage.device_type}}</td>
+
+																		<td>{{storage.name}}</td>
+																		<td><span ng-show="storage.total_size">{{storage.total_size}}</span><span ng-show="!storage.total_size">--</span></td>
+
+																		<td><span ng-show="storage.free_size">{{storage.free_size}}</span><span ng-show="!storage.free_size">--</span></td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					
+						<div class="tips" data-ng-if="loading"  localize="LOADING_TEXT">数据正在加载...</div>
+						<div class="tips" data-ng-show="!loading && get_obj_length(datas.local_storages) == 0"  localize="NO_MATCHING_DATA">没有匹配数据</div>
+
+						<div>
+							<div data-grid-pagination data-ng-show="(totalCount || (rows | filter:select | paging:currentPage:pagesize:rows).length) > 0" class="dt-toolbar-footer row">
+								<div class="col-sm-6 col-xs-12 hidden-xs">
+									<div class="dataTables_info" role="status"
+										data-localize="PAGE"
+										param1="{{ (currentPage - 1) * pagesize + 1 }}" 
+										param2="{{ currentPage * pagesize < (totalCount || (rows | filter:select | paging:currentPage:pagesize:rows).length) ? currentPage * pagesize : (totalCount || (rows | filter:select | paging:currentPage:pagesize:rows).length) }}"
+										param3="{{ totalCount || (rows | filter:select | paging:currentPage:pagesize:rows).length }}"
+									></div>
+								</div>
+								<div class="col-md-6">
+									<div class="dataTables_paginate paging_simple_numbers">
+										<pagination
+											boundary-links="true"
+											total-items="totalCount || (rows | filter:select | paging:currentPage:pagesize:rows).length"
+											items-per-page="pagesize"
+											data-ng-model="$parent.currentPage"
+											data-ng-change="pageChange()"
+											rotate="true"
+											max-size="10"
+											class="pagination-sm"
+											previous-text="&lsaquo;"
+											next-text="&rsaquo;"
+											first-text="&laquo;"
+											last-text="&raquo;"
+										></pagination>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+	</div>
+</section>
+<section>
+	<div class="row">
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div data-widget-grid class="jarviswidget">
+					<header class="storage_header" localize="远端存储"></header>
+					<div class="noborder">
+						<div class="widget-body no-padding">
+							<div class="form-inline no-footer">
+								<div class="storage-dt-toolbar">
+									<div class="row">
+										<div class="left-btn-group left_side col-xs-12 col-sm-4 col-md-4">
+											<a class="btn btn-xs btn-primary" href="javascript:" data-dialog="addStorageDialog" data-dialog-url="resource/storage/new_storage.html" data-dialog-size="md"><i class="fa icon-jj-addddd"></i>&nbsp;<span localize="添加存储">添加存储</span></a>
+										</div>
+										<div class="right_side col-sm-8 col-xs-10 hidden-xs col-md-8"> 									
+											<!-- <span data-localize="资源池">资源池</span> -->
+											<!-- <select class="selectServer" ng-model="select_pool_remote" ng-options="pool.name for pool in datas.remote_assigned_storages">
+												<option value="" data-localize="所有">所有</option>
+											</select> -->
+											<!-- <div class="pull-right filter"> <span localize="显示">显示</span> <select data-ng-model="pagesize"  ng-change="pageSizeChange()">
+												<option value="10" >10</option>
+												<option value="20" >20</option>
+												<option value="30" >30</option>
+											</select> <span localize="项结果"></span> </div> -->
+										</div>
+									</div>
+								</div>
+							</div>
+							<tabset>
+								<tab heading="已分配存储">
+									<div class="table-responsive storage-tabel">
+										<table cellpadding="0" cellspacing="0" 
+											class="table table-striped table-condensed table-hover smart-form storage-tabel-first">
+											<thead class="vdi_header">
+												<tr>
+													<th width="10%" localize="资源池">资源池</th>
+													<th width="11%" localize="主机">主机</th>
+
+													<th width="12%" localize="分配类型">分配类型</th>
+													<th width="11%" localize="存储服务器">存储服务器</th>
+													<th width="10%" localize="存储类型">存储类型</th>
+													
+													<th width="10%" localize="存储名">存储名</th>
+													<th width="11%" localize="精简配置">精简配置</th>
+													<th width="10%" localize="存储控制节点">存储控制节点</th>
+													<th width="9%"><span localize="总容量"></span>(GB)</th>
+
+													<th><span localize="可用空间"></span>(GB)</th>
+												</tr>
+											</thead>
+											<tbody class="vdi_body rowspan3">	
+												<tr ng-repeat="(key,pool) in datas.remote_assigned_storages track by $index">
+													<td>{{pool.name}}</td>
+													<td colspan="9" class="nopadding">
+														<table cellpadding="0" cellspacing="0" class="storage-tabel-second">
+															<tbody>
+																<tr ng-repeat="server in pool.servers track by $index">
+																	<td style="width:12.3%">{{server.ip}}</td>
+																	<td colspan="8" class="nopadding">
+																		<table cellpadding="0" cellspacing="0" class="storage-tabel-third">
+																			<tbody>
+																				<tr ng-repeat="storage in server.storages track by $index">
+																					<td>	
+																						<!-- <span ng-if="storage.storage_type==1" localize="基础镜像存储设备">基础镜像存储设备</span>
+																						<span ng-if="storage.storage_type==2" localize="性能型存储设备">性能型存储设备</span>
+																						<span ng-if="storage.storage_type==3" localize="容量型存储设备">容量型存储设备</span>
+																						<span ng-if="storage.storage_type=='cache'" localize="主机缓存设备">主机缓存设备</span> -->
+																						<!-- <span ng-if="storage.storage_type==4" localize="公共型存储">公共型存储</span> -->
+																						<span>{{storage.storage_type}}</span>
+																					</td>
+																					<td>{{storage.ip}}</td>
+																					<td>{{storage.device_type}}</td>
+
+																					<td>{{storage.name}}</td>
+																					<td>
+																						<span localize="启用" ng-if="storage.dynamic_lv"></span>
+																						<span localize="未启用" ng-if="!storage.dynamic_lv"></span>
+																					</td>
+																					<td>{{storage.storage_control_ip}}</td>
+																					<td><span ng-show="storage.total_size">{{storage.total_size}}</span><span ng-show="!storage.total_size">--</span></td>
+
+																					<td style="width:7%"><span ng-show="storage.free_size">{{storage.free_size}}</span><span ng-show="!storage.free_size">--</span></td>
+																				</tr>
+																			</tbody>
+																		</table>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="tips" data-ng-if="loading"  localize="LOADING_TEXT">数据正在加载...</div>
+									<div class="tips" data-ng-if="!loading && get_obj_length(datas.remote_assigned_storages)===0"  localize="NO_MATCHING_DATA">没有匹配数据</div>
+								</tab>
+								<tab heading="未分配存储">
+									<div class="table-responsive storage-tabel storage-tabel-unsigned">
+										<table cellpadding="0" cellspacing="0" 
+											class="table table-striped table-condensed table-hover smart-form storage-tabel-first">
+											<thead class="vdi_header">
+												<tr>
+													<th localize="存储类型" width="12%">存储类型</th>
+													<th localize="存储服务器" width="13%">存储服务器</th>
+													
+													<th localize="存储名" width="11%">存储名</th>
+													<th localize="精简配置" width="11%">精简配置</th>
+													<th localize="存储用途" width="11%">存储用途</th>
+
+													<th localize="存储控制节点" width="11%">存储控制节点</th>
+													<th width="11%"><span localize="总容量"></span>(GB)</th>
+
+													<th width="10%"><span localize="可用空间"></span>(GB)</th>
+													<th localize="操作" width="7%">操作</th>
+												</tr>
+											</thead>
+											<tbody class="vdi_body rowspan3">	
+												<tr ng-repeat="(storage_type,type_val) in datas.remote_unassigned_storages track by $index">
+													<td>{{storage_type}}</td>
+													<td colspan="8" class="nopadding">
+														<table cellpadding="0" cellspacing="0" class="storage-tabel-second">
+															<tbody>
+																<tr ng-repeat="(storage_ip,ip_val) in type_val track by $index">
+																	<td>{{storage_ip}}</td>
+																	<td colspan="6" class="nopadding">
+																		<table cellpadding="0" cellspacing="0" class="storage-tabel-third">
+																			<tbody>
+																				<tr ng-repeat="storage in ip_val track by $index">
+																					
+																					<td>{{storage.name}}</td>
+																					<td>
+																						<span localize="启用" ng-if="storage.dynamic_lv"></span>
+																						<span localize="未启用" ng-if="!storage.dynamic_lv"></span>
+																					</td>
+																					<td>
+																						<p ng-show="storage.storage_usability=='instance'" localize="桌面磁盘镜像存储"></p>
+																						<p ng-show="storage.storage_usability=='local'" localize="本地文件共享存储"></p>
+																					</td>
+
+																					<td>{{storage.storage_control_ip}}</td>
+																					<td><span ng-show="storage.total_size">{{storage.total_size}}</span><span ng-show="!storage.total_size">--</span></td>
+
+																					<td><span ng-show="storage.free_size">{{storage.free_size}}</span><span ng-show="!storage.free_size">--</span></td>
+																					<td><button localize-title="删除" class="btn btn-xs btn-default" ng-hide="storage.device_type=='local'" ng-click="delete(storage)" title="删除"><i class="fa icon-jj-delete"></i></button></td>
+																				</tr>
+																			</tbody>
+																		</table>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="tips" data-ng-if="loading"  localize="LOADING_TEXT">数据正在加载...</div>
+									<div class="tips" data-ng-if="!loading && get_obj_length(datas.remote_unassigned_storages)===0"  localize="NO_MATCHING_DATA">没有匹配数据</div>
+								</tab>
+							</tabset>
+							<div>
+								<div data-grid-pagination data-ng-show="(totalCount || (rows | filter:select | paging:currentPage:pagesize:rows).length) > 0" class="dt-toolbar-footer row">
+									<div class="col-sm-6 col-xs-12 hidden-xs">
+										<div class="dataTables_info" role="status"
+											data-localize="PAGE"
+											param1="{{ (currentPage - 1) * pagesize + 1 }}" 
+											param2="{{ currentPage * pagesize < (totalCount || (rows | filter:select | paging:currentPage:pagesize:rows).length) ? currentPage * pagesize : (totalCount || (rows | filter:select | paging:currentPage:pagesize:rows).length) }}"
+											param3="{{ totalCount || (rows | filter:select | paging:currentPage:pagesize:rows).length }}"
+										></div>
+									</div>
+									<div class="col-md-6">
+										<div class="dataTables_paginate paging_simple_numbers">
+											<pagination
+												boundary-links="true"
+												total-items="totalCount || (rows | filter:select | paging:currentPage:pagesize:rows).length"
+												items-per-page="pagesize"
+												data-ng-model="$parent.currentPage"
+												data-ng-change="pageChange()"
+												rotate="true"
+												max-size="10"
+												class="pagination-sm"
+												previous-text="&lsaquo;"
+												next-text="&rsaquo;"
+												first-text="&laquo;"
+												last-text="&raquo;"
+											></pagination>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+			</div>
+		</article>
+	</div>
+</section>

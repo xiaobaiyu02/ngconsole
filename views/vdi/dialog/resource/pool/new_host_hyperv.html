@@ -1,0 +1,120 @@
+<!-- 与新增kvm节点不公用template,公用controller -->
+<div class="modal-body padding-10">
+	<form class="form-horizontal ng-pristine ng-valid" name="addHostForm"  novalidate>
+		<fieldset>
+			<legend>
+				<header>
+					<button type="button" class="close" ng-click="close()">
+						<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+					</button>
+					<span localize="添加计算节点"></span><span>(Hyper-V)</span>
+				</header>
+			</legend>
+            <section ng-show="step===1">
+                <div class="form-group">
+                    <label class="col-xs-3 control-label required"><span localize="管理网络"></span>IP</label>
+                    <div class="col-xs-7">
+                        <input type="text" name="address" format-ip ng-model="host.ip" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                	<label class="col-xs-3 control-label" localize="用户名"></label>
+                	<div class="col-xs-7">
+                		<input type="text" class="form-control" disabled ng-init="host.username='administrator'" ng-model="host.username" required>
+                	</div>
+                </div>
+                <div class="form-group">
+                	<label class="col-xs-3 control-label" localize="密码"></label>
+                	<div class="col-xs-7">
+                		<input type="password" name="password" class="form-control" ng-model="host.root_password" required>
+                	</div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label"></label>
+                    <div class="col-xs-7">
+                        <label>
+                            <input type="checkbox" class="checkbox" ng-init="host.force=false"  data-ng-model="host.force">
+                            <span data-localize="强制添加计算节点"></span>
+                        </label>
+                        <label>
+                            <a href="javascript:void(0);" rel="popover-hover" data-ribbon-tips data-my-tips='forceAddHostTips' data-placement="right" data-html="true" data-content="" data-original-title="" title=""><i class="fa fa-question-circle"></i></a>
+                        </label>
+                    </div>
+                </div>
+                 <div class="col-md-12 text-right padding-10">
+                    <img ng-show="loading" src="img/loadingtext.gif" width="24px" height="24px"/>
+                    <button ng-hide="loading" ng-disabled="addHostForm.address.$invalid || addHostForm.password.$invalid" class="btn btn-default" type="button" ng-click="go_next()"  localize="下一步"></button>
+                </div>
+            </section>
+             <section ng-show="step===2">
+                <div class="form-group">
+                    <label  class="col-xs-3 control-label" localize="管理网络"></label>
+                    <label  class="col-xs-4 control-label text-left">{{agent_detail.node_manage_dev}}</label>
+                    <label  class="col-xs-4 control-label text-left">{{agent_detail.node_manage_ip}}</label>
+                </div>
+                <div class="form-group">
+                    <label  class="col-xs-3 control-label" localize="镜像网络"></label>
+                    <label  class="col-xs-4 control-label text-left">{{agent_detail.node_glance_dev}}</label>
+                    <label  class="col-xs-4 control-label text-left">{{agent_detail.node_glance_ip}}</label>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3  control-label" localize="数据网络"></label>
+                     <div class="col-xs-8">
+                        <table class="add_agent_table">
+                            <thead>
+                                <tr>
+                                    <th localize="网络"></th>
+                                    <th localize="分布式虚拟交换机"></th>
+                                    <th localize="映射网卡"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-show="loading_interface || loading_network"><td colspan="3"><img src="img/loadingtext.gif" width="24px" height="24px"/></td></tr>
+                                <tr ng-show="!(loading_interface || loading_network)" ng-repeat="net in dataNets track by $index">
+                                    <td>{{net.name}}</td>
+                                    <td>{{net.switch_name}}</td>
+                                    <td>
+                                        <select class="agent_table_control" ng-model="net._data_dev" ng-options="interface._dev for interface in interfaces | interfaceFilter:$index:dataNets">
+                                            <option value="" localize="无"></option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-8 col-xs-offset-3 init-note">
+                        <p class="note" localize="ADD_AGENT_MESS"></p>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right padding-10">
+                    <button ng-show="!loadding" class="btn btn-default" type="button" ng-click="go_pre()"  localize="上一步"></button>
+                    <button ng-show="!loadding" class="btn btn-primary" ng-disabled="!addHostForm.$valid" type="button" ng-click="ok('hyper-v')" localize="确定"></button>
+                    <button ng-show="!loadding" class="btn btn-default" type="button" ng-click="close()" localize="取消"></button>
+                    <img ng-show="loadding" src="img/loadingtext.gif" width="24px" height="24px"/>
+                </div>
+            </section>
+        </fieldset>
+	</form>
+</div>
+<style>
+    .add_agent_table{
+        width: 100%;
+        border:1px solid #ccc;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    .add_agent_table>thead>tr>th{
+        font-weight: normal;
+        padding: 7px;
+        white-space: nowrap;
+    }
+    .add_agent_table>tbody>tr>td{
+        padding: 7px;
+    }
+    .add_agent_table .agent_table_control{
+        width: 100px;
+    }
+</style>
+<script>pageSetUp();</script>

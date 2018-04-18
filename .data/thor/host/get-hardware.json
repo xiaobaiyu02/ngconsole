@@ -1,0 +1,27 @@
+{
+    "code": 0,
+    "cpu": [
+        {
+            "count": 2,
+            "value": "Intel(R) Xeon(R) CPU E5-2620 0 @ 2.00GHz"
+        }
+    ],
+    "disk": [
+        {
+            "count": 1,
+            "value": "LSI MR9260-8i 669GB"
+        }
+    ],
+    "graphic_card": [
+        {
+            "count": 1,
+            "value": "Matrox Electronics Systems Ltd. MGA G200e [Pilot] ServerEngines (SEP1)"
+        }
+    ],
+    "memory": [
+        {
+            "count": 4,
+            "value": "Kingston 16GB"
+        }
+    ]
+}

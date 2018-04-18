@@ -1,0 +1,343 @@
+<section id="widget-grid" class="ng-scope">
+<!--{{summary}}-->
+	<div class="well">
+        <div class="row">
+        	<div class="col-xs-6">
+        		<form class="form-horizontal">
+	        		<div class="form-group">
+	        			<label class="control-label col-xs-2" localize="资源池"></label>
+	        			<div class="col-xs-4">
+		        			<select ng-disabled="loading" class="form-control" ng-change="get_host(pool.uuid)" ng-model="pool" ng-options="pool.name for pool in pools">
+		        				<option value="" localize="所有"></option>
+		        			</select>
+		        		</div>
+	        			<img  ng-src="img/loadingtext.gif" ng-if="loading" height="32" width="32">
+	        		</div>
+        		</form>
+        	</div>
+            <div class="col-xs-6 col-sm-6">
+                <ul id="sparks" class="">
+                    <li class="sparks-info">
+						<div class="sparkline txt-color-bluejj hidden-mobile hidden-md hidden-sm"><i class="fa-fw fa icon-jj-host"></i></div>
+						<h5 data-localize="SUMMARY_TITLE_NODE"
+							param2="{{summary.host_total - summary.host_master|| 0}}"></h5>
+                    </li>
+                    <li class="sparks-info">
+						<div class="sparkline txt-color-bluejj hidden-mobile hidden-md hidden-sm"><i class="fa icon-jj-pc fa-fw "></i></div>
+						<h5 data-localize="SUMMARY_TITLE_DESKTOP"
+							param1="{{summary.mode_instance_cnt || 0}}"
+							param2="{{summary.person_instance_cnt || 0}}"> </h5>
+                    </li>
+                    <!-- <li class="sparks-info">
+						<div class="sparkline txt-color-bluejj hidden-mobile hidden-md hidden-sm"><i class="fa-fw fa icon-jj-Terminal"></i></div>
+						<h5 data-localize="SUMMARY_TITLE_CLIENT"
+							param1="{{summary.schoolroom_cnt || 0}}"
+							param2="{{summary.client_cnt || 0}}"> </h5>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+        <!-- row -->
+        <div class="row">
+            <article class="col-sm-12">
+                <!-- new widget -->
+                <div class="jarviswidget" id="wid-id-0" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                    <header>
+                        <h2 data-localize="HOST">主机</h2>
+                        <h2
+                        	data-localize="SUMMARY_HOST_DESC"
+                        	param1="{{summary.host_total || 0}}"
+                        	param2="{{summary.host_running || 0}}"
+                        	param3="{{summary.host_shutdown || 0}}"
+                        ></h2>
+                        <ul class="nav nav-tabs pull-right in" id="myTab">
+                        </ul>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div class="no-padding">
+                        <div class="widget-body">
+                            <!-- content -->
+                            <div id="myTabContent" class="tab-content">
+                                <div class="tab-pane fade in padding-10 no-padding-bottom active" id="s0">
+                                	<div class="row index all text-center">
+	                  					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                            <h3 class="title">CPU</h3>
+                                            <div class="item">
+                                                <p localize="SUMMARY_ALL_CORE"
+													param1="{{summary.cpu_cnt || 0}}"></p>
+                                                <p localize="SUMMARY_VCPU_CORE"
+                                               		param1="{{summary.cpu_v_running || 0}}"></p>
+                                                <!--<div class="progress">-->
+                                                    <!--<div class="progress-bar bg-color-teal" aria-valuetransitiongoal="25" aria-valuenow="25" style="width: 25%;">25%</div>-->
+                                                <!--</div>-->
+                                                <div class="svgpic" ng-show="cpu_rate"><strong>{{ summary.cpu_cnt==0?0:1 }} : {{cpu_rate}}</strong></div>
+                                            </div>
+                                            <div class="foootbar" 
+                                            	localize="SUMMARY_VCPU_TOTAL"
+                                            	param1="{{summary.cpu_v_total || 0}} "></div>
+	                  					</div>
+	                  					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                            <h3 class="title" localize="内存">内存</h3>
+                                            <div class="item">
+                                                <p data-localize="SUMMARY_SIZE_USED" param1="{{summary.mem_used || 0}}"></p>
+                                                <p data-localize="SUMMARY_SIZE_FREE" param1="{{summary.mem_remain || 0}}"></p>
+                                                <div id="3Dmemory" style="position:relative;top:-10px;">
+                                                    <!-- 这里是svg图                    -->
+                                                </div>
+                                            </div>
+                                            <div class="foootbar" 
+                                            	localize="SUMMARY_SIZE_TOTAL"
+                                            	param1="{{summary.memory_cnt || 0}} "></div>
+	                  						
+	                  					</div>
+                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                            <h3 class="title" localize="存储">存储</h3>
+                                            <div class="item">
+                                            	<p data-localize="SUMMARY_SIZE_USED" param1="{{summary.disk_used || 0}}"></p>
+                                                <p data-localize="SUMMARY_SIZE_FREE" param1="{{summary.disk_remain || 0}}"></p>
+                                                <div id="3Ddisk"  style="position:relative;top:-10px;">
+                                                    <!-- 这里是svg图                    -->
+                                                </div>
+                                            </div>
+                                            <div class="foootbar" 
+                                            	localize="SUMMARY_SIZE_TOTAL"
+                                            	param1="{{summary.disk_cnt || 0}} "></div>
+                                        </div>
+                                        <!--<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">-->
+                                            <!--<h3 class="title">网络</h3>-->
+                                            <!--<div class="item">-->
+                                                <!--<p>总共:3个Vlan75个IP</p>-->
+                                                <!--<p>已分配使用18个</p>-->
+                                            <!--</div>-->
+                                            <!--<div class="foootbar">总共使用率<span>25</span>%</div>-->
+                                        <!--</div>-->
+                  					</div>
+                                </div>
+                                <!-- end s0 tab pane -->
+                                <div class="tab-pane fade  in padding-10 no-padding-bottom" id="s1">
+                                	<div class="row">
+	                  					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+	                  						<div id="updating-chart-CPU" class="chart">
+	                  							<!-- 这里是svg图 -->
+	                  						</div>
+	                  					</div>
+	                  					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+	                  						<div class="height210">
+												<table class="table table-bordered">
+													<thead>
+														<tr>
+															<th>TOP</th>
+															<th>主机</th>
+															<th>状态</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr data-ng-repeat="item in hostrows">
+															<td>{{item.CPU.TOP}}</td>
+															<td>{{item.CPU.host}}</td>
+															<td><i class="fa {{item.CPU.state}}"></i></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+	                  					</div>
+                  					</div>
+
+                                </div>
+                                <!-- end s1 tab pane -->
+
+                                <div class="tab-pane fade  in padding-10 no-padding-bottom" id="s2">
+                                	<div class="row">
+	                  					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+	                  						<div id="updating-chart-memory" class="chart">
+	                  							<!-- 这里是svg图 -->
+	                  						</div>
+	                  					</div>
+	                  					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+	                  						<div class="height210">
+												<table class="table table-bordered">
+													<thead>
+														<tr>
+															<th>TOP</th>
+															<th>主机</th>
+															<th>状态</th>
+														</tr>
+													</thead>
+													<tbody>
+														
+														<tr data-ng-repeat="item in hostrows">
+
+															<td>{{item.memory.TOP}}</td>
+															<td>{{item.memory.host}}</td>
+															<td><i class="fa {{item.memory.state}}"></i></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+	                  					</div>
+                  					</div>
+                                </div>
+                                <!-- end s2 tab pane -->
+
+                                <div class="tab-pane fade  in padding-10 no-padding-bottom" id="s3">
+                                	<div class="row">
+	                  					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+	                  						<div id="updating-chart-save" class="chart">
+	                  							<!-- 这里是svg图 -->
+	                  						</div>
+	                  					</div>
+	                  					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+	                  						<div class="height210">
+												<table class="table table-bordered">
+													<thead>
+														<tr>
+															<th>TOP</th>
+															<th>主机</th>
+															<th>状态</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr data-ng-repeat="item in hostrows">
+															<td>{{item.save.TOP}}</td>
+															<td>{{item.save.host}}</td>
+															<td><i class="fa {{item.save.state}}"></i></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+	                  					</div>
+                  					</div>
+                                </div>
+                                <!-- end s3 tab pane -->
+                            </div>
+                            <!-- end content -->
+                        </div>
+
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+            </article>
+        </div>
+        <!-- end row -->
+        <!-- row -->
+        <div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<div class="jarviswidget jarviswidget-sortable">
+					<header role="heading" class="home-header">
+						<h2 data-localize="桌面">桌面</h2>
+						<h2
+							data-localize="SUMMARY_DESKTOP_DESC"
+							param1="{{instances_summary.instances_total || 0}}"
+							param2="{{instances_summary.instances_running || 0}}"
+							param3="{{instances_summary.instances_shutdown || 0}}"
+						></h2>
+					</header>
+					<div role="content">
+						<div class="widget-body">
+							<div class="height210">
+								<table class="table table-bordered nomargin">
+									<thead>
+										<tr>
+											<th>TOP 5</th>
+											<th data-localize="桌面">桌面</th>
+											<th data-localize="持续运行时间">持续运行时间</th>
+											<th data-localize="教室/所有人">教室/所有人</th>
+											<th data-localize="操作">操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="item in top_instances_list">
+											<td align="center">{{item.top}}</td>
+											<td><p class="text-overflow" style="width: 80px" title="{{item.name}}">{{item.name}}</p></td>
+											<td>{{item.startup_at}}</td>
+											<td>
+												<p class="text-overflow" style="width: 100px" ng-if="item.pool_name" title="{{ (item.pool_name?item.pool_name:'')+(item.pool_name && item.inst_owner?'/':'')+(item.inst_owner?item.inst_owner:'')}}">
+													{{item.pool_name}}<span ng-if="item.pool_name && item.inst_owner">/</span>{{item.inst_owner}}
+												</p>
+												<p class="text-overflow" style="width: 100px" ng-if="!item.pool_name" title="{{ item.inst_owner}}">
+													{{item.inst_owner}}
+												</p>
+											</td>
+											<td><a href="javascript:" ng-click="view_desktop(item.id)" data-localize="查看桌面">查看桌面</a></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<div class="jarviswidget jarviswidget-sortable">
+					<header role="heading">
+						<h2  data-localize="终端">终端</h2>
+						 <h2
+                        	data-localize="SUMMARY_CLIENT_DESC"
+                        	param1="{{clients_summary.clients_total || 0}}"
+                        	param2="{{clients_summary.clients_running || 0}}"
+                        	param3="{{clients_summary.clients_shutdown || 0}}"
+                        ></h2>
+					</header>
+					<div role="content">
+						<div class="widget-body">
+								<div class="height210">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th width="10%">TOP 5</th>
+											<th width="50%" data-localize="终端">终端</th>
+											<th width="40%" data-localize="持续开机时间">持续开机时间</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="item in top_clients_list">
+											<td align="center">{{item.top}}</td>
+											<td>{{item.name}}</td>
+											<td>{{item.access_at}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> -->
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<div class="jarviswidget jarviswidget-sortable">
+					<header role="heading" class="home-header">
+						<h2  data-localize="操作日志">操作日志</h2>
+						<!-- <a class="more" href="#/system/logs" data-localize="更多">更多</a> -->
+					</header>
+					<div role="content">
+						<div class="widget-body">
+								<div class="height210">
+								<table class="table table-bordered nomargin">
+									<thead>
+										<tr>
+											<th data-localize="操作者">操作者</th>
+											<th data-localize="操作内容">操作内容</th>
+											<th data-localize="操作时间">操作时间</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="item in top_logs_list">
+											<td align="center">{{item.user}}</td>
+											<td title="{{item.content}}"><p class="text-overflow text-overflow-summary">{{item.content}}</p></td>
+											<td class="nowrap">{{item.datetime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end row -->
+
+	</div>
+</section>
+              
